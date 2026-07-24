@@ -83,11 +83,34 @@ These feed the equipment (`+0x54` ItemData) and stat bytes. The gate reproduces 
 | `FUN_004c82a0` | vec3 field copy (`+0x44`) |
 | `FUN_00413710` | `ItemData_copy` (0x118) — already known |
 
+## Live capture — findings & a correction (2026-07-24)
+
+Ran a live rig (`../tools/frida_spawn_capture.py`) on the headless server (sandbox seed
+444444): hook `524540` + `rand()`, force-build zones via the zone builder, record each call's
+args + the exact `rand()` span it consumes. **6,305 spawn calls captured.** This corrected
+the static reading:
+
+- **`param_5` type 0 is the deterministic overworld spawn — it consumes ZERO `rand()`.** All
+  6,305 captured calls were type 0 with `rand_draws == 0`; positions are real world coords,
+  orientation cycles 0–3 (the `(2-orient)·90°` facing). So type 0 (not "type 1") is the base
+  path, and it is **deterministic** — the caller supplies position/type, `524540` just builds
+  the entity.
+- **The 33 `rand()` draws live in the dungeon-mob path (types 1–15)** — the equipment/stat
+  rolls. Type 0 doesn't reach them. My earlier "type-1 = base, 33 draws" conflated the two.
+
+**Blocker for the RNG gate:** a bare `zone_builder(world, zx, zz)` force-call builds terrain
+and fires type-0 overworld spawns, but does **not** trigger dungeon generation (dungeons=0
+even on the known dungeon zones 32707/32724). Dungeons come from the higher-level
+feature-generation path; the existing dungeon captures hooked a *natural* dungeon build
+("frozen server", `f0_boxlist_probe.py`). So capturing types 1–15 needs that trigger, not
+`zb()`.
+
 ## Status & next steps
 
-- ✅ Identity, signature, `Spawn` record, behaviour tree, and the base (type-1) path decoded
-  statically.
-- ▶ **Live gate**: hook the `Spawn` emit on a dungeon build, match type-1 records
-  (position + type bytes + behaviour ids + the 33-draw `rand()` sequence) ab-initio.
-- ▶ Then the type deltas (7/10/0xd/0xe/0xf), then port to the `cw_rederive` toolkit.
-- Relabel in the ledger: `creature_spawn_builder`, kind **game** (was `lib_fn_524540`).
+- ✅ Identity, signature, `Spawn` record, behaviour tree decoded statically.
+- ✅ Live rig built + validated; **type-0 overworld spawn confirmed deterministic (0 RNG)**.
+- ▶ **Dungeon-mob gate (types 1–15)**: trigger a *natural* dungeon build (feature path, not
+  `zb()`), then match the type + position + the 33-draw `rand()` sequence ab-initio. This is
+  the meaningful RNG gate; it's blocked only on the dungeon trigger, which the existing
+  dungeon rig already solves — adapt it.
+- ✅ Relabelled: `creature_spawn_builder`, kind **game** (was `lib_fn_524540`).
