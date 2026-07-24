@@ -3633,7 +3633,7 @@ addr	name	kind	module	class	attributed_by	size
 005f4c30	FUN_005f4c30	gamemisc	world	Helpers	caller-vote	213
 005f4d10	FUN_005f4d10	gamemisc	world	Helpers	caller-vote	143
 005f4da0	FUN_005f4da0	gamemisc	world	Helpers	caller-vote	1077
-005f51e0	item_build_5f51e0	game	entity	Proven	ledger	1237
+005f51e0	item_gen_kinds_4_9	game	entity	Proven	ledger	1237
 005f56c0	FUN_005f56c0	gamemisc	world	Helpers	caller-vote	5772
 005f6d50	item_special_candidate	game	entity	Proven	ledger	194
 005f6e20	FUN_005f6e20	gamemisc	world	Helpers	caller-vote	1445
@@ -3646,7 +3646,7 @@ addr	name	kind	module	class	attributed_by	size
 005f8590	FUN_005f8590	gamemisc	world	Helpers	caller-vote	311
 005f8750	FUN_005f8750	gamemisc	world	Helpers	caller-vote	502
 005f8960	FUN_005f8960	gamemisc	world	Helpers	caller-vote	341
-005f8ad0	item_build_5f8ad0	game	entity	Proven	ledger	817
+005f8ad0	item_gen_kind_3	game	entity	Proven	ledger	817
 005f8e10	vec3_distanceSquared	gamemisc	render	Proven	ledger	1325
 005f9340	WorldInfo_sampleTerrainHeight	game	world	Proven	ledger	731
 005f9620	vec3_store4	gamemisc	render	Proven	ledger	1426

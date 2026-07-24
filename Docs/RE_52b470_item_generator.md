@@ -110,10 +110,76 @@ and **6/6 final picks** — the chosen candidate matches the caller's stored `It
 copied byte. Three call sites are covered: `0x107a0b` (the dungeon boss) and `0x106f49` /
 `0x107218` (the dungeon loot loop).
 
-The one thing not derived is the item the 26th candidate wraps: `FUN_0052a760` sets kind 2,
-moves the original kind byte to `+0x08`, and delegates to one of two sub-generators. Those are
-their own thread; the gate checks only that the special exists and consumes the right number of
-draws (16 or 24).
+The 26th candidate — the one `FUN_0052a760` wraps — is gated separately below, so nothing in
+this function is left opaque.
+
+## The 26th candidate: `FUN_0052a760` and its two sub-generators — also gated
+
+```
+python tools/gate_52a760_subgen.py --all
+```
+
+`FUN_0052a760(out, level, rank)` is a thin wrapper: it zeroes an `ItemData`, coin-flips between
+two sub-generators, copies the result, then **moves the kind byte aside and overwrites it**:
+
+```c
+if (rand() % 2 == 0) FUN_00528bf0(tmp, level, rank, -1);
+else                 FUN_0052c4e0(tmp, level, rank, -1);
+FUN_00402a70(out, tmp);            // ItemData copy
+out[+0x08] = out[+0x00];           // the real kind moves to +0x08
+out[+0x00] = 2;                    // and kind becomes 2
+```
+
+So the parent's 26th candidate always reads `kind = 2` with the true kind at `+0x08` — which
+is why it looked like a distinct item family in the parent's table and is not one.
+
+### Both sub-generators are the parent's own shape, with two differences
+
+Each is a fixed table filtered by `param_4` (`-1` from `FUN_0052a760` = take every group), one
+roll per candidate, then a uniform pick. But unlike the parent:
+
+- **the rarity byte `+0x0c` is the caller's `rank` verbatim** — no roll at all; and
+- each candidate carries a **`rand() % 100`** value at `+0x04`, which the parent's own
+  candidates leave at 0.
+
+| | `FUN_00528bf0` | `FUN_0052c4e0` |
+|---|---|---|
+| candidates | 21 | 11 |
+| draws | 24 | 16 |
+| kind | **4, 5, 6, 7, 8, 9** | **3, and only 3** |
+| subtype | always 0 | 15 distinct values |
+| materials | 1, 25, 26, 27, and 11/12 | 1, 2, and 11/12 |
+| `param_4` groups | by material (1→1, 3→25, 2→26, 4→27) | by subtype set |
+
+`FUN_00528bf0`'s four groups are **the same table as the parent's candidates 6–24** — same
+materials 1/25/26/27, same kind patterns `[7,4,5,6]` then `[7,7,4,5,6]` three times. The parent
+inlines it and drops only the kinds 8/9 pair.
+
+Two details a port has to copy exactly:
+
+- `FUN_0052c4e0` has **another discarded draw**, a bare `rand()` between the subtype-6 and
+  subtype-8 candidates.
+- The coin-flipped material at the end of each is written with **opposite polarity**:
+  `FUN_00528bf0` uses `11 + (r % 2 != 0)` (11 on even), `FUN_0052c4e0` uses
+  `12 - (r % 2 != 0)` (12 on even). Both branches are observed live.
+
+### Gate: 18 invocations, 298 candidates
+
+Every sub-generator candidate reproduced on `{kind, subtype, +0x04 roll, material, rarity,
+level}`, the pick index reproduced, **and** the picked candidate verified through
+`FUN_0052a760`'s mutation into the parent's 26th entry — 18/18 across the 6 dungeons, with both
+branches and ranks 0–4 covered.
+
+### What they are
+
+Not asserted, but worth recording: six kinds with no subtype versus one kind with fifteen
+subtypes is the shape of *equipment slots* versus *weapon types*, and it agrees with the
+corpus's older weapon/armour reading of the client twins — while **pinning the direction**,
+which had never been fixed: `FUN_005f8ad0` (kind 3) is the weapon side and `FUN_005f51e0`
+(kinds 4–9) the equipment side. The ledger names them for what is proven —
+`item_gen_kind_3` and `item_gen_kinds_4_9` — not for what that probably means.
+
+---
 
 ## The server↔client twin map — closed
 
@@ -125,8 +191,8 @@ draws (16 or 24).
 | `FUN_0052b470` | `FUN_005f7a60` | 2765 / 2762 | item generator (this document) |
 | `FUN_0052bf40` | `FUN_005f8530` | 94 / **94** | rarity roll |
 | `FUN_0052a760` | `FUN_005f6d50` | 194 / **194** | special candidate (coin flip, kind := 2) |
-| `FUN_00528bf0` | `FUN_005f51e0` | 1240 / 1237 | the coin's even branch |
-| `FUN_0052c4e0` | `FUN_005f8ad0` | 820 / 817 | the coin's odd branch |
+| `FUN_00528bf0` | `FUN_005f51e0` | 1240 / 1237 | the coin's even branch — kinds 4–9 |
+| `FUN_0052c4e0` | `FUN_005f8ad0` | 820 / 817 | the coin's odd branch — kind 3 |
 | `FUN_00528530` | `FUN_004c7830` | 132 / **132** | `vector<ItemData>::push_back` |
 
 Three pairs are **byte-identical in size** and the other three differ by exactly 3 — and the
@@ -142,14 +208,11 @@ The client side had been labelled from the xref, and the twin identification ove
 |---|---|---|
 | `0x5f8530` | `WorldInfo_vectorElementAt` | **`rarityRoll`** — it indexes nothing; the body is 4 `rand()` draws and a clamp |
 | `0x5f6d50` | `World_emitDecalOrParticle` | **`item_special_candidate`** — it zeroes an `ItemData` and memsets its 0x100 payload |
-| `0x5f51e0` | `GameController_buildDecalMesh` | **an item builder** — the even branch of the above |
-| `0x5f8ad0` | `GameController_buildDecalMesh2` | **an item builder** — the odd branch |
+| `0x5f51e0` | `GameController_buildDecalMesh` | **`item_gen_kinds_4_9`** — the even branch of the above |
+| `0x5f8ad0` | `GameController_buildDecalMesh2` | **`item_gen_kind_3`** — the odd branch |
 
 The last two were already flagged in the xref as a pre-existing corpus conflict; this settles
-which side was right. The `item_build_*` names are deliberately neutral: these two build an
-`ItemData` each — proven — but *which* kind of item is the client-side thread, not established
-here. (The corpus elsewhere calls them the weapon and armour generators; that claim is not
-re-asserted by this work.)
+which side was right. Their names state what their tables provably emit, not what it means.
 
 `FUN_0052b470` and `FUN_0052a760` were themselves filed `lib_fn_*`. They are game code.
 

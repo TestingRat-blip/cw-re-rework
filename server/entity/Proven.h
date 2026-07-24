@@ -12,7 +12,7 @@ undefined1 * __thiscall FUN_00413710(void * this, undefined1 * param_1);
 /* 00528530  gamemisc  [ledger]  ~ItemData_vector_push_back */
 undefined __thiscall FUN_00528530(void * this, undefined1 * param_1);
 
-/* 00528bf0  game  [ledger]  ~item_build_528bf0 */
+/* 00528bf0  game  [ledger]  ~item_gen_kinds_4_9 */
 undefined __stdcall FUN_00528bf0(void * param_1, undefined2 param_2, undefined1 param_3, int param_4);
 
 /* 0052a760  game  [ledger]  ~item_special_candidate */
@@ -21,6 +21,6 @@ undefined __stdcall FUN_0052a760(byte * param_1, undefined2 param_2, undefined1 
 /* 0052b470  game  [ledger]  ~item_generator */
 undefined __stdcall FUN_0052b470(void * param_1, undefined2 param_2, int param_3);
 
-/* 0052c4e0  game  [ledger]  ~item_build_52c4e0 */
+/* 0052c4e0  game  [ledger]  ~item_gen_kind_3 */
 undefined __stdcall FUN_0052c4e0(void * param_1, undefined2 param_2, undefined1 param_3, int param_4);
 

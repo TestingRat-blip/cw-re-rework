@@ -47,7 +47,7 @@
   },
   "005f51e0": {
    "kind": "game",
-   "name": "item_build_5f51e0",
+   "name": "item_gen_kinds_4_9",
    "verdict": "KIND-FIX"
   },
   "005f6d50": {
@@ -67,7 +67,7 @@
   },
   "005f8ad0": {
    "kind": "game",
-   "name": "item_build_5f8ad0",
+   "name": "item_gen_kind_3",
    "verdict": "KIND-FIX"
   }
  },
@@ -419,7 +419,7 @@
   },
   "00528bf0": {
    "kind": "game",
-   "name": "item_build_528bf0",
+   "name": "item_gen_kinds_4_9",
    "verdict": "DEEP-RE"
   },
   "0052a760": {
@@ -439,7 +439,7 @@
   },
   "0052c4e0": {
    "kind": "game",
-   "name": "item_build_52c4e0",
+   "name": "item_gen_kind_3",
    "verdict": "DEEP-RE"
   },
   "0052d030": {

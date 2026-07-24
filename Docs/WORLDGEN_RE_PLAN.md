@@ -128,8 +128,9 @@ Still open in this phase:
   calls, `FUN_0052b470`, is ✅ DONE and gated -- `RE_52b470_item_generator.md`: a fixed
   26-candidate table plus a uniform pick, 450/450 candidates and 6/6 picks reproduced, and the
   server↔client twin map closed);
-- what the 26th candidate wraps: `FUN_0052a760`'s two sub-generators
-  (`FUN_00528bf0` / `FUN_0052c4e0`, 16 or 24 draws);
+  ✅ its 26th candidate is gated too: `FUN_0052a760`'s coin flip and both sub-generators
+  (`FUN_00528bf0` kinds 4-9 / `FUN_0052c4e0` kind 3) -- 18/18 invocations, 298 candidates,
+  verified through the kind-moves-to-+0x08 mutation;
 - the three per-dungeon inputs the boss block reads but does not compute: the dungeon `level`,
   the `[ebp-0x2bd4]` rarity byte, and the 2-entry species vector.
 

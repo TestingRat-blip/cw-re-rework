@@ -79,8 +79,15 @@ function bytes(p, n){ return Array.from(new Uint8Array(p.readByteArray(n))); }
 Interceptor.attach(b.add(0x128530), { onEnter(args){
   if (!cap || this.threadId !== genTid) return;
   let rva = 0; try { rva = this.returnAddress.sub(b).toUInt32(); } catch(e){ return; }
-  if (rva < ITEMGEN[0] || rva >= ITEMGEN[1]) return;
+  const zn = zone_of(rva);
+  // FUN_0052b470's own pushes plus those of whichever sub-generator FUN_0052a760 picked;
+  // they all land in the same invocation window, tagged by `zn`.
+  if (zn !== 'itemgen' && zn !== 'sub_528bf0' && zn !== 'sub_52c4e0') return;
   if (!cur) {
+    // Only FUN_0052b470's OWN push may open a window. A stray FUN_0052a760 from one of its
+    // other callers can fire first, and if it opened the window the args below would be read
+    // from the *sub-generator's* frame -- which silently yields the wrong `rank`.
+    if (zn !== 'itemgen') return;
     cur = { cands: [], site: rva };
     // Frida hooks FUN_00528530 before its prologue, so `ebp` still belongs to
     // FUN_0052b470: its args are at [ebp+8] (out), [ebp+0xc] (level), [ebp+0x10] (rank),
@@ -93,7 +100,17 @@ Interceptor.attach(b.add(0x128530), { onEnter(args){
       cur.caller = fp.add(4).readPointer().sub(b).toUInt32();
     } catch(e){ cur.argErr = ''+e; }
   }
-  try { cur.cands.push({ ra: rva, at: randN, b: bytes(args[0], 0x118) }); } catch(e){}
+  try { cur.cands.push({ ra: rva, at: randN, z: zn, b: bytes(args[0], 0x118) }); } catch(e){}
+  if (zn !== 'itemgen') {
+    // record the sub-generator's own args once (same trick: ebp is still its frame)
+    if (!cur.sub) {
+      try {
+        const fp = this.context.ebp;
+        cur.sub = { fn: zn, level: fp.add(0xc).readS32() & 0xffff,
+                    rank: fp.add(0x10).readS32(), filter: fp.add(0x14).readS32() };
+      } catch(e){}
+    }
+  }
   if (rva === LAST_PUSH_RA) {
     cur.rands = pending; pending = [];
     cur.randTotal = cur.rands.length;

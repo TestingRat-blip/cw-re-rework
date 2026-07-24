@@ -179,14 +179,13 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    on exactly one cell per dungeon, the apex/boss room), the chandelier at `0x507760`
    (`style == 3 && rand() % 10 == 0`), the kind-4 entrance marker at `0x504832`, and the
    loot/item generation loop that runs earlier in the same cell body. DONE and gated already:
-   the `cell.flags & 4` boss block at `0x5078b3`, and the item generator `FUN_0052b470` the
-   loop shares with it.
+   the `cell.flags & 4` boss block at `0x5078b3`, and the whole item-generation family
+   (`FUN_0052b470` + `FUN_0052a760` + both sub-generators) the loop shares with it.
 3. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,
    still the largest genuinely-new slice.
-4. **`FUN_0052a760`'s two sub-generators** (`FUN_00528bf0` / `FUN_0052c4e0`, 16 or 24 draws) —
-   what the item generator's 26th candidate actually wraps. Their client twins are
-   `FUN_005f51e0` / `FUN_005f8ad0`.
-5. **Port the mob pass + boss spawn + item generator into `cw_rederive`.** It now depends only on the finished dungeon voxel
+4. **Port the mob pass + boss spawn + the whole item-generation family into `cw_rederive`.**
+   All four are gated; the family (`0052b470` -> `0052a760` -> `00528bf0`/`0052c4e0`) is a pure
+   function of `(level, rank)` and the rand stream, with 10 discarded draws that must be burnt. It now depends only on the finished dungeon voxel
    stamp, which the port already produces bit-exact — no captured booleans, no order state.
 
 **Gate data is on disk:** `raw/dungeon_grid_capture*.json` (6 dungeons). Re-capture with

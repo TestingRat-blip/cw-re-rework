@@ -576,7 +576,7 @@ float10 FUN_004c7f60(void)
 }
 
 
-/* item_build_5f51e0 @ 005f51e0  kind=game  attributed-by=ledger  size=1237 */
+/* item_gen_kinds_4_9 @ 005f51e0  kind=game  attributed-by=ledger  size=1237 */
 
 /* WARNING: Removing unreachable block (ram,0x005f568f) */
 
@@ -1347,7 +1347,7 @@ void FUN_005f7a60(undefined4 param_1,undefined4 param_2,int param_3)
 }
 
 
-/* item_build_5f8ad0 @ 005f8ad0  kind=game  attributed-by=ledger  size=817 */
+/* item_gen_kind_3 @ 005f8ad0  kind=game  attributed-by=ledger  size=817 */
 
 /* WARNING: Removing unreachable block (ram,0x005f8ddb) */
 

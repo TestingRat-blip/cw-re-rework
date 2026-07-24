@@ -91,7 +91,7 @@ void __thiscall FUN_00528530(void *this,undefined1 *param_1)
 }
 
 
-/* item_build_528bf0 @ 00528bf0  kind=game  attributed-by=ledger  size=1240 */
+/* item_gen_kinds_4_9 @ 00528bf0  kind=game  attributed-by=ledger  size=1240 */
 
 void FUN_00528bf0(void *param_1,undefined2 param_2,undefined1 param_3,int param_4)
 
@@ -885,7 +885,7 @@ void FUN_0052b470(void *param_1,undefined2 param_2,int param_3)
 }
 
 
-/* item_build_52c4e0 @ 0052c4e0  kind=game  attributed-by=ledger  size=820 */
+/* item_gen_kind_3 @ 0052c4e0  kind=game  attributed-by=ledger  size=820 */
 
 void FUN_0052c4e0(void *param_1,undefined2 param_2,undefined1 param_3,int param_4)
 

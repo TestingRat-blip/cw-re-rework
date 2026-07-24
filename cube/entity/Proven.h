@@ -39,7 +39,7 @@ undefined FUN_004c7af0(void);
 /* 004c7f60  game  [ledger]  ~item_weaponDamage */
 undefined FUN_004c7f60(void);
 
-/* 005f51e0  game  [ledger]  ~item_build_5f51e0 */
+/* 005f51e0  game  [ledger]  ~item_gen_kinds_4_9 */
 undefined FUN_005f51e0(void);
 
 /* 005f6d50  game  [ledger]  ~item_special_candidate */
@@ -48,6 +48,6 @@ undefined FUN_005f6d50(void);
 /* 005f7a60  game  [ledger]  ~item_generator */
 undefined FUN_005f7a60(void);
 
-/* 005f8ad0  game  [ledger]  ~item_build_5f8ad0 */
+/* 005f8ad0  game  [ledger]  ~item_gen_kind_3 */
 undefined FUN_005f8ad0(void);
 

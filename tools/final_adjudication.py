@@ -195,11 +195,12 @@ the body was the only way to settle these.
         # rand stream. The first two were filed `lib_fn_*` -- they are game code.
         "0052b470": {"name": "item_generator", "kind": "game", "verdict": "DEEP-RE"},
         "0052a760": {"name": "item_special_candidate", "kind": "game", "verdict": "DEEP-RE"},
-        # the two branches of item_special_candidate's coin flip; each writes an ItemData
-        # (0x118, 0x100-byte payload memset) that its caller copies. Kind fixed, name kept
-        # neutral -- what they build is the client twins' thread, not proven here.
-        "00528bf0": {"name": "item_build_528bf0", "kind": "game", "verdict": "DEEP-RE"},
-        "0052c4e0": {"name": "item_build_52c4e0", "kind": "game", "verdict": "DEEP-RE"},
+        # the two branches of item_special_candidate's coin flip, both gated
+        # (18 invocations, 298 candidates). Named for what their tables provably emit:
+        # 528bf0 builds only kinds 4-9 with subtype 0; 52c4e0 builds only kind 3, across
+        # 15 subtypes. (That reads as equipment-vs-weapon, but this work does not prove it.)
+        "00528bf0": {"name": "item_gen_kinds_4_9", "kind": "game", "verdict": "DEEP-RE"},
+        "0052c4e0": {"name": "item_gen_kind_3", "kind": "game", "verdict": "DEEP-RE"},
         # was `loot_append` (cw_callgraph guess); the body is a vector push_back with an
         # 0x118 stride calling ItemData_copy -- so it is specifically vector<ItemData>.
         "00528530": {"name": "ItemData_vector_push_back", "kind": "gamemisc",

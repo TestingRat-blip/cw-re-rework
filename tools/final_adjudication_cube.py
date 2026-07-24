@@ -51,11 +51,11 @@ KIND_FIXES = {
                  "line-for-line the server's FUN_0052a760: zeroes an ItemData, memsets its "
                  "0x100 payload, coin-flips between two sub-generators, moves the kind byte to "
                  "+8 and sets kind = 2. FALSIFIES the xref's `World_emitDecalOrParticle`"),
-    "005f51e0": ("item_build_5f51e0", "game",
+    "005f51e0": ("item_gen_kinds_4_9", "game",
                  "the even branch of item_special_candidate's coin flip -- twin of the server's "
                  "FUN_00528bf0. FALSIFIES `GameController_buildDecalMesh`: it builds an "
                  "ItemData, not a mesh (the xref already flags this row as a corpus conflict)"),
-    "005f8ad0": ("item_build_5f8ad0", "game",
+    "005f8ad0": ("item_gen_kind_3", "game",
                  "the odd branch -- twin of the server's FUN_0052c4e0. "
                  "FALSIFIES `GameController_buildDecalMesh2`, same evidence"),
     "004c7830": ("ItemData_vector_push_back", "gamemisc",

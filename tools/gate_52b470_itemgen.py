@@ -100,7 +100,10 @@ def one(name):
     print(f"== {name}  zone {zone}  ({len(cap['calls'])} invocations)")
     ok = True
     for n, c in enumerate(cap["calls"]):
-        cands = [base64.b64decode(cd["b"]) for cd in c["cands"]]
+        # the capture also records the sub-generator's push_backs (see
+        # gate_52a760_subgen.py); FUN_0052b470's own are tagged `itemgen`
+        cands = [base64.b64decode(cd["b"]) for cd in c["cands"]
+                 if cd.get("z", "itemgen") == "itemgen"]
         stream, nsub = split_stream(c["rands"])
         model = generate(c["level"], c["rank"], stream)
 
@@ -129,7 +132,8 @@ def one(name):
         rv = bcap["bosses"][0]["rand_vals"]
         boss = next(c for c in cap["calls"] if c["caller"] == 0x107A0B)
         pick = rv[-2] % N_CAND                        # rv[-1] is the boss block's own draw B
-        chosen = base64.b64decode(boss["cands"][pick]["b"])
+        own = [cd for cd in boss["cands"] if cd.get("z", "itemgen") == "itemgen"]
+        chosen = base64.b64decode(own[pick]["b"])
         item = base64.b64decode(cap["boss_item"])
         same = all(chosen[i] == item[i] for i in COPIED)
         print(f"   [{'OK ' if same else 'BAD'}] final pick = rand() %% {N_CAND} = {pick}"
