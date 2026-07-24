@@ -2,107 +2,6 @@
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Unsorted_001.h"
 
-/* FUN_004189b0 @ 004189b0  kind=gamemisc  attributed-by=none  size=241 */
-
-void __cdecl
-FUN_004189b0(undefined8 *param_1,ushort *param_2,int param_3,uint *param_4,uint param_5)
-
-{
-  ushort uVar1;
-  int iVar2;
-  int iVar3;
-  undefined8 uVar4;
-  uint local_54;
-  uint local_50;
-  undefined1 local_4c [64];
-  int local_c;
-  uint local_8;
-  
-  local_8 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  param_4[10] = (uint)param_2;
-  if (param_3 == 0) {
-    uVar4 = 0;
-  }
-  else {
-    local_54 = param_4[8];
-    local_50 = param_4[9];
-    local_c = 0;
-    uVar1 = param_2[param_3 + -1];
-    param_2[param_3 + -1] = 0;
-    iVar2 = setjmp3(local_4c,0);
-    if (iVar2 == 0) {
-      FUN_00418410(&local_54,param_2,param_4,param_5,(uint)uVar1);
-    }
-    if (local_c == 0) {
-      iVar3 = 0;
-    }
-    else {
-      iVar3 = local_c - (int)param_2 >> 1;
-    }
-    param_4[8] = local_54;
-    param_4[9] = local_50;
-    if ((iVar2 == 0) && (uVar1 == 0x3c)) {
-      uVar4 = CONCAT44(param_3,5);
-    }
-    else {
-      uVar4 = CONCAT44(iVar3,iVar2);
-    }
-  }
-  *param_1 = uVar4;
-  *(undefined4 *)(param_1 + 1) = 0;
-  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-/* FUN_00418ab0 @ 00418ab0  kind=gamemisc  attributed-by=none  size=166 */
-
-void __thiscall FUN_00418ab0(void *this,int *param_1,undefined4 param_2,char param_3)
-
-{
-  short sVar1;
-  short *psVar2;
-  
-  *param_1 = *param_1 + 2;
-  sVar1 = *(short *)*param_1;
-  do {
-    if (sVar1 == 0) {
-      if ((param_3 != '\0') && ((short)param_2 == 0x3e)) {
-        return;
-      }
-      *(int *)((int)this + 0x48) = *param_1;
-                    /* WARNING: Subroutine does not return */
-      longjmp((int *)((int)this + 8),9);
-    }
-    psVar2 = (short *)*param_1;
-    sVar1 = *psVar2;
-    if (sVar1 == 0x3c) {
-      if ((psVar2[1] == 0x21) && (psVar2[2] != 0x2d)) {
-        if (psVar2[2] == 0x5b) {
-          FUN_00418b60(this,param_1);
-        }
-        else {
-          FUN_00418ab0(this,param_1,param_2,'\0');
-        }
-      }
-      else {
-LAB_00418b1f:
-        FUN_00418bd0(this,param_1);
-      }
-    }
-    else {
-      if ((sVar1 == 0x22) || (sVar1 == 0x27)) goto LAB_00418b1f;
-      if (sVar1 == 0x3e) {
-        *param_1 = *param_1 + 2;
-        return;
-      }
-      *param_1 = (int)(psVar2 + 1);
-    }
-    sVar1 = *(short *)*param_1;
-  } while( true );
-}
-
-
 /* FUN_00418b60 @ 00418b60  kind=gamemisc  attributed-by=none  size=112 */
 
 void __thiscall FUN_00418b60(void *this,int *param_1)
@@ -2047,23 +1946,6 @@ void __cdecl FUN_0041d550(int param_1,int param_2)
 }
 
 
-/* FUN_0041d5d0 @ 0041d5d0  kind=gamemisc  attributed-by=none  size=48 */
-
-void __cdecl FUN_0041d5d0(undefined4 *param_1,int param_2)
-
-{
-  for (; param_2 != 0; param_2 = param_2 + -1) {
-    if (param_1 != (undefined4 *)0x0) {
-      *param_1 = 0;
-      param_1[1] = 0;
-      param_1[2] = 0;
-    }
-    param_1 = param_1 + 3;
-  }
-  return;
-}
-
-
 /* FUN_0041d600 @ 0041d600  kind=gamemisc  attributed-by=none  size=114 */
 
 undefined4 * __cdecl FUN_0041d600(undefined1 *param_1,undefined1 *param_2,undefined4 *param_3)
@@ -2615,42 +2497,6 @@ int __thiscall FUN_0041e8f0(void *this,uint param_1)
 }
 
 
-/* FUN_0041ea10 @ 0041ea10  kind=gamemisc  attributed-by=none  size=159 */
-
-void __thiscall FUN_0041ea10(void *this,uint param_1)
-
-{
-  int iVar1;
-  uint uVar2;
-  uint uVar3;
-  
-  if (param_1 <= (uint)((*(int *)((int)this + 8) - *(int *)((int)this + 4)) / 0xc)) {
-    return;
-  }
-  iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0xc;
-  if (0x15555555U - iVar1 < param_1) {
-                    /* WARNING: Subroutine does not return */
-    std::_Xlength_error("vector<T> too long");
-  }
-  uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0xc;
-  uVar3 = iVar1 + param_1;
-  if (0x15555555 - (uVar2 >> 1) < uVar2) {
-    uVar2 = 0;
-    if (uVar3 != 0) {
-      uVar2 = uVar3;
-    }
-    FUN_0041e740(this,uVar2);
-    return;
-  }
-  uVar2 = uVar2 + (uVar2 >> 1);
-  if (uVar2 < uVar3) {
-    uVar2 = uVar3;
-  }
-  FUN_0041e740(this,uVar2);
-  return;
-}
-
-
 /* FUN_0041eab0 @ 0041eab0  kind=gamemisc  attributed-by=none  size=112 */
 
 uint __cdecl FUN_0041eab0(byte *param_1,byte *param_2,uint param_3)
@@ -2682,32 +2528,6 @@ LAB_0041eae6:
     }
   }
   return 0;
-}
-
-
-/* FUN_0041eb20 @ 0041eb20  kind=gamemisc  attributed-by=none  size=137 */
-
-undefined4 * __thiscall
-FUN_0041eb20(void *this,undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
-
-{
-  undefined4 *puVar1;
-  
-  if ((param_2 == *(undefined4 **)this) && (param_3 == *(undefined4 **)((int)this + 4))) {
-    FUN_00406310(*(undefined4 **)this,*(undefined4 **)((int)this + 4));
-    *(undefined4 *)((int)this + 4) = *(undefined4 *)this;
-    *param_1 = param_2;
-    return param_1;
-  }
-  if (param_2 != param_3) {
-    puVar1 = FUN_0041d390(param_3,*(undefined4 **)((int)this + 4),param_2);
-    FUN_00406310(puVar1,*(undefined4 **)((int)this + 4));
-    *(undefined4 **)((int)this + 4) = puVar1;
-    *param_1 = param_2;
-    return param_1;
-  }
-  *param_1 = param_2;
-  return param_1;
 }
 
 
@@ -3140,48 +2960,6 @@ undefined4 * __thiscall FUN_0041f640(void *this,uint param_1)
     return puVar3;
   }
   return puVar2;
-}
-
-
-/* FUN_0041f770 @ 0041f770  kind=gamemisc  attributed-by=none  size=240 */
-
-undefined4 * __thiscall FUN_0041f770(void *this,uint param_1)
-
-{
-  uint uVar1;
-  uint uVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  uVar2 = param_1;
-  local_8 = 0xffffffff;
-  puStack_c = &LAB_0054c070;
-  local_10 = ExceptionList;
-  ExceptionList = &local_10;
-  iVar4 = (int)*(undefined4 **)((int)this + 4) - *(int *)this;
-  puVar3 = (undefined4 *)(iVar4 * 0x2aaaaaab);
-  uVar1 = iVar4 / 0xc;
-  if (param_1 < uVar1) {
-    puVar3 = FUN_0041eb20(this,&param_1,(undefined4 *)(*(int *)this + param_1 * 0xc),
-                          *(undefined4 **)((int)this + 4));
-  }
-  else if (uVar1 < param_1) {
-    FUN_0041ea10(this,param_1 - uVar1);
-    local_8 = 0;
-    FUN_0041d5d0(*(undefined4 **)((int)this + 4),
-                 uVar2 - ((int)*(undefined4 **)((int)this + 4) - *(int *)this) / 0xc);
-    puVar3 = (undefined4 *)
-             (*(int *)((int)this + 4) +
-             (uVar2 - (*(int *)((int)this + 4) - *(int *)this) / 0xc) * 0xc);
-    *(undefined4 **)((int)this + 4) = puVar3;
-    ExceptionList = local_10;
-    return puVar3;
-  }
-  ExceptionList = local_10;
-  return puVar3;
 }
 
 
@@ -10135,6 +9913,566 @@ LAB_0047017b:
   FUN_00470360(param_1);
   FUN_0046f880(param_1);
   param_1[0xe] = param_1[0xe] | uVar11;
+  return;
+}
+
+
+/* FUN_00470300 @ 00470300  kind=gamemisc  attributed-by=none  size=91 */
+
+void __cdecl FUN_00470300(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = param_1;
+  if ((*(byte *)(*(int *)(param_1[2] + 0x10) + 0x2a) & 0x10) != 0) {
+    param_1 = (int *)0x0;
+    piVar1[10] = (int)&param_1;
+    FUN_004706c0(piVar1);
+    if (param_1[7] != 0) {
+      FUN_00466dd0(param_1[6]);
+    }
+    FUN_00494b00(*(int *)*piVar1,param_1);
+    return;
+  }
+  FUN_0046f990(param_1);
+  return;
+}
+
+
+/* FUN_00470360 @ 00470360  kind=gamemisc  attributed-by=none  size=858 */
+
+void __cdecl FUN_00470360(int *param_1)
+
+{
+  int iVar1;
+  undefined2 uVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  int *piVar6;
+  uint uVar7;
+  int *piVar8;
+  uint uVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  int local_208;
+  undefined4 *local_204;
+  undefined4 local_1e8;
+  undefined4 local_1e4;
+  undefined4 local_1e0;
+  double local_1c8;
+  double local_1b8;
+  uint local_1b0;
+  uint local_1ac;
+  double local_1a8;
+  double local_1a0;
+  undefined4 *local_198;
+  int local_194;
+  uint local_190;
+  uint local_18c;
+  uint local_188;
+  uint local_184;
+  undefined8 local_180;
+  uint local_178;
+  uint local_174;
+  undefined4 local_170;
+  undefined4 local_16c;
+  undefined4 *local_160;
+  undefined1 local_15c;
+  undefined2 local_15a;
+  undefined4 local_158;
+  uint local_150;
+  uint local_8;
+  
+  local_8 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
+  local_198 = (undefined4 *)param_1[1];
+  local_194 = *(int *)(param_1[2] + 0x2c);
+  piVar6 = (int *)local_198[1];
+  uVar3 = 0;
+  iVar1 = *piVar6;
+  if (0 < iVar1) {
+    do {
+      piVar6 = piVar6 + 1;
+      if (*piVar6 == local_194) {
+        local_178 = 1 << (uVar3 & 0x1f);
+        local_174 = 0;
+        if (0x1f < uVar3) {
+          local_174 = local_178;
+        }
+        local_178 = local_178 ^ local_174;
+        if (0x3f < uVar3) {
+          local_174 = local_178;
+        }
+        goto LAB_004703c7;
+      }
+      uVar3 = uVar3 + 1;
+    } while ((int)uVar3 < iVar1);
+  }
+  local_180 = 0;
+  local_180._4_4_ = 0;
+  local_180._0_4_ = 0;
+  local_178 = (uint)local_180;
+  local_174 = local_180._4_4_;
+LAB_004703c7:
+  local_184 = local_198[8];
+  local_190 = local_184 + local_198[6] * 0x28;
+  if (((((*(byte *)(param_1[2] + 0x24) & 1) == 0) && (*(int *)(param_1[2] + 0x44) == 0)) &&
+      ((*(byte *)((int)local_198 + 0x16) & 0x80) == 0)) && (local_184 < local_190)) {
+    do {
+      if (((*(short *)(local_184 + 0x10) == 0x100) &&
+          ((~local_178 & param_1[4] & *(uint *)(local_184 + 0x20)) == 0 &&
+           (~local_174 & param_1[5] & *(uint *)(local_184 + 0x24)) == 0)) &&
+         (iVar1 = *(int *)(local_184 + 0xc),
+         (*(uint *)(iVar1 + 0x168) & local_178) != 0 || (*(uint *)(iVar1 + 0x16c) & local_174) != 0)
+         ) {
+        uVar3 = *(int *)(iVar1 + 0x20) + *(int *)(iVar1 + 0x18) * 0x28;
+        piVar6 = param_1;
+        piVar8 = &local_208;
+        for (iVar5 = 0x18; iVar5 != 0; iVar5 = iVar5 + -1) {
+          *piVar8 = *piVar6;
+          piVar6 = piVar6 + 1;
+          piVar8 = piVar8 + 1;
+        }
+        local_1e8 = 0;
+        local_1e4 = 0;
+        local_1e0 = 0;
+        uVar7 = *(uint *)(iVar1 + 0x20);
+        local_180 = 0;
+        local_180._4_4_ = 0;
+        dVar10 = 0.0;
+        dVar11 = 0.0;
+        local_180._0_4_ = 0;
+        local_1a8 = 0.0;
+        local_1a0 = 0.0;
+        uVar4 = (uint)local_180;
+        uVar9 = local_180._4_4_;
+        local_18c = uVar3;
+        if (uVar7 < uVar3) {
+          local_188 = 0;
+          do {
+            if (*(short *)(uVar7 + 0x10) == 0x200) {
+              local_204 = *(undefined4 **)(uVar7 + 0xc);
+LAB_0047057c:
+              FUN_00470300(&local_208);
+              dVar10 = local_1b8 + local_1a8;
+              uVar4 = local_188 | local_1b0;
+              uVar9 = uVar9 | local_1ac;
+              dVar11 = local_1c8 + local_1a0;
+              uVar3 = local_18c;
+              local_1a8 = dVar10;
+              local_1a0 = dVar11;
+              local_188 = uVar4;
+              if (*(double *)(param_1 + 0x14) <= dVar10) break;
+            }
+            else if (*(int *)(uVar7 + 8) == local_194) {
+              local_160 = local_198;
+              local_170 = *local_198;
+              local_16c = local_198[1];
+              local_15a = 0;
+              local_15c = 0x45;
+              local_158 = 1;
+              local_204 = &local_170;
+              local_150 = uVar7;
+              goto LAB_0047057c;
+            }
+            uVar7 = uVar7 + 0x28;
+          } while (uVar7 < uVar3);
+        }
+        if (param_1[8] != 0) {
+          dVar12 = 1.0;
+          dVar13 = 10.0;
+          if (10.0 < dVar11) {
+            do {
+              dVar13 = dVar13 * 10.0;
+              dVar12 = dVar12 + 1.0;
+            } while (dVar13 < dVar11);
+          }
+          dVar10 = dVar10 + dVar12 * dVar11;
+        }
+        if (dVar10 < *(double *)(param_1 + 0x14)) {
+          *(double *)(param_1 + 0x14) = dVar10;
+          param_1[0x16] = uVar4;
+          param_1[0x17] = uVar9;
+          *(double *)(param_1 + 0x10) = dVar11;
+          if (param_1[0xb] == 0) {
+            uVar2 = 0;
+          }
+          else {
+            uVar2 = *(undefined2 *)(param_1[0xb] * 0x58 + -0x52 + param_1[0xd]);
+          }
+          *(undefined2 *)((int)param_1 + 0x3e) = uVar2;
+          param_1[0xe] = 0x10000000;
+          param_1[0x12] = local_184;
+        }
+      }
+      local_184 = local_184 + 0x28;
+    } while (local_184 < local_190);
+  }
+  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+/* FUN_004706c0 @ 004706c0  kind=gamemisc  attributed-by=none  size=543 */
+
+void __cdecl FUN_004706c0(int *param_1)
+
+{
+  int iVar1;
+  void *_Dst;
+  int iVar2;
+  int iVar3;
+  undefined2 uVar4;
+  int *piVar5;
+  int iVar6;
+  int *piVar7;
+  int iVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  int local_c;
+  
+  piVar7 = (int *)*param_1;
+  iVar1 = param_1[1];
+  iVar6 = *(int *)(param_1[2] + 0x10);
+  param_1[0xe] = 0;
+  param_1[0xf] = 0;
+  param_1[0x10] = 0;
+  param_1[0x11] = 0;
+  param_1[0x12] = 0;
+  param_1[0x13] = 0;
+  param_1[0x14] = 0;
+  param_1[0x15] = 0;
+  param_1[0x16] = 0;
+  param_1[0x17] = 0;
+  param_1[0xe] = 0x8000000;
+  piVar5 = *(int **)param_1[10];
+  if (piVar5 == (int *)0x0) {
+    piVar5 = FUN_0046c340(param_1);
+    *(int **)param_1[10] = piVar5;
+    if (piVar5 == (int *)0x0) {
+      return;
+    }
+  }
+  _Dst = (void *)piVar5[4];
+  local_c = 0;
+  if (0 < *piVar5) {
+    iVar8 = piVar5[1] + 5;
+    do {
+      iVar2 = *(int *)(iVar1 + 0x20);
+      *(bool *)iVar8 =
+           (*(uint *)(iVar2 + 0x18 + *(int *)(iVar8 + 3) * 0x28) & param_1[4]) == 0 &&
+           (*(uint *)(iVar2 + 0x1c + *(int *)(iVar8 + 3) * 0x28) & param_1[5]) == 0;
+      local_c = local_c + 1;
+      iVar8 = iVar8 + 0xc;
+    } while (local_c < *piVar5);
+  }
+  memset(_Dst,0,*piVar5 << 3);
+  if (piVar5[7] != 0) {
+    FUN_00466dd0(piVar5[6]);
+  }
+  iVar8 = piVar5[2];
+  piVar5[6] = 0;
+  piVar5[5] = 0;
+  piVar5[7] = 0;
+  piVar5[8] = 0;
+  piVar5[10] = -0x5d7860d2;
+  piVar5[0xb] = 0x546d42ae;
+  if (param_1[8] == 0) {
+    piVar5[2] = 0;
+  }
+  iVar6 = FUN_004bfde0(piVar7,iVar6,piVar5);
+  if (iVar6 == 0) {
+    iVar6 = 0;
+    if (0 < *piVar5) {
+      piVar7 = (int *)(piVar5[1] + 8);
+      do {
+        if (0 < *(int *)((int)_Dst + iVar6 * 8)) {
+          iVar2 = *piVar7;
+          iVar3 = *(int *)(iVar1 + 0x20);
+          param_1[0x16] = param_1[0x16] | *(uint *)(iVar3 + 0x18 + iVar2 * 0x28);
+          param_1[0x17] = param_1[0x17] | *(uint *)(iVar3 + 0x1c + iVar2 * 0x28);
+        }
+        iVar6 = iVar6 + 1;
+        piVar7 = piVar7 + 3;
+      } while (iVar6 < *piVar5);
+    }
+    dVar11 = *(double *)(piVar5 + 10);
+    if ((param_1[8] != 0) && (piVar5[8] == 0)) {
+      dVar9 = 1.0;
+      dVar10 = 10.0;
+      if (10.0 < dVar11) {
+        do {
+          dVar10 = dVar10 * 10.0;
+          dVar9 = dVar9 + 1.0;
+        } while (dVar10 < dVar11);
+      }
+      dVar11 = dVar11 + dVar9 * dVar11;
+    }
+    if (dVar11 <= 5e+98) {
+      *(double *)(param_1 + 0x14) = dVar11;
+    }
+    else {
+      param_1[0x14] = -0x5d7860d2;
+      param_1[0x15] = 0x546d42ae;
+    }
+    param_1[0x12] = (int)piVar5;
+    if (piVar5[8] == 0) {
+      if (param_1[0xb] == 0) {
+        uVar4 = 0;
+      }
+      else {
+        uVar4 = *(undefined2 *)(param_1[0xb] * 0x58 + -0x52 + param_1[0xd]);
+      }
+      *(undefined2 *)((int)param_1 + 0x3e) = uVar4;
+    }
+    else {
+      param_1[0xe] = param_1[0xe] | 0x800000;
+      *(short *)((int)param_1 + 0x3e) = (short)iVar8;
+    }
+    *(undefined2 *)(param_1 + 0xf) = 0;
+    piVar5[2] = iVar8;
+    FUN_00470360(param_1);
+  }
+  return;
+}
+
+
+/* FUN_00470aa0 @ 00470aa0  kind=gamemisc  attributed-by=none  size=256 */
+
+uint __cdecl FUN_00470aa0(int param_1,undefined4 param_2,int param_3,int param_4,undefined *param_5)
+
+{
+  int iVar1;
+  int *piVar2;
+  uint uVar3;
+  uint uVar4;
+  
+  if (param_1 == 0) {
+    FUN_004683f0(0x15,"misuse at line %d of [%.10s]");
+    return 0x15;
+  }
+  iVar1 = *(int *)(param_1 + 0x18);
+  if (*(int *)(iVar1 + 0xc) != 0) {
+    (*DAT_00582b18)(*(int *)(iVar1 + 0xc));
+  }
+  piVar2 = *(int **)(param_1 + 0x14);
+  if (((param_3 < 0) || (param_4 < 0)) || (*(int *)(param_1 + 4) < param_4 + param_3)) {
+    uVar4 = 1;
+    FUN_004961f0(iVar1,1,(byte *)0x0);
+  }
+  else if (piVar2 == (int *)0x0) {
+    uVar4 = 4;
+  }
+  else {
+    FUN_0048fbc0((undefined4 *)**(undefined4 **)(param_1 + 0x10));
+    uVar4 = (*(code *)param_5)(*(undefined4 *)(param_1 + 0x10),*(int *)(param_1 + 8) + param_4,
+                               param_3,param_2);
+    FUN_004907e0(*(int **)(param_1 + 0x10));
+    if (uVar4 == 4) {
+      FUN_004b5e70(piVar2);
+      *(undefined4 *)(param_1 + 0x14) = 0;
+    }
+    else {
+      *(uint *)(iVar1 + 0x2c) = uVar4;
+      piVar2[0x16] = uVar4;
+    }
+  }
+  if ((*(char *)(iVar1 + 0x38) != '\0') || (uVar4 == 0xc0a)) {
+    FUN_004961f0(iVar1,7,(byte *)0x0);
+    *(undefined1 *)(iVar1 + 0x38) = 0;
+    uVar4 = 7;
+  }
+  uVar3 = *(uint *)(iVar1 + 0x30);
+  if (*(int *)(iVar1 + 0xc) != 0) {
+    (*DAT_00582b20)(*(int *)(iVar1 + 0xc));
+  }
+  return uVar3 & uVar4;
+}
+
+
+/* FUN_00472ef0 @ 00472ef0  kind=gamemisc  attributed-by=none  size=718 */
+
+int __cdecl
+FUN_00472ef0(int *param_1,undefined4 *param_2,undefined4 *param_3,uint param_4,uint param_5,
+            int param_6,undefined4 *param_7)
+
+{
+  size_t _Size;
+  undefined2 *puVar1;
+  char cVar2;
+  int iVar3;
+  int iVar4;
+  int *piVar5;
+  int iVar6;
+  byte *pbVar7;
+  undefined4 uVar8;
+  int iVar9;
+  char cVar10;
+  bool bVar11;
+  int iVar12;
+  char *_Src;
+  char *pcVar13;
+  int *piVar14;
+  int iVar15;
+  int *piVar16;
+  int iVar17;
+  byte *pbVar18;
+  undefined3 extraout_var;
+  byte bVar19;
+  int iVar20;
+  uint uVar21;
+  int local_c;
+  undefined4 *local_8;
+  
+  iVar3 = param_2[7];
+  iVar4 = param_2[4];
+  piVar5 = (int *)param_1[2];
+  uVar21 = (uint)*(ushort *)(param_2 + 1);
+  iVar12 = param_6 + uVar21;
+  local_c = param_1[0x13] + 1;
+  param_1[0x13] = iVar12 + param_1[0x13];
+  _Src = (char *)FUN_0049db70(piVar5,iVar4);
+  if (_Src == (char *)0x0) {
+    local_8 = (undefined4 *)0x0;
+  }
+  else {
+    cVar2 = *_Src;
+    pcVar13 = _Src;
+    while (cVar2 != '\0') {
+      pcVar13 = pcVar13 + 1;
+      cVar2 = *pcVar13;
+    }
+    _Size = ((int)pcVar13 - (int)_Src & 0x3fffffffU) + 1;
+    local_8 = FUN_00494b90(*param_1,_Size);
+    if ((local_8 != (undefined4 *)0x0) && (memcpy(local_8,_Src,_Size), local_8 != (undefined4 *)0x0)
+       ) goto LAB_00472f92;
+  }
+  *(undefined1 *)(*param_1 + 0x38) = 1;
+LAB_00472f92:
+  param_6 = 0;
+  if (uVar21 == 0) {
+    *param_7 = local_8;
+    return local_c;
+  }
+  do {
+    piVar14 = FUN_00479c50(param_3,iVar3,*(int *)(*(int *)(iVar4 + 4) + param_6 * 4),param_4,param_5
+                           ,(ushort)*param_2,iVar4);
+    if (piVar14 == (int *)0x0) {
+      *param_7 = local_8;
+      return local_c;
+    }
+    iVar20 = param_6 + local_c;
+    iVar15 = FUN_00473660(param_1,piVar14,(int)param_2,iVar20);
+    iVar9 = local_c;
+    if (iVar15 != iVar20) {
+      if (iVar12 == 1) {
+        iVar9 = iVar15;
+        if ((local_c != 0) && (*(byte *)((int)param_1 + 0x13) < 8)) {
+          iVar15 = 0;
+          piVar16 = param_1 + 0x19;
+          do {
+            if (piVar16[4] == local_c) {
+              *(undefined1 *)(piVar16 + 2) = 1;
+              goto LAB_00473080;
+            }
+            iVar15 = iVar15 + 1;
+            piVar16 = piVar16 + 6;
+          } while (iVar15 < 10);
+          param_1[*(byte *)((int)param_1 + 0x13) + 7] = local_c;
+          *(char *)((int)param_1 + 0x13) = *(char *)((int)param_1 + 0x13) + '\x01';
+        }
+      }
+      else {
+        iVar6 = piVar5[7];
+        if ((iVar6 < piVar5[8]) || (iVar17 = FUN_0047de10(piVar5), iVar17 == 0)) {
+          piVar5[7] = piVar5[7] + 1;
+          iVar17 = piVar5[1];
+          *(undefined2 *)(iVar17 + iVar6 * 0x14) = 0xf;
+          *(undefined1 *)(iVar17 + 3 + iVar6 * 0x14) = 0;
+          *(int *)(iVar17 + 4 + iVar6 * 0x14) = iVar15;
+          *(int *)(iVar17 + 8 + iVar6 * 0x14) = iVar20;
+          *(undefined4 *)(iVar17 + 0xc + iVar6 * 0x14) = 0;
+          *(undefined4 *)(iVar17 + 0x10 + iVar6 * 0x14) = 0;
+        }
+      }
+    }
+LAB_00473080:
+    local_c = iVar9;
+    if ((*(byte *)(piVar14 + 4) & 0x81) == 0) {
+      uVar8 = param_2[9];
+      pbVar7 = *(byte **)(*piVar14 + 0xc);
+      for (pbVar18 = pbVar7; (*pbVar18 == 0x9d || (*pbVar18 == 0x9c));
+          pbVar18 = *(byte **)(pbVar18 + 8)) {
+      }
+      bVar19 = *pbVar18;
+      if (bVar19 == 0x84) {
+        bVar19 = pbVar18[0x23];
+      }
+      if (((bVar19 != 0x5e) && ((bVar19 < 0x81 || (0x83 < bVar19)))) &&
+         ((iVar9 = piVar5[7], iVar9 < piVar5[8] || (iVar15 = FUN_0047de10(piVar5), iVar15 == 0)))) {
+        piVar5[7] = piVar5[7] + 1;
+        puVar1 = (undefined2 *)(piVar5[1] + iVar9 * 0x14);
+        *puVar1 = 0x49;
+        *(undefined1 *)((int)puVar1 + 3) = 0;
+        *(int *)(puVar1 + 2) = param_6 + local_c;
+        *(undefined4 *)(puVar1 + 4) = uVar8;
+        *(undefined4 *)(puVar1 + 6) = 0;
+        *(undefined4 *)(puVar1 + 8) = 0;
+      }
+      if (local_8 != (undefined4 *)0x0) {
+        cVar2 = *(char *)(param_6 + (int)local_8);
+        cVar10 = FUN_00496480((char *)pbVar7);
+        if (cVar10 == '\0') {
+          if (cVar2 != '\0') goto LAB_0047316b;
+LAB_00473171:
+          *(undefined1 *)(param_6 + (int)local_8) = 0x62;
+        }
+        else if (cVar2 == '\0') {
+LAB_0047316b:
+          if ((char)(cVar10 + cVar2) == 'b') goto LAB_00473171;
+        }
+        else if ((cVar10 < 'c') && (cVar2 < 'c')) goto LAB_00473171;
+        bVar11 = FUN_004993e0((char *)pbVar7,*(char *)(param_6 + (int)local_8));
+        if (CONCAT31(extraout_var,bVar11) != 0) {
+          *(undefined1 *)(param_6 + (int)local_8) = 0x62;
+        }
+      }
+    }
+    param_6 = param_6 + 1;
+    if ((int)uVar21 <= param_6) {
+      *param_7 = local_8;
+      return local_c;
+    }
+  } while( true );
+}
+
+
+/* FUN_004731c0 @ 004731c0  kind=gamemisc  attributed-by=none  size=109 */
+
+void __cdecl FUN_004731c0(int param_1,int param_2,size_t param_3,int *param_4)
+
+{
+  int *piVar1;
+  
+  piVar1 = *(int **)(param_1 + 8);
+  if (param_4 != (int *)0x0) {
+    for (; (0 < (int)param_3 && ((char)*param_4 == 'b')); param_4 = (int *)((int)param_4 + 1)) {
+      param_3 = param_3 - 1;
+      param_2 = param_2 + 1;
+    }
+    for (; (1 < (int)param_3 && (*(char *)((int)param_4 + (param_3 - 1)) == 'b'));
+        param_3 = param_3 - 1) {
+    }
+    if (0 < (int)param_3) {
+      FUN_004ae830(piVar1,0x1e,param_2,param_3);
+      FUN_004aecc0(piVar1,-1,param_4,param_3);
+      FUN_00496d90(param_1,param_2,param_3);
+    }
+  }
   return;
 }
 

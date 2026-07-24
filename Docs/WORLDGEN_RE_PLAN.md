@@ -95,13 +95,27 @@ biggest genuinely-remaining generation slice.
 
 ## Phase 3 — dungeon entity / mob layer (Milestone 3)
 
-Spawns, AI hookup, and light emission inside dungeons — the functions that populate the
-already-exact geometry:
+**Mob placement — ✅ DONE, gated bit-exact (`RE_50702a_mob_populator.md`).** The pass lives at
+`0x507401`–`0x50775a` inside the dungeon assembler `FUN_00500300` (what was filed as
+`FUN_0050702a` is an alignment NOP, not a function — there is no dispatcher and no jumptable).
+It walks the 22×22×22 cell grid `I→J→K`; each kind-3 room cell with nothing above it and solid
+terrain overhead probes its 4 horizontal neighbours, and every neighbour that is not a room
+cell places one mob facing it. The 4 `524540` call sites are those 4 directions
+(orient 0/2/3/1), not 4 categories. **Zero `rand()` draws** — the layer is deterministic.
+Gate: **6 dungeons, 4 styles, 3 rotations, both mirror states — 1,350/1,350 qualifying cells
+and 1,122/1,122 spawns** reproduced ab-initio (`tools/gate_50702a_mobs.py --all`).
 
-- Find the spawn/mob emitter (entity records written during dungeon assembly), the light-source
-  placement, and the boss/chest special cases.
-- Verify placement against a live capture (positions + types + rand stream). AI *behaviour* is
-  a separate track (the Behavior classes are already RTTI-recovered) — scope this to *placement*.
+Still open in this phase:
+
+- the terrain probe at `0x5074a1` is *replayed* from the capture, not derived — the only
+  non-grid input to mob placement (it rejects 6 cells across the 6 dungeons);
+- the `cell.flags & 4` block at `0x5078b3` — fires on exactly one cell per dungeon (the apex /
+  boss room);
+- the chandelier at `0x507760` (`style == 3 && rand() % 10 == 0`) and the kind-4 entrance
+  marker at `0x504832`;
+- the loot/item generation loop earlier in the same cell body.
+
+AI *behaviour* stays a separate track (the Behavior classes are already RTTI-recovered).
 
 ## Phase 4 — infrastructure completeness sweep
 

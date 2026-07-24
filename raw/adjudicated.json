@@ -262,9 +262,44 @@
    "name": "dungeon_assembler",
    "verdict": "A"
   },
+  "00501e0a": {
+   "kind": "game",
+   "name": "dungeon_assembler__split_501e0a",
+   "verdict": "DEEP-RE"
+  },
+  "00502a7a": {
+   "kind": "game",
+   "name": "dungeon_assembler__split_502a7a",
+   "verdict": "DEEP-RE"
+  },
+  "00502dca": {
+   "kind": "game",
+   "name": "dungeon_assembler__split_502dca",
+   "verdict": "DEEP-RE"
+  },
+  "0050529a": {
+   "kind": "game",
+   "name": "dungeon_assembler__split_50529a",
+   "verdict": "DEEP-RE"
+  },
+  "005053ca": {
+   "kind": "game",
+   "name": "dungeon_assembler__split_5053ca",
+   "verdict": "DEEP-RE"
+  },
+  "005054fa": {
+   "kind": "game",
+   "name": "dungeon_assembler__split_5054fa",
+   "verdict": "DEEP-RE"
+  },
   "0050702a": {
    "kind": "game",
-   "name": "dungeon_mob_populator",
+   "name": "dungeon_assembler__split_50702a",
+   "verdict": "DEEP-RE"
+  },
+  "0050998a": {
+   "kind": "game",
+   "name": "dungeon_assembler__split_50998a",
    "verdict": "DEEP-RE"
   },
   "00509e40": {

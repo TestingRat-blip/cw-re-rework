@@ -93,10 +93,14 @@ Running out of order silently empties the islands/roles (it oscillates).
   Without those stubs a bare `zb()` builds terrain only and **no dungeon generates**.
   Scope hooks to the gen thread (`genTid`) and use `os._exit(0)` at the end.
 - Key RVAs: `World_ctor 0xc8570`, `seed/world 0xd83a0`, `zone_builder 0x118630`,
-  `writeVoxel 0x1ff00`, `dungeon_assembler 0x100300`, `creature_spawn_builder 0x124540`,
-  `dungeon_mob_populator 0x10702a`.
-- Captured data already on disk: `raw/dungeon_spawn_capture.json` (137 dungeon spawns with
-  positions, orient, caller RVA), `raw/spawn_capture.json` (6,305 overworld spawns).
+  `writeVoxel 0x1ff00`, `dungeon_assembler 0x100300` (body runs to `0x10931c`),
+  `creature_spawn_builder 0x124540`, `dungeon mob pass 0x107401-0x10775a`.
+- Captured data already on disk: `raw/dungeon_grid_capture*.json` (6 dungeons: full 22x22x22
+  cell grid + every mob-pass cell + 1,122 spawns), `raw/dungeon_spawn_capture.json` (the
+  original 137), `raw/spawn_capture.json` (6,305 overworld spawns).
+- **Six known dungeon zones**, all reachable with the recipe above:
+  `(32795,32796)` style 3, `(32796,32787)` style 0, `(32780,32788)` style 1,
+  `(32804,32788)` style 3, `(32804,32811)` style 2, `(32787,32796)` style 2.
 
 ## VS2012 toolchain + byte-matching (works)
 
@@ -122,9 +126,18 @@ Running out of order silently empties the islands/roles (it oscillates).
 4. **Big functions need a 600s decompiler timeout**, not the 60s default — the four "failures"
    were the zone/town/dungeon builders and the `.cub` loader.
 5. **`analyzeHeadless` splits script args on commas** — pass address lists as separate args.
-6. **0 direct callers ≠ artifact.** Vtable slots, dispatch-table targets and **jumptable
-   case-bodies** all look like orphans. `IndirectRefs.java` catches the first two; it still
-   misses jumptable case-bodies (that's how `0050702a` got mis-tagged `role:artifact`).
+6. **0 direct callers ≠ artifact — and ≠ a function.** Vtable slots and dispatch-table targets
+   look like orphans; `IndirectRefs.java` catches those. But a zero-reference "function" may be
+   no function at all: **90 of Server.exe's 129 zero-reference functions start on an MSVC
+   alignment NOP inside a bigger body** (`tools/nop_split_audit.py`). `0050702a` was one — the
+   bytes there are `8d 9b 00 00 00 00`, jumped over by an `eb 06` at `0x507028`, inside the
+   dungeon assembler. Check the entry bytes before believing a function boundary. (Cube.exe
+   has 0 of these; its orphans are real functions.)
+8. **`unaff_EBP` in a decompile means the frame belongs to someone else** — that is a function
+   boundary error, not an exotic calling convention.
+9. **When Ghidra warns it cannot track the stack, read the disassembly for loop induction
+   variables.** In the mob pass the decompiled C aliased `K` and `K+1` onto one name and made
+   the qualification test unreadable; twelve lines of disassembly settled it.
 7. **Both label sources are unreliable in opposite directions**: `CW_CONFIDENCE_XREF.md` had an
    off-by-one that filed proven worldgen as `lib_fn_*` (16 rows fixed); `cw_callgraph.py` gives
    game names to STL primitives. Always verify against the body.
@@ -148,28 +161,41 @@ is the entity layer. Two functions are freshly RE'd:
   behaviour tree `Sequential{Combat(20), LookAtPlayer, WalkPath(2)}`. **Consumes ZERO `rand()`**
   for type 0 — confirmed across 6,442 live spawns. Its 33 `rand()` sites are in the types 1–15
   branches (rare bosses/quest NPCs) that never fire in normal generation.
-- **`FUN_0050702a` = `dungeon_mob_populator`** — IN PROGRESS. The caller. It **grid-scans the
-  dungeon volume on a 10-unit lattice** and places a creature at qualifying cells, via 4 call
-  sites (RVAs `0x107552/5fd/6a8/753` → 38/35/33/31 = 137 mobs). 2,957 lines, 31 loops, only
-  **5 direct `rand()`** (one is `% 0x28`). It is a **case-body of the big dungeon dispatcher**
-  (`4e310a`/`4eaa7a`/`4ee3aa`) — decompiles with `unaff_EBP`/`unaff_EBX`.
+- **The dungeon mob pass (`0x507401`-`0x50775a`)** — SOLVED and gated bit-exact on 6 dungeons
+  (1,350/1,350 qualifying cells, 1,122/1,122 spawns; `Docs/RE_50702a_mob_populator.md`).
+  `FUN_0050702a` turned out **not to be a function** — it is an alignment NOP inside the
+  dungeon assembler `FUN_00500300`, so there is no dispatcher and no jumptable. The pass walks
+  the 22x22x22 cell grid `I->J->K`, and for each kind-3 room cell with nothing above it and
+  solid terrain overhead, probes the 4 horizontal neighbours; each neighbour that is not a room
+  cell places one mob at `(baseX+I*10, baseY+J*10, baseZ+K*10)` facing it. The 4 call sites are
+  those 4 directions (orient 0/2/3/1), not 4 categories. **It draws zero `rand()`** — the whole
+  mob layer is deterministic.
 
 ## YOUR TASK
 
-Continue `FUN_0050702a` (`dungeon_mob_populator`). Next step, in priority order:
+The dungeon mob pass is done. Pick up from there, in rough priority order:
 
-1. **The cell-qualification test** — what gates a spawn at a lattice cell (it reads the dungeon
-   voxel grid; look for `World_getBlockAt` / `Chunk_getColumnAt` / `Column_getBlockChecked` in
-   its body). Reproducing *lattice scan + cell test* should reproduce the 137 captured
-   positions — that's the first bit-exact gate on the populator.
-2. What the **4 call sites** distinguish (categories? sub-regions? passes — same volume,
-   overlapping positions).
-3. The **5 `rand()` draws** (density/variant decisions).
-4. If needed, RE it inside its **parent dispatcher** for the EBP/EBX context.
+1. **The one input the mob gate replays rather than derives** — `World_getBlockAt(x, y,
+   baseZ+(K+1)*10)` at `0x5074a1`. It genuinely rejects cells (6 across the 6 dungeons), so
+   deriving it needs the terrain column state at assembly time. Closing it makes the mob layer
+   derivable from the seed alone.
+2. **Feed `nop_split_audit.py` back into the pipeline.** 90 Server.exe "functions" are body
+   splits; `adjudicate_none.py` should merge them into their owner instead of counting them as
+   artifacts/`_indirect_*`, and the 8 dungeon-assembler splits should stop being separate
+   entries. Cube.exe needs nothing (0 hits).
+3. **The rest of the dungeon entity layer** — the `cell.flags & 4` block at `0x5078b3` (fires
+   on exactly one cell per dungeon, the apex/boss room), the chandelier at `0x507760`
+   (`style == 3 && rand() % 10 == 0`), the kind-4 entrance marker at `0x504832`, and the
+   loot/item generation loop that runs earlier in the same cell body.
+4. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,
+   still the largest genuinely-new slice.
 
-**Gate data is already captured:** `raw/dungeon_spawn_capture.json` holds the 137
-`(pos, orient, caller RVA)` tuples. Re-capture any time with
-`python tools/frida_dungeon_spawn.py` (takes ~1–2 min).
+**Gate data is on disk:** `raw/dungeon_grid_capture*.json` (6 dungeons). Re-capture with
+`python tools/frida_dungeon_grid.py [zx zz]` (~1-2 min each); verify with
+`python tools/gate_50702a_mobs.py --all`.
 
-Optional follow-ups once the populator is gated: the prop/vegetation placement layer
-(`FUN_004c8420`), and fixing `IndirectRefs.java` to resolve jumptable case-bodies.
+⚠ **The pipeline fixpoint is order-sensitive and destructive if you get it wrong.** Running
+`flirt_islands.py` / `adjudicate_none.py` against an already-structured tree finds nothing and
+overwrites `raw/*.libislands.json` + `raw/*.none_roles.json` with empties, silently degrading
+the tree. If you only changed labels, run `final_adjudication.py -> harvest_labels.py ->
+structure.py` and stop.

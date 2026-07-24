@@ -194,6 +194,16 @@ Ordered by leverage. These are follow-ups the pipeline exposes, not blockers.
    structurally but not byte-for-byte — the shipped binary's optimiser is strictly better,
    empirically confirming the **RTM (50727) vs Update 1 (51106)** gap: byte-exact matching of
    *every* function needs the Update 1 compiler; servicing-stable functions match on RTM today.
-6. **Fold the adjudicated names upstream.** The verdicts corrected `CW_CONFIDENCE_XREF.md`;
+6. **Merge the alignment-NOP splits (`nop_split_audit.py`).** Ghidra starts functions on the
+   6-byte `lea ebx,[ebx+0]` padding MSVC emits to 16-align a loop head, then hands the new
+   "function" the rest of the enclosing body. **90 of Server.exe's 129 zero-reference functions
+   are this** (82 with the giveaway `jmp` hopping exactly over the NOP), all traced to an owner;
+   eight of them belong to the dungeon assembler `FUN_00500300` alone. They are body splits,
+   not the "true artifacts" Phase 0 counted. `adjudicate_none.py` should merge rather than
+   role-classify them. Cube.exe has **0** — its 147 zero-reference functions all start on real
+   prologues, so its orphan count is honest. Found while RE-ing the dungeon mob pass, where the
+   phantom boundary had already produced a named function and a write-up
+   (`Docs/RE_50702a_mob_populator.md`).
+7. **Fold the adjudicated names upstream.** The verdicts corrected `CW_CONFIDENCE_XREF.md`;
    the same names should propagate into `cw_callgraph.py`'s working map so the two never
    drift apart again. (The stale-canopy fix of 2026-07-23 was one instance of this drift.)

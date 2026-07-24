@@ -3,24 +3,6 @@
 #pragma once
 #include "../include/cw_types.h"
 
-/* 00470300  gamemisc  [none] */
-undefined __cdecl FUN_00470300(int * param_1);
-
-/* 00470360  gamemisc  [none] */
-undefined __cdecl FUN_00470360(int * param_1);
-
-/* 004706c0  gamemisc  [none] */
-undefined __cdecl FUN_004706c0(int * param_1);
-
-/* 00470aa0  gamemisc  [none] */
-uint __cdecl FUN_00470aa0(int param_1, undefined4 param_2, int param_3, int param_4, undefined * param_5);
-
-/* 00472ef0  gamemisc  [none] */
-int __cdecl FUN_00472ef0(int * param_1, undefined4 * param_2, undefined4 * param_3, uint param_4, uint param_5, int param_6, undefined4 * param_7);
-
-/* 004731c0  gamemisc  [none] */
-undefined __cdecl FUN_004731c0(int param_1, int param_2, size_t param_3, int * param_4);
-
 /* 00473660  gamemisc  [none] */
 int __cdecl FUN_00473660(int * param_1, int * param_2, int param_3, int param_4);
 
@@ -452,4 +434,22 @@ undefined __thiscall FUN_004e27b0(void * this, uint param_1);
 
 /* 004f3880  gamemisc  [none] */
 uint * __thiscall FUN_004f3880(void * this, byte * param_1);
+
+/* 004f38a0  gamemisc  [none] */
+undefined __cdecl FUN_004f38a0(int param_1, int param_2, int param_3, float * param_4);
+
+/* 004f3940  gamemisc  [none] */
+undefined __cdecl FUN_004f3940(int param_1, int param_2, int param_3, undefined4 * param_4);
+
+/* 004f3a80  gamemisc  [none] */
+undefined __cdecl FUN_004f3a80(int param_1, int param_2, int param_3, undefined4 * param_4);
+
+/* 004f3c60  gamemisc  [none] */
+undefined __thiscall FUN_004f3c60(void * this, undefined4 * param_1, char param_2, undefined4 * param_3, undefined4 param_4, int * param_5);
+
+/* 004f4080  gamemisc  [none] */
+undefined4 * __thiscall FUN_004f4080(void * this, undefined4 * param_1, int * param_2, int * param_3, int * param_4);
+
+/* 004f42d0  gamemisc  [none] */
+undefined4 * __thiscall FUN_004f42d0(void * this, undefined4 * param_1, int * param_2, int * param_3, int * param_4);
 

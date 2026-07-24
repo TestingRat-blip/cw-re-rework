@@ -84,12 +84,6 @@ uint * __thiscall FUN_00402eb0(void * this, uint * param_1);
 /* 00405550  gamemisc  [none] */
 undefined __fastcall FUN_00405550(int * param_1);
 
-/* 00405660  gamemisc  [none] */
-undefined __thiscall FUN_00405660(void * this, int * param_1, uint param_2);
-
-/* 00405690  gamemisc  [none] */
-undefined __thiscall FUN_00405690(void * this, int * param_1, uint param_2);
-
 /* 00405750  gamemisc  [none] */
 int __thiscall FUN_00405750(void * this, uint param_1);
 
@@ -452,4 +446,10 @@ ushort * __cdecl FUN_00418280(ushort * param_1);
 
 /* 00418410  gamemisc  [none] */
 undefined __thiscall FUN_00418410(void * this, ushort * param_1, uint * param_2, uint param_3, undefined4 param_4);
+
+/* 004189b0  gamemisc  [none] */
+undefined __cdecl FUN_004189b0(undefined8 * param_1, ushort * param_2, int param_3, uint * param_4, uint param_5);
+
+/* 00418ab0  gamemisc  [none] */
+undefined __thiscall FUN_00418ab0(void * this, int * param_1, undefined4 param_2, char param_3);
 

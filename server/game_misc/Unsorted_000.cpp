@@ -468,40 +468,6 @@ void __fastcall FUN_00405550(int *param_1)
 }
 
 
-/* FUN_00405660 @ 00405660  kind=gamemisc  attributed-by=none  size=37 */
-
-void __thiscall FUN_00405660(void *this,int *param_1,uint param_2)
-
-{
-  uint uVar1;
-  int iVar2;
-  
-  uVar1 = *(uint *)this;
-  iVar2 = *(int *)((int)this + 4);
-  *param_1 = uVar1 + param_2 * -0x10000;
-  param_1[1] = (iVar2 - (((int)param_2 >> 0x1f) << 0x10 | param_2 >> 0x10)) -
-               (uint)(uVar1 < param_2 * 0x10000);
-  return;
-}
-
-
-/* FUN_00405690 @ 00405690  kind=gamemisc  attributed-by=none  size=35 */
-
-void __thiscall FUN_00405690(void *this,int *param_1,uint param_2)
-
-{
-  uint uVar1;
-  int iVar2;
-  
-  uVar1 = *(uint *)this;
-  iVar2 = *(int *)((int)this + 4);
-  *param_1 = param_2 * 0x10000 + *(int *)this;
-  param_1[1] = (((int)param_2 >> 0x1f) << 0x10 | param_2 >> 0x10) + iVar2 +
-               (uint)CARRY4(param_2 * 0x10000,uVar1);
-  return;
-}
-
-
 /* FUN_00405750 @ 00405750  kind=gamemisc  attributed-by=none  size=37 */
 
 int __thiscall FUN_00405750(void *this,uint param_1)
@@ -8195,6 +8161,107 @@ LAB_00418532:
     }
   }
   return;
+}
+
+
+/* FUN_004189b0 @ 004189b0  kind=gamemisc  attributed-by=none  size=241 */
+
+void __cdecl
+FUN_004189b0(undefined8 *param_1,ushort *param_2,int param_3,uint *param_4,uint param_5)
+
+{
+  ushort uVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
+  uint local_54;
+  uint local_50;
+  undefined1 local_4c [64];
+  int local_c;
+  uint local_8;
+  
+  local_8 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
+  param_4[10] = (uint)param_2;
+  if (param_3 == 0) {
+    uVar4 = 0;
+  }
+  else {
+    local_54 = param_4[8];
+    local_50 = param_4[9];
+    local_c = 0;
+    uVar1 = param_2[param_3 + -1];
+    param_2[param_3 + -1] = 0;
+    iVar2 = setjmp3(local_4c,0);
+    if (iVar2 == 0) {
+      FUN_00418410(&local_54,param_2,param_4,param_5,(uint)uVar1);
+    }
+    if (local_c == 0) {
+      iVar3 = 0;
+    }
+    else {
+      iVar3 = local_c - (int)param_2 >> 1;
+    }
+    param_4[8] = local_54;
+    param_4[9] = local_50;
+    if ((iVar2 == 0) && (uVar1 == 0x3c)) {
+      uVar4 = CONCAT44(param_3,5);
+    }
+    else {
+      uVar4 = CONCAT44(iVar3,iVar2);
+    }
+  }
+  *param_1 = uVar4;
+  *(undefined4 *)(param_1 + 1) = 0;
+  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+/* FUN_00418ab0 @ 00418ab0  kind=gamemisc  attributed-by=none  size=166 */
+
+void __thiscall FUN_00418ab0(void *this,int *param_1,undefined4 param_2,char param_3)
+
+{
+  short sVar1;
+  short *psVar2;
+  
+  *param_1 = *param_1 + 2;
+  sVar1 = *(short *)*param_1;
+  do {
+    if (sVar1 == 0) {
+      if ((param_3 != '\0') && ((short)param_2 == 0x3e)) {
+        return;
+      }
+      *(int *)((int)this + 0x48) = *param_1;
+                    /* WARNING: Subroutine does not return */
+      longjmp((int *)((int)this + 8),9);
+    }
+    psVar2 = (short *)*param_1;
+    sVar1 = *psVar2;
+    if (sVar1 == 0x3c) {
+      if ((psVar2[1] == 0x21) && (psVar2[2] != 0x2d)) {
+        if (psVar2[2] == 0x5b) {
+          FUN_00418b60(this,param_1);
+        }
+        else {
+          FUN_00418ab0(this,param_1,param_2,'\0');
+        }
+      }
+      else {
+LAB_00418b1f:
+        FUN_00418bd0(this,param_1);
+      }
+    }
+    else {
+      if ((sVar1 == 0x22) || (sVar1 == 0x27)) goto LAB_00418b1f;
+      if (sVar1 == 0x3e) {
+        *param_1 = *param_1 + 2;
+        return;
+      }
+      *param_1 = (int)(psVar2 + 1);
+    }
+    sVar1 = *(short *)*param_1;
+  } while( true );
 }
 
 

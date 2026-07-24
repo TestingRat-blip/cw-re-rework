@@ -23,6 +23,10 @@ Docs/                  the detailed write-ups (one per stage)
   NONE_ADJUDICATION.md   splitting the unattributed pile by structural role
   RECCMP.md              byte-matching reconstructions against the shipped code
   UPDATE1_INVESTIGATION.md   the toolchain gap and whether to chase Update 1
+  WORLDGEN_RE_PLAN.md    the per-function RE plan on top of the organised tree
+  RE_524540_creature_spawn.md    the creature/behaviour-tree spawn constructor
+  RE_50702a_mob_populator.md     the dungeon mob pass -- gated bit-exact, 6 dungeons
+  HANDOFF_PROMPT.md      session handoff: environment, rigs, lessons, next task
 tools/                 the pipeline (Ghidra scripts + Python passes)
 raw/                   intermediate JSONL + every audit trail
 reccmp/                byte-match workspace (sources, listings, compare.py)
@@ -108,6 +112,20 @@ python tools/structure.py             # emit tree + attribution.tsv
 python tools/flirt_islands.py         # carve SQLite/FreeType           -> raw/*.libislands.json
 python tools/adjudicate_none.py       # role-classify the residue       -> raw/*.none_roles.json
 python tools/structure.py             # re-emit with islands + roles
+```
+
+> **Order matters, and getting it wrong is destructive.** `flirt_islands.py` and
+> `adjudicate_none.py` read the *tree*; run them against an already-structured tree and they
+> find nothing, then overwrite `raw/*.libislands.json` and `raw/*.none_roles.json` with empty
+> results — the next `structure.py` silently emits a degraded tree. **If you only changed
+> labels, run `final_adjudication.py` -> `harvest_labels.py` -> `structure.py` and stop.**
+
+Audits and live gates, run on demand rather than as part of the fixpoint:
+
+```
+python tools/nop_split_audit.py       # zero-ref "functions" that are alignment NOPs mid-body
+python tools/frida_dungeon_grid.py [zx zz]   # live: dungeon cell grid + mob-pass trace
+python tools/gate_50702a_mobs.py --all       # gate: reproduce every dungeon mob ab-initio
 ```
 
 Ghidra stages (analysis, RTTI recovery, decompile, PDB apply, struct recovery) and their

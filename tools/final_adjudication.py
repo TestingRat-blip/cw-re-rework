@@ -168,14 +168,39 @@ the body was the only way to settle these.
         # FUN_00524540 — creature spawn + behaviour-tree builder (Docs/RE_524540_creature_spawn.md).
         # Falsifies the old "castle-arc wall stamps" label: 0 voxel writes, 321 Spawn refs.
         "00524540": {"name": "creature_spawn_builder", "kind": "game", "verdict": "DEEP-RE"},
-        # FUN_0050702a — dungeon mob populator (Docs/RE_50702a_mob_populator.md). Grid-scans the
-        # dungeon and calls 524540 per cell; false "artifact" (jumptable target, 0 resolved refs).
-        "0050702a": {"name": "dungeon_mob_populator", "kind": "game", "verdict": "DEEP-RE"},
+        # 0x50702a is NOT a function (Docs/RE_50702a_mob_populator.md): the bytes there are
+        # `8d 9b 00 00 00 00`, the alignment NOP a `jmp` at 0x507028 hops over, inside the
+        # dungeon assembler FUN_00500300 (0x500300-0x50931c). Ghidra started a function on
+        # padding. Same for its seven siblings -- see tools/nop_split_audit.py.
+        # The dungeon mob pass lives at 0x507401-0x50775a within that body and is gated
+        # bit-exact (tools/gate_50702a_mobs.py).
+        "0050702a": {"name": "dungeon_assembler__split_50702a", "kind": "game",
+                     "verdict": "DEEP-RE"},
+        "00501e0a": {"name": "dungeon_assembler__split_501e0a", "kind": "game",
+                     "verdict": "DEEP-RE"},
+        "00502a7a": {"name": "dungeon_assembler__split_502a7a", "kind": "game",
+                     "verdict": "DEEP-RE"},
+        "00502dca": {"name": "dungeon_assembler__split_502dca", "kind": "game",
+                     "verdict": "DEEP-RE"},
+        "0050529a": {"name": "dungeon_assembler__split_50529a", "kind": "game",
+                     "verdict": "DEEP-RE"},
+        "005053ca": {"name": "dungeon_assembler__split_5053ca", "kind": "game",
+                     "verdict": "DEEP-RE"},
+        "005054fa": {"name": "dungeon_assembler__split_5054fa", "kind": "game",
+                     "verdict": "DEEP-RE"},
+        "0050998a": {"name": "dungeon_assembler__split_50998a", "kind": "game",
+                     "verdict": "DEEP-RE"},
     }
     settled.update(DEEP_RE)
 
-    with open(os.path.join(RAW, "adjudicated.json"), "w", encoding="utf-8") as g:
-        json.dump({"Server.exe": settled}, g, indent=1, sort_keys=True)
+    # Merge, don't clobber: final_adjudication_cube.py writes its verdicts into the same file,
+    # and a plain overwrite here silently demoted 11 client identities back to their
+    # CW_CONFIDENCE_XREF.md rows (two of them from game/gamemisc to lib) on the next harvest.
+    path = os.path.join(RAW, "adjudicated.json")
+    data = json.load(open(path, encoding="utf-8")) if os.path.exists(path) else {}
+    data["Server.exe"] = settled
+    with open(path, "w", encoding="utf-8") as g:
+        json.dump(data, g, indent=1, sort_keys=True)
 
     for k, v in tally.most_common():
         print("  %-12s %d" % (k, v))
