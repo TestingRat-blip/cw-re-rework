@@ -25,7 +25,8 @@ Docs/                  the detailed write-ups (one per stage)
   UPDATE1_INVESTIGATION.md   the toolchain gap and whether to chase Update 1
   WORLDGEN_RE_PLAN.md    the per-function RE plan on top of the organised tree
   RE_524540_creature_spawn.md    the creature/behaviour-tree spawn constructor
-  RE_50702a_mob_populator.md     the dungeon mob pass -- gated bit-exact, 6 dungeons
+  RE_50702a_mob_populator.md     the dungeon mob pass + boss spawn -- gated, 6 dungeons
+  RE_52b470_item_generator.md    the item generator -- gated; closes the server<->client twin map
   HANDOFF_PROMPT.md      session handoff: environment, rigs, lessons, next task
 tools/                 the pipeline (Ghidra scripts + Python passes)
 raw/                   intermediate JSONL + every audit trail
@@ -131,6 +132,10 @@ Live gates and standalone audits:
 python tools/nop_split_audit.py              # the body-split report on its own
 python tools/frida_dungeon_grid.py [zx zz]   # live: dungeon cell grid + mob-pass trace
 python tools/gate_50702a_mobs.py --all       # gate: reproduce every dungeon mob ab-initio
+python tools/frida_dungeon_boss.py [zx zz]   # live: the cell.flags&4 boss spawn
+python tools/gate_5078b3_boss.py --all       # gate: the boss spawn
+python tools/frida_itemgen.py [zx zz]        # live: FUN_0052b470 candidates + rand stream
+python tools/gate_52b470_itemgen.py --all    # gate: the item generator
 ```
 
 Ghidra stages (analysis, RTTI recovery, decompile, PDB apply, struct recovery) and their

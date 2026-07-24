@@ -49,6 +49,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `0050c550` | 3330 | 1 | 17 |  | list<T> too long, vector<T> too long |
 | `004272d0` | 3290 | 1 | 27 |  | list<T> too long |
 | `004254a0` | 2935 | 1 | 28 |  |  joined., Client version: , Connection failed. |
+| `0052b470` | 2765 | 2 | 7 |  |  |
 | `00501e0a` | 2715 | 0 | 8 | orphan |  |
 | `00549c50` | 2242 | 1 | 58 |  | list<T> too long, server_, stopping generation thread... |
 | `005154aa` | 2225 | 0 | 5 | orphan |  |
@@ -87,6 +88,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `0052c820` | 1325 | 14 | 2 |  |  |
 | `00485a80` | 1322 | 1 | 12 |  | localtime, month, start of  |
 | `004a2f1a` | 1249 | 0 | 5 | orphan | %s mode not allowed: %s, access, cache |
+| `00528bf0` | 1240 | 5 | 6 |  |  |
 | `00462330` | 1221 | 0 | 13 | orphan | %.16g, %06.3f, string or blob too big |
 | `005236d0` | 1212 | 1 | 1 |  |  |
 | `0051819a` | 1161 | 0 | 6 | orphan |  |
@@ -120,6 +122,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `0047f1a0` | 848 | 1 | 5 |  |  |
 | `00502a7a` | 840 | 0 | 3 | orphan |  |
 | `0047c700` | 823 | 1 | 13 |  |  |
+| `0052c4e0` | 820 | 5 | 6 |  |  |
 | `00468a90` | 811 | 0 | 4 | orphan | string or blob too big |
 | `004d5740` | 806 | 1 | 5 |  |  |
 | `004f6db0` | 802 | 1 | 2 |  |  |
@@ -409,8 +412,5 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `004311f0` | 237 | 2 | 4 |  | invalid string position, string too long |
 | `00423ce0` | 235 | 2 | 6 |  |  |
 | `0046c6c0` | 235 | 0 | 2 | orphan |  |
-| `004129d0` | 234 | 2 | 3 |  |  |
-| `00489430` | 234 | 0 | 2 | orphan |  |
-| `004c2230` | 234 | 1 | 6 |  |  |
 
-**Total unnamed non-library functions: 1638** (119 of the listed 400 are orphans)
+**Total unnamed non-library functions: 1642** (118 of the listed 400 are orphans)

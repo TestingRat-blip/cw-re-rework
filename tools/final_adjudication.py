@@ -190,6 +190,20 @@ the body was the only way to settle these.
                      "verdict": "DEEP-RE"},
         "0050998a": {"name": "dungeon_assembler__split_50998a", "kind": "game",
                      "verdict": "DEEP-RE"},
+        # The item-generation family (Docs/RE_52b470_item_generator.md). All gated live:
+        # 18 invocations, 450 candidates, 6 final picks reproduced from (level, rank) + the
+        # rand stream. The first two were filed `lib_fn_*` -- they are game code.
+        "0052b470": {"name": "item_generator", "kind": "game", "verdict": "DEEP-RE"},
+        "0052a760": {"name": "item_special_candidate", "kind": "game", "verdict": "DEEP-RE"},
+        # the two branches of item_special_candidate's coin flip; each writes an ItemData
+        # (0x118, 0x100-byte payload memset) that its caller copies. Kind fixed, name kept
+        # neutral -- what they build is the client twins' thread, not proven here.
+        "00528bf0": {"name": "item_build_528bf0", "kind": "game", "verdict": "DEEP-RE"},
+        "0052c4e0": {"name": "item_build_52c4e0", "kind": "game", "verdict": "DEEP-RE"},
+        # was `loot_append` (cw_callgraph guess); the body is a vector push_back with an
+        # 0x118 stride calling ItemData_copy -- so it is specifically vector<ItemData>.
+        "00528530": {"name": "ItemData_vector_push_back", "kind": "gamemisc",
+                     "verdict": "DEEP-RE"},
     }
     settled.update(DEEP_RE)
 

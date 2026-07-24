@@ -155,6 +155,11 @@
    "name": "item_valueByType",
    "src": "CW_CONFIDENCE_XREF.md"
   },
+  "004c7830": {
+   "kind": "gamemisc",
+   "name": "ItemData_vector_push_back",
+   "src": "ADJUDICATION.md"
+  },
   "004c78c0": {
    "kind": "game",
    "name": "Item_compute_value",
@@ -297,23 +302,28 @@
   },
   "005f51e0": {
    "kind": "game",
-   "name": "GameController_buildDecalMesh",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "name": "item_build_5f51e0",
+   "src": "ADJUDICATION.md"
   },
   "005f6d50": {
-   "kind": "gamemisc",
-   "name": "World_emitDecalOrParticle",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "kind": "game",
+   "name": "item_special_candidate",
+   "src": "ADJUDICATION.md"
+  },
+  "005f7a60": {
+   "kind": "game",
+   "name": "item_generator",
+   "src": "ADJUDICATION.md"
   },
   "005f8530": {
    "kind": "game",
-   "name": "WorldInfo_vectorElementAt",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "name": "rarityRoll",
+   "src": "ADJUDICATION.md"
   },
   "005f8ad0": {
    "kind": "game",
-   "name": "GameController_buildDecalMesh2",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "name": "item_build_5f8ad0",
+   "src": "ADJUDICATION.md"
   },
   "005f8e10": {
    "kind": "gamemisc",
@@ -983,9 +993,9 @@
    "src": "ADJUDICATION.md"
   },
   "00528530": {
-   "kind": "game",
-   "name": "loot_append",
-   "src": "cw_callgraph.py"
+   "kind": "gamemisc",
+   "name": "ItemData_vector_push_back",
+   "src": "ADJUDICATION.md"
   },
   "005286a0": {
    "kind": "gamemisc",
@@ -998,13 +1008,13 @@
    "src": "CW_CONFIDENCE_XREF.md"
   },
   "00528bf0": {
-   "kind": "lib",
-   "name": "lib_fn_528bf0",
+   "kind": "game",
+   "name": "item_build_528bf0",
    "src": "ADJUDICATION.md"
   },
   "0052a760": {
-   "kind": "lib",
-   "name": "lib_fn_52a760",
+   "kind": "game",
+   "name": "item_special_candidate",
    "src": "ADJUDICATION.md"
   },
   "0052a830": {
@@ -1018,8 +1028,8 @@
    "src": "CW_CONFIDENCE_XREF.md"
   },
   "0052b470": {
-   "kind": "lib",
-   "name": "lib_fn_52b470",
+   "kind": "game",
+   "name": "item_generator",
    "src": "ADJUDICATION.md"
   },
   "0052bf40": {
@@ -1038,8 +1048,8 @@
    "src": "CW_CONFIDENCE_XREF.md"
   },
   "0052c4e0": {
-   "kind": "lib",
-   "name": "lib_fn_52c4e0",
+   "kind": "game",
+   "name": "item_build_52c4e0",
    "src": "ADJUDICATION.md"
   },
   "0052c820": {

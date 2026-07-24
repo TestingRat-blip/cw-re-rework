@@ -20,6 +20,11 @@
    "name": "GameController_load_specialization_text",
    "verdict": "KIND-FIX"
   },
+  "004c7830": {
+   "kind": "gamemisc",
+   "name": "ItemData_vector_push_back",
+   "verdict": "KIND-FIX"
+  },
   "004c78c0": {
    "kind": "game",
    "name": "Item_compute_value",
@@ -38,6 +43,31 @@
   "004c8ae0": {
    "kind": "game",
    "name": "WinMain",
+   "verdict": "KIND-FIX"
+  },
+  "005f51e0": {
+   "kind": "game",
+   "name": "item_build_5f51e0",
+   "verdict": "KIND-FIX"
+  },
+  "005f6d50": {
+   "kind": "game",
+   "name": "item_special_candidate",
+   "verdict": "KIND-FIX"
+  },
+  "005f7a60": {
+   "kind": "game",
+   "name": "item_generator",
+   "verdict": "KIND-FIX"
+  },
+  "005f8530": {
+   "kind": "game",
+   "name": "rarityRoll",
+   "verdict": "KIND-FIX"
+  },
+  "005f8ad0": {
+   "kind": "game",
+   "name": "item_build_5f8ad0",
    "verdict": "KIND-FIX"
   }
  },
@@ -382,20 +412,25 @@
    "name": "std_list_push_back",
    "verdict": "NEITHER"
   },
+  "00528530": {
+   "kind": "gamemisc",
+   "name": "ItemData_vector_push_back",
+   "verdict": "DEEP-RE"
+  },
   "00528bf0": {
-   "kind": "lib",
-   "name": "lib_fn_528bf0",
-   "verdict": "B"
+   "kind": "game",
+   "name": "item_build_528bf0",
+   "verdict": "DEEP-RE"
   },
   "0052a760": {
-   "kind": "lib",
-   "name": "lib_fn_52a760",
-   "verdict": "B"
+   "kind": "game",
+   "name": "item_special_candidate",
+   "verdict": "DEEP-RE"
   },
   "0052b470": {
-   "kind": "lib",
-   "name": "lib_fn_52b470",
-   "verdict": "B"
+   "kind": "game",
+   "name": "item_generator",
+   "verdict": "DEEP-RE"
   },
   "0052bf40": {
    "kind": "game",
@@ -403,9 +438,9 @@
    "verdict": "A"
   },
   "0052c4e0": {
-   "kind": "lib",
-   "name": "lib_fn_52c4e0",
-   "verdict": "B"
+   "kind": "game",
+   "name": "item_build_52c4e0",
+   "verdict": "DEEP-RE"
   },
   "0052d030": {
    "kind": "lib",

@@ -36,6 +36,30 @@ KIND_FIXES = {
                  "GameController member; the xref names it game logic yet files it lib"),
     "004a62c0": ("GameController_load_specialization_text", "game",
                  "same -- name and kind contradict each other"),
+    # --- the item-generation family, identified as the twins of the server's, which is
+    # --- gated live (Docs/RE_52b470_item_generator.md). Four of these overturn an existing
+    # --- xref label; the evidence is structural identity with a function whose behaviour is
+    # --- proven on the server side.
+    "005f7a60": ("item_generator", "game",
+                 "twin of the server's FUN_0052b470: same 26 push_backs, same 111 rand() calls, "
+                 "identical per-push draw deltas [9,9,4x23,0], same 0x118 ItemData locals"),
+    "005f8530": ("rarityRoll", "game",
+                 "body is line-for-line the server's FUN_0052bf40 = rarityRoll (4 draws, "
+                 "%100/%1000/%10000 bumps, clamp 4, param_2 override). "
+                 "FALSIFIES the xref's `WorldInfo_vectorElementAt` -- it indexes nothing"),
+    "005f6d50": ("item_special_candidate", "game",
+                 "line-for-line the server's FUN_0052a760: zeroes an ItemData, memsets its "
+                 "0x100 payload, coin-flips between two sub-generators, moves the kind byte to "
+                 "+8 and sets kind = 2. FALSIFIES the xref's `World_emitDecalOrParticle`"),
+    "005f51e0": ("item_build_5f51e0", "game",
+                 "the even branch of item_special_candidate's coin flip -- twin of the server's "
+                 "FUN_00528bf0. FALSIFIES `GameController_buildDecalMesh`: it builds an "
+                 "ItemData, not a mesh (the xref already flags this row as a corpus conflict)"),
+    "005f8ad0": ("item_build_5f8ad0", "game",
+                 "the odd branch -- twin of the server's FUN_0052c4e0. "
+                 "FALSIFIES `GameController_buildDecalMesh2`, same evidence"),
+    "004c7830": ("ItemData_vector_push_back", "gamemisc",
+                 "twin of the server's FUN_00528530: vector push_back with an 0x118 stride"),
     "00439110": ("math_round_to_tenth", "gamemisc",
                  "`(int)(x*10 + 0.5) * 0.1` with a negative-input recursion. The game's own rounding helper, "
                  "not a CRT routine -- so `lib` is wrong, but it is a utility, not game logic"),

@@ -124,8 +124,12 @@ Still open in this phase:
 
 - the chandelier at `0x507760` (`style == 3 && rand() % 10 == 0`) and the kind-4 entrance
   marker at `0x504832`;
-- the loot/item generation loop earlier in the same cell body, and the server item generator
-  `FUN_0052b470` it shares with the boss (most of the boss block's 134-142 draws are inside it);
+- the loot/item generation *loop* earlier in the same cell body (the item **generator** it
+  calls, `FUN_0052b470`, is ✅ DONE and gated -- `RE_52b470_item_generator.md`: a fixed
+  26-candidate table plus a uniform pick, 450/450 candidates and 6/6 picks reproduced, and the
+  server↔client twin map closed);
+- what the 26th candidate wraps: `FUN_0052a760`'s two sub-generators
+  (`FUN_00528bf0` / `FUN_0052c4e0`, 16 or 24 draws);
 - the three per-dungeon inputs the boss block reads but does not compute: the dungeon `level`,
   the `[ebp-0x2bd4]` rarity byte, and the 2-entry species vector.
 

@@ -1,4 +1,4 @@
-// Proven (world) -- cube. 29 functions. Bodies = Ghidra pseudo-C.
+// Proven (world) -- cube. 27 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Proven.h"
 
@@ -6605,90 +6605,6 @@ LAB_005f493b:
     FUN_00486240((int)&local_38 + 4);
   }
   goto LAB_005f4a46;
-}
-
-
-/* World_emitDecalOrParticle @ 005f6d50  kind=gamemisc  attributed-by=ledger  size=194 */
-
-void FUN_005f6d50(byte *param_1,undefined4 param_2,undefined4 param_3)
-
-{
-  uint uVar1;
-  undefined4 uVar2;
-  bool bVar3;
-  undefined1 local_120 [280];
-  uint local_8;
-  
-  local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  param_1[0x10] = 1;
-  param_1[0x11] = 0;
-  param_1[0] = 0;
-  param_1[1] = 0;
-  param_1[4] = 0;
-  param_1[5] = 0;
-  param_1[6] = 0;
-  param_1[7] = 0;
-  param_1[8] = 0;
-  param_1[9] = 0;
-  param_1[10] = 0;
-  param_1[0xb] = 0;
-  param_1[0xc] = 0;
-  param_1[0xd] = 0;
-  param_1[0xe] = 0;
-  param_1[0x114] = 0;
-  param_1[0x115] = 0;
-  param_1[0x116] = 0;
-  param_1[0x117] = 0;
-  memset(param_1 + 0x14,0,0x100);
-  uVar1 = rand();
-  uVar1 = uVar1 & 0x80000001;
-  bVar3 = uVar1 == 0;
-  if ((int)uVar1 < 0) {
-    bVar3 = (uVar1 - 1 | 0xfffffffe) == 0xffffffff;
-  }
-  if (bVar3) {
-    uVar2 = FUN_005f51e0(local_120,param_2,param_3,0xffffffff);
-  }
-  else {
-    uVar2 = FUN_005f8ad0(local_120,param_2,param_3,0xffffffff);
-  }
-  FUN_0042c5e0(uVar2);
-  *(uint *)(param_1 + 8) = (uint)*param_1;
-  *param_1 = 2;
-  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-/* WorldInfo_vectorElementAt @ 005f8530  kind=game  attributed-by=ledger  size=94 */
-
-int FUN_005f8530(int param_1,char param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  iVar1 = rand();
-  iVar1 = iVar1 % (param_1 + 1);
-  iVar2 = rand();
-  if (iVar2 % 100 == 0) {
-    iVar1 = iVar1 + 1;
-  }
-  iVar2 = rand();
-  if (iVar2 % 1000 == 0) {
-    iVar1 = iVar1 + 1;
-  }
-  iVar2 = rand();
-  if (iVar2 % 10000 == 0) {
-    iVar1 = iVar1 + 1;
-  }
-  if (param_2 != '\0') {
-    iVar1 = param_1 + 1;
-  }
-  if (4 < iVar1) {
-    iVar1 = 4;
-  }
-  return iVar1;
 }
 
 

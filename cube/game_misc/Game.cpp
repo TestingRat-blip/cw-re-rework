@@ -1,4 +1,4 @@
-// Game (game_misc) -- cube. 16 functions. Bodies = Ghidra pseudo-C.
+// Game (game_misc) -- cube. 17 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Game.h"
 
@@ -1179,6 +1179,38 @@ void FUN_005ee4b0(undefined4 *param_1,undefined4 *param_2)
     *param_2 = 0x1e;
   }
   return;
+}
+
+
+/* rarityRoll @ 005f8530  kind=game  attributed-by=ledger  size=94 */
+
+int FUN_005f8530(int param_1,char param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = rand();
+  iVar1 = iVar1 % (param_1 + 1);
+  iVar2 = rand();
+  if (iVar2 % 100 == 0) {
+    iVar1 = iVar1 + 1;
+  }
+  iVar2 = rand();
+  if (iVar2 % 1000 == 0) {
+    iVar1 = iVar1 + 1;
+  }
+  iVar2 = rand();
+  if (iVar2 % 10000 == 0) {
+    iVar1 = iVar1 + 1;
+  }
+  if (param_2 != '\0') {
+    iVar1 = param_1 + 1;
+  }
+  if (4 < iVar1) {
+    iVar1 = 4;
+  }
+  return iVar1;
 }
 
 
