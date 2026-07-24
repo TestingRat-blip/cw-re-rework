@@ -70,7 +70,7 @@ visible and can be adjudicated. **Winner is the right-hand entry.**
 | Server.exe | `0x004febd0` | chunk_to_region_nearest | game | cw_callgraph.py | World_findNearestFeatureCell | gamemisc | CW_CONFIDENCE_XREF.md |
 | Server.exe | `0x004ff340` | fill_box | game | cw_callgraph.py | lib_fn_4ff340 | lib | CW_CONFIDENCE_XREF.md |
 | Server.exe | `0x004ff3f0` | forestMound | game | CUBEWORLD_ALPHA_SOURCE.md | lib_fn_4ff3f0 | lib | CW_CONFIDENCE_XREF.md |
-| Server.exe | `0x004ffbf0` | tree_canopy_ellipsoid | game | cw_callgraph.py | ground_knoll | game | CW_CONFIDENCE_XREF.md |
+| Server.exe | `0x004ffbf0` | ground_knoll_ellipsoid | game | cw_callgraph.py | ground_knoll | game | CW_CONFIDENCE_XREF.md |
 | Server.exe | `0x00500300` | dungeonAssembler | game | CUBEWORLD_ALPHA_SOURCE.md | lib_fn_500300 | lib | CW_CONFIDENCE_XREF.md |
 | Server.exe | `0x00500300` | dungeon_assembler | game | cw_callgraph.py | dungeonAssembler | game | CUBEWORLD_ALPHA_SOURCE.md |
 | Server.exe | `0x00509e40` | ambient_spawner | game | cw_callgraph.py | stl_fn_509e40 | lib | CW_CONFIDENCE_XREF.md |

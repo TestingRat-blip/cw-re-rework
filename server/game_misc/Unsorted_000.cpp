@@ -16,19 +16,6 @@ FUN_004010b0(void *this,undefined4 param_1,undefined4 param_2,undefined4 param_3
 }
 
 
-/* FUN_00401370 @ 00401370  kind=gamemisc  attributed-by=none  size=37 */
-
-undefined1 * __thiscall FUN_00401370(void *this,undefined1 *param_1,undefined1 param_2)
-
-{
-  *(undefined1 *)this = *param_1;
-  *(undefined1 *)((int)this + 1) = param_1[1];
-  *(undefined1 *)((int)this + 2) = param_1[2];
-  *(undefined1 *)((int)this + 3) = param_2;
-  return this;
-}
-
-
 /* FUN_00401420 @ 00401420  kind=gamemisc  attributed-by=none  size=40 */
 
 float10 __fastcall FUN_00401420(longlong *param_1)
@@ -282,6 +269,40 @@ void __thiscall FUN_004023b0(void *this,float param_1,float param_2,float param_
 }
 
 
+/* FUN_00402510 @ 00402510  kind=gamemisc  attributed-by=none  size=64 */
+
+int __fastcall FUN_00402510(int param_1)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  
+  iVar1 = 0;
+  do {
+    uVar2 = FUN_0054a946();
+    *(int *)(param_1 + iVar1 * 8) = (int)uVar2;
+    *(int *)(param_1 + 4 + iVar1 * 8) = (int)(uVar2 >> 0x20);
+    iVar1 = iVar1 + 1;
+  } while (iVar1 < 3);
+  return param_1;
+}
+
+
+/* FUN_00402a40 @ 00402a40  kind=gamemisc  attributed-by=none  size=46 */
+
+undefined4 * __thiscall FUN_00402a40(void *this,undefined4 *param_1)
+
+{
+  *(undefined4 *)this = *param_1;
+  *(undefined4 *)((int)this + 4) = param_1[1];
+  *(undefined4 *)((int)this + 8) = param_1[2];
+  *(undefined4 *)((int)this + 0xc) = param_1[3];
+  *(undefined4 *)((int)this + 0x10) = param_1[4];
+  *(undefined4 *)((int)this + 0x14) = param_1[5];
+  return this;
+}
+
+
 /* FUN_00402c10 @ 00402c10  kind=gamemisc  attributed-by=none  size=22 */
 
 void __thiscall FUN_00402c10(void *this,int *param_1)
@@ -307,6 +328,39 @@ void __thiscall FUN_00402c30(void *this,int *param_1)
   *param_1 = iVar1;
   *(int *)this = iVar1 + 0xc;
   return;
+}
+
+
+/* FUN_00402cb0 @ 00402cb0  kind=gamemisc  attributed-by=none  size=85 */
+
+uint * __thiscall FUN_00402cb0(void *this,uint *param_1,uint *param_2)
+
+{
+  uint *puVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  *param_1 = *(uint *)this;
+  param_1[1] = *(uint *)((int)this + 4);
+  param_1[2] = *(uint *)((int)this + 8);
+  param_1[3] = *(uint *)((int)this + 0xc);
+  param_1[4] = *(uint *)((int)this + 0x10);
+  param_1[5] = *(uint *)((int)this + 0x14);
+  uVar3 = *param_2;
+  uVar2 = *param_1;
+  *param_1 = *param_1 + uVar3;
+  param_1[1] = param_1[1] + param_2[1] + (uint)CARRY4(uVar2,uVar3);
+  uVar3 = param_2[2];
+  puVar1 = param_1 + 2;
+  uVar2 = *puVar1;
+  *puVar1 = *puVar1 + uVar3;
+  param_1[3] = param_1[3] + param_2[3] + (uint)CARRY4(uVar2,uVar3);
+  uVar3 = param_2[4];
+  puVar1 = param_1 + 4;
+  uVar2 = *puVar1;
+  *puVar1 = *puVar1 + uVar3;
+  param_1[5] = param_1[5] + param_2[5] + (uint)CARRY4(uVar2,uVar3);
+  return param_1;
 }
 
 
@@ -428,19 +482,6 @@ void __fastcall FUN_00405550(int *param_1)
 }
 
 
-/* FUN_00405610 @ 00405610  kind=gamemisc  attributed-by=none  size=38 */
-
-undefined1 * __thiscall FUN_00405610(void *this,undefined1 *param_1)
-
-{
-  *(undefined1 *)this = *param_1;
-  *(undefined1 *)((int)this + 1) = param_1[1];
-  *(undefined1 *)((int)this + 2) = param_1[2];
-  *(undefined1 *)((int)this + 3) = param_1[3];
-  return this;
-}
-
-
 /* FUN_00405660 @ 00405660  kind=gamemisc  attributed-by=none  size=37 */
 
 void __thiscall FUN_00405660(void *this,int *param_1,uint param_2)
@@ -490,23 +531,6 @@ int __thiscall FUN_00405750(void *this,uint param_1)
     return CONCAT31(uVar1,1);
   }
   return (uint)uVar1 << 8;
-}
-
-
-/* FUN_00406380 @ 00406380  kind=gamemisc  attributed-by=none  size=44 */
-
-undefined4 * __thiscall
-FUN_00406380(void *this,undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-            undefined4 param_5,undefined4 param_6)
-
-{
-  *(undefined4 *)this = param_1;
-  *(undefined4 *)((int)this + 4) = param_2;
-  *(undefined4 *)((int)this + 8) = param_3;
-  *(undefined4 *)((int)this + 0xc) = param_4;
-  *(undefined4 *)((int)this + 0x10) = param_5;
-  *(undefined4 *)((int)this + 0x14) = param_6;
-  return this;
 }
 
 

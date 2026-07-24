@@ -162,6 +162,15 @@ the body was the only way to settle these.
             kind = "gamemisc"
         settled[a] = {"name": name, "kind": kind, "verdict": w}
 
+    # Identities settled by dedicated deep-RE (not label-conflict adjudication).
+    # Each cites the write-up under Docs/.
+    DEEP_RE = {
+        # FUN_00524540 — creature spawn + behaviour-tree builder (Docs/RE_524540_creature_spawn.md).
+        # Falsifies the old "castle-arc wall stamps" label: 0 voxel writes, 321 Spawn refs.
+        "00524540": {"name": "creature_spawn_builder", "kind": "game", "verdict": "DEEP-RE"},
+    }
+    settled.update(DEEP_RE)
+
     with open(os.path.join(RAW, "adjudicated.json"), "w", encoding="utf-8") as g:
         json.dump({"Server.exe": settled}, g, indent=1, sort_keys=True)
 

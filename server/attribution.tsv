@@ -7,7 +7,7 @@ addr	name	kind	module	class	attributed_by	size
 004010b0	FUN_004010b0	gamemisc	game_misc	Unsorted_000	none	48
 004010e0	FUN_004010e0	gamemisc	world	Helpers	caller-vote	81
 00401140	FUN_00401140	gamemisc	entity	Helpers	caller-vote	558
-00401370	FUN_00401370	gamemisc	game_misc	Unsorted_000	none	37
+00401370	FUN_00401370	gamemisc	world	Helpers	caller-vote	37
 004013a0	FUN_004013a0	gamemisc	world	Helpers	caller-vote	38
 004013d0	getElemPtr4	gamemisc	game_misc	Game	ledger	13
 004013e0	compute_4013e0	gamemisc	game_misc	_helpers_computed	role:computed	12
@@ -62,7 +62,7 @@ addr	name	kind	module	class	attributed_by	size
 004024a0	FUN_004024a0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	30
 004024c0	FUN_004024c0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	30
 004024e0	FUN_004024e0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	40
-00402510	FUN_00402510	gamemisc	ai	Helpers	caller-vote	64
+00402510	FUN_00402510	gamemisc	game_misc	Unsorted_000	none	64
 00402550	FUN_00402550	gamemisc	ai	Helpers	caller-vote	96
 004025b0	FUN_004025b0	gamemisc	ai	Helpers	caller-vote	52
 004025f0	FUN_004025f0	gamemisc	ai	Helpers	caller-vote	565
@@ -73,7 +73,7 @@ addr	name	kind	module	class	attributed_by	size
 004029b0	FUN_004029b0	gamemisc	ai	Helpers	caller-vote	34
 004029e0	cube::CombatBehavior::CombatBehavior	game	ai	CombatBehavior	rtti	46
 00402a10	fwd_0054a946_402a10	gamemisc	game_misc	_helpers_thunk	role:thunk	44
-00402a40	FUN_00402a40	gamemisc	ai	Helpers	caller-vote	46
+00402a40	FUN_00402a40	gamemisc	game_misc	Unsorted_000	none	46
 00402a70	FUN_00402a70	gamemisc	ai	Helpers	caller-vote	149
 00402b10	FUN_00402b10	gamemisc	ai	Helpers	caller-vote	159
 00402bb0	FUN_00402bb0	gamemisc	world	Helpers	caller-vote	15
@@ -82,7 +82,7 @@ addr	name	kind	module	class	attributed_by	size
 00402c10	FUN_00402c10	gamemisc	game_misc	Unsorted_000	none	22
 00402c30	FUN_00402c30	gamemisc	game_misc	Unsorted_000	none	19
 00402c50	FUN_00402c50	gamemisc	ai	Helpers	caller-vote	85
-00402cb0	FUN_00402cb0	gamemisc	ai	Helpers	caller-vote	85
+00402cb0	FUN_00402cb0	gamemisc	game_misc	Unsorted_000	none	85
 00402d10	FUN_00402d10	gamemisc	game_misc	Unsorted_000	none	37
 00402d40	FUN_00402d40	gamemisc	game_misc	_helpers_wrapper	role:wrapper	57
 00402d80	FUN_00402d80	gamemisc	ai	Helpers	caller-vote	37
@@ -103,7 +103,7 @@ addr	name	kind	module	class	attributed_by	size
 004055a0	FUN_004055a0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	38
 004055d0	cube::CompanionBehavior::CompanionBehavior	game	ai	CompanionBehavior	rtti	23
 004055f0	cube::CompanionBehavior::CompanionBehavior	game	ai	CompanionBehavior	rtti	27
-00405610	FUN_00405610	gamemisc	game_misc	Unsorted_000	none	38
+00405610	FUN_00405610	gamemisc	world	Helpers	caller-vote	38
 00405640	CRefTime::Millisecs	lib	_library	sdk_classes	rtti-lib-ns	18
 00405660	FUN_00405660	gamemisc	game_misc	Unsorted_000	none	37
 00405690	FUN_00405690	gamemisc	game_misc	Unsorted_000	none	35
@@ -125,7 +125,7 @@ addr	name	kind	module	class	attributed_by	size
 00406290	Region_getChunkCell	gamemisc	world	Proven	ledger	120
 00406310	FUN_00406310	gamemisc	world	_helpers_dtor-like	role:dtor-like	62
 00406350	FUN_00406350	gamemisc	game_misc	_helpers_wrapper	role:wrapper	47
-00406380	FUN_00406380	gamemisc	game_misc	Unsorted_000	none	44
+00406380	FUN_00406380	gamemisc	world	Helpers	caller-vote	44
 004063b0	fwd_00407be0_4063b0	gamemisc	game_misc	_helpers_thunk	role:thunk	31
 004063d0	FUN_004063d0	gamemisc	game_misc	_helpers_ctor-like	role:ctor-like	35
 00406400	cube::Creature::Creature	game	entity	Creature	rtti	1385
@@ -2210,7 +2210,7 @@ addr	name	kind	module	class	attributed_by	size
 004c82a0	FUN_004c82a0	gamemisc	game_misc	_helpers_ctor-like	role:ctor-like	156
 004c833c	Catch_All@004c833c	lib	_library	eh_funclets	eh	17
 004c8350	FUN_004c8350	gamemisc	game_misc	Unsorted_002	none	94
-004c83b0	FUN_004c83b0	gamemisc	game_misc	Unsorted_002	none	31
+004c83b0	FUN_004c83b0	gamemisc	world	Helpers	caller-vote	31
 004c83d0	FUN_004c83d0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	75
 004c8420	lib_fn_4c8420	lib	_library	cw_lib	ledger	133
 004c84b0	unproven ctor -- GAME	game	game_misc	Game	ledger	87
@@ -2260,7 +2260,7 @@ addr	name	kind	module	class	attributed_by	size
 004ce780	FUN_004ce780	gamemisc	game_misc	Unsorted_002	none	84
 004ce7e0	FUN_004ce7e0	gamemisc	game_misc	_helpers_dtor-like	role:dtor-like	231
 004ce8c7	Catch_All@004ce8c7	lib	_library	eh_funclets	eh	20
-004ce8e0	FUN_004ce8e0	gamemisc	game_misc	Unsorted_002	none	162
+004ce8e0	FUN_004ce8e0	gamemisc	world	Helpers	caller-vote	162
 004ce990	FUN_004ce990	gamemisc	game_misc	_helpers_wrapper	role:wrapper	89
 004ce9f0	FUN_004ce9f0	gamemisc	ai	Helpers	caller-vote	139
 004cea80	FUN_004cea80	gamemisc	game_misc	Unsorted_002	none	4604
@@ -2272,7 +2272,7 @@ addr	name	kind	module	class	attributed_by	size
 004d19f0	World_sampleNoiseAt	gamemisc	world	Proven	ledger	116
 004d1a70	FUN_004d1a70	gamemisc	game_misc	Unsorted_002	none	1805
 004d2190	FUN_004d2190	gamemisc	game_misc	Unsorted_002	none	431
-004d2340	FUN_004d2340	gamemisc	game_misc	Unsorted_002	none	166
+004d2340	FUN_004d2340	gamemisc	world	Helpers	caller-vote	166
 004d23f0	checked cell read -- GAME	game	game_misc	Game	ledger	167
 004d24a0	FUN_004d24a0	gamemisc	game_misc	Unsorted_002	none	87
 004d2500	lib_fn_4d2500	lib	_library	cw_lib	ledger	762
@@ -2333,7 +2333,7 @@ addr	name	kind	module	class	attributed_by	size
 004d9410	FUN_004d9410	gamemisc	game_misc	Unsorted_002	none	770
 004d9720	FUN_004d9720	gamemisc	game_misc	Unsorted_002	none	571
 004d9960	FUN_004d9960	gamemisc	game_misc	_helpers_ctor-like	role:ctor-like	104
-004d99d0	FUN_004d99d0	gamemisc	game_misc	Unsorted_002	none	63
+004d99d0	FUN_004d99d0	gamemisc	world	Helpers	caller-vote	63
 004d9a10	FUN_004d9a10	gamemisc	game_misc	Unsorted_002	none	152
 004d9aa8	Catch_All@004d9aa8	lib	_library	eh_funclets	eh	20
 004d9ac0	FUN_004d9ac0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	113
@@ -2394,8 +2394,8 @@ addr	name	kind	module	class	attributed_by	size
 004e1230	FUN_004e1230	gamemisc	game_misc	Unsorted_002	none	78
 004e1280	FUN_004e1280	gamemisc	game_misc	_helpers_dtor-like	role:dtor-like	208
 004e1350	Catch_All@004e1350	lib	_library	eh_funclets	eh	20
-004e1370	FUN_004e1370	gamemisc	game_misc	Unsorted_002	none	162
-004e1420	FUN_004e1420	gamemisc	game_misc	Unsorted_002	none	180
+004e1370	FUN_004e1370	gamemisc	world	Helpers	caller-vote	162
+004e1420	FUN_004e1420	gamemisc	world	Helpers	caller-vote	180
 004e14e0	FUN_004e14e0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	58
 004e1520	FUN_004e1520	gamemisc	game_misc	Unsorted_002	none	56
 004e1560	FUN_004e1560	gamemisc	game_misc	Unsorted_002	none	141
@@ -2408,11 +2408,11 @@ addr	name	kind	module	class	attributed_by	size
 004e19f0	lib_fn_4e19f0	lib	_library	cw_lib	ledger	232
 004e1ae0	FUN_004e1ae0	gamemisc	game_misc	Unsorted_002	none	82
 004e1b40	FUN_004e1b40	gamemisc	game_misc	Unsorted_002	none	532
-004e1d70	FUN_004e1d70	gamemisc	game_misc	Unsorted_003	none	53
-004e1db0	FUN_004e1db0	gamemisc	game_misc	Unsorted_003	none	72
-004e1e00	FUN_004e1e00	gamemisc	game_misc	Unsorted_003	none	68
-004e1e50	FUN_004e1e50	gamemisc	game_misc	Unsorted_003	none	54
-004e1e90	FUN_004e1e90	gamemisc	game_misc	Unsorted_003	none	32
+004e1d70	FUN_004e1d70	gamemisc	game_misc	Unsorted_002	none	53
+004e1db0	FUN_004e1db0	gamemisc	game_misc	Unsorted_002	none	72
+004e1e00	FUN_004e1e00	gamemisc	game_misc	Unsorted_002	none	68
+004e1e50	FUN_004e1e50	gamemisc	game_misc	Unsorted_002	none	54
+004e1e90	FUN_004e1e90	gamemisc	game_misc	Unsorted_002	none	32
 004e1eb0	FUN_004e1eb0	gamemisc	entity	Unsorted	logic:caller-vote	23
 004e1ed0	FUN_004e1ed0	gamemisc	game_misc	_helpers_ctor-like	role:ctor-like	156
 004e1f6c	Catch_All@004e1f6c	lib	_library	eh_funclets	eh	17
@@ -2424,7 +2424,7 @@ addr	name	kind	module	class	attributed_by	size
 004e2320	compute_4e2320	gamemisc	game_misc	_helpers_computed	role:computed	13
 004e2330	compute_4e2330	gamemisc	game_misc	_helpers_computed	role:computed	24
 004e2350	compute_4e2350	gamemisc	game_misc	_helpers_computed	role:computed	15
-004e2360	FUN_004e2360	gamemisc	game_misc	Unsorted_003	none	32
+004e2360	FUN_004e2360	gamemisc	game_misc	Unsorted_002	none	32
 004e2380	cube::House::scalar_deleting_destructor	game	world	House	rtti	33
 004e23b0	FUN_004e23b0	gamemisc	game_misc	Unsorted_003	none	75
 004e2400	FUN_004e2400	gamemisc	game_misc	_helpers_dtor-like	role:dtor-like	228
@@ -2562,7 +2562,7 @@ addr	name	kind	module	class	attributed_by	size
 004f82d0	lib_fn_4f82d0	lib	_library	cw_lib	ledger	456
 004f84a0	grid_cell_accessor -- GAME	game	game_misc	Game	ledger	127
 004f8520	FUN_004f8520	gamemisc	game_misc	Unsorted_003	none	72
-004f8570	temperature_blend	game	world	Proven	ledger	1482
+004f8570	lib_fn_4f8570	lib	_library	cw_lib	ledger	1482
 004f8b40	lib_fn_4f8b40	lib	_library	cw_lib	ledger	1228
 004f9010	corridor_connect	game	world	Proven	ledger	1085
 004f9450	lib_fn_4f9450	lib	_library	cw_lib	ledger	1822
@@ -2578,11 +2578,11 @@ addr	name	kind	module	class	attributed_by	size
 004fde90	lib_fn_4fde90	lib	_library	cw_lib	ledger	3381
 004febd0	World_findNearestFeatureCell	gamemisc	world	Proven	ledger	749
 004feec0	FUN_004feec0	gamemisc	game_misc	Unsorted_003	none	721
-004ff1a0	FUN_004ff1a0	gamemisc	game_misc	Unsorted_003	none	409
+004ff1a0	FUN_004ff1a0	gamemisc	world	Helpers	caller-vote	409
 004ff340	fill_box	game	world	Proven	ledger	160
 004ff3f0	lib_fn_4ff3f0	lib	_library	cw_lib	ledger	426
 004ff59a	FUN_004ff59a	gamemisc	game_misc	_artifacts	role:artifact	1600
-004ffbf0	ground_knoll	game	world	Proven	ledger	1802
+004ffbf0	lib_fn_4ffbf0	lib	_library	cw_lib	ledger	1802
 00500300	dungeon_assembler	game	world	Proven	ledger	6267
 00501e0a	FUN_00501e0a	gamemisc	game_misc	_artifacts	role:artifact	2715
 00502a7a	FUN_00502a7a	gamemisc	game_misc	_artifacts	role:artifact	840
@@ -2600,10 +2600,10 @@ addr	name	kind	module	class	attributed_by	size
 0050d8d0	FUN_0050d8d0	gamemisc	game_misc	Unsorted_003	none	419
 0050da73	FUN_0050da73	gamemisc	game_misc	_artifacts	role:artifact	1541
 0050e080	featureGrid	game	world	Proven	ledger	9264
-005104e0	structure_populator_CONTESTED	game	game_misc	Game	ledger	7192
+005104e0	lib_fn_5104e0	lib	_library	cw_lib	ledger	7192
 0051210a	FUN_0051210a	gamemisc	game_misc	_artifacts	role:artifact	4767
 00513400	lib_fn_513400	lib	_library	cw_lib	ledger	864
-00513760	UNRESOLVED_513760	gamemisc	game_misc	Game	ledger	7494
+00513760	lib_fn_513760	lib	_library	cw_lib	ledger	7494
 005154aa	FUN_005154aa	gamemisc	game_misc	_artifacts	role:artifact	2225
 00515d6a	FUN_00515d6a	gamemisc	game_misc	_artifacts	role:artifact	9225
 0051819a	FUN_0051819a	gamemisc	game_misc	_artifacts	role:artifact	1161
@@ -2614,7 +2614,7 @@ addr	name	kind	module	class	attributed_by	size
 0051b26a	FUN_0051b26a	gamemisc	game_misc	_artifacts	role:artifact	5776
 0051c90a	FUN_0051c90a	gamemisc	game_misc	_artifacts	role:artifact	9278
 0051ed6a	FUN_0051ed6a	gamemisc	game_misc	_artifacts	role:artifact	12564
-00521ed0	FUN_00521ed0	gamemisc	game_misc	Unsorted_003	none	952
+00521ed0	FUN_00521ed0	gamemisc	world	Helpers	caller-vote	952
 00522290	feature_count_range	game	world	Proven	ledger	137
 00522320	lib_fn_522320	lib	_library	cw_lib	ledger	593
 00522580	FUN_00522580	gamemisc	game_misc	Unsorted_003	none	659
@@ -2629,7 +2629,7 @@ addr	name	kind	module	class	attributed_by	size
 00523b90	lib_fn_523b90	lib	_library	cw_lib	ledger	493
 00523d80	lib_fn_523d80	lib	_library	cw_lib	ledger	1920
 00524500	FUN_00524500	gamemisc	game_misc	Unsorted_003	none	58
-00524540	lib_fn_524540	lib	_library	cw_lib	ledger	15842
+00524540	creature_spawn_builder	game	world	Proven	ledger	15842
 005283b0	FUN_005283b0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	67
 00528400	FUN_00528400	gamemisc	game_misc	_helpers_wrapper	role:wrapper	67
 00528450	std_list_push_back	lib	_library	cw_lib	ledger	67
@@ -2868,8 +2868,8 @@ addr	name	kind	module	class	attributed_by	size
 0054a8c8	MSVCR110.DLL::_CxxThrowException	lib	_library	imports	import-ns	6
 0054a8ce	MSVCR110.DLL::__CxxFrameHandler3	lib	_library	imports	import-ns	6
 0054a8e0	__alloca_probe	lib	_library	crt_stl	crt-name	43
-0054a910	ftol_round_to_int	lib	_library	cw_lib	ledger	28
-0054a946	ftol_trunc	lib	_library	cw_lib	ledger	117
+0054a910	ftol_helper	game	game_misc	Game	ledger	28
+0054a946	ftol2_round	gamemisc	game_misc	Game	ledger	117
 0054a9bc	MSVCR110.DLL::libm_sse2_asin_precise	lib	_library	imports	import-ns	6
 0054a9c2	MSVCR110.DLL::libm_sse2_cos_precise	lib	_library	imports	import-ns	6
 0054a9c8	MSVCR110.DLL::libm_sse2_sin_precise	lib	_library	imports	import-ns	6

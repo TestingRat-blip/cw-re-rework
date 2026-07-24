@@ -1,4 +1,4 @@
-// Helpers (ai) -- server. 85 functions. Bodies = Ghidra pseudo-C.
+// Helpers (ai) -- server. 82 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Helpers.h"
 
@@ -24,25 +24,6 @@ void __fastcall FUN_00401cd0(undefined4 *param_1)
   param_1[0xe] = 0;
   param_1[0xf] = 0x3f800000;
   return;
-}
-
-
-/* FUN_00402510 @ 00402510  kind=gamemisc  attributed-by=caller-vote  size=64 */
-
-int __fastcall FUN_00402510(int param_1)
-
-{
-  int iVar1;
-  ulonglong uVar2;
-  
-  iVar1 = 0;
-  do {
-    uVar2 = FUN_0054a946();
-    *(int *)(param_1 + iVar1 * 8) = (int)uVar2;
-    *(int *)(param_1 + 4 + iVar1 * 8) = (int)(uVar2 >> 0x20);
-    iVar1 = iVar1 + 1;
-  } while (iVar1 < 3);
-  return param_1;
 }
 
 
@@ -280,21 +261,6 @@ undefined1 * __fastcall FUN_004029b0(undefined1 *param_1)
 }
 
 
-/* FUN_00402a40 @ 00402a40  kind=gamemisc  attributed-by=caller-vote  size=46 */
-
-undefined4 * __thiscall FUN_00402a40(void *this,undefined4 *param_1)
-
-{
-  *(undefined4 *)this = *param_1;
-  *(undefined4 *)((int)this + 4) = param_1[1];
-  *(undefined4 *)((int)this + 8) = param_1[2];
-  *(undefined4 *)((int)this + 0xc) = param_1[3];
-  *(undefined4 *)((int)this + 0x10) = param_1[4];
-  *(undefined4 *)((int)this + 0x14) = param_1[5];
-  return this;
-}
-
-
 /* FUN_00402a70 @ 00402a70  kind=gamemisc  attributed-by=caller-vote  size=149 */
 
 undefined1 * __thiscall FUN_00402a70(void *this,undefined1 *param_1)
@@ -421,39 +387,6 @@ uint * __thiscall FUN_00402c50(void *this,uint *param_1,uint *param_2)
   uVar2 = *puVar1;
   *puVar1 = *puVar1 - uVar3;
   param_1[5] = (param_1[5] - param_2[5]) - (uint)(uVar2 < uVar3);
-  return param_1;
-}
-
-
-/* FUN_00402cb0 @ 00402cb0  kind=gamemisc  attributed-by=caller-vote  size=85 */
-
-uint * __thiscall FUN_00402cb0(void *this,uint *param_1,uint *param_2)
-
-{
-  uint *puVar1;
-  uint uVar2;
-  uint uVar3;
-  
-  *param_1 = *(uint *)this;
-  param_1[1] = *(uint *)((int)this + 4);
-  param_1[2] = *(uint *)((int)this + 8);
-  param_1[3] = *(uint *)((int)this + 0xc);
-  param_1[4] = *(uint *)((int)this + 0x10);
-  param_1[5] = *(uint *)((int)this + 0x14);
-  uVar3 = *param_2;
-  uVar2 = *param_1;
-  *param_1 = *param_1 + uVar3;
-  param_1[1] = param_1[1] + param_2[1] + (uint)CARRY4(uVar2,uVar3);
-  uVar3 = param_2[2];
-  puVar1 = param_1 + 2;
-  uVar2 = *puVar1;
-  *puVar1 = *puVar1 + uVar3;
-  param_1[3] = param_1[3] + param_2[3] + (uint)CARRY4(uVar2,uVar3);
-  uVar3 = param_2[4];
-  puVar1 = param_1 + 4;
-  uVar2 = *puVar1;
-  *puVar1 = *puVar1 + uVar3;
-  param_1[5] = param_1[5] + param_2[5] + (uint)CARRY4(uVar2,uVar3);
   return param_1;
 }
 

@@ -6,9 +6,6 @@
 /* 004010b0  gamemisc  [none] */
 undefined4 * __thiscall FUN_004010b0(void * this, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4);
 
-/* 00401370  gamemisc  [none] */
-undefined1 * __thiscall FUN_00401370(void * this, undefined1 * param_1, undefined1 param_2);
-
 /* 00401420  gamemisc  [none] */
 float10 __fastcall FUN_00401420(longlong * param_1);
 
@@ -57,11 +54,20 @@ undefined __thiscall FUN_004022e0(void * this, float * param_1);
 /* 004023b0  gamemisc  [none] */
 undefined __thiscall FUN_004023b0(void * this, float param_1, float param_2, float param_3);
 
+/* 00402510  gamemisc  [none] */
+int __fastcall FUN_00402510(int param_1);
+
+/* 00402a40  gamemisc  [none] */
+undefined4 * __thiscall FUN_00402a40(void * this, undefined4 * param_1);
+
 /* 00402c10  gamemisc  [none] */
 undefined __thiscall FUN_00402c10(void * this, int * param_1);
 
 /* 00402c30  gamemisc  [none] */
 undefined __thiscall FUN_00402c30(void * this, int * param_1);
+
+/* 00402cb0  gamemisc  [none] */
+uint * __thiscall FUN_00402cb0(void * this, uint * param_1, uint * param_2);
 
 /* 00402d10  gamemisc  [none] */
 int __thiscall FUN_00402d10(void * this, uint param_1);
@@ -81,9 +87,6 @@ uint * __thiscall FUN_00402eb0(void * this, uint * param_1);
 /* 00405550  gamemisc  [none] */
 undefined __fastcall FUN_00405550(int * param_1);
 
-/* 00405610  gamemisc  [none] */
-undefined1 * __thiscall FUN_00405610(void * this, undefined1 * param_1);
-
 /* 00405660  gamemisc  [none] */
 undefined __thiscall FUN_00405660(void * this, int * param_1, uint param_2);
 
@@ -92,9 +95,6 @@ undefined __thiscall FUN_00405690(void * this, int * param_1, uint param_2);
 
 /* 00405750  gamemisc  [none] */
 int __thiscall FUN_00405750(void * this, uint param_1);
-
-/* 00406380  gamemisc  [none] */
-undefined4 * __thiscall FUN_00406380(void * this, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6);
 
 /* 00407730  gamemisc  [none] */
 undefined1 * __thiscall FUN_00407730(void * this, undefined1 * param_1);

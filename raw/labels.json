@@ -705,7 +705,7 @@
   "004f2ee0": {
    "kind": "game",
    "name": "house_furniture_placer",
-   "src": "ADJUDICATION.md"
+   "src": "CW_CONFIDENCE_XREF.md"
   },
   "004f3490": {
    "kind": "lib",
@@ -725,7 +725,7 @@
   "004f5cc0": {
    "kind": "gamemisc",
    "name": "sort_routine_4f5cc0",
-   "src": "ADJUDICATION.md"
+   "src": "CW_CONFIDENCE_XREF.md"
   },
   "004f7370": {
    "kind": "game",
@@ -753,8 +753,8 @@
    "src": "ADJUDICATION.md"
   },
   "004f8570": {
-   "kind": "game",
-   "name": "temperature_blend",
+   "kind": "lib",
+   "name": "lib_fn_4f8570",
    "src": "ADJUDICATION.md"
   },
   "004f8b40": {
@@ -828,8 +828,8 @@
    "src": "ADJUDICATION.md"
   },
   "004ffbf0": {
-   "kind": "game",
-   "name": "ground_knoll",
+   "kind": "lib",
+   "name": "lib_fn_4ffbf0",
    "src": "ADJUDICATION.md"
   },
   "00500300": {
@@ -858,8 +858,8 @@
    "src": "CUBEWORLD_ALPHA_SOURCE.md"
   },
   "005104e0": {
-   "kind": "game",
-   "name": "structure_populator_CONTESTED",
+   "kind": "lib",
+   "name": "lib_fn_5104e0",
    "src": "ADJUDICATION.md"
   },
   "00513400": {
@@ -868,9 +868,9 @@
    "src": "ADJUDICATION.md"
   },
   "00513760": {
-   "kind": "gamemisc",
-   "name": "UNRESOLVED_513760",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "kind": "lib",
+   "name": "lib_fn_513760",
+   "src": "ADJUDICATION.md"
   },
   "00518630": {
    "kind": "game",
@@ -890,7 +890,7 @@
   "00522840": {
    "kind": "game",
    "name": "biome_border",
-   "src": "ADJUDICATION.md"
+   "src": "CW_CONFIDENCE_XREF.md"
   },
   "00522cc0": {
    "kind": "game",
@@ -910,7 +910,7 @@
   "00523380": {
    "kind": "gamemisc",
    "name": "pointSegmentDistanceSq",
-   "src": "ADJUDICATION.md"
+   "src": "CW_CONFIDENCE_XREF.md"
   },
   "005234b0": {
    "kind": "game",
@@ -933,8 +933,8 @@
    "src": "ADJUDICATION.md"
   },
   "00524540": {
-   "kind": "lib",
-   "name": "lib_fn_524540",
+   "kind": "game",
+   "name": "creature_spawn_builder",
    "src": "ADJUDICATION.md"
   },
   "00528450": {
@@ -970,7 +970,7 @@
   "0052a830": {
    "kind": "game",
    "name": "dungeon_scatter_emitter",
-   "src": "ADJUDICATION.md"
+   "src": "CW_CONFIDENCE_XREF.md"
   },
   "0052b1c0": {
    "kind": "lib",
@@ -1060,16 +1060,16 @@
   "00549c50": {
    "kind": "game",
    "name": "world_create",
-   "src": "ADJUDICATION.md"
+   "src": "CW_CONFIDENCE_XREF.md"
   },
   "0054a910": {
-   "kind": "lib",
-   "name": "ftol_round_to_int",
+   "kind": "game",
+   "name": "ftol_helper",
    "src": "ADJUDICATION.md"
   },
   "0054a946": {
-   "kind": "lib",
-   "name": "ftol_trunc",
+   "kind": "gamemisc",
+   "name": "ftol2_round",
    "src": "ADJUDICATION.md"
   }
  }

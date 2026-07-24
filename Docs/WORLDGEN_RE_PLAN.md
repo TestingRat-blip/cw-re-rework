@@ -65,14 +65,16 @@ layers. So this becomes the primary target, scoped honestly:
 | size | 15.8 KB, 10 params — a substantial target, not a quick win |
 
 Approach:
-1. **Structure map** — decode the `param_5` 16-way switch: which creature type → which
-   behaviour-tree shape + stat block. Start with one type (e.g. `param_5==1`) end-to-end.
-2. **Spawn-record model** — reverse the `Spawn` struct fields written (position, type,
-   behaviour chain, `+0x28` stat byte seen in the dispatch) — `RecoverStructs` already
-   applied a `Spawn` layout; extend it here.
-3. **Gate** — hook the spawn emit on a live `Server.exe` dungeon build and match the emitted
-   Spawn records (type + position + behaviour ids + the 33-draw rand sequence) ab-initio.
-4. Relabel in the ledger: `creature_spawn_builder`, kind **game** (currently `lib_fn_524540`).
+1. **Structure map — ✅ DONE** (type-1 / base path). Full static decode in
+   `RE_524540_creature_spawn.md`: signature, the `Spawn` record it writes (position, type
+   byte `+0x28`, model byte `+0x2c`, facing `(2-orient)·90°`, equipment `+0x54`), the shared
+   behaviour tree `Sequential{Combat(20), LookAtPlayer, WalkPath(2)}`, and the 33 `rand()`
+   draw sites. Four callees identified (`addChild`, `setPath`, vec-copy, `ItemData_copy`).
+2. Relabelled: **`creature_spawn_builder`**, kind game (was `lib_fn_524540`).
+3. ▶ **Gate (next, needs live rig)** — hook the spawn emit on a `Server.exe` dungeon build and
+   match type-1 records (position + type bytes + behaviour ids + the 33-draw rand sequence)
+   ab-initio from the zone seed.
+4. ▶ Then the type deltas (7/10/0xd/0xe/0xf), then port to `cw_rederive`.
 
 Because it's the mob layer, this also *is* the old "Phase 3" — the plan collapses: geometry
 is done, so the entity layers (this + props) are the whole remaining job.

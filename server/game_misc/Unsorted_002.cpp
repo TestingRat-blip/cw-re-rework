@@ -7262,19 +7262,6 @@ undefined4 * __thiscall FUN_004c8350(void *this,undefined4 *param_1)
 }
 
 
-/* FUN_004c83b0 @ 004c83b0  kind=gamemisc  attributed-by=none  size=31 */
-
-int __fastcall FUN_004c83b0(int param_1)
-
-{
-  *(undefined4 *)(param_1 + 0x2c) = 0x3f800000;
-  *(undefined4 *)(param_1 + 0x30) = 0x3f800000;
-  *(undefined4 *)(param_1 + 0x34) = 0x3f800000;
-  *(undefined4 *)(param_1 + 0x38) = 2;
-  return param_1;
-}
-
-
 /* FUN_004ce200 @ 004ce200  kind=gamemisc  attributed-by=none  size=22 */
 
 void __thiscall FUN_004ce200(void *this,int *param_1)
@@ -7366,42 +7353,6 @@ void __thiscall FUN_004ce780(void *this,int param_1)
   piVar2[2] = (int)piVar1;
   *piVar1 = param_1;
   *(int **)(param_1 + 4) = piVar1;
-  return;
-}
-
-
-/* FUN_004ce8e0 @ 004ce8e0  kind=gamemisc  attributed-by=none  size=162 */
-
-void __thiscall FUN_004ce8e0(void *this,uint param_1)
-
-{
-  int iVar1;
-  uint uVar2;
-  uint uVar3;
-  
-  if (param_1 <= (uint)((*(int *)((int)this + 8) - *(int *)((int)this + 4)) / 0x188)) {
-    return;
-  }
-  iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x188;
-  if (0xa72f05U - iVar1 < param_1) {
-                    /* WARNING: Subroutine does not return */
-    std::_Xlength_error("vector<T> too long");
-  }
-  uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x188;
-  uVar3 = iVar1 + param_1;
-  if (0xa72f05 - (uVar2 >> 1) < uVar2) {
-    uVar2 = 0;
-    if (uVar3 != 0) {
-      uVar2 = uVar3;
-    }
-    FUN_004ce7e0(this,uVar2);
-    return;
-  }
-  uVar2 = uVar2 + (uVar2 >> 1);
-  if (uVar2 < uVar3) {
-    uVar2 = uVar3;
-  }
-  FUN_004ce7e0(this,uVar2);
   return;
 }
 
@@ -9570,33 +9521,6 @@ void FUN_004d2190(undefined8 *param_1,undefined8 *param_2,float param_3,char par
 }
 
 
-/* FUN_004d2340 @ 004d2340  kind=gamemisc  attributed-by=none  size=166 */
-
-uint __thiscall FUN_004d2340(void *this,uint param_1,uint param_2,undefined8 param_3)
-
-{
-  uint uVar1;
-  uint *puVar2;
-  float10 fVar3;
-  ulonglong uVar4;
-  undefined8 uVar5;
-  
-  uVar4 = FUN_0054a946();
-  uVar5 = __alldiv((uint)uVar4,(uint)(uVar4 >> 0x20),0x10000,0);
-  uVar1 = (uint)uVar5;
-  uVar5 = __alldiv(param_1,param_2,0x10000,0);
-  puVar2 = (uint *)FUN_004286f0(this,(int)((int)uVar5 + ((int)uVar5 >> 0x1f & 0x7ffU)) >> 0xb,uVar1)
-  ;
-  if ((puVar2 != (uint *)0x0) && (puVar2[6] != 0)) {
-    fVar3 = FUN_0052c820(puVar2,&param_1,(uint *)&param_3);
-    if ((float)fVar3 <= 1.0) {
-      return puVar2[9];
-    }
-  }
-  return 1;
-}
-
-
 /* FUN_004d24a0 @ 004d24a0  kind=gamemisc  attributed-by=none  size=87 */
 
 byte __thiscall
@@ -11471,26 +11395,6 @@ float * FUN_004d9720(float *param_1)
 }
 
 
-/* FUN_004d99d0 @ 004d99d0  kind=gamemisc  attributed-by=none  size=63 */
-
-int * __thiscall FUN_004d99d0(void *this,uint *param_1)
-
-{
-  uint uVar1;
-  
-  uVar1 = *param_1;
-  *(uint *)this = uVar1 << 0x10;
-  *(uint *)((int)this + 4) = ((int)uVar1 >> 0x1f) << 0x10 | uVar1 >> 0x10;
-  uVar1 = param_1[1];
-  *(uint *)((int)this + 8) = uVar1 << 0x10;
-  *(uint *)((int)this + 0xc) = ((int)uVar1 >> 0x1f) << 0x10 | uVar1 >> 0x10;
-  uVar1 = param_1[2];
-  *(uint *)((int)this + 0x10) = uVar1 << 0x10;
-  *(uint *)((int)this + 0x14) = ((int)uVar1 >> 0x1f) << 0x10 | uVar1 >> 0x10;
-  return this;
-}
-
-
 /* FUN_004d9a10 @ 004d9a10  kind=gamemisc  attributed-by=none  size=152 */
 
 undefined4 * __thiscall FUN_004d9a10(void *this,int *param_1)
@@ -13017,87 +12921,6 @@ undefined4 * __cdecl FUN_004e1230(undefined4 *param_1,undefined4 *param_2,undefi
 }
 
 
-/* FUN_004e1370 @ 004e1370  kind=gamemisc  attributed-by=none  size=162 */
-
-void __thiscall FUN_004e1370(void *this,uint param_1)
-
-{
-  int iVar1;
-  uint uVar2;
-  uint uVar3;
-  
-  if (param_1 <= (uint)((*(int *)((int)this + 8) - *(int *)((int)this + 4)) / 0x18)) {
-    return;
-  }
-  iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x18;
-  if (0xaaaaaaaU - iVar1 < param_1) {
-                    /* WARNING: Subroutine does not return */
-    std::_Xlength_error("vector<T> too long");
-  }
-  uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x18;
-  uVar3 = iVar1 + param_1;
-  if (0xaaaaaaa - (uVar2 >> 1) < uVar2) {
-    uVar2 = 0;
-    if (uVar3 != 0) {
-      uVar2 = uVar3;
-    }
-    FUN_004e1280(this,uVar2);
-    return;
-  }
-  uVar2 = uVar2 + (uVar2 >> 1);
-  if (uVar2 < uVar3) {
-    uVar2 = uVar3;
-  }
-  FUN_004e1280(this,uVar2);
-  return;
-}
-
-
-/* FUN_004e1420 @ 004e1420  kind=gamemisc  attributed-by=none  size=180 */
-
-void __thiscall FUN_004e1420(void *this,undefined4 *param_1)
-
-{
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  
-  puVar1 = *(undefined4 **)((int)this + 4);
-  if ((param_1 < puVar1) && (puVar2 = *(undefined4 **)this, puVar2 <= param_1)) {
-    if (puVar1 == *(undefined4 **)((int)this + 8)) {
-      FUN_004e1370(this,1);
-    }
-    puVar1 = (undefined4 *)(*(int *)this + (((int)param_1 - (int)puVar2) / 0x18) * 0x18);
-    puVar2 = *(undefined4 **)((int)this + 4);
-    if (puVar2 != (undefined4 *)0x0) {
-      *puVar2 = *puVar1;
-      puVar2[1] = puVar1[1];
-      puVar2[2] = puVar1[2];
-      puVar2[3] = puVar1[3];
-      puVar2[4] = puVar1[4];
-      puVar2[5] = puVar1[5];
-      *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0x18;
-      return;
-    }
-  }
-  else {
-    if (puVar1 == *(undefined4 **)((int)this + 8)) {
-      FUN_004e1370(this,1);
-    }
-    puVar1 = *(undefined4 **)((int)this + 4);
-    if (puVar1 != (undefined4 *)0x0) {
-      *puVar1 = *param_1;
-      puVar1[1] = param_1[1];
-      puVar1[2] = param_1[2];
-      puVar1[3] = param_1[3];
-      puVar1[4] = param_1[4];
-      puVar1[5] = param_1[5];
-    }
-  }
-  *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0x18;
-  return;
-}
-
-
 /* FUN_004e1520 @ 004e1520  kind=gamemisc  attributed-by=none  size=56 */
 
 void __cdecl FUN_004e1520(float *param_1,float param_2,float *param_3)
@@ -13473,6 +13296,112 @@ joined_r0x004e1c74:
     local_10 = piVar5;
     piVar1 = local_8;
   } while( true );
+}
+
+
+/* FUN_004e1d70 @ 004e1d70  kind=gamemisc  attributed-by=none  size=53 */
+
+void __cdecl FUN_004e1d70(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  for (; param_1 != param_2; param_1 = param_1 + 3) {
+    if (param_3 != (undefined4 *)0x0) {
+      *param_3 = *param_1;
+      param_3[1] = param_1[1];
+      param_3[2] = param_1[2];
+    }
+    param_3 = param_3 + 3;
+  }
+  return;
+}
+
+
+/* FUN_004e1db0 @ 004e1db0  kind=gamemisc  attributed-by=none  size=72 */
+
+void __cdecl FUN_004e1db0(int param_1,int param_2)
+
+{
+  undefined4 *puVar1;
+  
+  if (param_2 != 0) {
+    puVar1 = (undefined4 *)(param_1 + 0xc);
+    do {
+      if (puVar1 != (undefined4 *)0xc) {
+        puVar1[-3] = 0;
+        puVar1[-2] = 0;
+        *puVar1 = 0;
+        puVar1[1] = 0;
+        puVar1[2] = 0;
+        puVar1[3] = 0;
+      }
+      puVar1 = puVar1 + 7;
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  return;
+}
+
+
+/* FUN_004e1e00 @ 004e1e00  kind=gamemisc  attributed-by=none  size=68 */
+
+void __cdecl FUN_004e1e00(undefined8 *param_1,undefined8 *param_2,undefined8 *param_3)
+
+{
+  for (; param_1 != param_2; param_1 = (undefined8 *)((int)param_1 + 0x1c)) {
+    if (param_3 != (undefined8 *)0x0) {
+      *param_3 = *param_1;
+      param_3[1] = param_1[1];
+      param_3[2] = param_1[2];
+      *(undefined4 *)(param_3 + 3) = *(undefined4 *)(param_1 + 3);
+    }
+    param_3 = (undefined8 *)((int)param_3 + 0x1c);
+  }
+  return;
+}
+
+
+/* FUN_004e1e50 @ 004e1e50  kind=gamemisc  attributed-by=none  size=54 */
+
+undefined4 * __cdecl FUN_004e1e50(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  if (param_1 == param_2) {
+    return param_3;
+  }
+  do {
+    if (param_3 != (undefined4 *)0x0) {
+      *param_3 = *param_1;
+      param_3[1] = param_1[1];
+    }
+    param_1 = param_1 + 2;
+    param_3 = param_3 + 2;
+  } while (param_1 != param_2);
+  return param_3;
+}
+
+
+/* FUN_004e1e90 @ 004e1e90  kind=gamemisc  attributed-by=none  size=32 */
+
+undefined4 * __thiscall
+FUN_004e1e90(void *this,undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  *(undefined4 *)this = param_1;
+  *(undefined4 *)((int)this + 4) = param_2;
+  *(undefined4 *)((int)this + 8) = param_3;
+  *(undefined4 *)((int)this + 0xc) = param_4;
+  return this;
+}
+
+
+/* FUN_004e2360 @ 004e2360  kind=gamemisc  attributed-by=none  size=32 */
+
+int * __thiscall FUN_004e2360(void *this,int *param_1,int param_2)
+
+{
+  *param_1 = *(int *)this / param_2;
+  param_1[1] = *(int *)((int)this + 4) / param_2;
+  return param_1;
 }
 
 

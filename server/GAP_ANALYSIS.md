@@ -15,6 +15,7 @@ Treat an orphan as a fragment of its preceding function until proven otherwise.
 | `00541d9a` | 19159 | 0 | 110 | orphan |  |
 | `0040a840` | 17600 | 7 | 4 |  |  |
 | `004ee3aa` | 17215 | 0 | 106 | orphan |  |
+| `00524540` | 15842 | 7 | 51 |  | list<T> too long |
 | `004eaa7a` | 14586 | 0 | 60 | orphan |  |
 | `0053cba1` | 13776 | 0 | 106 | orphan |  |
 | `0051ed6a` | 12564 | 0 | 106 | orphan |  |
@@ -27,9 +28,7 @@ Treat an orphan as a fragment of its preceding function until proven otherwise.
 | `0051880a` | 8528 | 0 | 22 | orphan |  |
 | `0054687a` | 8010 | 0 | 70 | orphan |  |
 | `005343fa` | 7810 | 0 | 101 | orphan |  |
-| `00513760` | 7494 | 3 | 15 |  |  |
 | `004816ca` | 7194 | 0 | 22 | orphan | ORDER |
-| `005104e0` | 7192 | 1 | 15 |  |  |
 | `004db200` | 7104 | 1 | 28 |  | list<T> too long |
 | `005054fa` | 6960 | 0 | 35 | orphan |  |
 | `004cfd50` | 6604 | 4 | 29 |  | list<T> too long |
@@ -63,7 +62,6 @@ Treat an orphan as a fragment of its preceding function until proven otherwise.
 | `0053670a` | 1882 | 0 | 28 | orphan |  |
 | `0046f990` | 1866 | 2 | 4 |  |  |
 | `004d1a70` | 1805 | 3 | 3 |  |  |
-| `004ffbf0` | 1802 | 3 | 9 |  |  |
 | `004dd2e0` | 1779 | 6 | 8 |  |  |
 | `00426020` | 1774 | 1 | 30 |  |  |
 | `00416210` | 1759 | 1 | 18 |  |  |
@@ -76,7 +74,6 @@ Treat an orphan as a fragment of its preceding function until proven otherwise.
 | `004ff59a` | 1600 | 0 | 10 | orphan |  |
 | `00531c6a` | 1561 | 0 | 4 | orphan |  |
 | `0050da73` | 1541 | 0 | 13 | orphan | list<T> too long |
-| `004f8570` | 1482 | 13 | 4 |  |  |
 | `0052a830` | 1448 | 1 | 7 |  |  |
 | `00418410` | 1415 | 1 | 7 |  |  |
 | `0047afc0` | 1397 | 1 | 14 |  | Expression tree is too large (maximum de |
@@ -410,5 +407,8 @@ Treat an orphan as a fragment of its preceding function until proven otherwise.
 | `004311f0` | 237 | 2 | 4 |  | invalid string position, string too long |
 | `00423ce0` | 235 | 2 | 6 |  |  |
 | `0046c6c0` | 235 | 0 | 2 | orphan |  |
+| `004129d0` | 234 | 2 | 3 |  |  |
+| `00489430` | 234 | 0 | 2 | orphan |  |
+| `004c2230` | 234 | 1 | 6 |  |  |
 
-**Total unnamed non-library functions: 1639** (118 of the listed 400 are orphans)
+**Total unnamed non-library functions: 1638** (119 of the listed 400 are orphans)

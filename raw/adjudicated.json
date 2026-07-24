@@ -110,7 +110,7 @@
   "004286f0": {
    "kind": "gamemisc",
    "name": "World_getTileAtCoords",
-   "verdict": "XREF-FIX"
+   "verdict": "B"
   },
   "0042f440": {
    "kind": "lib",
@@ -170,7 +170,7 @@
   "004e28e0": {
    "kind": "game",
    "name": "town_builder",
-   "verdict": "XREF-FIX"
+   "verdict": "A"
   },
   "004f2be0": {
    "kind": "lib",
@@ -182,20 +182,10 @@
    "name": "std_vector_push_back (32B elem)",
    "verdict": "NEITHER"
   },
-  "004f2ee0": {
-   "kind": "game",
-   "name": "house_furniture_placer",
-   "verdict": "XREF-FIX"
-  },
   "004f3630": {
    "kind": "game",
    "name": "unproven ctor -- GAME",
    "verdict": "A-KIND"
-  },
-  "004f5cc0": {
-   "kind": "gamemisc",
-   "name": "sort_routine_4f5cc0",
-   "verdict": "XREF-FIX"
   },
   "004f79f0": {
    "kind": "lib",
@@ -213,9 +203,9 @@
    "verdict": "A-KIND"
   },
   "004f8570": {
-   "kind": "game",
-   "name": "temperature_blend",
-   "verdict": "XREF-FIX"
+   "kind": "lib",
+   "name": "lib_fn_4f8570",
+   "verdict": "B"
   },
   "004f8b40": {
    "kind": "lib",
@@ -263,9 +253,9 @@
    "verdict": "B"
   },
   "004ffbf0": {
-   "kind": "game",
-   "name": "ground_knoll",
-   "verdict": "XREF-FIX"
+   "kind": "lib",
+   "name": "lib_fn_4ffbf0",
+   "verdict": "B"
   },
   "00500300": {
    "kind": "game",
@@ -288,13 +278,18 @@
    "verdict": "B"
   },
   "005104e0": {
-   "kind": "game",
-   "name": "structure_populator_CONTESTED",
-   "verdict": "XREF-FIX"
+   "kind": "lib",
+   "name": "lib_fn_5104e0",
+   "verdict": "B"
   },
   "00513400": {
    "kind": "lib",
    "name": "lib_fn_513400",
+   "verdict": "B"
+  },
+  "00513760": {
+   "kind": "lib",
+   "name": "lib_fn_513760",
    "verdict": "B"
   },
   "00518630": {
@@ -305,27 +300,17 @@
   "00522290": {
    "kind": "game",
    "name": "feature_count_range",
-   "verdict": "XREF-FIX"
+   "verdict": "A"
   },
   "00522320": {
    "kind": "lib",
    "name": "lib_fn_522320",
    "verdict": "B"
   },
-  "00522840": {
-   "kind": "game",
-   "name": "biome_border",
-   "verdict": "XREF-FIX"
-  },
   "00522cc0": {
    "kind": "game",
    "name": "dist2_16_16",
    "verdict": "A"
-  },
-  "00523380": {
-   "kind": "gamemisc",
-   "name": "pointSegmentDistanceSq",
-   "verdict": "XREF-FIX"
   },
   "005234b0": {
    "kind": "game",
@@ -348,9 +333,9 @@
    "verdict": "B"
   },
   "00524540": {
-   "kind": "lib",
-   "name": "lib_fn_524540",
-   "verdict": "B"
+   "kind": "game",
+   "name": "creature_spawn_builder",
+   "verdict": "DEEP-RE"
   },
   "00528450": {
    "kind": "lib",
@@ -366,11 +351,6 @@
    "kind": "lib",
    "name": "lib_fn_52a760",
    "verdict": "B"
-  },
-  "0052a830": {
-   "kind": "game",
-   "name": "dungeon_scatter_emitter",
-   "verdict": "XREF-FIX"
   },
   "0052b470": {
    "kind": "lib",
@@ -417,20 +397,15 @@
    "name": "lib_fn_5322d0",
    "verdict": "B"
   },
-  "00549c50": {
-   "kind": "game",
-   "name": "world_create",
-   "verdict": "XREF-FIX"
-  },
   "0054a910": {
-   "kind": "lib",
-   "name": "ftol_round_to_int",
-   "verdict": "XREF-FIX"
+   "kind": "game",
+   "name": "ftol_helper",
+   "verdict": "A"
   },
   "0054a946": {
-   "kind": "lib",
-   "name": "ftol_trunc",
-   "verdict": "XREF-FIX"
+   "kind": "gamemisc",
+   "name": "ftol2_round",
+   "verdict": "B"
   }
  }
 }

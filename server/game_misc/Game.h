@@ -30,12 +30,6 @@ undefined __cdecl FUN_004f5cc0(float * param_1, float * param_2, int param_3, un
 /* 004f84a0  game  [ledger]  ~grid_cell_accessor -- GAME */
 undefined1 * __thiscall FUN_004f84a0(void * this, int param_1, int param_2, int param_3);
 
-/* 005104e0  game  [ledger]  ~structure_populator_CONTESTED */
-undefined __thiscall FUN_005104e0(void * this, int param_1, uint * param_2, int * param_3);
-
-/* 00513760  gamemisc  [ledger]  ~UNRESOLVED_513760 */
-undefined __stdcall FUN_00513760(float param_1, uint param_2, float param_3, int param_4, int param_5, int param_6, int param_7);
-
 /* 00522cc0  game  [ledger]  ~dist2_16_16 */
 undefined __stdcall FUN_00522cc0(void);
 
@@ -50,4 +44,10 @@ int __stdcall FUN_0052bf40(int param_1, char param_2);
 
 /* 0052dde0  game  [ledger]  ~grid_orient_transform */
 undefined __thiscall FUN_0052dde0(void * this, int * param_1, int * param_2);
+
+/* 0054a910  game  [ledger]  ~ftol_helper */
+ulonglong __fastcall FUN_0054a910(undefined4 param_1, undefined4 param_2);
+
+/* 0054a946  gamemisc  [ledger]  ~ftol2_round */
+ulonglong __stdcall FUN_0054a946(void);
 
