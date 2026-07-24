@@ -77,6 +77,40 @@ class StubMat:
         return (self.mat(i, j, k, d) & 0x1F) not in (0, 2)
 
 
+_TERR = {}
+
+
+def terrain_rule(probes):
+    """The pure-terrain approximation of the probe: solid <=> z <= surfH + 1.
+
+    Needs cw_rederive (the bit-exact surface height) on the path. Returns
+    (matches, total, residuals) or None if the toolkit is not importable.
+    """
+    if not probes:
+        return None
+    if "mod" not in _TERR:
+        try:
+            sys.path.insert(0, os.path.normpath(os.path.join(RAW, "..", "..", "cw_rederive")))
+            import cw_seed
+            import cw_height
+            _TERR["mod"] = cw_height
+            _TERR["base"] = cw_seed.configure(42069)
+        except Exception:
+            _TERR["mod"] = None
+    if _TERR["mod"] is None:
+        return None
+    m, resid = 0, []
+    for p in probes:
+        sh = _TERR["mod"].surf_height(_TERR["base"], p["x"], p["y"])
+        model = p["z"] <= sh + 1
+        if model == bool(p["solid"]):
+            m += 1
+        else:
+            resid.append({"cell": (p["I"], p["J"], p["K"]), "dir": p["dir"], "z": p["z"],
+                          "surfH": sh, "b": p["b"], "solid": p["solid"]})
+    return m, len(probes), resid
+
+
 def marker(b):
     return {"type": struct.unpack_from("<i", b, 0)[0],
             "f14": struct.unpack_from("<i", b, 0x14)[0],
@@ -143,6 +177,17 @@ def one(name):
         rej = sum(1 for v in live_v if v)
         print(f"   probe: {len(probes)} candidates, {rej} rejected as solid, "
               f"{len(probes) - rej} emitted")
+
+    # How much of that needs the world at all? Measure the pure-TERRAIN rule the engine
+    # port uses -- `z <= surfH + 1` off cw_rederive's bit-exact surface height -- so the
+    # residual is a number in the gate rather than a claim in a doc.
+    th = terrain_rule(probes)
+    if th is not None:
+        m, n, resid = th
+        print(f"   terrain-only rule (z <= surfH + 1, no world dump): {m}/{n}")
+        for r in resid[:4]:
+            print(f"      residual: cell {r['cell']} dir {r['dir']} z {r['z']} "
+                  f"surfH {r['surfH']} block {r['b']} solid {r['solid']}")
 
     print("  " + ("GATE PASS" if ok else "GATE FAIL"))
     return (0 if ok else 1), len(probes), n_derived, len(live_m)

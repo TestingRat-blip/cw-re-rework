@@ -125,6 +125,13 @@ Running out of order silently empties the islands/roles (it oscillates).
    `if (f<=0)`. Fixing the source gave a 100% match.
 2. **Live capture has corrected static reads three times.** Trust the binary over the
    decompiler's pseudo-C.
+2b. **A captured byte is data; what it *means* is still a guess until you test it.** Two
+   retractions in one session came from reading semantics off raw values: a uniform grey
+   `(200,200,200)` read as "the dungeon's own palette stone" (it is global underground rock —
+   one `Counter` across three differently-styled dungeons kills it), and a pointer passed
+   next to a spawn call read as "the species list" (twelve instructions of its callee show a
+   vec4 float store). Both cost a wrong "port gap" in a doc. **Before writing a finding down,
+   name the cheapest observation that would falsify it and make it.**
 3. **Ghidra collapses `/GS` function bodies** to just the security-cookie epilogue — `0x522cc0`
    looked like a stub but is a 16.16 fixed-point distance. Check raw bytes when a body looks
    too short for its size.
@@ -210,9 +217,13 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    1/2 spend a prologue `rand()%3`, and an empty companion list skips its own count draw. It also
    falsified the previous session's guess that the mob pass reads those containers — it does not;
    `[ebp-0x374]` is an all-zero int4, and mob species is `FUN_00524540`'s `param_5` byte.
-   ▶ **One quantified port gap remains**: RatForge rejects wall stubs on terrain surface height,
-   but 79 of the reference dungeon's 84 rejects are the dungeon's *own stone*, so it over-emits
-   stubs. The RE rule is `(block[3] & 0x1f) ∉ {0,2}` on the finished world.
+   ⚠ **The "stub occlusion port gap" this list used to name is RETRACTED** — it was my own bad
+   read of the reject census. `(200,200,200, class 1)` is global underground rock, not the
+   dungeon's palette (it is byte-identical across three differently-coloured dungeons), and the
+   probe lands one block past the core shell's overhang in a never-stamped kind-0 cell. The
+   box-aware probe was built and measured identical on 305 candidates, then reverted; the pure
+   terrain rule `z <= surfH + 1` reproduces 476/480 live verdicts and is what the port already
+   did. **The dungeon assembler now has no known port gap.**
 3. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,
    still the largest genuinely-new slice.
 4. **Port the mob pass + boss spawn + light sources into `cw_rederive`** (the item-generation

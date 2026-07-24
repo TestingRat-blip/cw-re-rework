@@ -98,18 +98,45 @@ to be emitted — it **predicts the whole stub set, in emit order**:
 | (32787, 32796) / (32804, 32811) | 2 | 0 | 0 | 0 |
 | **total** | | **480** | **200** | **280** |
 
-**What the rejects actually are matters for the port.** In the reference dungeon 79 of the 84
-rejects read `(200, 200, 200, class 1)` — the *dungeon's own stone*, not terrain; only 5 are
-terrain materials (`0x24`, `0x06`). So a terrain-height test alone does not model this gate.
+### What the rejects are — a claim this document got wrong, then checked
 
-Checked against RatForge: its `Dungeons.cpp` already probes at exactly these four offsets
-(`kSpx`/`kSpz`) and in the right emit order, but it rejects on `terr()` **surface height**, so it
-**over-emits stubs wherever a wall backs onto the dungeon's own mass** — the majority case. The
-fix is to evaluate the finished dungeon-plus-terrain block class at the probe point instead;
-the engine has the box lists at that point, so it is a local change. This is the one place the
-RE is now ahead of the port.
+**Retracted (2026-07-24).** This section first read the reject census as *"79 of the reference
+dungeon's 84 rejects are `(200, 200, 200, class 1)` — the dungeon's own stone, so RatForge's
+terrain-height test over-emits stubs."* Both halves are false, and the check that settles it is
+cheap:
 
-The **entrance marker needs no port change** — `dungeonDecorWalk` already emits
+- **The grey is not palette.** `(200,200,200, class 1)` appears with the *same* RGB in dungeons
+  of styles 3, 1 **and** 0. A per-dungeon palette cannot produce one constant across three
+  differently-coloured dungeons, so it is a global material — underground terrain rock.
+- **The probe cannot reach the dungeon mass anyway.** The core shells are 14³ boxes centred on
+  each 10³ cell, so they overhang a neighbour by 2 blocks; the probe sits **3** blocks out, one
+  past that. And only kind-3/kind-2 cells are stamped, while the stub gate requires its
+  neighbour to be kind 0. Evaluating the probe against the assembled box list instead of
+  terrain was implemented and measured: **identical verdicts on 305 candidates across styles
+  0, 1 and 3** — a pure no-op, so it was reverted.
+- **The terrain rule reproduces the live verdicts directly.** Driving
+  `cw_rederive.cw_height.surf_height` at each probe point:
+
+  | rule | result |
+  |---|---|
+  | `z <= surfH` | 470/480 — the 10 misses are all `z == surfH + 1` on class-`0x24` grass |
+  | `z <= surfH + 1` (the surface skin) | **476/480** |
+
+  which is *exactly* RatForge's existing test (`terr()` returns `bz = surfaceHeight, sp = 2`,
+  and it rejects on `Y < bz + sp`). The 4 residuals are all one cell cluster in
+  (32804, 32788) reading a white class-0 block where the column model places the skin — a
+  known separately-unverified water class, not a stub-rule effect.
+
+`gate_dungeon_marker.py` now prints that 476/480 and names the residuals, so the number is
+measured on every run instead of asserted here.
+
+**Net: the port needed no change.** RatForge already probed at the right four offsets, in the
+right emit order, with the right rule. What it lacked was any evidence that it was right — it
+now has a per-style sweep in `--dungeontest` reporting stub candidates vs kept for all six
+styles (0/1/3 emit 103/107/95 candidates keeping 18/49/54; 2/4/5 offer none), which fails if a
+style's candidate set collapses or the record count and the kept count disagree.
+
+The **entrance marker needed no port change either** — `dungeonDecorWalk` already emits
 `DunPropKind::Entrance` at `(X0+5, Z0+5, Y0)`, including the missing `+5` on the vertical axis.
 That was a guess when it was written; it is now proven 6/6.
 

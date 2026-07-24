@@ -191,10 +191,19 @@ stays 52/52 and the hash is unchanged.
 Mob species is `FUN_00524540`'s `param_5` model byte — a spawn-builder property, not a
 per-dungeon one.
 
-Still open in this phase:
-- a **port gap, now quantified**: 79 of the reference dungeon's 84 stub rejects are the
-  dungeon's *own stone*, not terrain, so RatForge's terrain-height-only occlusion test
-  over-emits stubs.
+**The "stub occlusion port gap" was not a gap — RETRACTED (2026-07-24).** The claim that 79 of
+84 rejects are the dungeon's own stone is false: `(200,200,200, class 1)` is a *global*
+underground-rock material (it is byte-identical in style-3, style-1 and style-0 dungeons, which
+no per-dungeon palette can be), and the probe sits one block beyond the 14³ core shell's
+overhang into a kind-0 cell that is never stamped. Evaluating the probe against the assembled
+box list was implemented and measured — **identical on 305 candidates across styles 0/1/3** —
+then reverted. Driving `cw_height.surf_height` directly, `z <= surfH + 1` reproduces
+**476/480** live verdicts, which is exactly RatForge's existing `terr()` test; the 4 residuals
+are one cell cluster reading a white class-0 block (a known separately-unverified water class).
+The gate now prints that number every run, and `--dungeontest` sweeps all six styles reporting
+stub candidates vs kept.
+
+Nothing in this phase is open.
 
 **Level + rarity byte — ✅ DONE, gated 6/6 ab-initio (`RE_dungeon_level_rank.md`).** The last
 open input, the `counter` feeding `monster_level_formula`, is the **Pass-3 candidate loop index**
