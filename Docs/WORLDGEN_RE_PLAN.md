@@ -45,19 +45,37 @@ sweep (Phase 4), not the core.
   ground truth for every gate below (`cw-server-capture-rig` note). Re-verify it runs before
   Phase 1.
 
-## Phase 1 — the last deterministic geometry (highest value, fully verifiable)
+## Phase 1 — creature spawn + behavior-tree builder (`FUN_00524540`)
 
-`FUN_00524540` (**15,842 bytes**, currently mislabelled `lib_fn_524540`) — the castle-arc
-wall stamps + ceiling-web dungeon geometry. Big but pure (no region-cache), so it is
-**byte-exact verifiable** two ways:
+**⚠ Scope correction (2026-07-23).** Scoping falsified the original premise. `FUN_00524540`
+is **not** geometry — it writes **0 voxels**. It is the **creature/mob spawn builder**: 321
+`Spawn` references, constructs the full behaviour tree per spawn (Combat / Sequential /
+WalkPath / LookAtPlayer), 33 `rand()` draws, dispatched 16 ways on `param_5` = creature type
+(0–0xf). The long-contested "castle-arc wall stamps" label is now firmly falsified. And the
+dungeon *geometry* (grid + boxes + decoration) is already bit-exact — **there is no clean
+"deterministic geometry" left to be Phase 1**; the remaining worldgen work is the entity
+layers. So this becomes the primary target, scoped honestly:
 
-- against a live capture via the existing dungeon rig (as the box pass was), and
-- via **reccmp**: reconstruct in C, compile with `../../msvc_vs2012_rtm/compiler_bin`, and
-  diff instructions (`../reccmp/`). This is the first real test of reccmp on a *large*
-  function.
+| aspect | reality |
+|---|---|
+| nature | stateful entity construction (Spawn + 4 behaviour types), not pure math |
+| dispatch | 16-way on creature type (`param_5` 0–0xf) — RE per type |
+| RNG | 33 `rand()` draws → gate via the proven zone rand stream |
+| verify | **live-capture spawn gate** (positions + types + behaviours + rand draws), **not** reccmp — too stateful for a clean byte-match |
+| size | 15.8 KB, 10 params — a substantial target, not a quick win |
 
-Deliverable: `524540` ported + gated, closing the dungeon-geometry tail. Relabel it in the
-ledger (it's game code, not `lib_`).
+Approach:
+1. **Structure map** — decode the `param_5` 16-way switch: which creature type → which
+   behaviour-tree shape + stat block. Start with one type (e.g. `param_5==1`) end-to-end.
+2. **Spawn-record model** — reverse the `Spawn` struct fields written (position, type,
+   behaviour chain, `+0x28` stat byte seen in the dispatch) — `RecoverStructs` already
+   applied a `Spawn` layout; extend it here.
+3. **Gate** — hook the spawn emit on a live `Server.exe` dungeon build and match the emitted
+   Spawn records (type + position + behaviour ids + the 33-draw rand sequence) ab-initio.
+4. Relabel in the ledger: `creature_spawn_builder`, kind **game** (currently `lib_fn_524540`).
+
+Because it's the mob layer, this also *is* the old "Phase 3" — the plan collapses: geometry
+is done, so the entity layers (this + props) are the whole remaining job.
 
 ## Phase 2 — prop / vegetation entity placement (Phase 12 of the port plan)
 
