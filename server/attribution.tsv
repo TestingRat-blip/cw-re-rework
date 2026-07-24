@@ -2212,8 +2212,8 @@ addr	name	kind	module	class	attributed_by	size
 004c8350	FUN_004c8350	gamemisc	game_misc	Unsorted_002	none	94
 004c83b0	FUN_004c83b0	gamemisc	world	Unsorted	logic:caller-vote	31
 004c83d0	FUN_004c83d0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	75
-004c8420	lib_fn_4c8420	lib	_library	cw_lib	ledger	133
-004c84b0	unproven ctor -- GAME	game	game_misc	Game	ledger	87
+004c8420	DungeonProp_copy_0x188	gamemisc	world	Proven	ledger	133
+004c84b0	DungeonProp_ctor_0x188	game	world	Proven	ledger	87
 004c8510	mutator_4c8510	gamemisc	game_misc	_helpers_mutator	role:mutator	17
 004c8530	mutator_4c8530	gamemisc	game_misc	_helpers_mutator	role:mutator	17
 004c8570	World_ctor	game	world	Proven	ledger	21206
@@ -2651,7 +2651,7 @@ addr	name	kind	module	class	attributed_by	size
 0052bf40	rarityRoll	game	game_misc	Game	ledger	94
 0052bfa0	FUN_0052bfa0	gamemisc	world	Unsorted	logic:caller-vote	311
 0052c160	lib_fn_52c160	lib	_library	cw_lib	ledger	502
-0052c370	lib_fn_52c370	lib	_library	cw_lib	ledger	341
+0052c370	dungeon_decor_emitter	game	world	Proven	ledger	341
 0052c4e0	item_gen_kind_3	game	entity	Proven	ledger	820
 0052c820	World_objectFalloffWeight	game	world	Proven	ledger	1325
 0052cd50	World_sampleTerrainHeight	game	world	Proven	ledger	731

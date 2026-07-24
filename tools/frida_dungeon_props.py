@@ -45,12 +45,18 @@ let randN = 0;
 const props = [];
 const grids = [];
 const torchRands = [];      // the torch block's three draws, by exact return address
+let scatterRands = [];      // FUN_0052a830's draws since the last prop push
 const ASM = [0x100300, 0x10931c];
 // return addresses of the three `call ebx` sites in the torch block (0x5058ed..0x5059e0):
 // the 1-in-40 gate, the rand()%4 direction, and the rand()%4000 flicker phase.
 const T_GATE = 0x1058ef, T_ROT = 0x1059bb, T_FLICKER = 0x1059d9;
 // and the four stub-light coin flips, one per wall direction (0x5049b5 / b6c / d10 / ebc)
 const STUB_COINS = { 0x1049b7: 0, 0x104b6e: 2, 0x104d12: 3, 0x104ebe: 1 };
+// FUN_0052a830 = the scatter/furniture builder behind the four 0x1063xx-0x106dxx emitters.
+// Its draws are attributed by return-address range so nothing inside it has to be patched.
+const SCATTER = [0x12a830, 0x12a830 + 1448];   // BYTE size, not the decompiled-C length:
+// 4820 is how long its C is, and that range runs past FUN_0052b470's entry at 0x12b470 and
+// swallows 72 of the item generator's draws.
 
 Interceptor.attach(b.add(0xd83a0), { onEnter(){ if (!world) world = this.context.ecx; } });
 Interceptor.replace(b.add(0x149550), new NativeCallback(function(){}, 'void', ['pointer'], 'fastcall'));
@@ -63,6 +69,7 @@ Interceptor.attach(m.getExportByName('rand'), { onLeave(rv){
   if (!cap || this.threadId !== genTid) return;
   randN++;
   let rva = 0; try { rva = this.returnAddress.sub(b).toUInt32(); } catch(e){ return; }
+  if (rva >= SCATTER[0] && rva < SCATTER[1]) { scatterRands.push([rva, rv.toInt32()]); return; }
   if (rva === T_GATE || rva === T_ROT || rva === T_FLICKER || (rva in STUB_COINS)) {
     const ebp = this.context.ebp;
     torchRands.push({ ra: rva, v: rv.toInt32(), n: randN - 1,
@@ -95,6 +102,7 @@ Interceptor.attach(b.add(0xd6670), { onEnter(args){
   const r = { ra: rva, randN: randN,
               I: i32(ebp,0x2b50), J: i32(ebp,0x2b4c), K: i32(ebp,0x2b48) };
   try { r.b = Array.from(new Uint8Array(args[0].readByteArray(0x40))); } catch(e){}
+  r.rands = scatterRands; scatterRands = [];
   props.push(r);
 }});
 

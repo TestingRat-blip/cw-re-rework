@@ -548,13 +548,13 @@
    "src": "CW_CONFIDENCE_XREF.md"
   },
   "004c8420": {
-   "kind": "lib",
-   "name": "lib_fn_4c8420",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "kind": "gamemisc",
+   "name": "DungeonProp_copy_0x188",
+   "src": "ADJUDICATION.md"
   },
   "004c84b0": {
    "kind": "game",
-   "name": "unproven ctor -- GAME",
+   "name": "DungeonProp_ctor_0x188",
    "src": "ADJUDICATION.md"
   },
   "004c8570": {
@@ -1043,9 +1043,9 @@
    "src": "CW_CONFIDENCE_XREF.md"
   },
   "0052c370": {
-   "kind": "lib",
-   "name": "lib_fn_52c370",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "kind": "game",
+   "name": "dungeon_decor_emitter",
+   "src": "ADJUDICATION.md"
   },
   "0052c4e0": {
    "kind": "game",

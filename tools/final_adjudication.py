@@ -205,6 +205,17 @@ the body was the only way to settle these.
         # 0x118 stride calling ItemData_copy -- so it is specifically vector<ItemData>.
         "00528530": {"name": "ItemData_vector_push_back", "kind": "gamemisc",
                      "verdict": "DEEP-RE"},
+        # the dungeon prop record (0x188) that lives in the assembler's site+0xc vector, and
+        # the two emitters that fill it (Docs/RE_dungeon_lights.md, RE_52a830_scatter.md).
+        # 004c8420 was filed lib_fn_*; it copies base fields, a vec at +0x48, an ItemData at
+        # +0x58 (FUN_00413710) and +0x170..+0x184 -- i.e. exactly one 0x188 prop record.
+        "004c8420": {"name": "DungeonProp_copy_0x188", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # was "unproven ctor -- GAME": it is that record's ctor, paired with the 004cd8f0 dtor
+        # around every site+0xc emit, and its field extent (+0x184) matches the 0x188 stride.
+        "004c84b0": {"name": "DungeonProp_ctor_0x188", "kind": "game", "verdict": "DEEP-RE"},
+        # was lib_fn_52c370: the wall-decor emitter, called from the same four wall-direction
+        # blocks as the scatter but pushing its record to site+4 (a std::list) instead.
+        "0052c370": {"name": "dungeon_decor_emitter", "kind": "game", "verdict": "DEEP-RE"},
     }
     settled.update(DEEP_RE)
 

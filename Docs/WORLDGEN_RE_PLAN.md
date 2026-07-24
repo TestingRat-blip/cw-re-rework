@@ -127,8 +127,17 @@ reproduce every record field (18/18); all 280 stubs are confirmed coin+neighbour
 with exact records. Correction worth carrying: the `+0x24` triple that looks like an RGB colour
 is a **size** — the server stores no light colour or radius at all.
 
+**Furniture scatter — ✅ DONE, gated (`RE_52a830_scatter.md`).** The nine remaining ids in the
+`site+0xc` prop vector all come from `FUN_0052a830`: 1-in-50 chest, else `rand()%3` over
+shelf / table / stool with the family chosen by dungeon style. **196/196 records** reproduced
+(id, size, draw count). Confirms RatForge's `dungeonPropModelName` table from the binary's own
+arithmetic — and exposes a gap in it: **id `0x0f`, the style-4 stool, is missing**, which will
+trip `runDungeonTest`'s unresolved-prop check.
+
 Still open in this phase:
 
+- `FUN_0052c370`, the sibling wall-decor emitter — same four wall blocks, but its record goes
+  to `site+4` (a `std::list`) rather than the prop vector;
 - the stub's third gate, a `World_getBlockAt` probe at points **off** the 10-unit lattice;
 - the chandelier at `0x507760` (`style == 3 && rand() % 10 == 0`) and the kind-4 entrance
   marker at `0x504832`;

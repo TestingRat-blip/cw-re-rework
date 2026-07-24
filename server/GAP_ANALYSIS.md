@@ -297,6 +297,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `004d4c20` | 345 | 1 | 2 |  |  |
 | `004f4b50` | 345 | 1 | 1 |  |  |
 | `004f4dd0` | 345 | 1 | 1 |  |  |
+| `0052c370` | 341 | 1 | 1 |  |  |
 | `0041f880` | 338 | 1 | 1 |  |  |
 | `0049a9aa` | 337 | 0 | 7 | orphan |  |
 | `0053ae68` | 337 | 0 | 8 | orphan |  |
@@ -411,6 +412,5 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `004672d0` | 238 | 0 | 4 | orphan | %.*s"%w"%s, string or blob too big |
 | `004311f0` | 237 | 2 | 4 |  | invalid string position, string too long |
 | `00423ce0` | 235 | 2 | 6 |  |  |
-| `0046c6c0` | 235 | 0 | 2 | orphan |  |
 
-**Total unnamed non-library functions: 1642** (118 of the listed 400 are orphans)
+**Total unnamed non-library functions: 1644** (117 of the listed 400 are orphans)

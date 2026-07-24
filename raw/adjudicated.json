@@ -152,10 +152,15 @@
    "name": "loadVoxelModels",
    "verdict": "COMPATIBLE"
   },
+  "004c8420": {
+   "kind": "gamemisc",
+   "name": "DungeonProp_copy_0x188",
+   "verdict": "DEEP-RE"
+  },
   "004c84b0": {
    "kind": "game",
-   "name": "unproven ctor -- GAME",
-   "verdict": "A-KIND"
+   "name": "DungeonProp_ctor_0x188",
+   "verdict": "DEEP-RE"
   },
   "004d1950": {
    "kind": "gamemisc",
@@ -436,6 +441,11 @@
    "kind": "game",
    "name": "rarityRoll",
    "verdict": "A"
+  },
+  "0052c370": {
+   "kind": "game",
+   "name": "dungeon_decor_emitter",
+   "verdict": "DEEP-RE"
   },
   "0052c4e0": {
    "kind": "game",

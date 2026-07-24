@@ -1,4 +1,4 @@
-// Proven_02 (world) -- server. 18 functions. Bodies = Ghidra pseudo-C.
+// Proven_02 (world) -- server. 19 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Proven_02.h"
 
@@ -15937,6 +15937,102 @@ switchD_0052a96b_default:
   ExceptionList = local_10;
   __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
   return;
+}
+
+
+/* dungeon_decor_emitter @ 0052c370  kind=game  attributed-by=ledger  size=341 */
+
+int * __cdecl FUN_0052c370(int *param_1,undefined4 param_2,int *param_3,int param_4)
+
+{
+  uint *puVar1;
+  uint uVar2;
+  int iVar3;
+  bool bVar4;
+  
+  param_1[0xb] = 0x3f800000;
+  param_1[0xc] = 0x3f800000;
+  param_1[0xd] = 0x3f800000;
+  param_1[0xe] = 2;
+  param_1[2] = *param_3;
+  param_1[3] = param_3[1];
+  param_1[4] = param_3[2];
+  param_1[5] = param_3[3];
+  param_1[6] = param_3[4];
+  param_1[7] = param_3[5];
+  param_1[9] = param_4;
+  param_1[8] = 0x3d800000;
+  switch(param_2) {
+  case 0:
+    uVar2 = rand();
+    uVar2 = uVar2 & 0x80000001;
+    if ((int)uVar2 < 0) {
+      uVar2 = (uVar2 - 1 | 0xfffffffe) + 1;
+    }
+    if (uVar2 == 0) {
+      *param_1 = 0x32;
+      puVar1 = (uint *)(param_1 + 6);
+      uVar2 = *puVar1;
+      *puVar1 = *puVar1 + 0x20000;
+      param_1[7] = param_1[7] + (uint)(0xfffdffff < uVar2);
+      return param_1;
+    }
+    if (uVar2 != 1) {
+      return param_1;
+    }
+    break;
+  case 1:
+  case 2:
+    iVar3 = rand();
+    iVar3 = iVar3 % 3;
+    if (iVar3 == 0) {
+      *param_1 = 0x32;
+      return param_1;
+    }
+    if (iVar3 != 1) {
+      if (iVar3 != 2) {
+        return param_1;
+      }
+      *param_1 = 0x34;
+      param_1[0xe] = 1;
+      param_1[0xb] = 0;
+      param_1[0xc] = 0x3f000000;
+      param_1[0xd] = 0x3dcccccd;
+      return param_1;
+    }
+    *param_1 = 0x31;
+    return param_1;
+  case 3:
+    *param_1 = 0x30;
+    return param_1;
+  case 4:
+    uVar2 = rand();
+    uVar2 = uVar2 & 0x80000001;
+    bVar4 = uVar2 == 0;
+    if ((int)uVar2 < 0) {
+      bVar4 = (uVar2 - 1 | 0xfffffffe) == 0xffffffff;
+    }
+    if (!bVar4) {
+      uVar2 = rand();
+      uVar2 = uVar2 & 0x80000003;
+      if ((int)uVar2 < 0) {
+        uVar2 = (uVar2 - 1 | 0xfffffffc) + 1;
+      }
+      *param_1 = uVar2 + 0x2c;
+      return param_1;
+    }
+    break;
+  case 5:
+    break;
+  default:
+    return param_1;
+  }
+  *param_1 = 0x36;
+  param_1[0xe] = 1;
+  param_1[0xb] = 0x3f4ccccd;
+  param_1[0xc] = 0x3f333333;
+  param_1[0xd] = 0x3e4ccccd;
+  return param_1;
 }
 
 

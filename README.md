@@ -28,6 +28,7 @@ Docs/                  the detailed write-ups (one per stage)
   RE_50702a_mob_populator.md     the dungeon mob pass + boss spawn -- gated, 6 dungeons
   RE_52b470_item_generator.md    the item-generation family -- gated; closes the twin map
   RE_dungeon_lights.md           the dungeon torch + wall-stub light sources -- gated
+  RE_52a830_scatter.md           the dungeon furniture scatter (the rest of the props) -- gated
   HANDOFF_PROMPT.md      session handoff: environment, rigs, lessons, next task
 tools/                 the pipeline (Ghidra scripts + Python passes)
 raw/                   intermediate JSONL + every audit trail
@@ -140,6 +141,7 @@ python tools/gate_52b470_itemgen.py --all    # gate: the item generator
 python tools/gate_52a760_subgen.py --all    # gate: its two sub-generators
 python tools/frida_dungeon_props.py [zx zz]  # live: the site+0xc prop vector
 python tools/gate_dungeon_lights.py --all    # gate: the torch + wall-stub lights
+python tools/gate_52a830_scatter.py --all   # gate: the furniture scatter
 ```
 
 Ghidra stages (analysis, RTTI recovery, decompile, PDB apply, struct recovery) and their

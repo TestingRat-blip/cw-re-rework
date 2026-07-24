@@ -1,4 +1,4 @@
-// Proven_00 (world) -- server. 28 functions. Bodies = Ghidra pseudo-C.
+// Proven_00 (world) -- server. 30 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Proven_00.h"
 
@@ -18520,6 +18520,44 @@ void FUN_00431400(undefined4 *param_1)
   ExceptionList = local_10;
   __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
   return;
+}
+
+
+/* DungeonProp_copy_0x188 @ 004c8420  kind=gamemisc  attributed-by=ledger  size=133 */
+
+void * __thiscall FUN_004c8420(void *this,undefined4 *param_1)
+
+{
+  FUN_00422da0(this,param_1);
+  FUN_004c82a0((void *)((int)this + 0x48),param_1 + 0x12);
+  *(undefined4 *)((int)this + 0x54) = param_1[0x15];
+  FUN_00413710((void *)((int)this + 0x58),(undefined1 *)(param_1 + 0x16));
+  *(undefined4 *)((int)this + 0x170) = param_1[0x5c];
+  *(undefined4 *)((int)this + 0x174) = param_1[0x5d];
+  *(undefined4 *)((int)this + 0x178) = param_1[0x5e];
+  *(undefined4 *)((int)this + 0x17c) = param_1[0x5f];
+  *(undefined4 *)((int)this + 0x180) = param_1[0x60];
+  *(undefined4 *)((int)this + 0x184) = param_1[0x61];
+  return this;
+}
+
+
+/* DungeonProp_ctor_0x188 @ 004c84b0  kind=game  attributed-by=ledger  size=87 */
+
+int __fastcall FUN_004c84b0(int param_1)
+
+{
+  *(undefined1 *)(param_1 + 0x30) = 1;
+  *(undefined4 *)(param_1 + 0x34) = 0;
+  *(undefined4 *)(param_1 + 0x38) = 0;
+  *(undefined4 *)(param_1 + 0x40) = 0;
+  *(undefined4 *)(param_1 + 0x44) = 0;
+  FUN_00406ef0((undefined4 *)(param_1 + 0x48));
+  *(undefined4 *)(param_1 + 0x178) = 0xffffffff;
+  *(undefined4 *)(param_1 + 0x17c) = 0xffffffff;
+  *(undefined4 *)(param_1 + 0x180) = 0xffffffff;
+  *(undefined4 *)(param_1 + 0x184) = 0;
+  return param_1;
 }
 
 
