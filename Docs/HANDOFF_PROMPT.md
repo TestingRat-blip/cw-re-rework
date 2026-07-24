@@ -178,10 +178,11 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
 1. **The rest of the dungeon entity layer** — the `cell.flags & 4` block at `0x5078b3` (fires
    on exactly one cell per dungeon, the apex/boss room), the chandelier at `0x507760`
    (`style == 3 && rand() % 10 == 0`), the kind-4 entrance marker at `0x504832`, and the
-   loot/item generation loop that runs earlier in the same cell body, and `FUN_0052c370` --
-   the wall-decor emitter that pushes to `site+4` rather than the prop vector.
-   DONE and gated already: the whole `site+0xc` prop vector (lights in
-   `RE_dungeon_lights.md`, furniture in `RE_52a830_scatter.md`),
+   loot/item generation loop that runs earlier in the same cell body, and the three remaining
+   `site+4` emitters -- liana `0x37`, cobwebs `0x39`/`0x3a`, chandelier `0x38` (all captured in
+   `raw/dungeon_props_capture*.json`, none modelled). DONE and gated already: the whole
+   `site+0xc` prop vector (lights in `RE_dungeon_lights.md`, furniture in
+   `RE_52a830_scatter.md`) and the `site+4` wall decor (`RE_52c370_wall_decor.md`),
    the `cell.flags & 4` boss block at `0x5078b3`, and the whole item-generation family
    (`FUN_0052b470` + `FUN_0052a760` + both sub-generators) the loop shares with it.
 3. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,

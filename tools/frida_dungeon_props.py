@@ -46,6 +46,8 @@ const props = [];
 const grids = [];
 const torchRands = [];      // the torch block's three draws, by exact return address
 let scatterRands = [];      // FUN_0052a830's draws since the last prop push
+let decorRands = [];        // FUN_0052c370's draws since the last decor push
+const decor = [];           // site+4 records (wall decor, chandelier, liana, cobwebs)
 const ASM = [0x100300, 0x10931c];
 // return addresses of the three `call ebx` sites in the torch block (0x5058ed..0x5059e0):
 // the 1-in-40 gate, the rand()%4 direction, and the rand()%4000 flicker phase.
@@ -54,7 +56,10 @@ const T_GATE = 0x1058ef, T_ROT = 0x1059bb, T_FLICKER = 0x1059d9;
 const STUB_COINS = { 0x1049b7: 0, 0x104b6e: 2, 0x104d12: 3, 0x104ebe: 1 };
 // FUN_0052a830 = the scatter/furniture builder behind the four 0x1063xx-0x106dxx emitters.
 // Its draws are attributed by return-address range so nothing inside it has to be patched.
-const SCATTER = [0x12a830, 0x12a830 + 1448];   // BYTE size, not the decompiled-C length:
+const SCATTER = [0x12a830, 0x12a830 + 1448];
+// FUN_0052c370 = the wall-decor emitter; its record goes to site+4, a std::list, via
+// FUN_00528450 -- a different container from the site+0xc prop vector.
+const DECOR = [0x12c370, 0x12c370 + 341];   // BYTE size, not the decompiled-C length:
 // 4820 is how long its C is, and that range runs past FUN_0052b470's entry at 0x12b470 and
 // swallows 72 of the item generator's draws.
 
@@ -70,6 +75,7 @@ Interceptor.attach(m.getExportByName('rand'), { onLeave(rv){
   randN++;
   let rva = 0; try { rva = this.returnAddress.sub(b).toUInt32(); } catch(e){ return; }
   if (rva >= SCATTER[0] && rva < SCATTER[1]) { scatterRands.push([rva, rv.toInt32()]); return; }
+  if (rva >= DECOR[0] && rva < DECOR[1]) { decorRands.push([rva, rv.toInt32()]); return; }
   if (rva === T_GATE || rva === T_ROT || rva === T_FLICKER || (rva in STUB_COINS)) {
     const ebp = this.context.ebp;
     torchRands.push({ ra: rva, v: rv.toInt32(), n: randN - 1,
@@ -106,6 +112,19 @@ Interceptor.attach(b.add(0xd6670), { onEnter(args){
   props.push(r);
 }});
 
+// FUN_00528450 = std::list::push_back on site+4 (`this` = the list, args[0] = the record)
+Interceptor.attach(b.add(0x128450), { onEnter(args){
+  if (!cap || this.threadId !== genTid) return;
+  let rva = 0; try { rva = this.returnAddress.sub(b).toUInt32(); } catch(e){ return; }
+  if (rva < ASM[0] || rva >= ASM[1]) return;
+  const ebp = this.context.ebp;
+  const r = { ra: rva, randN: randN,
+              I: i32(ebp,0x2b50), J: i32(ebp,0x2b4c), K: i32(ebp,0x2b48) };
+  try { r.b = Array.from(new Uint8Array(args[0].readByteArray(0x40))); } catch(e){}
+  r.rands = decorRands; decorRands = [];
+  decor.push(r);
+}});
+
 const zb = new NativeFunction(b.add(0x118630), 'void', ['pointer','uint32','uint32'], 'thiscall');
 rpc.exports = {
   ready(){ return world ? world.toString() : null; },
@@ -118,6 +137,8 @@ rpc.exports = {
   count(){ return props.length; },
   slice(a, n){ return props.slice(a, a + n); },
   torchRands(){ return torchRands; },
+  decorCount(){ return decor.length; },
+  decorSlice(a, n){ return decor.slice(a, a + n); },
   grids(){ return grids.map(g => { const o = Object.assign({}, g); o.bytes = null; return o; }); },
   gridBytes(i){ return grids[i] && grids[i].bytes ? grids[i].bytes : null; }
 };
@@ -155,6 +176,9 @@ def main():
         for a in range(0, n, 500):
             props.extend(api.slice(a, 500))
         torch_rands = api.torch_rands()
+        decor = []
+        for a in range(0, api.decor_count(), 500):
+            decor.extend(api.decor_slice(a, 500))
         grids = api.grids()
         for i, g in enumerate(grids):
             raw = api.grid_bytes(i)
@@ -173,10 +197,15 @@ def main():
     for p in props:
         if p.get("b"):
             p["b"] = base64.b64encode(bytes(p["b"])).decode()
-    print(f"  torch-block draws: {len(torch_rands)}", flush=True)
+    dk = Counter(d["b"][0] for d in decor if d.get("b"))
+    print(f"  torch-block draws: {len(torch_rands)}   site+4 decor records: {len(decor)}"
+          f"  by id: {dict(sorted(dk.items()))}", flush=True)
+    for d_ in decor:
+        if d_.get("b"):
+            d_["b"] = base64.b64encode(bytes(d_["b"])).decode()
     with open(OUT, "w") as f:
         json.dump({"seed": 42069, "zone": ZONE, "grids": grids, "props": props,
-                   "torch_rands": torch_rands}, f)
+                   "torch_rands": torch_rands, "decor": decor}, f)
     print(f"wrote {os.path.normpath(OUT)}", flush=True)
     sys.stdout.flush()
     os._exit(0)

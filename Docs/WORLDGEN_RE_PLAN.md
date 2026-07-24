@@ -134,10 +134,18 @@ shelf / table / stool with the family chosen by dungeon style. **196/196 records
 arithmetic — and exposes a gap in it: **id `0x0f`, the style-4 stool, is missing**, which will
 trip `runDungeonTest`'s unresolved-prop check.
 
+**Wall decor — ✅ DONE, gated (`RE_52c370_wall_decor.md`).** `FUN_0052c370` fills the
+assembler's *second* decoration container, the `std::list` at `site+4`. **108/108** records
+reproduced on id, scale, flag, draw count and position — including the style-0 coin-even branch
+that raises the record by exactly 2.0, decoded then confirmed 9/9. Extends RatForge's "id 0x30
+for style 3" note to all six styles.
+
 Still open in this phase:
 
-- `FUN_0052c370`, the sibling wall-decor emitter — same four wall blocks, but its record goes
-  to `site+4` (a `std::list`) rather than the prop vector;
+- the other two `site+4` emitters, captured but not modelled: the **liana** (`0x37`, 37
+  records), the **cobwebs** (`0x39`/`0x3a`, 99) and the **chandelier** (`0x38`, 24, the
+  `rand() % 10` block at `0x507760`) — all in the *hanging-decor* id namespace, not the
+  static-entity one the wall decor uses;
 - the stub's third gate, a `World_getBlockAt` probe at points **off** the 10-unit lattice;
 - the chandelier at `0x507760` (`style == 3 && rand() % 10 == 0`) and the kind-4 entrance
   marker at `0x504832`;
