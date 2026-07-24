@@ -8065,6 +8065,84 @@ void __thiscall FUN_004f7a70(void *this,float *param_1,float param_2)
 }
 
 
+/* FUN_004f7df0 @ 004f7df0  kind=gamemisc  attributed-by=none  size=225 */
+
+void __thiscall FUN_004f7df0(void *this,uint param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  void *pvVar3;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_00555670;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  pvVar3 = (void *)0x0;
+  if (param_1 != 0) {
+    if (param_1 < 0xaaaaaab) {
+      pvVar3 = operator_new(param_1 * 0x18);
+      if (pvVar3 != (void *)0x0) goto LAB_004f7e4f;
+    }
+                    /* WARNING: Subroutine does not return */
+    std::_Xbad_alloc();
+  }
+LAB_004f7e4f:
+  local_8 = 0;
+  FUN_004f7130(*(int **)this,*(int **)((int)this + 4),pvVar3);
+  iVar1 = *(int *)((int)this + 4);
+  iVar2 = *(int *)this;
+  if (*(undefined4 **)this != (undefined4 *)0x0) {
+    FUN_004f3bf0(*(undefined4 **)this,*(undefined4 **)((int)this + 4));
+    operator_delete(*(void **)this);
+  }
+  *(void **)this = pvVar3;
+  *(void **)((int)this + 8) = (void *)((int)pvVar3 + param_1 * 0x18);
+  *(void **)((int)this + 4) = (void *)((int)pvVar3 + ((iVar1 - iVar2) / 0x18) * 0x18);
+  ExceptionList = local_10;
+  return;
+}
+
+
+/* FUN_004f8180 @ 004f8180  kind=gamemisc  attributed-by=none  size=162 */
+
+void __thiscall FUN_004f8180(void *this,uint param_1)
+
+{
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  if (param_1 <= (uint)((*(int *)((int)this + 8) - *(int *)((int)this + 4)) / 0x18)) {
+    return;
+  }
+  iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x18;
+  if (0xaaaaaaaU - iVar1 < param_1) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("vector<T> too long");
+  }
+  uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x18;
+  uVar3 = iVar1 + param_1;
+  if (0xaaaaaaa - (uVar2 >> 1) < uVar2) {
+    uVar2 = 0;
+    if (uVar3 != 0) {
+      uVar2 = uVar3;
+    }
+    FUN_004f7df0(this,uVar2);
+    return;
+  }
+  uVar2 = uVar2 + (uVar2 >> 1);
+  if (uVar2 < uVar3) {
+    uVar2 = uVar3;
+  }
+  FUN_004f7df0(this,uVar2);
+  return;
+}
+
+
 /* FUN_004f8230 @ 004f8230  kind=gamemisc  attributed-by=none  size=159 */
 
 void __thiscall FUN_004f8230(void *this,uint param_1)
@@ -20422,138 +20500,6 @@ undefined8 __aulldvrm(uint param_1,uint param_2,uint param_3,uint param_4)
     uVar3 = 0;
   }
   return CONCAT44(uVar3,iVar4);
-}
-
-
-/* __aullrem @ 0054b160  kind=gamemisc  attributed-by=none  size=117 */
-
-/* Library Function - Single Match
-    __aullrem
-   
-   Library: Visual Studio */
-
-undefined8 __aullrem(uint param_1,uint param_2,uint param_3,uint param_4)
-
-{
-  ulonglong uVar1;
-  longlong lVar2;
-  uint uVar3;
-  uint uVar4;
-  uint uVar5;
-  int iVar6;
-  int iVar7;
-  uint uVar8;
-  uint uVar9;
-  uint uVar10;
-  bool bVar11;
-  
-  uVar3 = param_1;
-  uVar4 = param_4;
-  uVar9 = param_2;
-  uVar10 = param_3;
-  if (param_4 == 0) {
-    iVar6 = (int)(((ulonglong)param_2 % (ulonglong)param_3 << 0x20 | (ulonglong)param_1) %
-                 (ulonglong)param_3);
-    iVar7 = 0;
-  }
-  else {
-    do {
-      uVar5 = uVar4 >> 1;
-      uVar10 = uVar10 >> 1 | (uint)((uVar4 & 1) != 0) << 0x1f;
-      uVar8 = uVar9 >> 1;
-      uVar3 = uVar3 >> 1 | (uint)((uVar9 & 1) != 0) << 0x1f;
-      uVar4 = uVar5;
-      uVar9 = uVar8;
-    } while (uVar5 != 0);
-    uVar1 = CONCAT44(uVar8,uVar3) / (ulonglong)uVar10;
-    uVar3 = (int)uVar1 * param_4;
-    lVar2 = (uVar1 & 0xffffffff) * (ulonglong)param_3;
-    uVar9 = (uint)((ulonglong)lVar2 >> 0x20);
-    uVar4 = (uint)lVar2;
-    uVar10 = uVar9 + uVar3;
-    if (((CARRY4(uVar9,uVar3)) || (param_2 < uVar10)) || ((param_2 <= uVar10 && (param_1 < uVar4))))
-    {
-      bVar11 = uVar4 < param_3;
-      uVar4 = uVar4 - param_3;
-      uVar10 = (uVar10 - param_4) - (uint)bVar11;
-    }
-    iVar6 = -(uVar4 - param_1);
-    iVar7 = -(uint)(uVar4 - param_1 != 0) - ((uVar10 - param_2) - (uint)(uVar4 < param_1));
-  }
-  return CONCAT44(iVar7,iVar6);
-}
-
-
-/* ___tmainCRTStartup @ 0054b2e6  kind=gamemisc  attributed-by=none  size=330 */
-
-/* WARNING: Function: __SEH_prolog4 replaced with injection: SEH_prolog4 */
-/* WARNING: Function: __SEH_epilog4 replaced with injection: EH_epilog3 */
-/* Library Function - Single Match
-    ___tmainCRTStartup
-   
-   Library: Visual Studio 2012 Release */
-
-int ___tmainCRTStartup(void)
-
-{
-  bool bVar1;
-  void *pvVar2;
-  void *pvVar3;
-  int iVar4;
-  BOOL BVar5;
-  
-  bVar1 = false;
-  do {
-    pvVar3 = (void *)0x0;
-    LOCK();
-    pvVar2 = StackBase;
-    if (DAT_00584684 != (void *)0x0) {
-      pvVar3 = DAT_00584684;
-      pvVar2 = DAT_00584684;
-    }
-    DAT_00584684 = pvVar2;
-    UNLOCK();
-    if (pvVar3 == (void *)0x0) goto LAB_0054b321;
-  } while (pvVar3 != StackBase);
-  bVar1 = true;
-LAB_0054b321:
-  if (DAT_00584688 == 1) {
-    _amsg_exit(0x1f);
-  }
-  else if (DAT_00584688 == 0) {
-    DAT_00584688 = 1;
-    iVar4 = initterm_e(&DAT_0055854c,&DAT_00558560);
-    if (iVar4 != 0) {
-      return 0xff;
-    }
-  }
-  else {
-    DAT_00584624 = 1;
-  }
-  if (DAT_00584688 == 1) {
-    initterm(&DAT_00558408,&DAT_00558548);
-    DAT_00584688 = 2;
-  }
-  if (!bVar1) {
-    LOCK();
-    DAT_00584684 = (void *)0x0;
-    UNLOCK();
-  }
-  if ((DAT_0058468c != (code *)0x0) &&
-     (BVar5 = __IsNonwritableInCurrentImage((PBYTE)&DAT_0058468c), BVar5 != 0)) {
-    (*DAT_0058468c)(0,2,0);
-  }
-  pvVar3 = DAT_00584630;
-  *(void **)__initenv_exref = DAT_00584630;
-  DAT_00584620 = FUN_00549c50(pvVar3);
-  if (DAT_00584638 != 0) {
-    if (DAT_00584624 == 0) {
-      _cexit();
-    }
-    return DAT_00584620;
-  }
-                    /* WARNING: Subroutine does not return */
-  exit(DAT_00584620);
 }
 
 

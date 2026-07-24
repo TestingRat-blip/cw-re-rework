@@ -177,11 +177,21 @@ twin map closed), as is its 26th candidate — `FUN_0052a760`'s coin flip and bo
 (`FUN_00528bf0` kinds 4-9 / `FUN_0052c4e0` kind 3), 18/18 invocations, 298 candidates, verified
 through the kind-moves-to-+0x08 mutation.
 
+**Creature species — ✅ DONE, gated + ported (`RE_dungeon_species.md`).** The `[ebp-0x2bf4]`
+group container and the `[ebp-0x2be8]` flat vector are both prologue products of the *same*
+jump table. The whole assembler has exactly **three** `operator[]` sites — boss, patrol,
+companion — which is what proves the coverage. Derived 6/6, with 32 patrol + 51 companion
+species each indexed out of its own group. Two findings a port needs: styles 1/2 spend a
+prologue `rand()%3` on their second group's id, and an **empty `list1` skips the companion
+block *including* its count draw**. Both are now in `cwDungeonSpecies`; `rederive_dundecor`
+stays 52/52 and the hash is unchanged.
+
+⚠ It also **falsifies this plan's own earlier guess**: the mob pass reads neither container.
+`[ebp-0x374]` is an all-zero int4 (a vec4 float store plus a `cvttss2si`), not a species list.
+Mob species is `FUN_00524540`'s `param_5` model byte — a spawn-builder property, not a
+per-dungeon one.
+
 Still open in this phase:
-- the **mob species**: the second container `[ebp-0x2bf4]`, filled by the same prologue arms
-  from `[ebp-0x37c]`/`[ebp-0x370]` (the style-1/2 arm adds a `rand()%3` pick over
-  `0x61`/`0x11`/`0x5e`). `0x50754d` hands `FUN_00524540` a per-spawn list built from it. Mob
-  *placement* is bit-exact; *species* starts in the prologue, not in the mob pass.
 - a **port gap, now quantified**: 79 of the reference dungeon's 84 stub rejects are the
   dungeon's *own stone*, not terrain, so RatForge's terrain-height-only occlusion test
   over-emits stubs.

@@ -1,4 +1,4 @@
-// Helpers (world) -- server. 179 functions. Bodies = Ghidra pseudo-C.
+// Helpers (world) -- server. 175 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Helpers.h"
 
@@ -228,15 +228,6 @@ undefined4 __fastcall FUN_00402170(int param_1)
 
 {
   return *(undefined4 *)(param_1 + 0x4c);
-}
-
-
-/* FUN_00402bb0 @ 00402bb0  kind=gamemisc  attributed-by=caller-vote  size=15 */
-
-int __thiscall FUN_00402bb0(void *this,int param_1)
-
-{
-  return *(int *)this + param_1 * 4;
 }
 
 
@@ -7630,130 +7621,6 @@ undefined4 * __thiscall FUN_004f7c60(void *this,int *param_1)
     } while (*(char *)((int)puVar2 + 0xd) == '\0');
   }
   return puVar3;
-}
-
-
-/* FUN_004f7df0 @ 004f7df0  kind=gamemisc  attributed-by=caller-vote  size=225 */
-
-void __thiscall FUN_004f7df0(void *this,uint param_1)
-
-{
-  int iVar1;
-  int iVar2;
-  void *pvVar3;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  local_8 = 0xffffffff;
-  puStack_c = &LAB_00555670;
-  local_10 = ExceptionList;
-  ExceptionList = &local_10;
-  pvVar3 = (void *)0x0;
-  if (param_1 != 0) {
-    if (param_1 < 0xaaaaaab) {
-      pvVar3 = operator_new(param_1 * 0x18);
-      if (pvVar3 != (void *)0x0) goto LAB_004f7e4f;
-    }
-                    /* WARNING: Subroutine does not return */
-    std::_Xbad_alloc();
-  }
-LAB_004f7e4f:
-  local_8 = 0;
-  FUN_004f7130(*(int **)this,*(int **)((int)this + 4),pvVar3);
-  iVar1 = *(int *)((int)this + 4);
-  iVar2 = *(int *)this;
-  if (*(undefined4 **)this != (undefined4 *)0x0) {
-    FUN_004f3bf0(*(undefined4 **)this,*(undefined4 **)((int)this + 4));
-    operator_delete(*(void **)this);
-  }
-  *(void **)this = pvVar3;
-  *(void **)((int)this + 8) = (void *)((int)pvVar3 + param_1 * 0x18);
-  *(void **)((int)this + 4) = (void *)((int)pvVar3 + ((iVar1 - iVar2) / 0x18) * 0x18);
-  ExceptionList = local_10;
-  return;
-}
-
-
-/* FUN_004f8180 @ 004f8180  kind=gamemisc  attributed-by=caller-vote  size=162 */
-
-void __thiscall FUN_004f8180(void *this,uint param_1)
-
-{
-  int iVar1;
-  uint uVar2;
-  uint uVar3;
-  
-  if (param_1 <= (uint)((*(int *)((int)this + 8) - *(int *)((int)this + 4)) / 0x18)) {
-    return;
-  }
-  iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x18;
-  if (0xaaaaaaaU - iVar1 < param_1) {
-                    /* WARNING: Subroutine does not return */
-    std::_Xlength_error("vector<T> too long");
-  }
-  uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x18;
-  uVar3 = iVar1 + param_1;
-  if (0xaaaaaaa - (uVar2 >> 1) < uVar2) {
-    uVar2 = 0;
-    if (uVar3 != 0) {
-      uVar2 = uVar3;
-    }
-    FUN_004f7df0(this,uVar2);
-    return;
-  }
-  uVar2 = uVar2 + (uVar2 >> 1);
-  if (uVar2 < uVar3) {
-    uVar2 = uVar3;
-  }
-  FUN_004f7df0(this,uVar2);
-  return;
-}
-
-
-/* FUN_005285c0 @ 005285c0  kind=gamemisc  attributed-by=caller-vote  size=213 */
-
-void __thiscall FUN_005285c0(void *this,int *param_1)
-
-{
-  int *piVar1;
-  int *piVar2;
-  void *this_00;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  local_8 = 0xffffffff;
-  puStack_c = &LAB_005560b2;
-  local_10 = ExceptionList;
-  ExceptionList = &local_10;
-  piVar1 = *(int **)((int)this + 4);
-  if ((param_1 < piVar1) && (piVar2 = *(int **)this, piVar2 <= param_1)) {
-    if (piVar1 == *(int **)((int)this + 8)) {
-      FUN_004f8180(this,1);
-    }
-    this_00 = *(void **)((int)this + 4);
-    param_1 = (int *)(*(int *)this + (((int)param_1 - (int)piVar2) / 0x18) * 0x18);
-    local_8 = 0;
-    if (this_00 == (void *)0x0) goto LAB_0052867d;
-    FUN_004daa80(this_00,param_1);
-    local_8 = CONCAT31(local_8._1_3_,1);
-  }
-  else {
-    if (piVar1 == *(int **)((int)this + 8)) {
-      FUN_004f8180(this,1);
-    }
-    this_00 = *(void **)((int)this + 4);
-    local_8 = 2;
-    if (this_00 == (void *)0x0) goto LAB_0052867d;
-    FUN_004daa80(this_00,param_1);
-    local_8 = CONCAT31(local_8._1_3_,3);
-  }
-  FUN_004daa80((void *)((int)this_00 + 0xc),param_1 + 3);
-LAB_0052867d:
-  *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0x18;
-  ExceptionList = local_10;
-  return;
 }
 
 

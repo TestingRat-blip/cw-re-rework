@@ -4,7 +4,7 @@ addr	name	kind	module	class	attributed_by	size
 00401040	FUN_00401040	gamemisc	world	Helpers	caller-vote	26
 00401060	FUN_00401060	gamemisc	world	Helpers	caller-vote	28
 00401080	FUN_00401080	gamemisc	world	Helpers	caller-vote	38
-004010b0	FUN_004010b0	gamemisc	world	Unsorted	logic:caller-vote	48
+004010b0	vec4_store_f32	gamemisc	render	Proven	ledger	48
 004010e0	FUN_004010e0	gamemisc	world	Helpers	caller-vote	81
 00401140	FUN_00401140	gamemisc	entity	Helpers	caller-vote	558
 00401370	FUN_00401370	gamemisc	world	Unsorted	logic:caller-vote	37
@@ -76,7 +76,7 @@ addr	name	kind	module	class	attributed_by	size
 00402a40	FUN_00402a40	gamemisc	world	Unsorted	logic:caller-vote	46
 00402a70	FUN_00402a70	gamemisc	world	Unsorted	logic:caller-vote	149
 00402b10	FUN_00402b10	gamemisc	ai	Helpers	caller-vote	159
-00402bb0	FUN_00402bb0	gamemisc	world	Helpers	caller-vote	15
+00402bb0	int_vector_at	gamemisc	game_misc	Game	ledger	15
 00402bc0	FUN_00402bc0	gamemisc	world	Helpers	caller-vote	6
 00402bd0	FUN_00402bd0	gamemisc	ai	Helpers	caller-vote	63
 00402c10	FUN_00402c10	gamemisc	game_misc	Unsorted_000	none	22
@@ -515,7 +515,7 @@ addr	name	kind	module	class	attributed_by	size
 0041fe60	VoxelColumn_setBlock	gamemisc	world	Proven	ledger	151
 0041ff00	writeVoxel	gamemisc	world	Proven	ledger	154
 0041ff9a	writeVoxel__split_41ff9a	gamemisc	world	_body_splits	role:body-split	80
-0041fff0	compute_41fff0	gamemisc	game_misc	_helpers_computed	role:computed	9
+0041fff0	int_vector_size	gamemisc	game_misc	Game	ledger	9
 00420000	compute_420000	gamemisc	game_misc	_helpers_computed	role:computed	23
 00420020	compute_420020	gamemisc	game_misc	_helpers_computed	role:computed	22
 00420040	FUN_00420040	gamemisc	game_misc	_helpers_wrapper	role:wrapper	58
@@ -2390,7 +2390,7 @@ addr	name	kind	module	class	attributed_by	size
 004e0f40	spawn_ctor	game	world	Proven	ledger	380
 004e10c0	cube::Spawn::~Spawn	game	world	Spawn	rtti	259
 004e11d0	cube::Spawn::scalar_deleting_destructor	game	world	Spawn	rtti	33
-004e1200	lib_fn_4e1200	lib	_library	cw_lib	ledger	39
+004e1200	vec4_f32_to_i32	gamemisc	render	Proven	ledger	39
 004e1230	FUN_004e1230	gamemisc	world	Unsorted	logic:caller-vote	78
 004e1280	FUN_004e1280	gamemisc	world	_helpers_dtor-like	role:dtor-like	208
 004e1350	Catch_All@004e1350	lib	_library	eh_funclets	eh	20
@@ -2438,7 +2438,7 @@ addr	name	kind	module	class	attributed_by	size
 004e27b0	FUN_004e27b0	gamemisc	world	Unsorted	logic:caller-vote	115
 004e2830	compute_4e2830	gamemisc	game_misc	_helpers_computed	role:computed	7
 004e2840	lib_fn_4e2840	lib	_library	cw_lib	ledger	134
-004e28d0	compute_4e28d0	gamemisc	game_misc	_helpers_computed	role:computed	11
+004e28d0	int_vector_empty	gamemisc	game_misc	Game	ledger	11
 004e28e0	town_builder	game	world	Proven	ledger	2083
 004e310a	town_builder__split_4e310a	gamemisc	world	_body_splits	role:body-split	28175
 004eaa7a	town_builder__split_4eaa7a	gamemisc	world	_body_splits	role:body-split	14586
@@ -2523,7 +2523,7 @@ addr	name	kind	module	class	attributed_by	size
 004f73ca	dungeon_grid_init__split_4f73ca	gamemisc	world	_body_splits	role:body-split	28
 004f7400	FUN_004f7400	gamemisc	world	Unsorted	logic:caller-vote	130
 004f7490	StructureMarker_ctor	game	game_misc	Game	ledger	161
-004f7540	FUN_004f7540	gamemisc	world	_helpers_ctor-like	role:ctor-like	44
+004f7540	SpeciesGroup_ctor	gamemisc	game_misc	Game	ledger	44
 004f7570	cube::Region::Region	game	world	Region	rtti	174
 004f7620	FUN_004f7620	gamemisc	world	Helpers	caller-vote	52
 004f7660	FUN_004f7660	gamemisc	world	Helpers	caller-vote	166
@@ -2550,14 +2550,14 @@ addr	name	kind	module	class	attributed_by	size
 004f7ca0	FUN_004f7ca0	gamemisc	world	Unsorted	logic:caller-vote	85
 004f7d00	FUN_004f7d00	gamemisc	world	_helpers_dtor-like	role:dtor-like	212
 004f7dd4	Catch_All@004f7dd4	lib	_library	eh_funclets	eh	20
-004f7df0	FUN_004f7df0	gamemisc	world	Helpers	caller-vote	225
+004f7df0	FUN_004f7df0	gamemisc	game_misc	Unsorted_002	none	225
 004f7ed1	Catch_All@004f7ed1	lib	_library	eh_funclets	eh	20
 004f7ef0	lib_fn_4f7ef0	lib	_library	cw_lib	ledger	207
 004f7fbf	Catch_All@004f7fbf	lib	_library	eh_funclets	eh	20
 004f7fe0	FUN_004f7fe0	gamemisc	game_misc	_helpers_dtor-like	role:dtor-like	207
 004f80af	Catch_All@004f80af	lib	_library	eh_funclets	eh	20
 004f80d0	FUN_004f80d0	gamemisc	world	Unsorted	logic:caller-vote	162
-004f8180	FUN_004f8180	gamemisc	world	Helpers	caller-vote	162
+004f8180	FUN_004f8180	gamemisc	game_misc	Unsorted_002	none	162
 004f8230	FUN_004f8230	gamemisc	game_misc	Unsorted_002	none	159
 004f82d0	lib_fn_4f82d0	lib	_library	cw_lib	ledger	456
 004f84a0	grid_cell_accessor -- GAME	game	game_misc	Game	ledger	127
@@ -2635,7 +2635,7 @@ addr	name	kind	module	class	attributed_by	size
 00528450	std_list_push_back	lib	_library	cw_lib	ledger	67
 005284a0	StructureMarker_push_back	gamemisc	game_misc	Game	ledger	130
 00528530	ItemData_vector_push_back	gamemisc	entity	Proven	ledger	132
-005285c0	FUN_005285c0	gamemisc	world	Helpers	caller-vote	213
+005285c0	SpeciesGroup_push_back	gamemisc	game_misc	Game	ledger	213
 005286a0	UNRESOLVED_5286a0	gamemisc	game_misc	Game	ledger	143
 00528730	FUN_00528730	gamemisc	world	Unsorted	logic:caller-vote	115
 005287b0	lib_fn_5287b0	lib	_library	cw_lib	ledger	1077
@@ -2896,11 +2896,11 @@ addr	name	kind	module	class	attributed_by	size
 0054b030	__allshl	gamemisc	game_misc	Unsorted_002	none	31
 0054b050	__aulldiv	gamemisc	game_misc	Unsorted_002	none	104
 0054b0c0	__aulldvrm	gamemisc	game_misc	Unsorted_002	none	149
-0054b160	__aullrem	gamemisc	game_misc	Unsorted_002	none	117
+0054b160	__aullrem	gamemisc	game_misc	Unsorted_003	none	117
 0054b1d6	MSVCR110.DLL::libm_sse2_acos_precise	lib	_library	imports	import-ns	6
 0054b1dc	MSVCR110.DLL::libm_sse2_exp_precise	lib	_library	imports	import-ns	6
 0054b29b	FUN_0054b29b	gamemisc	game_misc	_indirect_dispatch-target	role:dispatch-target	75
-0054b2e6	___tmainCRTStartup	gamemisc	game_misc	Unsorted_002	none	330
+0054b2e6	___tmainCRTStartup	gamemisc	game_misc	Unsorted_003	none	330
 0054b44b	entry	gamemisc	game_misc	_helpers_wrapper	role:wrapper	10
 0054b456	MSVCR110.DLL::_lock	lib	_library	imports	import-ns	6
 0054b45c	MSVCR110.DLL::_unlock	lib	_library	imports	import-ns	6

@@ -1,4 +1,4 @@
-// Game (game_misc) -- server. 17 functions. Bodies = Ghidra pseudo-C.
+// Game (game_misc) -- server. 22 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Game.h"
 
@@ -8,6 +8,15 @@ int __thiscall FUN_004013d0(void *this,int param_1)
 
 {
   return (int)(void *)((int)this + param_1 * 4);
+}
+
+
+/* int_vector_at @ 00402bb0  kind=gamemisc  attributed-by=ledger  size=15 */
+
+int __thiscall FUN_00402bb0(void *this,int param_1)
+
+{
+  return *(int *)this + param_1 * 4;
 }
 
 
@@ -99,6 +108,15 @@ void __thiscall FUN_00413420(void *this,uint param_1,int param_2)
     *(uint *)((int)this + 0x1c) = param_1;
   }
   return;
+}
+
+
+/* int_vector_size @ 0041fff0  kind=gamemisc  attributed-by=ledger  size=9 */
+
+int __fastcall FUN_0041fff0(int *param_1)
+
+{
+  return param_1[1] - *param_1 >> 2;
 }
 
 
@@ -455,6 +473,15 @@ void __thiscall FUN_004d83a0(void *this,uint param_1,int *param_2)
 }
 
 
+/* int_vector_empty @ 004e28d0  kind=gamemisc  attributed-by=ledger  size=11 */
+
+bool __fastcall FUN_004e28d0(int *param_1)
+
+{
+  return *param_1 == param_1[1];
+}
+
+
 /* unproven ctor -- GAME @ 004f3630  kind=game  attributed-by=ledger  size=186 */
 
 int * __cdecl FUN_004f3630(int *param_1,int *param_2,int param_3)
@@ -563,6 +590,21 @@ undefined4 * __fastcall FUN_004f7490(undefined4 *param_1)
 }
 
 
+/* SpeciesGroup_ctor @ 004f7540  kind=gamemisc  attributed-by=ledger  size=44 */
+
+undefined4 * __fastcall FUN_004f7540(undefined4 *param_1)
+
+{
+  *param_1 = 0;
+  param_1[1] = 0;
+  param_1[2] = 0;
+  param_1[3] = 0;
+  param_1[4] = 0;
+  param_1[5] = 0;
+  return param_1;
+}
+
+
 /* grid_cell_accessor -- GAME @ 004f84a0  kind=game  attributed-by=ledger  size=127 */
 
 undefined1 * __thiscall FUN_004f84a0(void *this,int param_1,int param_2,int param_3)
@@ -659,6 +701,52 @@ void __thiscall FUN_005284a0(void *this,undefined4 *param_1)
     }
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0x140;
+  return;
+}
+
+
+/* SpeciesGroup_push_back @ 005285c0  kind=gamemisc  attributed-by=ledger  size=213 */
+
+void __thiscall FUN_005285c0(void *this,int *param_1)
+
+{
+  int *piVar1;
+  int *piVar2;
+  void *this_00;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_005560b2;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  piVar1 = *(int **)((int)this + 4);
+  if ((param_1 < piVar1) && (piVar2 = *(int **)this, piVar2 <= param_1)) {
+    if (piVar1 == *(int **)((int)this + 8)) {
+      FUN_004f8180(this,1);
+    }
+    this_00 = *(void **)((int)this + 4);
+    param_1 = (int *)(*(int *)this + (((int)param_1 - (int)piVar2) / 0x18) * 0x18);
+    local_8 = 0;
+    if (this_00 == (void *)0x0) goto LAB_0052867d;
+    FUN_004daa80(this_00,param_1);
+    local_8 = CONCAT31(local_8._1_3_,1);
+  }
+  else {
+    if (piVar1 == *(int **)((int)this + 8)) {
+      FUN_004f8180(this,1);
+    }
+    this_00 = *(void **)((int)this + 4);
+    local_8 = 2;
+    if (this_00 == (void *)0x0) goto LAB_0052867d;
+    FUN_004daa80(this_00,param_1);
+    local_8 = CONCAT31(local_8._1_3_,3);
+  }
+  FUN_004daa80((void *)((int)this_00 + 0xc),param_1 + 3);
+LAB_0052867d:
+  *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0x18;
+  ExceptionList = local_10;
   return;
 }
 

@@ -215,6 +215,21 @@ the body was the only way to settle these.
         # too -- the Pass-3 candidate loop index [esp+0x28] (0x50ea0e/0x50f27c); level and rank
         # are reproduced 6/6 ab-initio by tools/gate_dungeon_counter.py.
         "00411090": {"name": "monster_level_formula", "kind": "game", "verdict": "DEEP-RE"},
+        # the creature-species containers the dungeon assembler builds in its prologue and
+        # the three helpers that index them (Docs/RE_dungeon_species.md, gated 6/6).
+        # 402bb0 / 41fff0 / 4e28d0 are vector<int> operator[] / size / empty: proven by the
+        # three index sites (boss 0x5079cd, patrol 0x508c4a, companion 0x509292) each doing
+        # `list[rand() % size(list)]` guarded by `empty(list)`.
+        "00402bb0": {"name": "int_vector_at", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        "0041fff0": {"name": "int_vector_size", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        "004e28d0": {"name": "int_vector_empty", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # the 0x18 species GROUP (two vector<int>) and the vector of them
+        "004f7540": {"name": "SpeciesGroup_ctor", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        "005285c0": {"name": "SpeciesGroup_push_back", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # NOT a species list, despite sitting one instruction from the mob spawn call: a
+        # 12-instruction vec4 float store and its cvttss2si companion (0x5074f7/0x507503).
+        "004010b0": {"name": "vec4_store_f32", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        "004e1200": {"name": "vec4_f32_to_i32", "kind": "gamemisc", "verdict": "DEEP-RE"},
         # site+0x48, the assembler's FOURTH container: the two structure markers (kind-4
         # entrance = type 5 @0x5048c7, boss = type 6 @0x507aa0). Those are the only two
         # pushes into it in the whole 36 KB body (Docs/RE_dungeon_markers.md, 12/12).

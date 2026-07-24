@@ -144,14 +144,19 @@ table, not six), and **the style-5 pair is stored descending** (`0x4e` then `0x4
 live vectors match, 6/6 — `[2,3] [15,16] [15,16] [11,12] [2,3] [15,16]` for styles
 3, 1, 2, 0, 3, 2.
 
-### The lead it opens
+### The lead it opens — followed up in `RE_dungeon_species.md`
 
 Each arm also fills two more creature lists (`[ebp-0x37c]`, `[ebp-0x370]`) which go to a
 *second* container `[ebp-0x2bf4]` via `FUN_005285c0`, and the style-1/2 arm picks one of three
-extra ids (`0x61` / `0x11` / `0x5e`) with a `rand() % 3`. That container is what the **mob**
-pass's spawns read — `0x50754d` passes `[ebp-0x374]`, built per spawn just above, as
-`FUN_00524540`'s species argument. Mob *placement* is already bit-exact; mob *species* is the
-next thread, and it starts here rather than in the mob pass.
+extra ids (`0x61` / `0x11` / `0x5e`) with a `rand() % 3`.
+
+⚠ **The guess that followed was wrong and is corrected there.** That container is *not* what the
+mob pass reads: `[ebp-0x374]`, which `0x50754d` hands `FUN_00524540`, is an all-zero **int4** —
+`FUN_004010b0` is a vec4 float store and `FUN_004e1200` its `cvttss2si` companion, twelve
+instructions each. The group container feeds the **patrol NPC and its companions**; the flat
+vector feeds the **boss, guard fans and centre arc**; and the whole assembler holds exactly
+three `operator[]` sites, so the mob pass reads neither. Its spawns take `FUN_00524540`'s own
+`param_5` model byte.
 
 ---
 

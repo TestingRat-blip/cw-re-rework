@@ -413,4 +413,4 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `004311f0` | 237 | 2 | 4 |  | invalid string position, string too long |
 | `00423ce0` | 235 | 2 | 6 |  |  |
 
-**Total unnamed non-library functions: 1645** (117 of the listed 400 are orphans)
+**Total unnamed non-library functions: 1646** (117 of the listed 400 are orphans)

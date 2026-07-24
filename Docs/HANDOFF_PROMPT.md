@@ -70,6 +70,7 @@ applied). They are copies — **never mutate `RatForge\tools\ghidra_proj\CubeAud
 | `frida_spawn_capture.py` | live overworld spawn capture |
 | `frida_dungeon_spawn.py` | **live dungeon capture** (the important one, see below) |
 | `frida_dungeon_marker.py` | `site+0x48` markers + the stub's off-lattice terrain probe |
+| `frida_dungeon_patrol.py` | the two creature-species containers + every species they hand out |
 | `reccmp/compare.py` | byte-match a recompile vs the shipped code |
 
 **⚠ Pipeline is a fixpoint — run in this order after any change:**
@@ -203,8 +204,15 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    480/480 derived, so the whole 280-stub set is now predicted in emit order) and the **boss
    species vector** (a four-way jump table on `style-1` in the prologue, no capture needed,
    6/6). New rig `tools/frida_dungeon_marker.py`.
-   ▶ **What is left of the mob layer is SPECIES, not placement** — the second prologue container
-   `[ebp-0x2bf4]`, which `0x50754d` feeds to `FUN_00524540`. Start there.
+   **Creature SPECIES is done too (`RE_dungeon_species.md`)** — both containers are prologue
+   products of the same `style-1` jump table, the assembler holds exactly three `operator[]`
+   sites (boss / patrol / companion), and it is derived 6/6 + ported. Two traps it found: styles
+   1/2 spend a prologue `rand()%3`, and an empty companion list skips its own count draw. It also
+   falsified the previous session's guess that the mob pass reads those containers — it does not;
+   `[ebp-0x374]` is an all-zero int4, and mob species is `FUN_00524540`'s `param_5` byte.
+   ▶ **One quantified port gap remains**: RatForge rejects wall stubs on terrain surface height,
+   but 79 of the reference dungeon's 84 rejects are the dungeon's *own stone*, so it over-emits
+   stubs. The RE rule is `(block[3] & 0x1f) ∉ {0,2}` on the finished world.
 3. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,
    still the largest genuinely-new slice.
 4. **Port the mob pass + boss spawn + light sources into `cw_rederive`** (the item-generation

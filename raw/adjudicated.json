@@ -72,6 +72,11 @@
   }
  },
  "Server.exe": {
+  "004010b0": {
+   "kind": "gamemisc",
+   "name": "vec4_store_f32",
+   "verdict": "DEEP-RE"
+  },
   "004013d0": {
    "kind": "gamemisc",
    "name": "getElemPtr4",
@@ -86,6 +91,11 @@
    "kind": "gamemisc",
    "name": "vec3_store",
    "verdict": "B"
+  },
+  "00402bb0": {
+   "kind": "gamemisc",
+   "name": "int_vector_at",
+   "verdict": "DEEP-RE"
   },
   "00405f20": {
    "kind": "gamemisc",
@@ -136,6 +146,11 @@
    "kind": "gamemisc",
    "name": "writeVoxel",
    "verdict": "COMPATIBLE"
+  },
+  "0041fff0": {
+   "kind": "gamemisc",
+   "name": "int_vector_size",
+   "verdict": "DEEP-RE"
   },
   "00428590": {
    "kind": "lib",
@@ -207,6 +222,16 @@
    "name": "lib_fn_4e0740",
    "verdict": "B"
   },
+  "004e1200": {
+   "kind": "gamemisc",
+   "name": "vec4_f32_to_i32",
+   "verdict": "DEEP-RE"
+  },
+  "004e28d0": {
+   "kind": "gamemisc",
+   "name": "int_vector_empty",
+   "verdict": "DEEP-RE"
+  },
   "004e28e0": {
    "kind": "game",
    "name": "town_builder",
@@ -230,6 +255,11 @@
   "004f7490": {
    "kind": "game",
    "name": "StructureMarker_ctor",
+   "verdict": "DEEP-RE"
+  },
+  "004f7540": {
+   "kind": "gamemisc",
+   "name": "SpeciesGroup_ctor",
    "verdict": "DEEP-RE"
   },
   "004f79f0": {
@@ -435,6 +465,11 @@
   "00528530": {
    "kind": "gamemisc",
    "name": "ItemData_vector_push_back",
+   "verdict": "DEEP-RE"
+  },
+  "005285c0": {
+   "kind": "gamemisc",
+   "name": "SpeciesGroup_push_back",
    "verdict": "DEEP-RE"
   },
   "00528bf0": {

@@ -417,6 +417,11 @@
   }
  },
  "Server.exe": {
+  "004010b0": {
+   "kind": "gamemisc",
+   "name": "vec4_store_f32",
+   "src": "ADJUDICATION.md"
+  },
   "004013d0": {
    "kind": "gamemisc",
    "name": "getElemPtr4",
@@ -430,6 +435,11 @@
   "00402990": {
    "kind": "gamemisc",
    "name": "vec3_store",
+   "src": "ADJUDICATION.md"
+  },
+  "00402bb0": {
+   "kind": "gamemisc",
+   "name": "int_vector_at",
    "src": "ADJUDICATION.md"
   },
   "00405f20": {
@@ -495,6 +505,11 @@
   "0041ff00": {
    "kind": "gamemisc",
    "name": "writeVoxel",
+   "src": "ADJUDICATION.md"
+  },
+  "0041fff0": {
+   "kind": "gamemisc",
+   "name": "int_vector_size",
    "src": "ADJUDICATION.md"
   },
   "00427000": {
@@ -653,9 +668,9 @@
    "src": "cw_callgraph.py"
   },
   "004e1200": {
-   "kind": "lib",
-   "name": "lib_fn_4e1200",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "kind": "gamemisc",
+   "name": "vec4_f32_to_i32",
+   "src": "ADJUDICATION.md"
   },
   "004e19f0": {
    "kind": "lib",
@@ -681,6 +696,11 @@
    "kind": "lib",
    "name": "lib_fn_4e2840",
    "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004e28d0": {
+   "kind": "gamemisc",
+   "name": "int_vector_empty",
+   "src": "ADJUDICATION.md"
   },
   "004e28e0": {
    "kind": "game",
@@ -745,6 +765,11 @@
   "004f7490": {
    "kind": "game",
    "name": "StructureMarker_ctor",
+   "src": "ADJUDICATION.md"
+  },
+  "004f7540": {
+   "kind": "gamemisc",
+   "name": "SpeciesGroup_ctor",
    "src": "ADJUDICATION.md"
   },
   "004f79f0": {
@@ -1005,6 +1030,11 @@
   "00528530": {
    "kind": "gamemisc",
    "name": "ItemData_vector_push_back",
+   "src": "ADJUDICATION.md"
+  },
+  "005285c0": {
+   "kind": "gamemisc",
+   "name": "SpeciesGroup_push_back",
    "src": "ADJUDICATION.md"
   },
   "005286a0": {
