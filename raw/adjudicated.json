@@ -1,0 +1,436 @@
+{
+ "Cube.exe": {
+  "00439110": {
+   "kind": "gamemisc",
+   "name": "math_round_to_tenth",
+   "verdict": "KIND-FIX"
+  },
+  "00446150": {
+   "kind": "game",
+   "name": "Equipment_sum_slot_values",
+   "verdict": "KIND-FIX"
+  },
+  "004a5710": {
+   "kind": "game",
+   "name": "GameController_load_skill_tooltip",
+   "verdict": "KIND-FIX"
+  },
+  "004a62c0": {
+   "kind": "game",
+   "name": "GameController_load_specialization_text",
+   "verdict": "KIND-FIX"
+  },
+  "004c78c0": {
+   "kind": "game",
+   "name": "Item_compute_value",
+   "verdict": "KIND-FIX"
+  },
+  "004c85f0": {
+   "kind": "game",
+   "name": "App_render_frame",
+   "verdict": "KIND-FIX"
+  },
+  "004c8940": {
+   "kind": "game",
+   "name": "App_reset_device",
+   "verdict": "KIND-FIX"
+  },
+  "004c8ae0": {
+   "kind": "game",
+   "name": "WinMain",
+   "verdict": "KIND-FIX"
+  }
+ },
+ "Server.exe": {
+  "004013d0": {
+   "kind": "gamemisc",
+   "name": "getElemPtr4",
+   "verdict": "B"
+  },
+  "004013f0": {
+   "kind": "lib",
+   "name": "std_vector_int_at",
+   "verdict": "B"
+  },
+  "00402990": {
+   "kind": "gamemisc",
+   "name": "vec3_store",
+   "verdict": "B"
+  },
+  "00405f20": {
+   "kind": "gamemisc",
+   "name": "Column_getBlockChecked",
+   "verdict": "B"
+  },
+  "00405fd0": {
+   "kind": "gamemisc",
+   "name": "World_getBlockAt",
+   "verdict": "B"
+  },
+  "00406100": {
+   "kind": "gamemisc",
+   "name": "Chunk_getColumnAt",
+   "verdict": "B"
+  },
+  "00406290": {
+   "kind": "gamemisc",
+   "name": "Region_getChunkCell",
+   "verdict": "B"
+  },
+  "00411090": {
+   "kind": "gamemisc",
+   "name": "unproven -- kind is GAME",
+   "verdict": "NEITHER"
+  },
+  "00413420": {
+   "kind": "gamemisc",
+   "name": "resize_dword_array",
+   "verdict": "B"
+  },
+  "00413710": {
+   "kind": "gamemisc",
+   "name": "ItemData_copy (0x118)",
+   "verdict": "COMPATIBLE"
+  },
+  "0041fe60": {
+   "kind": "gamemisc",
+   "name": "VoxelColumn_setBlock",
+   "verdict": "B"
+  },
+  "0041ff00": {
+   "kind": "gamemisc",
+   "name": "writeVoxel",
+   "verdict": "COMPATIBLE"
+  },
+  "00428590": {
+   "kind": "lib",
+   "name": "std_list_push_back (role: conn edge)",
+   "verdict": "NEITHER"
+  },
+  "004286f0": {
+   "kind": "gamemisc",
+   "name": "World_getTileAtCoords",
+   "verdict": "XREF-FIX"
+  },
+  "0042f440": {
+   "kind": "lib",
+   "name": "std_vector_free",
+   "verdict": "B"
+  },
+  "00431400": {
+   "kind": "gamemisc",
+   "name": "loadVoxelModels",
+   "verdict": "COMPATIBLE"
+  },
+  "004c84b0": {
+   "kind": "game",
+   "name": "unproven ctor -- GAME",
+   "verdict": "A-KIND"
+  },
+  "004d1950": {
+   "kind": "gamemisc",
+   "name": "VoxelGrid_cellAt3D",
+   "verdict": "B"
+  },
+  "004d23f0": {
+   "kind": "game",
+   "name": "checked cell read -- GAME",
+   "verdict": "A-KIND"
+  },
+  "004d2500": {
+   "kind": "lib",
+   "name": "lib_fn_4d2500",
+   "verdict": "B"
+  },
+  "004d44c0": {
+   "kind": "lib",
+   "name": "lib_fn_4d44c0",
+   "verdict": "B"
+  },
+  "004d4820": {
+   "kind": "lib",
+   "name": "lib_fn_4d4820",
+   "verdict": "B"
+  },
+  "004d6670": {
+   "kind": "lib",
+   "name": "std_vector_push_back (with EH)",
+   "verdict": "NEITHER"
+  },
+  "004d7870": {
+   "kind": "game",
+   "name": "region_tier",
+   "verdict": "A"
+  },
+  "004e0740": {
+   "kind": "lib",
+   "name": "lib_fn_4e0740",
+   "verdict": "B"
+  },
+  "004e28e0": {
+   "kind": "game",
+   "name": "town_builder",
+   "verdict": "XREF-FIX"
+  },
+  "004f2be0": {
+   "kind": "lib",
+   "name": "std_vector_push_back_int",
+   "verdict": "B"
+  },
+  "004f2c50": {
+   "kind": "lib",
+   "name": "std_vector_push_back (32B elem)",
+   "verdict": "NEITHER"
+  },
+  "004f2ee0": {
+   "kind": "game",
+   "name": "house_furniture_placer",
+   "verdict": "XREF-FIX"
+  },
+  "004f3630": {
+   "kind": "game",
+   "name": "unproven ctor -- GAME",
+   "verdict": "A-KIND"
+  },
+  "004f5cc0": {
+   "kind": "gamemisc",
+   "name": "sort_routine_4f5cc0",
+   "verdict": "XREF-FIX"
+  },
+  "004f79f0": {
+   "kind": "lib",
+   "name": "int128_sub",
+   "verdict": "NEITHER"
+  },
+  "004f82d0": {
+   "kind": "lib",
+   "name": "lib_fn_4f82d0",
+   "verdict": "B"
+  },
+  "004f84a0": {
+   "kind": "game",
+   "name": "grid_cell_accessor -- GAME",
+   "verdict": "A-KIND"
+  },
+  "004f8570": {
+   "kind": "game",
+   "name": "temperature_blend",
+   "verdict": "XREF-FIX"
+  },
+  "004f8b40": {
+   "kind": "lib",
+   "name": "lib_fn_4f8b40",
+   "verdict": "B"
+  },
+  "004f9010": {
+   "kind": "game",
+   "name": "corridor_connect",
+   "verdict": "A"
+  },
+  "004f9450": {
+   "kind": "lib",
+   "name": "lib_fn_4f9450",
+   "verdict": "B"
+  },
+  "004fae90": {
+   "kind": "lib",
+   "name": "lib_fn_4fae90",
+   "verdict": "B"
+  },
+  "004fc180": {
+   "kind": "lib",
+   "name": "lib_fn_4fc180",
+   "verdict": "B"
+  },
+  "004fd920": {
+   "kind": "lib",
+   "name": "lib_fn_4fd920",
+   "verdict": "B"
+  },
+  "004fde90": {
+   "kind": "lib",
+   "name": "lib_fn_4fde90",
+   "verdict": "B"
+  },
+  "004ff340": {
+   "kind": "game",
+   "name": "fill_box",
+   "verdict": "A"
+  },
+  "004ff3f0": {
+   "kind": "lib",
+   "name": "lib_fn_4ff3f0",
+   "verdict": "B"
+  },
+  "004ffbf0": {
+   "kind": "game",
+   "name": "ground_knoll",
+   "verdict": "XREF-FIX"
+  },
+  "00500300": {
+   "kind": "game",
+   "name": "dungeon_assembler",
+   "verdict": "A"
+  },
+  "00509e40": {
+   "kind": "lib",
+   "name": "stl_fn_509e40",
+   "verdict": "B"
+  },
+  "0050b870": {
+   "kind": "lib",
+   "name": "lib_fn_50b870",
+   "verdict": "B"
+  },
+  "0050bd60": {
+   "kind": "lib",
+   "name": "lib_fn_50bd60",
+   "verdict": "B"
+  },
+  "005104e0": {
+   "kind": "game",
+   "name": "structure_populator_CONTESTED",
+   "verdict": "XREF-FIX"
+  },
+  "00513400": {
+   "kind": "lib",
+   "name": "lib_fn_513400",
+   "verdict": "B"
+  },
+  "00518630": {
+   "kind": "game",
+   "name": "zone_builder",
+   "verdict": "A"
+  },
+  "00522290": {
+   "kind": "game",
+   "name": "feature_count_range",
+   "verdict": "XREF-FIX"
+  },
+  "00522320": {
+   "kind": "lib",
+   "name": "lib_fn_522320",
+   "verdict": "B"
+  },
+  "00522840": {
+   "kind": "game",
+   "name": "biome_border",
+   "verdict": "XREF-FIX"
+  },
+  "00522cc0": {
+   "kind": "game",
+   "name": "dist2_16_16",
+   "verdict": "A"
+  },
+  "00523380": {
+   "kind": "gamemisc",
+   "name": "pointSegmentDistanceSq",
+   "verdict": "XREF-FIX"
+  },
+  "005234b0": {
+   "kind": "game",
+   "name": "seg_carve",
+   "verdict": "A"
+  },
+  "005236d0": {
+   "kind": "game",
+   "name": "room_carve",
+   "verdict": "A"
+  },
+  "00523b90": {
+   "kind": "lib",
+   "name": "lib_fn_523b90",
+   "verdict": "B"
+  },
+  "00523d80": {
+   "kind": "lib",
+   "name": "lib_fn_523d80",
+   "verdict": "B"
+  },
+  "00524540": {
+   "kind": "lib",
+   "name": "lib_fn_524540",
+   "verdict": "B"
+  },
+  "00528450": {
+   "kind": "lib",
+   "name": "std_list_push_back",
+   "verdict": "NEITHER"
+  },
+  "00528bf0": {
+   "kind": "lib",
+   "name": "lib_fn_528bf0",
+   "verdict": "B"
+  },
+  "0052a760": {
+   "kind": "lib",
+   "name": "lib_fn_52a760",
+   "verdict": "B"
+  },
+  "0052a830": {
+   "kind": "game",
+   "name": "dungeon_scatter_emitter",
+   "verdict": "XREF-FIX"
+  },
+  "0052b470": {
+   "kind": "lib",
+   "name": "lib_fn_52b470",
+   "verdict": "B"
+  },
+  "0052bf40": {
+   "kind": "game",
+   "name": "rarityRoll",
+   "verdict": "A"
+  },
+  "0052c4e0": {
+   "kind": "lib",
+   "name": "lib_fn_52c4e0",
+   "verdict": "B"
+  },
+  "0052d030": {
+   "kind": "lib",
+   "name": "lib_fn_52d030",
+   "verdict": "B"
+  },
+  "0052d5d0": {
+   "kind": "lib",
+   "name": "lib_fn_52d5d0",
+   "verdict": "B"
+  },
+  "0052d870": {
+   "kind": "lib",
+   "name": "lib_fn_52d870",
+   "verdict": "B"
+  },
+  "0052db90": {
+   "kind": "lib",
+   "name": "lib_fn_52db90",
+   "verdict": "B"
+  },
+  "0052dee0": {
+   "kind": "gamemisc",
+   "name": "World_falloffSquared",
+   "verdict": "B"
+  },
+  "005322d0": {
+   "kind": "lib",
+   "name": "lib_fn_5322d0",
+   "verdict": "B"
+  },
+  "00549c50": {
+   "kind": "game",
+   "name": "world_create",
+   "verdict": "XREF-FIX"
+  },
+  "0054a910": {
+   "kind": "lib",
+   "name": "ftol_round_to_int",
+   "verdict": "XREF-FIX"
+  },
+  "0054a946": {
+   "kind": "lib",
+   "name": "ftol_trunc",
+   "verdict": "XREF-FIX"
+  }
+ }
+}

@@ -1,0 +1,19 @@
+0x0052dee0  PUSH EBP
+0x0052dee1  MOV EBP,ESP
+0x0052dee3  PUSH dword ptr [EBP + 0xc]
+0x0052dee6  PUSH dword ptr [EBP + 0x8]
+0x0052dee9  CALL 0x0052c820
+0x0052deee  FSTP float ptr [EBP + 0xc]
+0x0052def1  MOVSS XMM1,dword ptr [0x005586dc]
+0x0052def9  SUBSS XMM1,dword ptr [EBP + 0xc]
+0x0052defe  XORPS XMM0,XMM0
+0x0052df01  COMISS XMM0,XMM1
+0x0052df04  JC 0x0052df0c
+0x0052df06  FLDZ
+0x0052df08  POP EBP
+0x0052df09  RET 0x8
+0x0052df0c  MULSS XMM1,XMM1
+0x0052df10  MOVSS dword ptr [EBP + 0xc],XMM1
+0x0052df15  FLD float ptr [EBP + 0xc]
+0x0052df18  POP EBP
+0x0052df19  RET 0x8

@@ -1,0 +1,1076 @@
+{
+ "Cube.exe": {
+  "00411d10": {
+   "kind": "game",
+   "name": "powf_f",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004128f0": {
+   "kind": "game",
+   "name": "Creature_drawModel",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00424610": {
+   "kind": "game",
+   "name": "mat4_rotateZ",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00424730": {
+   "kind": "game",
+   "name": "mat4_scaleAxes",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00424a60": {
+   "kind": "game",
+   "name": "mat4_translate",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0042c4a0": {
+   "kind": "gamemisc",
+   "name": "vec3i64_toFloat",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00434ad0": {
+   "kind": "game",
+   "name": "mat_scaleColumns",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00439110": {
+   "kind": "gamemisc",
+   "name": "math_round_to_tenth",
+   "src": "ADJUDICATION.md"
+  },
+  "0043c980": {
+   "kind": "gamemisc",
+   "name": "curve_diminishing01",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0043caa0": {
+   "kind": "game",
+   "name": "combat_getAttackWindup",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0043e6a0": {
+   "kind": "game",
+   "name": "ability_getManaCost",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004444a0": {
+   "kind": "gamemisc",
+   "name": "combat_rollElementProc",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00444db0": {
+   "kind": "gamemisc",
+   "name": "stat_calcAttackDamage",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00445f60": {
+   "kind": "gamemisc",
+   "name": "math_pow2Mul",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00446150": {
+   "kind": "game",
+   "name": "Equipment_sum_slot_values",
+   "src": "ADJUDICATION.md"
+  },
+  "00446aa0": {
+   "kind": "gamemisc",
+   "name": "curve_diminishingP1",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00447310": {
+   "kind": "gamemisc",
+   "name": "combat_getReloadFrames",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004496a0": {
+   "kind": "game",
+   "name": "blob_deobfuscate",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00449810": {
+   "kind": "gamemisc",
+   "name": "db_loadBlobByKey",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004498d0": {
+   "kind": "gamemisc",
+   "name": "db_getBlobInto",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004709c0": {
+   "kind": "game",
+   "name": "GameController_onItemPickup",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00477e10": {
+   "kind": "game",
+   "name": "findNearestEntityInGrid",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00487da0": {
+   "kind": "game",
+   "name": "GameController_getVoxelColumn8",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004889e0": {
+   "kind": "game",
+   "name": "GameController_updateSelectedEntity",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004a5710": {
+   "kind": "game",
+   "name": "GameController_load_skill_tooltip",
+   "src": "ADJUDICATION.md"
+  },
+  "004a62c0": {
+   "kind": "game",
+   "name": "GameController_load_specialization_text",
+   "src": "ADJUDICATION.md"
+  },
+  "004c0ef0": {
+   "kind": "game",
+   "name": "perlinNoise2D_cosInterp",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004c6a90": {
+   "kind": "gamemisc",
+   "name": "item_computeBlockValue",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004c6e10": {
+   "kind": "gamemisc",
+   "name": "item_computeValue",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004c70b0": {
+   "kind": "gamemisc",
+   "name": "item_computeStat_armor",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004c76e0": {
+   "kind": "game",
+   "name": "item_valueByType",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004c78c0": {
+   "kind": "game",
+   "name": "Item_compute_value",
+   "src": "ADJUDICATION.md"
+  },
+  "004c7af0": {
+   "kind": "gamemisc",
+   "name": "item_computeStat_variant2",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004c7f60": {
+   "kind": "game",
+   "name": "item_weaponDamage",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004c85f0": {
+   "kind": "game",
+   "name": "App_render_frame",
+   "src": "ADJUDICATION.md"
+  },
+  "004c8940": {
+   "kind": "game",
+   "name": "App_reset_device",
+   "src": "ADJUDICATION.md"
+  },
+  "004c8ae0": {
+   "kind": "game",
+   "name": "WinMain",
+   "src": "ADJUDICATION.md"
+  },
+  "004e7290": {
+   "kind": "gamemisc",
+   "name": "VoxelModel_load_from_file_or_buffer",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004e7650": {
+   "kind": "gamemisc",
+   "name": "VoxelModel_set_data",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004ee230": {
+   "kind": "game",
+   "name": "GameController_load_game_assets",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00528530": {
+   "kind": "lib",
+   "name": "sqlite3_mutex_enter_win",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00598930": {
+   "kind": "gamemisc",
+   "name": "VoxelChunk_cellAt",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005989d0": {
+   "kind": "gamemisc",
+   "name": "Terrain_sampleHeightAtWorldXY",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0059b180": {
+   "kind": "gamemisc",
+   "name": "Creature_spawnDeathEffects",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005af170": {
+   "kind": "gamemisc",
+   "name": "Chunk_generateObjects",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005c4520": {
+   "kind": "gamemisc",
+   "name": "terrain_biomeColorFromNoise",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005c4dd0": {
+   "kind": "game",
+   "name": "GameController_sampleHumidityGrid",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005c56e0": {
+   "kind": "gamemisc",
+   "name": "terrain_surfaceColor_blend",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005c5e20": {
+   "kind": "gamemisc",
+   "name": "terrain_generateColumnColor",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005c7140": {
+   "kind": "gamemisc",
+   "name": "terrain_rockColor_blend",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005cc510": {
+   "kind": "gamemisc",
+   "name": "World_populateRegionDecorations",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005d7f60": {
+   "kind": "gamemisc",
+   "name": "World_generateFoliageBlob",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005df960": {
+   "kind": "gamemisc",
+   "name": "World_generateWaterOrPathFeature",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005e4850": {
+   "kind": "game",
+   "name": "WorldInfo_generateBiomeContent",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005ee4b0": {
+   "kind": "gamemisc",
+   "name": "assign_two_dwords",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005ee540": {
+   "kind": "gamemisc",
+   "name": "World_getColumnDataAt",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005eea60": {
+   "kind": "gamemisc",
+   "name": "World_findNearestObject",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005ef040": {
+   "kind": "gamemisc",
+   "name": "World_getRegionCellPtr",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005f0ce0": {
+   "kind": "game",
+   "name": "WorldInfo_placeStructure",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005f51e0": {
+   "kind": "game",
+   "name": "GameController_buildDecalMesh",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005f6d50": {
+   "kind": "gamemisc",
+   "name": "World_emitDecalOrParticle",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005f8530": {
+   "kind": "game",
+   "name": "WorldInfo_vectorElementAt",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005f8ad0": {
+   "kind": "game",
+   "name": "GameController_buildDecalMesh2",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005f8e10": {
+   "kind": "gamemisc",
+   "name": "vec3_distanceSquared",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005f9340": {
+   "kind": "game",
+   "name": "WorldInfo_sampleTerrainHeight",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005f9620": {
+   "kind": "gamemisc",
+   "name": "vec3_store4",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005f9bc0": {
+   "kind": "gamemisc",
+   "name": "vec3_computeNoiseOffset",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005f9e50": {
+   "kind": "gamemisc",
+   "name": "vec2_store",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005f9f70": {
+   "kind": "game",
+   "name": "WorldInfo_rotateAndPlace",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005fc1b0": {
+   "kind": "game",
+   "name": "GameController_processNetworkTick",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0060c510": {
+   "kind": "game",
+   "name": "GameController_updateSubsystems",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00642ad0": {
+   "kind": "lib",
+   "name": "lib_fn_642ad0",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00648d60": {
+   "kind": "lib",
+   "name": "lib_fn_648d60",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00659940": {
+   "kind": "game",
+   "name": "Widget_deserialize_common_field",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0066ec30": {
+   "kind": "lib",
+   "name": "lib_fn_66ec30",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0066f1d0": {
+   "kind": "lib",
+   "name": "lib_fn_66f1d0",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00673090": {
+   "kind": "lib",
+   "name": "stl_fn_673090",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00674ee0": {
+   "kind": "lib",
+   "name": "std_vector_push_back_0xc",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00679a40": {
+   "kind": "lib",
+   "name": "lib_fn_679a40",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00681c70": {
+   "kind": "game",
+   "name": "PlasmaGraphics_loadDisplay",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00687560": {
+   "kind": "game",
+   "name": "Widget_readProperty",
+   "src": "CW_CONFIDENCE_XREF.md"
+  }
+ },
+ "Server.exe": {
+  "004013d0": {
+   "kind": "gamemisc",
+   "name": "getElemPtr4",
+   "src": "ADJUDICATION.md"
+  },
+  "004013f0": {
+   "kind": "lib",
+   "name": "std_vector_int_at",
+   "src": "ADJUDICATION.md"
+  },
+  "00402990": {
+   "kind": "gamemisc",
+   "name": "vec3_store",
+   "src": "ADJUDICATION.md"
+  },
+  "00405f20": {
+   "kind": "gamemisc",
+   "name": "Column_getBlockChecked",
+   "src": "ADJUDICATION.md"
+  },
+  "00405fd0": {
+   "kind": "gamemisc",
+   "name": "World_getBlockAt",
+   "src": "ADJUDICATION.md"
+  },
+  "00406050": {
+   "kind": "gamemisc",
+   "name": "World_getBlockFloat",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00406100": {
+   "kind": "gamemisc",
+   "name": "Chunk_getColumnAt",
+   "src": "ADJUDICATION.md"
+  },
+  "004061d0": {
+   "kind": "lib",
+   "name": "get_field_0x10",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004061f0": {
+   "kind": "lib",
+   "name": "check_type_low5_active",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00406290": {
+   "kind": "gamemisc",
+   "name": "Region_getChunkCell",
+   "src": "ADJUDICATION.md"
+  },
+  "00411090": {
+   "kind": "gamemisc",
+   "name": "unproven -- kind is GAME",
+   "src": "ADJUDICATION.md"
+  },
+  "00413130": {
+   "kind": "game",
+   "name": "SpeechDb_loadBlobToVector",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00413420": {
+   "kind": "gamemisc",
+   "name": "resize_dword_array",
+   "src": "ADJUDICATION.md"
+  },
+  "00413710": {
+   "kind": "gamemisc",
+   "name": "ItemData_copy (0x118)",
+   "src": "ADJUDICATION.md"
+  },
+  "0041fe60": {
+   "kind": "gamemisc",
+   "name": "VoxelColumn_setBlock",
+   "src": "ADJUDICATION.md"
+  },
+  "0041ff00": {
+   "kind": "gamemisc",
+   "name": "writeVoxel",
+   "src": "ADJUDICATION.md"
+  },
+  "00427000": {
+   "kind": "lib",
+   "name": "game_inventoryAccumulateCount",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00428590": {
+   "kind": "lib",
+   "name": "std_list_push_back (role: conn edge)",
+   "src": "ADJUDICATION.md"
+  },
+  "004286f0": {
+   "kind": "gamemisc",
+   "name": "World_getTileAtCoords",
+   "src": "ADJUDICATION.md"
+  },
+  "0042e090": {
+   "kind": "gamemisc",
+   "name": "World_findNearestEntityInRegion",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0042f440": {
+   "kind": "lib",
+   "name": "std_vector_free",
+   "src": "ADJUDICATION.md"
+  },
+  "0042f9a0": {
+   "kind": "game",
+   "name": "World_loadVoxelModel",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00430230": {
+   "kind": "game",
+   "name": "World_buildVoxelMesh",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00431400": {
+   "kind": "gamemisc",
+   "name": "loadVoxelModels",
+   "src": "ADJUDICATION.md"
+  },
+  "004496a0": {
+   "kind": "game",
+   "name": "decode",
+   "src": "CUBEWORLD_ALPHA_SOURCE.md"
+  },
+  "004c6770": {
+   "kind": "lib",
+   "name": "lib_fn_4c6770",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004c8420": {
+   "kind": "lib",
+   "name": "lib_fn_4c8420",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004c84b0": {
+   "kind": "game",
+   "name": "unproven ctor -- GAME",
+   "src": "ADJUDICATION.md"
+  },
+  "004c8570": {
+   "kind": "game",
+   "name": "World_ctor",
+   "src": "cw_callgraph.py"
+  },
+  "004cde40": {
+   "kind": "lib",
+   "name": "lib_fn_4cde40",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004d1950": {
+   "kind": "gamemisc",
+   "name": "VoxelGrid_cellAt3D",
+   "src": "ADJUDICATION.md"
+  },
+  "004d19f0": {
+   "kind": "gamemisc",
+   "name": "World_sampleNoiseAt",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004d23f0": {
+   "kind": "game",
+   "name": "checked cell read -- GAME",
+   "src": "ADJUDICATION.md"
+  },
+  "004d2500": {
+   "kind": "lib",
+   "name": "lib_fn_4d2500",
+   "src": "ADJUDICATION.md"
+  },
+  "004d2a00": {
+   "kind": "game",
+   "name": "unknown_seen",
+   "src": "cw_callgraph.py"
+  },
+  "004d44c0": {
+   "kind": "lib",
+   "name": "lib_fn_4d44c0",
+   "src": "ADJUDICATION.md"
+  },
+  "004d4820": {
+   "kind": "lib",
+   "name": "lib_fn_4d4820",
+   "src": "ADJUDICATION.md"
+  },
+  "004d5a80": {
+   "kind": "gamemisc",
+   "name": "World_sampleTerrainGradient",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004d5d30": {
+   "kind": "gamemisc",
+   "name": "valueNoise2D",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004d6670": {
+   "kind": "lib",
+   "name": "std_vector_push_back (with EH)",
+   "src": "ADJUDICATION.md"
+  },
+  "004d7870": {
+   "kind": "game",
+   "name": "region_tier",
+   "src": "ADJUDICATION.md"
+  },
+  "004d78e0": {
+   "kind": "lib",
+   "name": "lib_fn_4d78e0",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004d7c50": {
+   "kind": "game",
+   "name": "spawn_registrar",
+   "src": "cw_callgraph.py"
+  },
+  "004d83a0": {
+   "kind": "game",
+   "name": "seedInit",
+   "src": "CUBEWORLD_ALPHA_SOURCE.md"
+  },
+  "004d9010": {
+   "kind": "lib",
+   "name": "lib_fn_4d9010",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004e0740": {
+   "kind": "lib",
+   "name": "lib_fn_4e0740",
+   "src": "ADJUDICATION.md"
+  },
+  "004e0f40": {
+   "kind": "game",
+   "name": "spawn_ctor",
+   "src": "cw_callgraph.py"
+  },
+  "004e1200": {
+   "kind": "lib",
+   "name": "lib_fn_4e1200",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004e19f0": {
+   "kind": "lib",
+   "name": "lib_fn_4e19f0",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004e1f80": {
+   "kind": "game",
+   "name": "house_ctor",
+   "src": "cw_callgraph.py"
+  },
+  "004e20d0": {
+   "kind": "lib",
+   "name": "lib_fn_4e20d0",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004e25e0": {
+   "kind": "lib",
+   "name": "lib_fn_4e25e0",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004e2840": {
+   "kind": "lib",
+   "name": "lib_fn_4e2840",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004e28e0": {
+   "kind": "game",
+   "name": "town_builder",
+   "src": "ADJUDICATION.md"
+  },
+  "004e7290": {
+   "kind": "game",
+   "name": "cub_load",
+   "src": "cw_callgraph.py"
+  },
+  "004e7650": {
+   "kind": "game",
+   "name": "cub_builder",
+   "src": "cw_callgraph.py"
+  },
+  "004f2be0": {
+   "kind": "lib",
+   "name": "std_vector_push_back_int",
+   "src": "ADJUDICATION.md"
+  },
+  "004f2c50": {
+   "kind": "lib",
+   "name": "std_vector_push_back (32B elem)",
+   "src": "ADJUDICATION.md"
+  },
+  "004f2cd0": {
+   "kind": "lib",
+   "name": "lib_fn_4f2cd0",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004f2ee0": {
+   "kind": "game",
+   "name": "house_furniture_placer",
+   "src": "ADJUDICATION.md"
+  },
+  "004f3490": {
+   "kind": "lib",
+   "name": "lib_fn_4f3490",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004f3630": {
+   "kind": "game",
+   "name": "unproven ctor -- GAME",
+   "src": "ADJUDICATION.md"
+  },
+  "004f36f0": {
+   "kind": "lib",
+   "name": "lib_fn_4f36f0",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004f5cc0": {
+   "kind": "gamemisc",
+   "name": "sort_routine_4f5cc0",
+   "src": "ADJUDICATION.md"
+  },
+  "004f7370": {
+   "kind": "game",
+   "name": "dungeon_grid_init",
+   "src": "cw_callgraph.py"
+  },
+  "004f79f0": {
+   "kind": "lib",
+   "name": "int128_sub",
+   "src": "ADJUDICATION.md"
+  },
+  "004f7ef0": {
+   "kind": "lib",
+   "name": "lib_fn_4f7ef0",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004f82d0": {
+   "kind": "lib",
+   "name": "lib_fn_4f82d0",
+   "src": "ADJUDICATION.md"
+  },
+  "004f84a0": {
+   "kind": "game",
+   "name": "grid_cell_accessor -- GAME",
+   "src": "ADJUDICATION.md"
+  },
+  "004f8570": {
+   "kind": "game",
+   "name": "temperature_blend",
+   "src": "ADJUDICATION.md"
+  },
+  "004f8b40": {
+   "kind": "lib",
+   "name": "lib_fn_4f8b40",
+   "src": "ADJUDICATION.md"
+  },
+  "004f9010": {
+   "kind": "game",
+   "name": "corridor_connect",
+   "src": "ADJUDICATION.md"
+  },
+  "004f9450": {
+   "kind": "lib",
+   "name": "lib_fn_4f9450",
+   "src": "ADJUDICATION.md"
+  },
+  "004f9b70": {
+   "kind": "game",
+   "name": "World_generateBiomeSample",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004fae90": {
+   "kind": "lib",
+   "name": "lib_fn_4fae90",
+   "src": "ADJUDICATION.md"
+  },
+  "004fb480": {
+   "kind": "lib",
+   "name": "lib_fn_4fb480",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004fc140": {
+   "kind": "lib",
+   "name": "lib_fn_4fc140",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004fc180": {
+   "kind": "lib",
+   "name": "lib_fn_4fc180",
+   "src": "ADJUDICATION.md"
+  },
+  "004fd920": {
+   "kind": "lib",
+   "name": "lib_fn_4fd920",
+   "src": "ADJUDICATION.md"
+  },
+  "004fdd80": {
+   "kind": "lib",
+   "name": "lib_fn_4fdd80",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004fde90": {
+   "kind": "lib",
+   "name": "lib_fn_4fde90",
+   "src": "ADJUDICATION.md"
+  },
+  "004febd0": {
+   "kind": "gamemisc",
+   "name": "World_findNearestFeatureCell",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "004ff340": {
+   "kind": "game",
+   "name": "fill_box",
+   "src": "ADJUDICATION.md"
+  },
+  "004ff3f0": {
+   "kind": "lib",
+   "name": "lib_fn_4ff3f0",
+   "src": "ADJUDICATION.md"
+  },
+  "004ffbf0": {
+   "kind": "game",
+   "name": "ground_knoll",
+   "src": "ADJUDICATION.md"
+  },
+  "00500300": {
+   "kind": "game",
+   "name": "dungeon_assembler",
+   "src": "ADJUDICATION.md"
+  },
+  "00509e40": {
+   "kind": "lib",
+   "name": "stl_fn_509e40",
+   "src": "ADJUDICATION.md"
+  },
+  "0050b870": {
+   "kind": "lib",
+   "name": "lib_fn_50b870",
+   "src": "ADJUDICATION.md"
+  },
+  "0050bd60": {
+   "kind": "lib",
+   "name": "lib_fn_50bd60",
+   "src": "ADJUDICATION.md"
+  },
+  "0050e080": {
+   "kind": "game",
+   "name": "featureGrid",
+   "src": "CUBEWORLD_ALPHA_SOURCE.md"
+  },
+  "005104e0": {
+   "kind": "game",
+   "name": "structure_populator_CONTESTED",
+   "src": "ADJUDICATION.md"
+  },
+  "00513400": {
+   "kind": "lib",
+   "name": "lib_fn_513400",
+   "src": "ADJUDICATION.md"
+  },
+  "00513760": {
+   "kind": "gamemisc",
+   "name": "UNRESOLVED_513760",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00518630": {
+   "kind": "game",
+   "name": "zone_builder",
+   "src": "ADJUDICATION.md"
+  },
+  "00522290": {
+   "kind": "game",
+   "name": "feature_count_range",
+   "src": "ADJUDICATION.md"
+  },
+  "00522320": {
+   "kind": "lib",
+   "name": "lib_fn_522320",
+   "src": "ADJUDICATION.md"
+  },
+  "00522840": {
+   "kind": "game",
+   "name": "biome_border",
+   "src": "ADJUDICATION.md"
+  },
+  "00522cc0": {
+   "kind": "game",
+   "name": "dist2_16_16",
+   "src": "ADJUDICATION.md"
+  },
+  "00522d80": {
+   "kind": "gamemisc",
+   "name": "World_terrainOffset2D",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00522e20": {
+   "kind": "gamemisc",
+   "name": "World_waterProximityInfluence",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00523380": {
+   "kind": "gamemisc",
+   "name": "pointSegmentDistanceSq",
+   "src": "ADJUDICATION.md"
+  },
+  "005234b0": {
+   "kind": "game",
+   "name": "seg_carve",
+   "src": "ADJUDICATION.md"
+  },
+  "005236d0": {
+   "kind": "game",
+   "name": "room_carve",
+   "src": "ADJUDICATION.md"
+  },
+  "00523b90": {
+   "kind": "lib",
+   "name": "lib_fn_523b90",
+   "src": "ADJUDICATION.md"
+  },
+  "00523d80": {
+   "kind": "lib",
+   "name": "lib_fn_523d80",
+   "src": "ADJUDICATION.md"
+  },
+  "00524540": {
+   "kind": "lib",
+   "name": "lib_fn_524540",
+   "src": "ADJUDICATION.md"
+  },
+  "00528450": {
+   "kind": "lib",
+   "name": "std_list_push_back",
+   "src": "ADJUDICATION.md"
+  },
+  "00528530": {
+   "kind": "game",
+   "name": "loot_append",
+   "src": "cw_callgraph.py"
+  },
+  "005286a0": {
+   "kind": "gamemisc",
+   "name": "UNRESOLVED_5286a0",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "005287b0": {
+   "kind": "lib",
+   "name": "lib_fn_5287b0",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00528bf0": {
+   "kind": "lib",
+   "name": "lib_fn_528bf0",
+   "src": "ADJUDICATION.md"
+  },
+  "0052a760": {
+   "kind": "lib",
+   "name": "lib_fn_52a760",
+   "src": "ADJUDICATION.md"
+  },
+  "0052a830": {
+   "kind": "game",
+   "name": "dungeon_scatter_emitter",
+   "src": "ADJUDICATION.md"
+  },
+  "0052b1c0": {
+   "kind": "lib",
+   "name": "lib_fn_52b1c0",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0052b470": {
+   "kind": "lib",
+   "name": "lib_fn_52b470",
+   "src": "ADJUDICATION.md"
+  },
+  "0052bf40": {
+   "kind": "game",
+   "name": "rarityRoll",
+   "src": "ADJUDICATION.md"
+  },
+  "0052c160": {
+   "kind": "lib",
+   "name": "lib_fn_52c160",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0052c370": {
+   "kind": "lib",
+   "name": "lib_fn_52c370",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0052c4e0": {
+   "kind": "lib",
+   "name": "lib_fn_52c4e0",
+   "src": "ADJUDICATION.md"
+  },
+  "0052c820": {
+   "kind": "game",
+   "name": "World_objectFalloffWeight",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0052cd50": {
+   "kind": "game",
+   "name": "World_sampleTerrainHeight",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0052d030": {
+   "kind": "lib",
+   "name": "lib_fn_52d030",
+   "src": "ADJUDICATION.md"
+  },
+  "0052d5d0": {
+   "kind": "lib",
+   "name": "lib_fn_52d5d0",
+   "src": "ADJUDICATION.md"
+  },
+  "0052d870": {
+   "kind": "lib",
+   "name": "lib_fn_52d870",
+   "src": "ADJUDICATION.md"
+  },
+  "0052d990": {
+   "kind": "game",
+   "name": "World_computeClimateColor",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "0052db90": {
+   "kind": "lib",
+   "name": "lib_fn_52db90",
+   "src": "ADJUDICATION.md"
+  },
+  "0052dde0": {
+   "kind": "game",
+   "name": "grid_orient_transform",
+   "src": "cw_callgraph.py"
+  },
+  "0052dee0": {
+   "kind": "gamemisc",
+   "name": "World_falloffSquared",
+   "src": "ADJUDICATION.md"
+  },
+  "005322d0": {
+   "kind": "lib",
+   "name": "lib_fn_5322d0",
+   "src": "ADJUDICATION.md"
+  },
+  "00549550": {
+   "kind": "lib",
+   "name": "lib_fn_549550",
+   "src": "CW_CONFIDENCE_XREF.md"
+  },
+  "00549c50": {
+   "kind": "game",
+   "name": "world_create",
+   "src": "ADJUDICATION.md"
+  },
+  "0054a910": {
+   "kind": "lib",
+   "name": "ftol_round_to_int",
+   "src": "ADJUDICATION.md"
+  },
+  "0054a946": {
+   "kind": "lib",
+   "name": "ftol_trunc",
+   "src": "ADJUDICATION.md"
+  }
+ }
+}

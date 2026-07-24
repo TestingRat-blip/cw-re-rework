@@ -1,0 +1,10842 @@
+{
+"00401040": {
+"evidence": "single field-derived expression, no calls",
+"module": "audio",
+"module_conf": 1.0,
+"name": "compute",
+"role": "computed"
+},
+"00401120": {
+"evidence": null,
+"module": "audio",
+"module_conf": 1.0,
+"role": "logic"
+},
+"004012a0": {
+"evidence": null,
+"module": "audio",
+"module_conf": 1.0,
+"role": "logic"
+},
+"00401330": {
+"evidence": null,
+"module": "audio",
+"module_conf": 1.0,
+"role": "logic"
+},
+"00401c40": {
+"evidence": null,
+"role": "logic"
+},
+"00401d70": {
+"evidence": null,
+"role": "logic"
+},
+"00401e30": {
+"evidence": null,
+"role": "logic"
+},
+"00402210": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00402280": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004022f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00402350": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"00402370": {
+"evidence": null,
+"role": "logic"
+},
+"00402500": {
+"evidence": null,
+"role": "logic"
+},
+"00402d50": {
+"evidence": null,
+"role": "logic"
+},
+"00402e50": {
+"evidence": null,
+"role": "logic"
+},
+"00402f80": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00402fd0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00403030": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00403350": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.8,
+"role": "logic"
+},
+"00403eb0": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "control",
+"module_conf": 0.7,
+"role": "wrapper"
+},
+"00403ee0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00404040": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00404060": {
+"evidence": null,
+"role": "logic"
+},
+"004041c0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "control",
+"module_conf": 1.0,
+"role": "dtor-like"
+},
+"004044f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00404570": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00404650": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00404760": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00404890": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004049a0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00404ab0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00404be0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00404cf0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00404e00": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00404f10": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00405100": {
+"evidence": "single-call forwarder -> 0x0040da70",
+"name": "fwd_0040da70",
+"role": "thunk"
+},
+"00405120": {
+"evidence": null,
+"role": "logic"
+},
+"004051b0": {
+"evidence": "single-call forwarder -> 0x0040da70",
+"name": "fwd_0040da70",
+"role": "thunk"
+},
+"004051e0": {
+"evidence": "single-call forwarder -> 0x0040da70",
+"name": "fwd_0040da70",
+"role": "thunk"
+},
+"00405210": {
+"evidence": null,
+"role": "logic"
+},
+"00405290": {
+"evidence": "single-call forwarder -> 0x0040c390",
+"name": "fwd_0040c390",
+"role": "thunk"
+},
+"004052b0": {
+"evidence": "single-call forwarder -> 0x0040c390",
+"name": "fwd_0040c390",
+"role": "thunk"
+},
+"004052e0": {
+"evidence": null,
+"role": "logic"
+},
+"004053b0": {
+"evidence": null,
+"role": "logic"
+},
+"00405470": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00405640": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00405700": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00405810": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00405850": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00405960": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00405a70": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00405ba0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00405e70": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00405f90": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004060b0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004061e0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00406300": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00406420": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00406540": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00406660": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004066f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004067c0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004068b0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004069c0": {
+"evidence": "single-call forwarder -> 0x0040b9f0",
+"name": "fwd_0040b9f0",
+"role": "thunk"
+},
+"004069e0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00406b00": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00406c30": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00406d50": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00406dc0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00406e30": {
+"evidence": null,
+"role": "logic"
+},
+"00406ec0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00406f30": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00407040": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00407170": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00407290": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004073d0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00407510": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00407570": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00407620": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00407680": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004076d0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004077f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00407910": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00407a50": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00407c40": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00407e00": {
+"evidence": null,
+"role": "logic"
+},
+"00407e30": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00407ed0": {
+"evidence": null,
+"role": "logic"
+},
+"00407f80": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00408080": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00408150": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00408160": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004081b0": {
+"evidence": null,
+"role": "logic"
+},
+"004081e0": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00408230": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00408280": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004082f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00408350": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004083f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00408460": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004085a0": {
+"evidence": null,
+"role": "logic"
+},
+"004088a0": {
+"evidence": null,
+"role": "logic"
+},
+"00408a00": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00408b10": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00408c20": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00408d50": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00408eb0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004090b0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004091c0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004092e0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004093e0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00409500": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00409620": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00409730": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00409860": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00409970": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00409a80": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00409b50": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00409c20": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00409cf0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00409de0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00409eb0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00409fc0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040a0e0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040a200": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040a350": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040a3a0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040a430": {
+"evidence": null,
+"role": "logic"
+},
+"0040a4c0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040a560": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040a600": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040a690": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040a740": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040a860": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040a9c0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040aa50": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040aaf0": {
+"evidence": "single-call forwarder -> 0x0040aa50",
+"name": "fwd_0040aa50",
+"role": "thunk"
+},
+"0040ab10": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040abf0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040ac80": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040ad70": {
+"evidence": null,
+"role": "logic"
+},
+"0040af30": {
+"evidence": null,
+"role": "logic"
+},
+"0040b0a0": {
+"evidence": "single-call forwarder -> 0x0040bbc0",
+"name": "fwd_0040bbc0",
+"role": "thunk"
+},
+"0040b0c0": {
+"evidence": null,
+"role": "logic"
+},
+"0040b270": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040b380": {
+"evidence": "single-call forwarder -> 0x0040bd50",
+"name": "fwd_0040bd50",
+"role": "thunk"
+},
+"0040b390": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040b4e0": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "ui",
+"module_conf": 0.64,
+"role": "wrapper"
+},
+"0040b550": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040b5e0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040b680": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040b730": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040b810": {
+"evidence": null,
+"role": "logic"
+},
+"0040b9f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040bac0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0040bb30": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0040bb90": {
+"evidence": null,
+"role": "logic"
+},
+"0040bbb0": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"0040bbc0": {
+"evidence": null,
+"role": "logic"
+},
+"0040bd50": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040be60": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040bef0": {
+"evidence": null,
+"role": "logic"
+},
+"0040bfc0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0040c0a0": {
+"evidence": null,
+"role": "logic"
+},
+"0040c280": {
+"evidence": null,
+"role": "logic"
+},
+"0040c390": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040c520": {
+"evidence": null,
+"role": "logic"
+},
+"0040cb00": {
+"evidence": null,
+"role": "logic"
+},
+"0040cba0": {
+"evidence": null,
+"role": "logic"
+},
+"0040d860": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0040d9d0": {
+"evidence": null,
+"role": "logic"
+},
+"0040e420": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0040e440": {
+"evidence": "zero-inits 10 fields, returns this",
+"module": "ui",
+"module_conf": 0.82,
+"role": "ctor-like"
+},
+"0040e696": {
+"evidence": null,
+"role": "logic"
+},
+"0040e6f0": {
+"evidence": "zero-inits 8 fields, returns this",
+"module": "ui",
+"module_conf": 0.82,
+"role": "ctor-like"
+},
+"0040e8d6": {
+"evidence": null,
+"role": "logic"
+},
+"0040ea30": {
+"evidence": null,
+"role": "logic"
+},
+"0040ea50": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0040ea70": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0040ea90": {
+"evidence": null,
+"role": "logic"
+},
+"0040eac0": {
+"evidence": null,
+"role": "logic"
+},
+"0040eb60": {
+"evidence": null,
+"role": "logic"
+},
+"0040ee70": {
+"evidence": null,
+"role": "logic"
+},
+"0040ef20": {
+"evidence": null,
+"role": "logic"
+},
+"0040f3c0": {
+"evidence": null,
+"module": "ui",
+"module_conf": 0.82,
+"role": "logic"
+},
+"0040f570": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0040f650": {
+"evidence": null,
+"role": "logic"
+},
+"0040f680": {
+"evidence": null,
+"role": "logic"
+},
+"0040f7a0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.71,
+"role": "logic"
+},
+"0040f8e0": {
+"evidence": "trivial expression, no calls",
+"module": "ui",
+"module_conf": 0.6,
+"name": "compute",
+"role": "computed"
+},
+"00411320": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00411340": {
+"evidence": null,
+"role": "logic"
+},
+"00411a90": {
+"evidence": "small field store(s), no calls",
+"module": "control",
+"module_conf": 0.75,
+"role": "mutator"
+},
+"00411ad0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00411b90": {
+"evidence": "thin wrapper around 2 call(s)",
+"module": "ui",
+"module_conf": 0.75,
+"role": "wrapper"
+},
+"00411bc0": {
+"evidence": "single-call forwarder -> 0x00411ad0",
+"module": "ui",
+"module_conf": 0.79,
+"name": "fwd_00411ad0",
+"role": "thunk"
+},
+"00411cf0": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00411d00": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00411d40": {
+"evidence": null,
+"role": "logic"
+},
+"00411df0": {
+"evidence": null,
+"role": "logic"
+},
+"00411e30": {
+"evidence": null,
+"role": "logic"
+},
+"00412080": {
+"evidence": null,
+"role": "logic"
+},
+"004120a0": {
+"evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 0.67,
+"name": "compute",
+"role": "computed"
+},
+"004120b0": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"004120c0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.6,
+"role": "logic"
+},
+"004120f0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.8,
+"role": "logic"
+},
+"00412120": {
+"evidence": null,
+"role": "logic"
+},
+"004121c0": {
+"evidence": null,
+"role": "logic"
+},
+"00412200": {
+"evidence": null,
+"role": "logic"
+},
+"00412220": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00412260": {
+"evidence": null,
+"role": "logic"
+},
+"00412280": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.6,
+"role": "logic"
+},
+"004122c0": {
+"evidence": null,
+"role": "logic"
+},
+"004122e0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00412350": {
+"evidence": null,
+"role": "logic"
+},
+"00412390": {
+"evidence": null,
+"role": "logic"
+},
+"00412780": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"004127c0": {
+"evidence": null,
+"role": "logic"
+},
+"00412810": {
+"evidence": null,
+"role": "logic"
+},
+"00412850": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00423e70": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.64,
+"role": "logic"
+},
+"00423ee0": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "control",
+"module_conf": 0.67,
+"role": "wrapper"
+},
+"00423f70": {
+"evidence": null,
+"role": "logic"
+},
+"004240f0": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "control",
+"module_conf": 0.67,
+"role": "wrapper"
+},
+"00424810": {
+"evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 0.67,
+"name": "compute",
+"role": "computed"
+},
+"00424820": {
+"evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 0.67,
+"name": "compute",
+"role": "computed"
+},
+"00424830": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.8,
+"role": "logic"
+},
+"00424860": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"004248a0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"00424990": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"00424b50": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00424ba0": {
+"evidence": "zero-inits 5 fields, returns this",
+"role": "ctor-like"
+},
+"00424d40": {
+"evidence": null,
+"role": "logic"
+},
+"00424f30": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.83,
+"role": "logic"
+},
+"004252f0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"00425330": {
+"evidence": null,
+"role": "logic"
+},
+"00425390": {
+"evidence": null,
+"role": "logic"
+},
+"00427a80": {
+"evidence": null,
+"role": "logic"
+},
+"00428750": {
+"evidence": null,
+"role": "logic"
+},
+"004288e0": {
+"evidence": null,
+"module": "ui",
+"module_conf": 0.6,
+"role": "logic"
+},
+"00428920": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00428940": {
+"evidence": null,
+"role": "logic"
+},
+"00428970": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00428980": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00428db0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.7,
+"role": "logic"
+},
+"0042b810": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0042b860": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0042b8b0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0042b910": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0042b950": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0042b990": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0042b9e0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0042ba20": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0042ba60": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0042bab0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0042bd20": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.8,
+"role": "logic"
+},
+"0042bd90": {
+"evidence": null,
+"role": "logic"
+},
+"0042c460": {
+"evidence": null,
+"role": "logic"
+},
+"0042c500": {
+"evidence": null,
+"role": "logic"
+},
+"0042c520": {
+"evidence": null,
+"role": "logic"
+},
+"0042c580": {
+"evidence": "single-call forwarder -> 0x0068d946",
+"module": "control",
+"module_conf": 0.75,
+"name": "fwd_0068d946",
+"role": "thunk"
+},
+"0042c5b0": {
+"evidence": null,
+"role": "logic"
+},
+"0042c5e0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.6,
+"role": "logic"
+},
+"0042c680": {
+"evidence": null,
+"role": "logic"
+},
+"0042c6c0": {
+"evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 0.67,
+"name": "compute",
+"role": "computed"
+},
+"0042c6d0": {
+"evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 0.67,
+"name": "compute",
+"role": "computed"
+},
+"0042c6e0": {
+"evidence": "single-call forwarder -> 0x0042c900",
+"module": "control",
+"module_conf": 0.67,
+"name": "fwd_0042c900",
+"role": "thunk"
+},
+"0042c7a0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0042c800": {
+"evidence": null,
+"role": "logic"
+},
+"0042c8d0": {
+"evidence": null,
+"role": "logic"
+},
+"0042c900": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0042ca00": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0042ca80": {
+"evidence": "thin wrapper around 2 call(s)",
+"module": "engine",
+"module_conf": 0.67,
+"role": "wrapper"
+},
+"0042ef10": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0042f030": {
+"evidence": "small field store(s), no calls",
+"module": "control",
+"module_conf": 0.6,
+"role": "mutator"
+},
+"0042f040": {
+"evidence": null,
+"role": "logic"
+},
+"0042f3e0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0042f470": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"0042f4a0": {
+"evidence": null,
+"role": "logic"
+},
+"0042f590": {
+"evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 0.67,
+"name": "compute",
+"role": "computed"
+},
+"0042f640": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0042f7e0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.71,
+"role": "logic"
+},
+"0042f860": {
+"evidence": null,
+"role": "logic"
+},
+"004347a0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.91,
+"role": "logic"
+},
+"004348b0": {
+"evidence": "trivial expression, no calls",
+"module": "world",
+"module_conf": 0.6,
+"name": "compute",
+"role": "computed"
+},
+"00434a90": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.6,
+"role": "logic"
+},
+"00434b70": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00434b80": {
+"evidence": null,
+"role": "logic"
+},
+"00434c10": {
+"evidence": "trivial expression, no calls",
+"module": "world",
+"module_conf": 0.6,
+"name": "compute",
+"role": "computed"
+},
+"00434d10": {
+"evidence": null,
+"role": "logic"
+},
+"004391d0": {
+"evidence": null,
+"role": "logic"
+},
+"00439510": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00439600": {
+"evidence": null,
+"role": "logic"
+},
+"0043a270": {
+"evidence": null,
+"role": "logic"
+},
+"0043a3f0": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0043a450": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "control",
+"module_conf": 0.86,
+"role": "wrapper"
+},
+"0043a490": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"0043ab30": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "control",
+"module_conf": 0.8,
+"role": "wrapper"
+},
+"0043abc0": {
+"evidence": null,
+"role": "logic"
+},
+"0043abf0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.6,
+"role": "logic"
+},
+"0043ac20": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.8,
+"role": "logic"
+},
+"0043b480": {
+"evidence": "small field store(s), no calls",
+"module": "world",
+"module_conf": 0.6,
+"role": "mutator"
+},
+"0043b5e0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0043b610": {
+"evidence": null,
+"role": "logic"
+},
+"0043c020": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 0.64,
+"role": "wrapper"
+},
+"0043c0a0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0043c380": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0043c3b0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0043c3e0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0043c870": {
+"evidence": null,
+"role": "logic"
+},
+"0043c8e0": {
+"evidence": null,
+"role": "logic"
+},
+"0043c920": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0043d1a0": {
+"evidence": null,
+"role": "logic"
+},
+"0043e350": {
+"evidence": null,
+"role": "logic"
+},
+"0043e4a0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0043e550": {
+"evidence": null,
+"role": "logic"
+},
+"0043e5a0": {
+"evidence": null,
+"role": "logic"
+},
+"0043e630": {
+"evidence": "single-call forwarder -> 0x00639cf0",
+"name": "fwd_00639cf0",
+"role": "thunk"
+},
+"0043ec90": {
+"evidence": null,
+"role": "logic"
+},
+"0043f720": {
+"evidence": null,
+"role": "logic"
+},
+"0043f7c0": {
+"evidence": null,
+"role": "logic"
+},
+"00444230": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"00444270": {
+"evidence": null,
+"role": "logic"
+},
+"004445d0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.8,
+"role": "logic"
+},
+"00444610": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00444650": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"00444860": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00444a90": {
+"evidence": null,
+"role": "logic"
+},
+"00445ff0": {
+"evidence": null,
+"role": "logic"
+},
+"00446950": {
+"evidence": null,
+"role": "logic"
+},
+"00446e80": {
+"evidence": null,
+"role": "logic"
+},
+"00447700": {
+"evidence": null,
+"role": "logic"
+},
+"004478b0": {
+"evidence": null,
+"role": "logic"
+},
+"00447d10": {
+"evidence": "virtual dispatch through vtable",
+"module": "ui",
+"module_conf": 0.64,
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00447dd0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00447e10": {
+"evidence": null,
+"role": "logic"
+},
+"00447fb0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00448010": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00448100": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00448170": {
+"evidence": null,
+"role": "logic"
+},
+"00448280": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"004482a0": {
+"evidence": null,
+"role": "logic"
+},
+"00448f10": {
+"evidence": null,
+"module": "ui",
+"module_conf": 0.64,
+"role": "logic"
+},
+"00448fe0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00449720": {
+"evidence": null,
+"role": "logic"
+},
+"00449920": {
+"evidence": null,
+"role": "logic"
+},
+"004499c0": {
+"evidence": "single-call forwarder -> 0x004499f0",
+"module": "world",
+"module_conf": 0.75,
+"name": "fwd_004499f0",
+"role": "thunk"
+},
+"004499f0": {
+"evidence": null,
+"role": "logic"
+},
+"0044a500": {
+"evidence": null,
+"role": "logic"
+},
+"0044a580": {
+"evidence": null,
+"role": "logic"
+},
+"0044a650": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0044a7c0": {
+"evidence": null,
+"role": "logic"
+},
+"0044a9f0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0044b560": {
+"evidence": "trivial expression, no calls",
+"module": "world",
+"module_conf": 0.75,
+"name": "compute",
+"role": "computed"
+},
+"0044b580": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0044b5f0": {
+"evidence": null,
+"module": "entity",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0044b7f0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0044b920": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0044bc10": {
+"evidence": null,
+"role": "logic"
+},
+"0044d4b0": {
+"evidence": null,
+"role": "logic"
+},
+"0044d660": {
+"evidence": null,
+"role": "logic"
+},
+"0044e7a0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.93,
+"role": "logic"
+},
+"0044e890": {
+"evidence": "trivial expression, no calls",
+"module": "world",
+"module_conf": 0.75,
+"name": "compute",
+"role": "computed"
+},
+"00450960": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00450ab0": {
+"evidence": null,
+"role": "logic"
+},
+"00450d90": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00450e00": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00450f00": {
+"evidence": null,
+"role": "logic"
+},
+"004511e0": {
+"evidence": null,
+"role": "logic"
+},
+"004514b0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00451510": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.6,
+"role": "logic"
+},
+"00451550": {
+"evidence": "zero-inits 6 fields, returns this",
+"role": "ctor-like"
+},
+"004515f0": {
+"evidence": "zero-inits 6 fields, returns this",
+"role": "ctor-like"
+},
+"004516e0": {
+"evidence": "zero-inits 6 fields, returns this",
+"role": "ctor-like"
+},
+"00451850": {
+"evidence": "zero-inits 6 fields, returns this",
+"module": "engine",
+"module_conf": 0.6,
+"role": "ctor-like"
+},
+"00451940": {
+"evidence": null,
+"role": "logic"
+},
+"00451a60": {
+"evidence": null,
+"role": "logic"
+},
+"00452260": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004522a0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004522e0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00452320": {
+"evidence": null,
+"role": "logic"
+},
+"00452500": {
+"evidence": "single-call forwarder -> 0x0040f680",
+"name": "fwd_0040f680",
+"role": "thunk"
+},
+"00452600": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00452650": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "engine",
+"module_conf": 0.75,
+"role": "dtor-like"
+},
+"00452c20": {
+"evidence": null,
+"role": "logic"
+},
+"00452e30": {
+"evidence": null,
+"role": "logic"
+},
+"00453040": {
+"evidence": null,
+"role": "logic"
+},
+"00453230": {
+"evidence": null,
+"role": "logic"
+},
+"00453420": {
+"evidence": null,
+"role": "logic"
+},
+"00453670": {
+"evidence": null,
+"role": "logic"
+},
+"004538c0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004539e0": {
+"evidence": null,
+"role": "logic"
+},
+"00453b40": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00453c90": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00454190": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"00454260": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"00454b50": {
+"evidence": null,
+"role": "logic"
+},
+"00454d60": {
+"evidence": null,
+"role": "logic"
+},
+"00454ef0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00454fe0": {
+"evidence": null,
+"role": "logic"
+},
+"004551b0": {
+"evidence": null,
+"role": "logic"
+},
+"00455270": {
+"evidence": null,
+"role": "logic"
+},
+"00455340": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"004553c0": {
+"evidence": null,
+"role": "logic"
+},
+"00455470": {
+"evidence": null,
+"role": "logic"
+},
+"004555c0": {
+"evidence": null,
+"role": "logic"
+},
+"004556b0": {
+"evidence": null,
+"role": "logic"
+},
+"00455710": {
+"evidence": null,
+"role": "logic"
+},
+"00455760": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00455860": {
+"evidence": null,
+"role": "logic"
+},
+"00455940": {
+"evidence": null,
+"role": "logic"
+},
+"00455c30": {
+"evidence": null,
+"role": "logic"
+},
+"00455d80": {
+"evidence": null,
+"role": "logic"
+},
+"00455fb0": {
+"evidence": null,
+"role": "logic"
+},
+"00456010": {
+"evidence": null,
+"role": "logic"
+},
+"00456160": {
+"evidence": null,
+"role": "logic"
+},
+"004563d0": {
+"evidence": null,
+"role": "logic"
+},
+"00456ae0": {
+"evidence": null,
+"role": "logic"
+},
+"00456c30": {
+"evidence": null,
+"role": "logic"
+},
+"00456d30": {
+"evidence": "single-call forwarder -> 0x00466590",
+"name": "fwd_00466590",
+"role": "thunk"
+},
+"00456dc0": {
+"evidence": null,
+"role": "logic"
+},
+"00456e90": {
+"evidence": null,
+"role": "logic"
+},
+"00456ee0": {
+"evidence": null,
+"role": "logic"
+},
+"00456f20": {
+"evidence": null,
+"module": "world",
+"module_conf": 1.0,
+"role": "logic"
+},
+"00456f70": {
+"evidence": null,
+"role": "logic"
+},
+"004570a0": {
+"evidence": null,
+"role": "logic"
+},
+"004573d0": {
+"evidence": null,
+"role": "logic"
+},
+"004578a0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004578e0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00457900": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00457ae0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00457b80": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00457ea0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00457ec0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "engine",
+"module_conf": 0.8,
+"role": "dtor-like"
+},
+"00457f70": {
+"evidence": null,
+"role": "logic"
+},
+"00458030": {
+"evidence": null,
+"role": "logic"
+},
+"00458100": {
+"evidence": null,
+"role": "logic"
+},
+"004581d0": {
+"evidence": null,
+"role": "logic"
+},
+"00458310": {
+"evidence": null,
+"role": "logic"
+},
+"004583f0": {
+"evidence": null,
+"role": "logic"
+},
+"00458500": {
+"evidence": null,
+"role": "logic"
+},
+"00458650": {
+"evidence": null,
+"role": "logic"
+},
+"00458780": {
+"evidence": null,
+"role": "logic"
+},
+"00458860": {
+"evidence": null,
+"role": "logic"
+},
+"00458940": {
+"evidence": null,
+"role": "logic"
+},
+"00458a20": {
+"evidence": null,
+"role": "logic"
+},
+"00458c10": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00458de0": {
+"evidence": "empty body",
+"module": "control",
+"module_conf": 0.75,
+"name": "empty_stub",
+"role": "stub"
+},
+"00458df0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00458f30": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00458fd0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004592f0": {
+"evidence": null,
+"role": "logic"
+},
+"004593b0": {
+"evidence": "single-call forwarder -> 0x00487250",
+"name": "fwd_00487250",
+"role": "thunk"
+},
+"00459530": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "control",
+"module_conf": 0.67,
+"role": "wrapper"
+},
+"00459660": {
+"evidence": null,
+"role": "logic"
+},
+"00459800": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"00459a90": {
+"evidence": null,
+"role": "logic"
+},
+"00459b10": {
+"evidence": null,
+"role": "logic"
+},
+"00459c00": {
+"evidence": "single-call forwarder -> 0x0068d946",
+"name": "fwd_0068d946",
+"role": "thunk"
+},
+"00465ae0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00465b30": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00465b60": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00465fd0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00466050": {
+"evidence": null,
+"role": "logic"
+},
+"00466650": {
+"evidence": null,
+"role": "logic"
+},
+"00466aa0": {
+"evidence": "single-call forwarder -> 0x0068d66e",
+"name": "fwd_0068d66e",
+"role": "thunk"
+},
+"00466ab0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00466ad0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00466af0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00466b10": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00466b40": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00466b90": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00466be0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00467ab0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00467af0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00467b40": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00467bcb": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00467c70": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00468000": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"00468430": {
+"evidence": null,
+"role": "logic"
+},
+"00468840": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"004688d0": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00468910": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.72,
+"role": "logic"
+},
+"004689a0": {
+"evidence": null,
+"role": "logic"
+},
+"00468ad0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.8,
+"role": "logic"
+},
+"00468b70": {
+"evidence": null,
+"role": "logic"
+},
+"00468c60": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00468c70": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00468c80": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00468c90": {
+"evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 0.67,
+"name": "compute",
+"role": "computed"
+},
+"00468ca0": {
+"evidence": null,
+"role": "logic"
+},
+"00468d30": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00468d70": {
+"evidence": "single-call forwarder -> 0x005c3ea0",
+"module": "control",
+"module_conf": 0.67,
+"name": "fwd_005c3ea0",
+"role": "thunk"
+},
+"00468d90": {
+"evidence": null,
+"role": "logic"
+},
+"00468dd0": {
+"evidence": null,
+"role": "logic"
+},
+"00468df0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00468e70": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00468f20": {
+"evidence": null,
+"role": "logic"
+},
+"00468fa0": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"00468fc0": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 0.67,
+"role": "wrapper"
+},
+"004690a0": {
+"evidence": null,
+"role": "logic"
+},
+"00469590": {
+"evidence": null,
+"role": "logic"
+},
+"00469c10": {
+"evidence": null,
+"role": "logic"
+},
+"0046b740": {
+"evidence": null,
+"role": "logic"
+},
+"0046b8be": {
+"evidence": null,
+"role": "logic"
+},
+"0046d1c0": {
+"evidence": null,
+"role": "logic"
+},
+"0046d4b0": {
+"evidence": null,
+"role": "logic"
+},
+"0046d4e0": {
+"evidence": null,
+"role": "logic"
+},
+"0046d520": {
+"evidence": null,
+"role": "logic"
+},
+"0046d550": {
+"evidence": null,
+"role": "logic"
+},
+"0046d590": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.83,
+"role": "logic"
+},
+"0046d5d0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"0046d650": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"0046d950": {
+"evidence": null,
+"role": "logic"
+},
+"0046daf0": {
+"evidence": "single-call forwarder -> 0x00452650",
+"name": "fwd_00452650",
+"role": "thunk"
+},
+"0046db10": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0046dc50": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0046dd00": {
+"evidence": null,
+"role": "logic"
+},
+"0046dd40": {
+"evidence": null,
+"role": "logic"
+},
+"0046dd90": {
+"evidence": null,
+"role": "logic"
+},
+"0046e150": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0046e250": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0046e330": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "control",
+"module_conf": 1.0,
+"role": "dtor-like"
+},
+"0046e430": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0046e710": {
+"evidence": null,
+"role": "logic"
+},
+"0046e780": {
+"evidence": null,
+"role": "logic"
+},
+"0046e880": {
+"evidence": null,
+"role": "logic"
+},
+"0046eac0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0046eaf0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0046eb20": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0046eb80": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"0046ebe0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.62,
+"role": "logic"
+},
+"0046ef60": {
+"evidence": null,
+"role": "logic"
+},
+"0046f050": {
+"evidence": null,
+"role": "logic"
+},
+"0046f390": {
+"evidence": null,
+"role": "logic"
+},
+"0046f440": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"0046f450": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0046f490": {
+"evidence": null,
+"role": "logic"
+},
+"0046f8b0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0046f990": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0046f9f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00470d80": {
+"evidence": null,
+"role": "logic"
+},
+"004718b0": {
+"evidence": null,
+"role": "logic"
+},
+"00471b60": {
+"evidence": null,
+"role": "logic"
+},
+"00471d50": {
+"evidence": null,
+"role": "logic"
+},
+"004758c0": {
+"evidence": null,
+"module": "ui",
+"module_conf": 0.86,
+"role": "logic"
+},
+"00476660": {
+"evidence": null,
+"role": "logic"
+},
+"00477220": {
+"evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 0.67,
+"name": "compute",
+"role": "computed"
+},
+"00477240": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00477280": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004777f0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.8,
+"role": "logic"
+},
+"004778b0": {
+"evidence": null,
+"role": "logic"
+},
+"00477d20": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00477d90": {
+"evidence": null,
+"role": "logic"
+},
+"0047b5f0": {
+"evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 0.71,
+"name": "compute",
+"role": "computed"
+},
+"0047fae0": {
+"evidence": null,
+"role": "logic"
+},
+"00480e00": {
+"evidence": "zero-inits 7 fields, returns this",
+"role": "ctor-like"
+},
+"004814f0": {
+"evidence": null,
+"role": "logic"
+},
+"004815c0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004815e0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004816f0": {
+"evidence": null,
+"role": "logic"
+},
+"00481d30": {
+"evidence": null,
+"role": "logic"
+},
+"00481fe0": {
+"evidence": null,
+"role": "logic"
+},
+"004821a0": {
+"evidence": null,
+"role": "logic"
+},
+"00483e70": {
+"evidence": null,
+"role": "logic"
+},
+"00484170": {
+"evidence": null,
+"role": "logic"
+},
+"00484230": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00484350": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00486050": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004860b0": {
+"evidence": "thin wrapper around 2 call(s)",
+"module": "control",
+"module_conf": 0.7,
+"role": "wrapper"
+},
+"00486150": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00486240": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00486380": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004864c0": {
+"evidence": "thin wrapper around 2 call(s)",
+"module": "control",
+"module_conf": 0.75,
+"role": "wrapper"
+},
+"00486560": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00486600": {
+"evidence": null,
+"role": "logic"
+},
+"00486b60": {
+"evidence": null,
+"role": "logic"
+},
+"00486d00": {
+"evidence": null,
+"role": "logic"
+},
+"004870c0": {
+"evidence": null,
+"role": "logic"
+},
+"004871e0": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.8,
+"role": "logic"
+},
+"00487250": {
+"evidence": null,
+"role": "logic"
+},
+"00487380": {
+"evidence": null,
+"role": "logic"
+},
+"004874a0": {
+"evidence": null,
+"role": "logic"
+},
+"004878a0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00487ea0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00487f50": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00487f60": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00487ff0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00488bb0": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"00488bd0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00488c00": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00488c70": {
+"evidence": null,
+"role": "logic"
+},
+"00488d00": {
+"evidence": null,
+"role": "logic"
+},
+"00498d0b": {
+"evidence": null,
+"role": "logic"
+},
+"0049be00": {
+"evidence": null,
+"role": "logic"
+},
+"0049be3b": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0049be57": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0049be73": {
+"evidence": null,
+"role": "logic"
+},
+"0049bf44": {
+"evidence": null,
+"role": "logic"
+},
+"004a14c0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"004a19d0": {
+"evidence": null,
+"role": "logic"
+},
+"004a2300": {
+"evidence": null,
+"role": "logic"
+},
+"004a23d0": {
+"evidence": null,
+"role": "logic"
+},
+"004a2870": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"004a8f40": {
+"evidence": null,
+"role": "logic"
+},
+"004a9030": {
+"evidence": null,
+"role": "logic"
+},
+"004a9110": {
+"evidence": null,
+"role": "logic"
+},
+"004a93c0": {
+"evidence": null,
+"role": "logic"
+},
+"004a9470": {
+"evidence": null,
+"role": "logic"
+},
+"004a9790": {
+"evidence": null,
+"role": "logic"
+},
+"004a98d0": {
+"evidence": null,
+"role": "logic"
+},
+"004a9ad0": {
+"evidence": null,
+"role": "logic"
+},
+"004a9b50": {
+"evidence": null,
+"role": "logic"
+},
+"004a9db0": {
+"evidence": null,
+"role": "logic"
+},
+"004a9e60": {
+"evidence": null,
+"role": "logic"
+},
+"004aa350": {
+"evidence": null,
+"role": "logic"
+},
+"004aa490": {
+"evidence": null,
+"role": "logic"
+},
+"004aa720": {
+"evidence": null,
+"role": "logic"
+},
+"004aa7c0": {
+"evidence": null,
+"role": "logic"
+},
+"004aabd0": {
+"evidence": null,
+"role": "logic"
+},
+"004aaeb0": {
+"evidence": null,
+"role": "logic"
+},
+"004ab870": {
+"evidence": null,
+"role": "logic"
+},
+"004ab8b0": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"004aba90": {
+"evidence": "single-call forwarder -> 0x004aa350",
+"name": "fwd_004aa350",
+"role": "thunk"
+},
+"004abac0": {
+"evidence": "single-call forwarder -> 0x004aa490",
+"name": "fwd_004aa490",
+"role": "thunk"
+},
+"004abc00": {
+"evidence": null,
+"role": "logic"
+},
+"004abc30": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"004abc60": {
+"evidence": null,
+"role": "logic"
+},
+"004abca0": {
+"evidence": null,
+"role": "logic"
+},
+"004abdb0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004ac020": {
+"evidence": null,
+"role": "logic"
+},
+"004b21f3": {
+"evidence": null,
+"role": "logic"
+},
+"004b39e0": {
+"evidence": null,
+"role": "logic"
+},
+"004bbd80": {
+"evidence": null,
+"role": "logic"
+},
+"004bc760": {
+"evidence": null,
+"role": "logic"
+},
+"004bd160": {
+"evidence": null,
+"role": "logic"
+},
+"004be760": {
+"evidence": null,
+"role": "logic"
+},
+"004c04c0": {
+"evidence": null,
+"role": "logic"
+},
+"004c0ec0": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"004c0ed0": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"004c1190": {
+"evidence": null,
+"role": "logic"
+},
+"004c12f0": {
+"evidence": null,
+"role": "logic"
+},
+"004c5a00": {
+"evidence": null,
+"role": "logic"
+},
+"004c5a60": {
+"evidence": null,
+"role": "logic"
+},
+"004c5bb0": {
+"evidence": null,
+"role": "logic"
+},
+"004c60f0": {
+"evidence": null,
+"role": "logic"
+},
+"004c6350": {
+"evidence": null,
+"role": "logic"
+},
+"004c64c0": {
+"evidence": null,
+"role": "logic"
+},
+"004c67b0": {
+"evidence": null,
+"role": "logic"
+},
+"004c67f0": {
+"evidence": null,
+"role": "logic"
+},
+"004c6840": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004c6940": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
+},
+"004c6b80": {
+"evidence": null,
+"role": "logic"
+},
+"004c7250": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"004c76a0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004c7c00": {
+"evidence": null,
+"role": "logic"
+},
+"004c7e80": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
+},
+"004c7ed0": {
+"evidence": null,
+"role": "logic"
+},
+"004c83f0": {
+"evidence": null,
+"role": "logic"
+},
+"004c8720": {
+"evidence": null,
+"role": "logic"
+},
+"004c9550": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004c9580": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004c9640": {
+"evidence": null,
+"role": "logic"
+},
+"004cb0c0": {
+"evidence": null,
+"module": "world",
+"module_conf": 1.0,
+"role": "logic"
+},
+"004cb220": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004cb290": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004cb2c0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004cb5d0": {
+"evidence": null,
+"role": "logic"
+},
+"004cb670": {
+"evidence": null,
+"role": "logic"
+},
+"004cb710": {
+"evidence": null,
+"role": "logic"
+},
+"004cb7b0": {
+"evidence": null,
+"role": "logic"
+},
+"004cb850": {
+"evidence": null,
+"role": "logic"
+},
+"004cb930": {
+"evidence": null,
+"role": "logic"
+},
+"004cb9d0": {
+"evidence": null,
+"role": "logic"
+},
+"004cba70": {
+"evidence": null,
+"role": "logic"
+},
+"004cbb10": {
+"evidence": null,
+"role": "logic"
+},
+"004cbbc0": {
+"evidence": null,
+"role": "logic"
+},
+"004cbc80": {
+"evidence": null,
+"role": "logic"
+},
+"004cbd40": {
+"evidence": null,
+"role": "logic"
+},
+"004cbde0": {
+"evidence": null,
+"role": "logic"
+},
+"004cbe50": {
+"evidence": null,
+"role": "logic"
+},
+"004cbed0": {
+"evidence": null,
+"role": "logic"
+},
+"004cbf40": {
+"evidence": null,
+"role": "logic"
+},
+"004cbfc0": {
+"evidence": null,
+"role": "logic"
+},
+"004cc030": {
+"evidence": null,
+"role": "logic"
+},
+"004cc0b0": {
+"evidence": null,
+"role": "logic"
+},
+"004cc140": {
+"evidence": null,
+"role": "logic"
+},
+"004cc1c0": {
+"evidence": null,
+"role": "logic"
+},
+"004cc240": {
+"evidence": null,
+"role": "logic"
+},
+"004cc2c0": {
+"evidence": null,
+"role": "logic"
+},
+"004cc340": {
+"evidence": null,
+"role": "logic"
+},
+"004cc3c0": {
+"evidence": null,
+"role": "logic"
+},
+"004cc440": {
+"evidence": null,
+"role": "logic"
+},
+"004cc4c0": {
+"evidence": null,
+"role": "logic"
+},
+"004cc540": {
+"evidence": null,
+"role": "logic"
+},
+"004cc5c0": {
+"evidence": null,
+"role": "logic"
+},
+"004cc650": {
+"evidence": null,
+"role": "logic"
+},
+"004cc6d0": {
+"evidence": null,
+"role": "logic"
+},
+"004cc750": {
+"evidence": null,
+"role": "logic"
+},
+"004cc800": {
+"evidence": null,
+"role": "logic"
+},
+"004cc840": {
+"evidence": null,
+"role": "logic"
+},
+"004ccaa0": {
+"evidence": null,
+"role": "logic"
+},
+"004ccbf0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.6,
+"role": "logic"
+},
+"004ccc30": {
+"evidence": null,
+"role": "logic"
+},
+"004cccf0": {
+"evidence": null,
+"role": "logic"
+},
+"004ccda0": {
+"evidence": null,
+"role": "logic"
+},
+"004cce20": {
+"evidence": null,
+"role": "logic"
+},
+"004ccea0": {
+"evidence": null,
+"role": "logic"
+},
+"004ccf20": {
+"evidence": null,
+"role": "logic"
+},
+"004ccfa0": {
+"evidence": null,
+"role": "logic"
+},
+"004cd3e0": {
+"evidence": null,
+"role": "logic"
+},
+"004cdaa0": {
+"evidence": null,
+"role": "logic"
+},
+"004ce2a0": {
+"evidence": "zero-inits 7 fields, returns this",
+"role": "ctor-like"
+},
+"004ce3f9": {
+"evidence": null,
+"role": "logic"
+},
+"004ce460": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004ce550": {
+"evidence": "zero-inits 5 fields, returns this",
+"role": "ctor-like"
+},
+"004ce6c0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"004ce6e0": {
+"evidence": null,
+"role": "logic"
+},
+"004cef80": {
+"evidence": null,
+"role": "logic"
+},
+"004d4650": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004d4cb0": {
+"evidence": null,
+"role": "logic"
+},
+"004d4d20": {
+"evidence": null,
+"role": "logic"
+},
+"004d6c20": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"004d6c40": {
+"evidence": null,
+"role": "logic"
+},
+"004d6cb0": {
+"evidence": null,
+"role": "logic"
+},
+"004d6d10": {
+"evidence": "single-call forwarder -> 0x004d72f0",
+"name": "fwd_004d72f0",
+"role": "thunk"
+},
+"004d6d30": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"004d6d40": {
+"evidence": null,
+"role": "logic"
+},
+"004d6d60": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"004d6d70": {
+"evidence": null,
+"role": "logic"
+},
+"004d6d90": {
+"evidence": null,
+"role": "logic"
+},
+"004d6e20": {
+"evidence": null,
+"role": "logic"
+},
+"004d6ea0": {
+"evidence": null,
+"role": "logic"
+},
+"004d6f10": {
+"evidence": null,
+"role": "logic"
+},
+"004d6f60": {
+"evidence": null,
+"role": "logic"
+},
+"004d6fe0": {
+"evidence": null,
+"role": "logic"
+},
+"004d7020": {
+"evidence": null,
+"role": "logic"
+},
+"004d70a0": {
+"evidence": null,
+"role": "logic"
+},
+"004d70d0": {
+"evidence": null,
+"role": "logic"
+},
+"004d7150": {
+"evidence": null,
+"role": "logic"
+},
+"004d7190": {
+"evidence": null,
+"role": "logic"
+},
+"004d7240": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"004d72a0": {
+"evidence": null,
+"role": "logic"
+},
+"004d72f0": {
+"evidence": null,
+"role": "logic"
+},
+"004d73a0": {
+"evidence": null,
+"role": "logic"
+},
+"004d7400": {
+"evidence": null,
+"role": "logic"
+},
+"004d7460": {
+"evidence": null,
+"role": "logic"
+},
+"004d74f0": {
+"evidence": null,
+"role": "logic"
+},
+"004d75f0": {
+"evidence": null,
+"role": "logic"
+},
+"004d77d0": {
+"evidence": null,
+"role": "logic"
+},
+"004d7840": {
+"evidence": null,
+"role": "logic"
+},
+"004d7860": {
+"evidence": null,
+"role": "logic"
+},
+"004d78a0": {
+"evidence": null,
+"role": "logic"
+},
+"004d79f0": {
+"evidence": null,
+"role": "logic"
+},
+"004d7a60": {
+"evidence": null,
+"role": "logic"
+},
+"004d7b00": {
+"evidence": null,
+"role": "logic"
+},
+"004d7bc0": {
+"evidence": null,
+"role": "logic"
+},
+"004d7be0": {
+"evidence": null,
+"role": "logic"
+},
+"004d7c30": {
+"evidence": "zero-inits 4 fields, returns this",
+"role": "ctor-like"
+},
+"004d7ce0": {
+"evidence": null,
+"role": "logic"
+},
+"004d7dc0": {
+"evidence": null,
+"role": "logic"
+},
+"004d7e70": {
+"evidence": null,
+"role": "logic"
+},
+"004d8410": {
+"evidence": null,
+"role": "logic"
+},
+"004d8510": {
+"evidence": null,
+"role": "logic"
+},
+"004d85c0": {
+"evidence": null,
+"role": "logic"
+},
+"004d8630": {
+"evidence": null,
+"role": "logic"
+},
+"004d8750": {
+"evidence": null,
+"role": "logic"
+},
+"004d8810": {
+"evidence": null,
+"role": "logic"
+},
+"004d8900": {
+"evidence": null,
+"role": "logic"
+},
+"004d8c70": {
+"evidence": null,
+"role": "logic"
+},
+"004d8ef0": {
+"evidence": null,
+"role": "logic"
+},
+"004d8f40": {
+"evidence": "zero-inits 4 fields, returns this",
+"role": "ctor-like"
+},
+"004d9000": {
+"evidence": null,
+"role": "logic"
+},
+"004d90d0": {
+"evidence": null,
+"role": "logic"
+},
+"004d91d0": {
+"evidence": null,
+"role": "logic"
+},
+"004d9340": {
+"evidence": null,
+"role": "logic"
+},
+"004d94e0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004d9520": {
+"evidence": null,
+"role": "logic"
+},
+"004d9600": {
+"evidence": null,
+"role": "logic"
+},
+"004d96f0": {
+"evidence": null,
+"role": "logic"
+},
+"004d9950": {
+"evidence": null,
+"role": "logic"
+},
+"004d9a40": {
+"evidence": null,
+"role": "logic"
+},
+"004d9ae0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004d9b10": {
+"evidence": null,
+"role": "logic"
+},
+"004d9b90": {
+"evidence": null,
+"role": "logic"
+},
+"004d9c50": {
+"evidence": null,
+"role": "logic"
+},
+"004d9e50": {
+"evidence": null,
+"role": "logic"
+},
+"004da050": {
+"evidence": null,
+"role": "logic"
+},
+"004da1a0": {
+"evidence": null,
+"role": "logic"
+},
+"004da2f0": {
+"evidence": null,
+"role": "logic"
+},
+"004da480": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "control",
+"module_conf": 0.71,
+"role": "wrapper"
+},
+"004da730": {
+"evidence": null,
+"role": "logic"
+},
+"004da770": {
+"evidence": null,
+"role": "logic"
+},
+"004da800": {
+"evidence": null,
+"role": "logic"
+},
+"004da850": {
+"evidence": null,
+"role": "logic"
+},
+"004db110": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"004dc680": {
+"evidence": null,
+"role": "logic"
+},
+"004dc8e0": {
+"evidence": null,
+"role": "logic"
+},
+"004df760": {
+"evidence": null,
+"role": "logic"
+},
+"004df880": {
+"evidence": null,
+"role": "logic"
+},
+"004df9c0": {
+"evidence": null,
+"role": "logic"
+},
+"004e0730": {
+"evidence": null,
+"module": "ui",
+"module_conf": 1.0,
+"role": "logic"
+},
+"004e0940": {
+"evidence": null,
+"role": "logic"
+},
+"004e0fe0": {
+"evidence": null,
+"role": "logic"
+},
+"004e1480": {
+"evidence": null,
+"role": "logic"
+},
+"004e15e0": {
+"evidence": null,
+"module": "ui",
+"module_conf": 1.0,
+"role": "logic"
+},
+"004e16b0": {
+"evidence": null,
+"role": "logic"
+},
+"004e29a0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004e29d0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004e2a70": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004e2aa0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004e2d90": {
+"evidence": null,
+"role": "logic"
+},
+"004e2f00": {
+"evidence": null,
+"role": "logic"
+},
+"004e31e0": {
+"evidence": null,
+"role": "logic"
+},
+"004e3480": {
+"evidence": null,
+"role": "logic"
+},
+"004e34f0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004e3530": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004e3550": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004e3630": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004e3790": {
+"evidence": null,
+"role": "logic"
+},
+"004e37e0": {
+"evidence": null,
+"role": "logic"
+},
+"004e3bb0": {
+"evidence": null,
+"role": "logic"
+},
+"004e3c70": {
+"evidence": null,
+"role": "logic"
+},
+"004e5590": {
+"evidence": null,
+"role": "logic"
+},
+"004e5e70": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004e6af0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"004e6bd0": {
+"evidence": null,
+"role": "logic"
+},
+"004e6ce0": {
+"evidence": null,
+"role": "logic"
+},
+"004e6d00": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"004e6d80": {
+"evidence": null,
+"role": "logic"
+},
+"004e6df0": {
+"evidence": null,
+"role": "logic"
+},
+"004e7520": {
+"evidence": null,
+"role": "logic"
+},
+"004e75c0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "control",
+"module_conf": 0.75,
+"role": "dtor-like"
+},
+"004e7870": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.6,
+"role": "logic"
+},
+"004eb8d0": {
+"evidence": null,
+"role": "logic"
+},
+"004ec0d0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"004ec370": {
+"evidence": null,
+"role": "logic"
+},
+"004ec400": {
+"evidence": null,
+"module": "ui",
+"module_conf": 0.71,
+"role": "logic"
+},
+"0051be60": {
+"evidence": null,
+"role": "logic"
+},
+"0051c760": {
+"evidence": null,
+"role": "logic"
+},
+"0051c7a0": {
+"evidence": null,
+"role": "logic"
+},
+"0051c810": {
+"evidence": null,
+"role": "logic"
+},
+"0051c950": {
+"evidence": "single-call forwarder -> 0x0056bce0",
+"name": "fwd_0056bce0",
+"role": "thunk"
+},
+"0051c970": {
+"evidence": "single-call forwarder -> 0x0056bce0",
+"name": "fwd_0056bce0",
+"role": "thunk"
+},
+"0051c990": {
+"evidence": "single-call forwarder -> 0x0056bce0",
+"name": "fwd_0056bce0",
+"role": "thunk"
+},
+"0051c9b0": {
+"evidence": "field getter: return *(this+0x1e)",
+"name": "get_0x1e",
+"role": "accessor"
+},
+"0051c9c0": {
+"evidence": null,
+"role": "logic"
+},
+"0051ca20": {
+"evidence": null,
+"role": "logic"
+},
+"0051cbf0": {
+"evidence": null,
+"role": "logic"
+},
+"0051ce10": {
+"evidence": null,
+"role": "logic"
+},
+"0051ce90": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"0051cea0": {
+"evidence": "field getter: return *(this+8)",
+"name": "get_8",
+"role": "accessor"
+},
+"0051ceb0": {
+"evidence": null,
+"role": "logic"
+},
+"0051cee0": {
+"evidence": null,
+"role": "logic"
+},
+"0051cf90": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0051cfd0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0051d010": {
+"evidence": "single-call forwarder -> 0x00574df0",
+"name": "fwd_00574df0",
+"role": "thunk"
+},
+"0051d040": {
+"evidence": "single-call forwarder -> 0x00575040",
+"name": "fwd_00575040",
+"role": "thunk"
+},
+"0051d070": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0051d0b0": {
+"evidence": "single-call forwarder -> 0x00575040",
+"name": "fwd_00575040",
+"role": "thunk"
+},
+"0051d0e0": {
+"evidence": "single-call forwarder -> 0x00575040",
+"name": "fwd_00575040",
+"role": "thunk"
+},
+"0051d110": {
+"evidence": null,
+"role": "logic"
+},
+"0051d1d0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0051d210": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0051d320": {
+"evidence": null,
+"role": "logic"
+},
+"0051d350": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0051d390": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0051d3d0": {
+"evidence": null,
+"role": "logic"
+},
+"0051d400": {
+"evidence": null,
+"role": "logic"
+},
+"0051d4d0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0051d510": {
+"evidence": "single-call forwarder -> 0x00574570",
+"name": "fwd_00574570",
+"role": "thunk"
+},
+"0051d520": {
+"evidence": null,
+"role": "logic"
+},
+"0051d580": {
+"evidence": null,
+"role": "logic"
+},
+"0051d5e0": {
+"evidence": null,
+"role": "logic"
+},
+"0051d650": {
+"evidence": null,
+"role": "logic"
+},
+"0051d9c0": {
+"evidence": null,
+"role": "logic"
+},
+"0051da30": {
+"evidence": null,
+"role": "logic"
+},
+"0051dac0": {
+"evidence": null,
+"role": "logic"
+},
+"0051db30": {
+"evidence": null,
+"role": "logic"
+},
+"0051dbd0": {
+"evidence": null,
+"role": "logic"
+},
+"0051dc20": {
+"evidence": null,
+"role": "logic"
+},
+"0051dc70": {
+"evidence": null,
+"role": "logic"
+},
+"0051dde0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0051de20": {
+"evidence": "field getter: return *(this+0x36)",
+"name": "get_0x36",
+"role": "accessor"
+},
+"0051de30": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"0051de50": {
+"evidence": null,
+"role": "logic"
+},
+"0051df10": {
+"evidence": null,
+"role": "logic"
+},
+"0051df50": {
+"evidence": null,
+"role": "logic"
+},
+"0051dfa0": {
+"evidence": null,
+"role": "logic"
+},
+"0051dff0": {
+"evidence": null,
+"role": "logic"
+},
+"0051e270": {
+"evidence": null,
+"role": "logic"
+},
+"0051e340": {
+"evidence": null,
+"role": "logic"
+},
+"0051e950": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"0051e960": {
+"evidence": null,
+"role": "logic"
+},
+"0051ea40": {
+"evidence": "single-call forwarder -> 0x0051e960",
+"name": "fwd_0051e960",
+"role": "thunk"
+},
+"0051ea60": {
+"evidence": null,
+"role": "logic"
+},
+"0051eb70": {
+"evidence": null,
+"role": "logic"
+},
+"0051ec50": {
+"evidence": null,
+"role": "logic"
+},
+"0051f1f0": {
+"evidence": null,
+"role": "logic"
+},
+"0051f310": {
+"evidence": null,
+"role": "logic"
+},
+"0051f3c0": {
+"evidence": null,
+"role": "logic"
+},
+"0051f4c0": {
+"evidence": null,
+"role": "logic"
+},
+"0051f6b0": {
+"evidence": null,
+"role": "logic"
+},
+"0051f790": {
+"evidence": null,
+"role": "logic"
+},
+"0051f890": {
+"evidence": null,
+"role": "logic"
+},
+"0051f900": {
+"evidence": "single-call forwarder -> 0x0051f6b0",
+"name": "fwd_0051f6b0",
+"role": "thunk"
+},
+"0051f920": {
+"evidence": null,
+"role": "logic"
+},
+"0051f970": {
+"evidence": null,
+"role": "logic"
+},
+"0051ff10": {
+"evidence": null,
+"role": "logic"
+},
+"0051ff50": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"0051ff80": {
+"evidence": null,
+"role": "logic"
+},
+"005201b0": {
+"evidence": null,
+"role": "logic"
+},
+"005204f0": {
+"evidence": null,
+"role": "logic"
+},
+"00520640": {
+"evidence": null,
+"role": "logic"
+},
+"00520c70": {
+"evidence": null,
+"role": "logic"
+},
+"00520e20": {
+"evidence": null,
+"role": "logic"
+},
+"00520ea0": {
+"evidence": null,
+"role": "logic"
+},
+"005211a0": {
+"evidence": "single-call forwarder -> 0x0051f3c0",
+"name": "fwd_0051f3c0",
+"role": "thunk"
+},
+"005211c0": {
+"evidence": null,
+"role": "logic"
+},
+"00521220": {
+"evidence": null,
+"role": "logic"
+},
+"005212a0": {
+"evidence": "single-call forwarder -> 0x0051f790",
+"name": "fwd_0051f790",
+"role": "thunk"
+},
+"005212c0": {
+"evidence": null,
+"role": "logic"
+},
+"00521320": {
+"evidence": "single-call forwarder -> 0x0051f1f0",
+"name": "fwd_0051f1f0",
+"role": "thunk"
+},
+"00521340": {
+"evidence": null,
+"role": "logic"
+},
+"00521390": {
+"evidence": null,
+"role": "logic"
+},
+"00521440": {
+"evidence": "single-call forwarder -> 0x00533b00",
+"name": "fwd_00533b00",
+"role": "thunk"
+},
+"00521460": {
+"evidence": null,
+"role": "logic"
+},
+"005214d0": {
+"evidence": null,
+"role": "logic"
+},
+"005215b0": {
+"evidence": "single-call forwarder -> 0x00533b00",
+"name": "fwd_00533b00",
+"role": "thunk"
+},
+"005215c0": {
+"evidence": null,
+"role": "logic"
+},
+"00521770": {
+"evidence": null,
+"role": "logic"
+},
+"00521820": {
+"evidence": null,
+"role": "logic"
+},
+"005218b0": {
+"evidence": null,
+"role": "logic"
+},
+"00521950": {
+"evidence": null,
+"role": "logic"
+},
+"00522240": {
+"evidence": null,
+"role": "logic"
+},
+"00522310": {
+"evidence": null,
+"role": "logic"
+},
+"00522370": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"00522390": {
+"evidence": "single-call forwarder -> 0x0052e130",
+"name": "fwd_0052e130",
+"role": "thunk"
+},
+"005223b0": {
+"evidence": null,
+"role": "logic"
+},
+"00522460": {
+"evidence": "single-call forwarder -> 0x0052e130",
+"name": "fwd_0052e130",
+"role": "thunk"
+},
+"00522480": {
+"evidence": "single-call forwarder -> 0x0068d494",
+"name": "fwd_0068d494",
+"role": "thunk"
+},
+"00522540": {
+"evidence": null,
+"role": "logic"
+},
+"005225c0": {
+"evidence": null,
+"role": "logic"
+},
+"00522640": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00522660": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"00522680": {
+"evidence": "single-call forwarder -> 0x0068d53c",
+"name": "fwd_0068d53c",
+"role": "thunk"
+},
+"00522690": {
+"evidence": null,
+"role": "logic"
+},
+"00522720": {
+"evidence": null,
+"role": "logic"
+},
+"00522760": {
+"evidence": null,
+"role": "logic"
+},
+"00522820": {
+"evidence": "field getter: return *(this+0xc)",
+"name": "get_0xc",
+"role": "accessor"
+},
+"00522830": {
+"evidence": null,
+"role": "logic"
+},
+"005229f0": {
+"evidence": null,
+"role": "logic"
+},
+"00522bc0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00522bf0": {
+"evidence": null,
+"role": "logic"
+},
+"00522c50": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00522ca0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00522d40": {
+"evidence": null,
+"role": "logic"
+},
+"00522dc1": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"00522ddd": {
+"evidence": null,
+"role": "logic"
+},
+"00522e32": {
+"evidence": null,
+"role": "logic"
+},
+"00523050": {
+"evidence": null,
+"role": "logic"
+},
+"00523070": {
+"evidence": null,
+"role": "logic"
+},
+"005231c0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00523220": {
+"evidence": null,
+"role": "logic"
+},
+"00523260": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00523280": {
+"evidence": "field getter: return *(this+0x20)",
+"name": "get_0x20",
+"role": "accessor"
+},
+"00523290": {
+"evidence": "field getter: return *(this+0x48)",
+"name": "get_0x48",
+"role": "accessor"
+},
+"005232a0": {
+"evidence": "field getter: return *(this+0x4c)",
+"name": "get_0x4c",
+"role": "accessor"
+},
+"005232b0": {
+"evidence": "field setter: *(this+0xe0)=x",
+"name": "set_0xe0",
+"role": "mutator"
+},
+"005232d0": {
+"evidence": null,
+"role": "logic"
+},
+"00523720": {
+"evidence": null,
+"role": "logic"
+},
+"005237f0": {
+"evidence": null,
+"role": "logic"
+},
+"00523900": {
+"evidence": null,
+"role": "logic"
+},
+"005239d0": {
+"evidence": null,
+"role": "logic"
+},
+"00523a80": {
+"evidence": null,
+"role": "logic"
+},
+"00523c30": {
+"evidence": null,
+"role": "logic"
+},
+"00523dd0": {
+"evidence": null,
+"role": "logic"
+},
+"00524120": {
+"evidence": null,
+"role": "logic"
+},
+"00524160": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00524180": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"005241a0": {
+"evidence": null,
+"role": "logic"
+},
+"005244c0": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"005244e0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00524570": {
+"evidence": null,
+"role": "logic"
+},
+"00524640": {
+"evidence": null,
+"role": "logic"
+},
+"005246a0": {
+"evidence": null,
+"role": "logic"
+},
+"005247b0": {
+"evidence": null,
+"role": "logic"
+},
+"00524800": {
+"evidence": null,
+"role": "logic"
+},
+"00524910": {
+"evidence": null,
+"role": "logic"
+},
+"005253b0": {
+"evidence": null,
+"role": "logic"
+},
+"00525500": {
+"evidence": "field getter: return *(this+0x20)",
+"name": "get_0x20",
+"role": "accessor"
+},
+"00525510": {
+"evidence": null,
+"role": "logic"
+},
+"00525580": {
+"evidence": "field getter: return *(this+0x24)",
+"name": "get_0x24",
+"role": "accessor"
+},
+"00525590": {
+"evidence": "single-call forwarder -> 0x00540b70",
+"name": "fwd_00540b70",
+"role": "thunk"
+},
+"005255b0": {
+"evidence": null,
+"role": "logic"
+},
+"00525800": {
+"evidence": null,
+"role": "logic"
+},
+"00525a20": {
+"evidence": "single-call forwarder -> 0x00540b70",
+"name": "fwd_00540b70",
+"role": "thunk"
+},
+"00525a50": {
+"evidence": null,
+"role": "logic"
+},
+"00525aa0": {
+"evidence": null,
+"role": "logic"
+},
+"00525d20": {
+"evidence": null,
+"role": "logic"
+},
+"00525d90": {
+"evidence": null,
+"role": "logic"
+},
+"00525f10": {
+"evidence": null,
+"role": "logic"
+},
+"00525ff0": {
+"evidence": null,
+"role": "logic"
+},
+"00526030": {
+"evidence": null,
+"role": "logic"
+},
+"005260c0": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"005260e0": {
+"evidence": null,
+"role": "logic"
+},
+"00526410": {
+"evidence": null,
+"role": "logic"
+},
+"005264a0": {
+"evidence": "single-call forwarder -> 0x0055d830",
+"name": "fwd_0055d830",
+"role": "thunk"
+},
+"005264c0": {
+"evidence": null,
+"role": "logic"
+},
+"00526590": {
+"evidence": "single-call forwarder -> 0x00563550",
+"name": "fwd_00563550",
+"role": "thunk"
+},
+"005265b0": {
+"evidence": "single-call forwarder -> 0x00563550",
+"name": "fwd_00563550",
+"role": "thunk"
+},
+"005265d0": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"005265f0": {
+"evidence": null,
+"role": "logic"
+},
+"005267a0": {
+"evidence": "single-call forwarder -> 0x0052e070",
+"name": "fwd_0052e070",
+"role": "thunk"
+},
+"005267c0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00526810": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00526870": {
+"evidence": null,
+"role": "logic"
+},
+"005268d0": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"005268e0": {
+"evidence": null,
+"role": "logic"
+},
+"00526940": {
+"evidence": null,
+"role": "logic"
+},
+"00526b00": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00526b40": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"00526b80": {
+"evidence": null,
+"role": "logic"
+},
+"00526be0": {
+"evidence": "single-call forwarder -> 0x0052e070",
+"name": "fwd_0052e070",
+"role": "thunk"
+},
+"00526c00": {
+"evidence": null,
+"role": "logic"
+},
+"00526d60": {
+"evidence": null,
+"role": "logic"
+},
+"00526db0": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00526dc0": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"00526df0": {
+"evidence": null,
+"role": "logic"
+},
+"00526e20": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00526e40": {
+"evidence": null,
+"role": "logic"
+},
+"00526e80": {
+"evidence": null,
+"role": "logic"
+},
+"00526f90": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"00526fb0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"005270f0": {
+"evidence": null,
+"role": "logic"
+},
+"00527160": {
+"evidence": null,
+"role": "logic"
+},
+"00527220": {
+"evidence": null,
+"role": "logic"
+},
+"00527290": {
+"evidence": null,
+"role": "logic"
+},
+"00527570": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"00527670": {
+"evidence": null,
+"role": "logic"
+},
+"00527740": {
+"evidence": null,
+"role": "logic"
+},
+"00527b00": {
+"evidence": null,
+"role": "logic"
+},
+"00527b60": {
+"evidence": null,
+"role": "logic"
+},
+"00527d50": {
+"evidence": null,
+"role": "logic"
+},
+"00527dd0": {
+"evidence": null,
+"role": "logic"
+},
+"00527e00": {
+"evidence": null,
+"role": "logic"
+},
+"00527ea0": {
+"evidence": null,
+"role": "logic"
+},
+"00527f30": {
+"evidence": null,
+"role": "logic"
+},
+"00527f60": {
+"evidence": null,
+"role": "logic"
+},
+"00527f90": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00527fc0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00528030": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"005281b0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00528270": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00528320": {
+"evidence": "single-call forwarder -> 0x00528720",
+"name": "fwd_00528720",
+"role": "thunk"
+},
+"00528350": {
+"evidence": null,
+"role": "logic"
+},
+"005283b0": {
+"evidence": null,
+"role": "logic"
+},
+"00528470": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00528490": {
+"evidence": null,
+"role": "logic"
+},
+"00528550": {
+"evidence": null,
+"role": "logic"
+},
+"00528710": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00528720": {
+"evidence": null,
+"role": "logic"
+},
+"00528800": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00528810": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"00528830": {
+"evidence": null,
+"role": "logic"
+},
+"00528890": {
+"evidence": null,
+"role": "logic"
+},
+"005288e0": {
+"evidence": null,
+"role": "logic"
+},
+"005290e0": {
+"evidence": null,
+"role": "logic"
+},
+"00529cf0": {
+"evidence": null,
+"role": "logic"
+},
+"00529de0": {
+"evidence": null,
+"role": "logic"
+},
+"0052df70": {
+"evidence": null,
+"role": "logic"
+},
+"0052e130": {
+"evidence": null,
+"role": "logic"
+},
+"0052ebe0": {
+"evidence": null,
+"role": "logic"
+},
+"00532980": {
+"evidence": null,
+"role": "logic"
+},
+"00532a40": {
+"evidence": null,
+"role": "logic"
+},
+"00532d10": {
+"evidence": null,
+"role": "logic"
+},
+"005336b0": {
+"evidence": null,
+"role": "logic"
+},
+"00533710": {
+"evidence": null,
+"role": "logic"
+},
+"00533960": {
+"evidence": null,
+"role": "logic"
+},
+"00533b00": {
+"evidence": null,
+"role": "logic"
+},
+"00534970": {
+"evidence": null,
+"role": "logic"
+},
+"00536500": {
+"evidence": null,
+"role": "logic"
+},
+"005367f0": {
+"evidence": null,
+"role": "logic"
+},
+"0053a850": {
+"evidence": null,
+"role": "logic"
+},
+"0053a8f0": {
+"evidence": null,
+"role": "logic"
+},
+"0053ac70": {
+"evidence": null,
+"role": "logic"
+},
+"0053b1b0": {
+"evidence": null,
+"role": "logic"
+},
+"0053b920": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"0053c010": {
+"evidence": null,
+"role": "logic"
+},
+"0053c140": {
+"evidence": null,
+"role": "logic"
+},
+"0053c6d0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0053ce20": {
+"evidence": null,
+"role": "logic"
+},
+"0053dde0": {
+"evidence": null,
+"role": "logic"
+},
+"00540b00": {
+"evidence": "single-call forwarder -> 0x005259c0",
+"name": "fwd_005259c0",
+"role": "thunk"
+},
+"00540b70": {
+"evidence": null,
+"role": "logic"
+},
+"00541240": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00541820": {
+"evidence": null,
+"role": "logic"
+},
+"00542f30": {
+"evidence": null,
+"role": "logic"
+},
+"00542ff0": {
+"evidence": null,
+"role": "logic"
+},
+"00543120": {
+"evidence": null,
+"role": "logic"
+},
+"00543a20": {
+"evidence": null,
+"role": "logic"
+},
+"00543b00": {
+"evidence": null,
+"role": "logic"
+},
+"00543be0": {
+"evidence": null,
+"role": "logic"
+},
+"00544050": {
+"evidence": null,
+"role": "logic"
+},
+"005440c0": {
+"evidence": null,
+"role": "logic"
+},
+"00544290": {
+"evidence": null,
+"role": "logic"
+},
+"005442c0": {
+"evidence": null,
+"role": "logic"
+},
+"00544320": {
+"evidence": null,
+"role": "logic"
+},
+"00544360": {
+"evidence": null,
+"role": "logic"
+},
+"00544470": {
+"evidence": null,
+"role": "logic"
+},
+"00544540": {
+"evidence": null,
+"role": "logic"
+},
+"00546470": {
+"evidence": null,
+"role": "logic"
+},
+"00546890": {
+"evidence": null,
+"role": "logic"
+},
+"00546ad0": {
+"evidence": null,
+"role": "logic"
+},
+"005476b0": {
+"evidence": null,
+"role": "logic"
+},
+"00547860": {
+"evidence": null,
+"role": "logic"
+},
+"00548960": {
+"evidence": "field setter: *(this+0x10)=x",
+"name": "set_0x10",
+"role": "mutator"
+},
+"00548b20": {
+"evidence": null,
+"role": "logic"
+},
+"00548d00": {
+"evidence": null,
+"role": "logic"
+},
+"0054ad90": {
+"evidence": null,
+"role": "logic"
+},
+"0054bd10": {
+"evidence": null,
+"role": "logic"
+},
+"0054de80": {
+"evidence": null,
+"role": "logic"
+},
+"0054ecc0": {
+"evidence": null,
+"role": "logic"
+},
+"00558820": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0055cd50": {
+"evidence": null,
+"role": "logic"
+},
+"0055dc20": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"0055e040": {
+"evidence": null,
+"role": "logic"
+},
+"0055f340": {
+"evidence": null,
+"role": "logic"
+},
+"00563550": {
+"evidence": null,
+"role": "logic"
+},
+"0056a810": {
+"evidence": null,
+"role": "logic"
+},
+"0056a850": {
+"evidence": null,
+"role": "logic"
+},
+"0056a940": {
+"evidence": null,
+"role": "logic"
+},
+"00575240": {
+"evidence": null,
+"role": "logic"
+},
+"00577d90": {
+"evidence": null,
+"role": "logic"
+},
+"0057a1b0": {
+"evidence": null,
+"role": "logic"
+},
+"0057a310": {
+"evidence": null,
+"role": "logic"
+},
+"0057a3c0": {
+"evidence": null,
+"role": "logic"
+},
+"0057a410": {
+"evidence": null,
+"role": "logic"
+},
+"0057b1e0": {
+"evidence": null,
+"role": "logic"
+},
+"0057b270": {
+"evidence": null,
+"role": "logic"
+},
+"0057b2f0": {
+"evidence": null,
+"role": "logic"
+},
+"0057c220": {
+"evidence": null,
+"role": "logic"
+},
+"0057f890": {
+"evidence": null,
+"role": "logic"
+},
+"0057f980": {
+"evidence": null,
+"role": "logic"
+},
+"0057fa50": {
+"evidence": null,
+"role": "logic"
+},
+"0057fb10": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0057fb50": {
+"evidence": null,
+"role": "logic"
+},
+"0057fe70": {
+"evidence": null,
+"role": "logic"
+},
+"0057ff40": {
+"evidence": null,
+"role": "logic"
+},
+"00583bf0": {
+"evidence": "zero-inits 4 fields, returns this",
+"role": "ctor-like"
+},
+"00583cb0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00584eb0": {
+"evidence": null,
+"role": "logic"
+},
+"00584fb0": {
+"evidence": null,
+"role": "logic"
+},
+"005856b0": {
+"evidence": null,
+"role": "logic"
+},
+"00585760": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"005857d0": {
+"evidence": null,
+"role": "logic"
+},
+"00585840": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00585870": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00585880": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"005866a0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00586730": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00586780": {
+"evidence": null,
+"role": "logic"
+},
+"005868a0": {
+"evidence": null,
+"role": "logic"
+},
+"00586980": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00586a80": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00586b90": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00586bb0": {
+"evidence": "field getter: return *(this+0x1a0)",
+"name": "get_0x1a0",
+"role": "accessor"
+},
+"00586bc0": {
+"evidence": "single-call forwarder -> 0x0068e8ca",
+"name": "fwd_0068e8ca",
+"role": "thunk"
+},
+"00586be0": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00586c00": {
+"evidence": "single-call forwarder -> 0xexternal:0000005b",
+"name": "fwd_external:0000005b",
+"role": "thunk"
+},
+"00586c20": {
+"evidence": "single-call forwarder -> 0xexternal:0000005b",
+"name": "fwd_external:0000005b",
+"role": "thunk"
+},
+"00586c40": {
+"evidence": "single-call forwarder -> 0xexternal:0000005b",
+"name": "fwd_external:0000005b",
+"role": "thunk"
+},
+"00586c60": {
+"evidence": "single-call forwarder -> 0xexternal:0000005b",
+"name": "fwd_external:0000005b",
+"role": "thunk"
+},
+"00586c80": {
+"evidence": "single-call forwarder -> 0xexternal:0000005b",
+"name": "fwd_external:0000005b",
+"role": "thunk"
+},
+"00586ca0": {
+"evidence": "single-call forwarder -> 0xexternal:0000005b",
+"name": "fwd_external:0000005b",
+"role": "thunk"
+},
+"00586cd0": {
+"evidence": "return *this",
+"name": "deref_get",
+"role": "accessor"
+},
+"00586ce0": {
+"evidence": null,
+"role": "logic"
+},
+"00586d70": {
+"evidence": null,
+"role": "logic"
+},
+"00586e00": {
+"evidence": null,
+"role": "logic"
+},
+"00587020": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"005870c0": {
+"evidence": null,
+"role": "logic"
+},
+"00587140": {
+"evidence": "single-call forwarder -> 0x005870c0",
+"name": "fwd_005870c0",
+"role": "thunk"
+},
+"00587160": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"00587180": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"005871f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00587290": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00587350": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00587460": {
+"evidence": null,
+"role": "logic"
+},
+"0058c440": {
+"evidence": null,
+"role": "logic"
+},
+"0058d710": {
+"evidence": null,
+"role": "logic"
+},
+"0058d730": {
+"evidence": null,
+"role": "logic"
+},
+"0058d7a0": {
+"evidence": "zero-inits 4 fields, returns this",
+"role": "ctor-like"
+},
+"0058d8f0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0058dc20": {
+"evidence": null,
+"role": "logic"
+},
+"0058e7d0": {
+"evidence": null,
+"role": "logic"
+},
+"0058e990": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0058e9e0": {
+"evidence": "return param_1 (this) \u2014 often a no-op ctor/cast",
+"name": "identity",
+"role": "identity"
+},
+"00593df0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00593e50": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"005945b0": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00594760": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"005947a0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"005947e0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00594c80": {
+"evidence": null,
+"role": "logic"
+},
+"00595010": {
+"evidence": null,
+"role": "logic"
+},
+"005953a0": {
+"evidence": null,
+"role": "logic"
+},
+"00595850": {
+"evidence": null,
+"role": "logic"
+},
+"00596ca0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00598840": {
+"evidence": null,
+"role": "logic"
+},
+"0059a0e0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0059a9b0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0059c480": {
+"evidence": "single-call forwarder -> 0xexternal:00000018",
+"name": "fwd_external:00000018",
+"role": "thunk"
+},
+"0059c490": {
+"evidence": null,
+"role": "logic"
+},
+"0059c550": {
+"evidence": null,
+"role": "logic"
+},
+"0059ee90": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.6,
+"role": "logic"
+},
+"0059fbf0": {
+"evidence": null,
+"role": "logic"
+},
+"0059ff60": {
+"evidence": null,
+"role": "logic"
+},
+"005a02d0": {
+"evidence": null,
+"role": "logic"
+},
+"005a0970": {
+"evidence": null,
+"role": "logic"
+},
+"005a0ed0": {
+"evidence": null,
+"role": "logic"
+},
+"005a4980": {
+"evidence": null,
+"role": "logic"
+},
+"005a5240": {
+"evidence": null,
+"role": "logic"
+},
+"005a52e0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
+},
+"005a5af0": {
+"evidence": null,
+"role": "logic"
+},
+"005a5f60": {
+"evidence": null,
+"role": "logic"
+},
+"005a6a00": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"005a6a70": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.6,
+"role": "logic"
+},
+"005a6e60": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"005a7a40": {
+"evidence": null,
+"role": "logic"
+},
+"005a7bd0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"005a7c90": {
+"evidence": null,
+"role": "logic"
+},
+"005a9ca0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"005a9d40": {
+"evidence": null,
+"role": "logic"
+},
+"005a9e50": {
+"evidence": null,
+"role": "logic"
+},
+"005a9f90": {
+"evidence": null,
+"module": "ai",
+"module_conf": 0.67,
+"role": "logic"
+},
+"005aaab0": {
+"evidence": null,
+"module": "ai",
+"module_conf": 0.67,
+"role": "logic"
+},
+"005ade10": {
+"evidence": null,
+"module": "world",
+"module_conf": 1.0,
+"role": "logic"
+},
+"005ae950": {
+"evidence": null,
+"module": "world",
+"module_conf": 1.0,
+"role": "logic"
+},
+"005ae9f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"005aea70": {
+"evidence": null,
+"role": "logic"
+},
+"005c0100": {
+"evidence": "trivial expression, no calls",
+"module": "world",
+"module_conf": 0.67,
+"name": "compute",
+"role": "computed"
+},
+"005c0350": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"005c1060": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"005c14e0": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"005c1690": {
+"evidence": null,
+"role": "logic"
+},
+"005c1ef0": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"005c21f0": {
+"evidence": null,
+"role": "logic"
+},
+"005c36a0": {
+"evidence": null,
+"module": "world",
+"module_conf": 1.0,
+"role": "logic"
+},
+"005c36e0": {
+"evidence": null,
+"module": "world",
+"module_conf": 1.0,
+"role": "logic"
+},
+"005c3790": {
+"evidence": null,
+"role": "logic"
+},
+"005c3d60": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"005c3ea0": {
+"evidence": null,
+"role": "logic"
+},
+"005c3ef0": {
+"evidence": null,
+"role": "logic"
+},
+"005c4800": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.69,
+"role": "logic"
+},
+"005c7730": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.8,
+"role": "logic"
+},
+"005cade0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"005dc644": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"005effa0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
+},
+"005fa4c0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"005fae00": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"005fb860": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"005fb9f0": {
+"evidence": null,
+"role": "logic"
+},
+"005fbc10": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"005fbed0": {
+"evidence": null,
+"role": "logic"
+},
+"005fc0d0": {
+"evidence": null,
+"role": "logic"
+},
+"00601cb0": {
+"evidence": "single-call forwarder -> 0xexternal:00000018",
+"module": "control",
+"module_conf": 0.88,
+"name": "fwd_external:00000018",
+"role": "thunk"
+},
+"00601e90": {
+"evidence": "single-call forwarder -> 0xexternal:00000019",
+"module": "control",
+"module_conf": 0.88,
+"name": "fwd_external:00000019",
+"role": "thunk"
+},
+"00601ea0": {
+"evidence": "single-call forwarder -> 0xexternal:00000019",
+"name": "fwd_external:00000019",
+"role": "thunk"
+},
+"00602160": {
+"evidence": null,
+"role": "logic"
+},
+"006022d0": {
+"evidence": null,
+"role": "logic"
+},
+"00602440": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.6,
+"role": "logic"
+},
+"006024d0": {
+"evidence": null,
+"role": "logic"
+},
+"00603230": {
+"evidence": null,
+"role": "logic"
+},
+"00603a00": {
+"evidence": null,
+"role": "logic"
+},
+"00605950": {
+"evidence": null,
+"role": "logic"
+},
+"00605a20": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006089c0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00608a20": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00609320": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00609400": {
+"evidence": null,
+"role": "logic"
+},
+"0060a9f0": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"0060aac0": {
+"evidence": null,
+"role": "logic"
+},
+"00623530": {
+"evidence": null,
+"role": "logic"
+},
+"006240d0": {
+"evidence": "single-call forwarder -> 0x0046d590",
+"name": "fwd_0046d590",
+"role": "thunk"
+},
+"00624340": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00624a70": {
+"evidence": null,
+"module": "audio",
+"module_conf": 1.0,
+"role": "logic"
+},
+"00624f80": {
+"evidence": null,
+"module": "audio",
+"module_conf": 1.0,
+"role": "logic"
+},
+"00625130": {
+"evidence": null,
+"module": "audio",
+"module_conf": 1.0,
+"role": "logic"
+},
+"00625a30": {
+"evidence": "single-call forwarder -> 0xexternal:0000013a",
+"name": "fwd_external:0000013a",
+"role": "thunk"
+},
+"00627670": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00627ce0": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "ui",
+"module_conf": 0.7,
+"role": "wrapper"
+},
+"00627d50": {
+"evidence": null,
+"module": "ui",
+"module_conf": 0.69,
+"role": "logic"
+},
+"006290d0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00629140": {
+"evidence": "zero-inits 4 fields, returns this",
+"role": "ctor-like"
+},
+"006291d0": {
+"evidence": "thin wrapper around 2 call(s)",
+"module": "ui",
+"module_conf": 0.64,
+"role": "wrapper"
+},
+"006294c0": {
+"evidence": "single-call forwarder -> 0x00629300",
+"name": "fwd_00629300",
+"role": "thunk"
+},
+"006294d0": {
+"evidence": null,
+"module": "ui",
+"module_conf": 0.86,
+"role": "logic"
+},
+"006295a0": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0062a650": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0062b400": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.91,
+"role": "logic"
+},
+"0062b510": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.78,
+"role": "logic"
+},
+"0062ba50": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0062bb90": {
+"evidence": null,
+"role": "logic"
+},
+"0062ddc0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0062de60": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.71,
+"role": "logic"
+},
+"0062f600": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0062f630": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0062f660": {
+"evidence": "thin wrapper around 2 call(s)",
+"module": "control",
+"module_conf": 0.75,
+"role": "wrapper"
+},
+"0062f690": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"0062f8c0": {
+"evidence": "thin wrapper around 2 call(s)",
+"module": "control",
+"module_conf": 1.0,
+"role": "wrapper"
+},
+"0062f9b0": {
+"evidence": null,
+"role": "logic"
+},
+"0062fbc0": {
+"evidence": null,
+"role": "logic"
+},
+"0062fdc0": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"0062ffb0": {
+"evidence": null,
+"role": "logic"
+},
+"00630690": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006306b0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00630a10": {
+"evidence": null,
+"role": "logic"
+},
+"00630a80": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00630b60": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00633d70": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.62,
+"role": "logic"
+},
+"00633e70": {
+"evidence": null,
+"role": "logic"
+},
+"00636040": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.88,
+"role": "logic"
+},
+"00636810": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.89,
+"role": "logic"
+},
+"00636870": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00636ad0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "control",
+"module_conf": 0.83,
+"role": "dtor-like"
+},
+"00636b70": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.89,
+"role": "logic"
+},
+"00636c40": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00637260": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006372a0": {
+"evidence": null,
+"role": "logic"
+},
+"006374d0": {
+"evidence": null,
+"role": "logic"
+},
+"00638db0": {
+"evidence": null,
+"role": "logic"
+},
+"00639060": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006391e0": {
+"evidence": null,
+"role": "logic"
+},
+"00639300": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00639390": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00639470": {
+"evidence": null,
+"role": "logic"
+},
+"00639530": {
+"evidence": null,
+"role": "logic"
+},
+"00639800": {
+"evidence": null,
+"role": "logic"
+},
+"00639b30": {
+"evidence": null,
+"module": "ui",
+"module_conf": 0.92,
+"role": "logic"
+},
+"00639cf0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0063a690": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0063a710": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0063a8e0": {
+"evidence": null,
+"module": "engine",
+"module_conf": 1.0,
+"role": "logic"
+},
+"0063c680": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0063c700": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0063d930": {
+"evidence": null,
+"role": "logic"
+},
+"0063d960": {
+"evidence": null,
+"role": "logic"
+},
+"0063d990": {
+"evidence": null,
+"role": "logic"
+},
+"0063d9c0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0063da20": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0063dc90": {
+"evidence": null,
+"role": "logic"
+},
+"0063de60": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0063e020": {
+"evidence": null,
+"role": "logic"
+},
+"0063ea00": {
+"evidence": null,
+"role": "logic"
+},
+"0063ef20": {
+"evidence": null,
+"role": "logic"
+},
+"0063f3b0": {
+"evidence": null,
+"role": "logic"
+},
+"0063fe80": {
+"evidence": null,
+"role": "logic"
+},
+"00641180": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006413b0": {
+"evidence": null,
+"role": "logic"
+},
+"006414c0": {
+"evidence": null,
+"role": "logic"
+},
+"00642700": {
+"evidence": null,
+"role": "logic"
+},
+"00642770": {
+"evidence": null,
+"role": "logic"
+},
+"006427e0": {
+"evidence": null,
+"role": "logic"
+},
+"00642ab0": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"0064b0d0": {
+"evidence": "zero-inits 7 fields, returns this",
+"role": "ctor-like"
+},
+"0064b460": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0064b540": {
+"evidence": null,
+"module": "control",
+"module_conf": 1.0,
+"role": "logic"
+},
+"0064b770": {
+"evidence": null,
+"role": "logic"
+},
+"0064bce0": {
+"evidence": null,
+"role": "logic"
+},
+"0064d810": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0064dd20": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0064e410": {
+"evidence": null,
+"role": "logic"
+},
+"0064e490": {
+"evidence": null,
+"role": "logic"
+},
+"0064f080": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0064f200": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0064f300": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006500d0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00650160": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006501e0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006502e0": {
+"evidence": "thin wrapper around 2 call(s)",
+"module": "control",
+"module_conf": 0.67,
+"role": "wrapper"
+},
+"006504e0": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.6,
+"role": "logic"
+},
+"00650890": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006508f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00650dfb": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00652710": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00652730": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00652790": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006531e0": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"00653360": {
+"evidence": null,
+"role": "logic"
+},
+"00653620": {
+"evidence": "virtual dispatch through vtable",
+"module": "engine",
+"module_conf": 0.7,
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00658530": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "control",
+"module_conf": 0.89,
+"role": "dtor-like"
+},
+"00659670": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00659d70": {
+"evidence": null,
+"role": "logic"
+},
+"00659ef0": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00659fb0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0065a0e0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0065aa90": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0065aab0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0065aae0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0065ae10": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0065ae80": {
+"evidence": null,
+"role": "logic"
+},
+"0065aeb0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0065b180": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0065bc70": {
+"evidence": null,
+"role": "logic"
+},
+"0065c040": {
+"evidence": null,
+"role": "logic"
+},
+"0065d4c0": {
+"evidence": null,
+"role": "logic"
+},
+"0065ded0": {
+"evidence": null,
+"role": "logic"
+},
+"0065e8d0": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.75,
+"role": "logic"
+},
+"0065f260": {
+"evidence": null,
+"role": "logic"
+},
+"0065f3d0": {
+"evidence": null,
+"role": "logic"
+},
+"0065fb80": {
+"evidence": null,
+"role": "logic"
+},
+"0065fef0": {
+"evidence": null,
+"role": "logic"
+},
+"006612f0": {
+"evidence": null,
+"role": "logic"
+},
+"00661540": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00661680": {
+"evidence": null,
+"module": "engine",
+"module_conf": 0.9,
+"role": "logic"
+},
+"00661830": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "control",
+"module_conf": 0.75,
+"role": "dtor-like"
+},
+"00661a20": {
+"evidence": null,
+"role": "logic"
+},
+"00661ae0": {
+"evidence": null,
+"role": "logic"
+},
+"00661df0": {
+"evidence": null,
+"role": "logic"
+},
+"006626d0": {
+"evidence": null,
+"role": "logic"
+},
+"00662fb0": {
+"evidence": "small field store(s), no calls",
+"module": "engine",
+"module_conf": 0.67,
+"role": "mutator"
+},
+"00663510": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00664bf0": {
+"evidence": null,
+"role": "logic"
+},
+"00664c10": {
+"evidence": null,
+"role": "logic"
+},
+"00664cf0": {
+"evidence": null,
+"role": "logic"
+},
+"00667ee0": {
+"evidence": null,
+"role": "logic"
+},
+"006685d0": {
+"evidence": null,
+"role": "logic"
+},
+"0066cc10": {
+"evidence": null,
+"role": "logic"
+},
+"0066cc90": {
+"evidence": null,
+"role": "logic"
+},
+"0066cd10": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"0066cd20": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"0066cd30": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"0066cd40": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"0066cd50": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"0066dcb0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0066dd80": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0066de00": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0066de80": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0066df00": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0066df80": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0066dff0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0066e060": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0066e0d0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0066e140": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0066e1b0": {
+"evidence": null,
+"role": "logic"
+},
+"0066e970": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0066e9a0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0066ea00": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0066ea60": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0066eac0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0066eb20": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0066eb80": {
+"evidence": null,
+"role": "logic"
+},
+"0066ec20": {
+"evidence": null,
+"role": "logic"
+},
+"0066ed80": {
+"evidence": null,
+"role": "logic"
+},
+"0066eef0": {
+"evidence": null,
+"role": "logic"
+},
+"0066f280": {
+"evidence": null,
+"role": "logic"
+},
+"0066f380": {
+"evidence": null,
+"role": "logic"
+},
+"00671290": {
+"evidence": null,
+"role": "logic"
+},
+"006712c0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00671340": {
+"evidence": null,
+"role": "logic"
+},
+"00671f80": {
+"evidence": null,
+"role": "logic"
+},
+"006721d0": {
+"evidence": null,
+"role": "logic"
+},
+"00672600": {
+"evidence": null,
+"role": "logic"
+},
+"00672e80": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00672f70": {
+"evidence": null,
+"role": "logic"
+},
+"00674160": {
+"evidence": null,
+"role": "logic"
+},
+"006751d0": {
+"evidence": null,
+"role": "logic"
+},
+"00675670": {
+"evidence": "single-call forwarder -> 0x0066add0",
+"name": "fwd_0066add0",
+"role": "thunk"
+},
+"00675690": {
+"evidence": null,
+"role": "logic"
+},
+"00677630": {
+"evidence": null,
+"role": "logic"
+},
+"00677790": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00677800": {
+"evidence": null,
+"role": "logic"
+},
+"00677970": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00677b00": {
+"evidence": null,
+"role": "logic"
+},
+"00677d10": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "control",
+"module_conf": 1.0,
+"role": "dtor-like"
+},
+"0067a7b0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "engine",
+"module_conf": 0.75,
+"role": "dtor-like"
+},
+"0067e480": {
+"evidence": "thin wrapper around 2 call(s)",
+"module": "control",
+"module_conf": 0.8,
+"role": "wrapper"
+},
+"0067eb10": {
+"evidence": null,
+"role": "logic"
+},
+"0067f980": {
+"evidence": null,
+"role": "logic"
+},
+"0067fa50": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"0067fa60": {
+"evidence": null,
+"role": "logic"
+},
+"0067fc90": {
+"evidence": null,
+"role": "logic"
+},
+"0067fde0": {
+"evidence": null,
+"role": "logic"
+},
+"006800d0": {
+"evidence": null,
+"role": "logic"
+},
+"006803c0": {
+"evidence": null,
+"role": "logic"
+},
+"006806b0": {
+"evidence": null,
+"role": "logic"
+},
+"006808f0": {
+"evidence": null,
+"role": "logic"
+},
+"00680b40": {
+"evidence": null,
+"role": "logic"
+},
+"00680d80": {
+"evidence": null,
+"role": "logic"
+},
+"00680fd0": {
+"evidence": null,
+"role": "logic"
+},
+"00681240": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00681820": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00681840": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00681890": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006819e0": {
+"evidence": null,
+"role": "logic"
+},
+"00681a70": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00681af0": {
+"evidence": null,
+"role": "logic"
+},
+"00681bf0": {
+"evidence": null,
+"role": "logic"
+},
+"00682a80": {
+"evidence": null,
+"role": "logic"
+},
+"00683070": {
+"evidence": null,
+"role": "logic"
+},
+"00683270": {
+"evidence": null,
+"role": "logic"
+},
+"00683750": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00683870": {
+"evidence": null,
+"role": "logic"
+},
+"00683de0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"00683f00": {
+"evidence": null,
+"role": "logic"
+},
+"00684770": {
+"evidence": null,
+"role": "logic"
+},
+"00684970": {
+"evidence": null,
+"role": "logic"
+},
+"00684c30": {
+"evidence": null,
+"role": "logic"
+},
+"00684ef0": {
+"evidence": null,
+"role": "logic"
+},
+"00685b10": {
+"evidence": null,
+"role": "logic"
+},
+"00686820": {
+"evidence": null,
+"role": "logic"
+},
+"00686ff0": {
+"evidence": null,
+"role": "logic"
+},
+"00687440": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006880c0": {
+"evidence": null,
+"role": "logic"
+},
+"00688220": {
+"evidence": null,
+"role": "logic"
+},
+"006886f0": {
+"evidence": null,
+"role": "logic"
+},
+"00688b20": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
+},
+"0068a6b0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0068a710": {
+"evidence": null,
+"role": "logic"
+},
+"0068ab30": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0068b6a0": {
+"evidence": null,
+"role": "logic"
+},
+"0068d300": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0068d57e": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0068d593": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0068d652": {
+"evidence": "single-call forwarder -> 0x0068d668",
+"module": "world",
+"module_conf": 0.64,
+"name": "fwd_0068d668",
+"role": "thunk"
+},
+"0068d74c": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"0068d755": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"0068d800": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.8,
+"role": "logic"
+},
+"0068d85f": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0068d86f": {
+"evidence": null,
+"role": "logic"
+},
+"0068d910": {
+"evidence": null,
+"role": "logic"
+},
+"0068d946": {
+"evidence": null,
+"role": "logic"
+},
+"0068d9e0": {
+"evidence": null,
+"role": "logic"
+},
+"0068da90": {
+"evidence": null,
+"module": "control",
+"module_conf": 0.75,
+"role": "logic"
+},
+"0068dac4": {
+"evidence": null,
+"role": "logic"
+},
+"0068db1c": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0068dca4": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"0068dcb0": {
+"evidence": null,
+"role": "logic"
+},
+"0068dd90": {
+"evidence": null,
+"role": "logic"
+},
+"0068de70": {
+"evidence": null,
+"role": "logic"
+},
+"0068df50": {
+"evidence": null,
+"role": "logic"
+},
+"0068dfc0": {
+"evidence": null,
+"role": "logic"
+},
+"0068e060": {
+"evidence": null,
+"role": "logic"
+},
+"0068e195": {
+"evidence": null,
+"role": "logic"
+},
+"0068e1e0": {
+"evidence": null,
+"role": "logic"
+},
+"0068e489": {
+"evidence": "single-call forwarder -> 0x0068e8b2",
+"name": "fwd_0068e8b2",
+"role": "thunk"
+},
+"0068e604": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0068e660": {
+"evidence": null,
+"role": "logic"
+},
+"0068e6b0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"0068e770": {
+"evidence": null,
+"role": "logic"
+},
+"0068e83b": {
+"evidence": "returns a constant \u2014 stub / trivial predicate",
+"name": "ret_const",
+"role": "stub"
+},
+"0068e83e": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0068e85e": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0068e87e": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0068e970": {
+"evidence": null,
+"role": "logic"
+},
+"0068eb30": {
+"evidence": null,
+"role": "logic"
+},
+"0068ecd0": {
+"evidence": null,
+"role": "logic"
+},
+"0068ed60": {
+"evidence": null,
+"role": "logic"
+},
+"0068ee50": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0068eec0": {
+"evidence": null,
+"role": "logic"
+},
+"0068ef00": {
+"evidence": null,
+"role": "logic"
+},
+"0068efc0": {
+"evidence": null,
+"role": "logic"
+},
+"0068f040": {
+"evidence": null,
+"role": "logic"
+},
+"0068f090": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"0068f0a0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"0068f0c0": {
+"evidence": null,
+"role": "logic"
+},
+"0068f170": {
+"evidence": null,
+"role": "logic"
+},
+"0068f190": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"0068f4a0": {
+"evidence": null,
+"role": "logic"
+},
+"0068fb10": {
+"evidence": null,
+"role": "logic"
+},
+"0068fbb0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0068fc00": {
+"evidence": null,
+"role": "logic"
+},
+"0068fc70": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0068fcc0": {
+"evidence": null,
+"role": "logic"
+},
+"0068fd60": {
+"evidence": "single-call forwarder -> 0x0068fce0",
+"module": "engine",
+"module_conf": 1.0,
+"name": "fwd_0068fce0",
+"role": "thunk"
+},
+"0068fdf0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0068fe10": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0068fe70": {
+"evidence": null,
+"role": "logic"
+},
+"0068ff10": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0068ff90": {
+"evidence": null,
+"role": "logic"
+},
+"006903a0": {
+"evidence": null,
+"role": "logic"
+},
+"00690430": {
+"evidence": null,
+"role": "logic"
+},
+"006905a0": {
+"evidence": null,
+"role": "logic"
+},
+"006909c0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00690a20": {
+"evidence": null,
+"role": "logic"
+},
+"00690a40": {
+"evidence": null,
+"role": "logic"
+},
+"00690a70": {
+"evidence": null,
+"role": "logic"
+},
+"00690aa0": {
+"evidence": null,
+"role": "logic"
+},
+"00690ae0": {
+"evidence": null,
+"role": "logic"
+},
+"00690b20": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00690bf0": {
+"evidence": null,
+"role": "logic"
+},
+"00690c60": {
+"evidence": null,
+"role": "logic"
+},
+"00690d40": {
+"evidence": null,
+"role": "logic"
+},
+"00691170": {
+"evidence": null,
+"role": "logic"
+},
+"006912b0": {
+"evidence": null,
+"role": "logic"
+},
+"00691310": {
+"evidence": null,
+"role": "logic"
+},
+"00691360": {
+"evidence": null,
+"role": "logic"
+},
+"006914c0": {
+"evidence": null,
+"role": "logic"
+},
+"00691650": {
+"evidence": "single-call forwarder -> 0x00691600",
+"name": "fwd_00691600",
+"role": "thunk"
+},
+"006917d0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"00691820": {
+"evidence": "single-call forwarder -> 0x00691290",
+"name": "fwd_00691290",
+"role": "thunk"
+},
+"006919d0": {
+"evidence": null,
+"role": "logic"
+},
+"00691a90": {
+"evidence": null,
+"role": "logic"
+},
+"00691b30": {
+"evidence": null,
+"module": "engine",
+"module_conf": 1.0,
+"role": "logic"
+},
+"00691dc0": {
+"evidence": null,
+"role": "logic"
+},
+"00691ee0": {
+"evidence": null,
+"role": "logic"
+},
+"00692010": {
+"evidence": null,
+"role": "logic"
+},
+"00692520": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00692a70": {
+"evidence": "thin wrapper around 2 call(s)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "wrapper"
+},
+"00693750": {
+"evidence": "single-call forwarder -> 0x00691dc0",
+"name": "fwd_00691dc0",
+"role": "thunk"
+},
+"006937b0": {
+"evidence": null,
+"role": "logic"
+},
+"00693840": {
+"evidence": null,
+"role": "logic"
+},
+"006938e0": {
+"evidence": null,
+"role": "logic"
+},
+"00693940": {
+"evidence": null,
+"role": "logic"
+},
+"00693a30": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00693bf0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00693c40": {
+"evidence": null,
+"role": "logic"
+},
+"00693db0": {
+"evidence": null,
+"role": "logic"
+},
+"00693e10": {
+"evidence": null,
+"role": "logic"
+},
+"00693ed0": {
+"evidence": null,
+"role": "logic"
+},
+"00694f50": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00695d90": {
+"evidence": null,
+"role": "logic"
+},
+"00695f10": {
+"evidence": null,
+"role": "logic"
+},
+"006971d0": {
+"evidence": null,
+"role": "logic"
+},
+"00697270": {
+"evidence": null,
+"role": "logic"
+},
+"00697310": {
+"evidence": "single-call forwarder -> 0x00693a60",
+"name": "fwd_00693a60",
+"role": "thunk"
+},
+"00697350": {
+"evidence": null,
+"role": "logic"
+},
+"006973a0": {
+"evidence": null,
+"role": "logic"
+},
+"00697430": {
+"evidence": "single-call forwarder -> 0x006971d0",
+"name": "fwd_006971d0",
+"role": "thunk"
+},
+"00697440": {
+"evidence": null,
+"role": "logic"
+},
+"00697460": {
+"evidence": "single-call forwarder -> 0x00691290",
+"name": "fwd_00691290",
+"role": "thunk"
+},
+"00697490": {
+"evidence": null,
+"role": "logic"
+},
+"00697500": {
+"evidence": null,
+"role": "logic"
+},
+"00697540": {
+"evidence": null,
+"role": "logic"
+},
+"006975c0": {
+"evidence": null,
+"role": "logic"
+},
+"006977d0": {
+"evidence": null,
+"role": "logic"
+},
+"00697a40": {
+"evidence": null,
+"role": "logic"
+},
+"00697b00": {
+"evidence": null,
+"role": "logic"
+},
+"00697be0": {
+"evidence": null,
+"role": "logic"
+},
+"00697ce0": {
+"evidence": null,
+"role": "logic"
+},
+"00697df0": {
+"evidence": null,
+"role": "logic"
+},
+"00697e30": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"00697ea0": {
+"evidence": null,
+"role": "logic"
+},
+"00698060": {
+"evidence": null,
+"role": "logic"
+},
+"00698130": {
+"evidence": null,
+"role": "logic"
+},
+"00698500": {
+"evidence": null,
+"role": "logic"
+},
+"00698e00": {
+"evidence": null,
+"role": "logic"
+},
+"00698ff0": {
+"evidence": null,
+"role": "logic"
+},
+"00699130": {
+"evidence": null,
+"role": "logic"
+},
+"00699320": {
+"evidence": null,
+"role": "logic"
+},
+"00699490": {
+"evidence": null,
+"role": "logic"
+},
+"006998b0": {
+"evidence": null,
+"role": "logic"
+},
+"00699f90": {
+"evidence": null,
+"role": "logic"
+},
+"0069a1e0": {
+"evidence": null,
+"role": "logic"
+},
+"0069a730": {
+"evidence": null,
+"role": "logic"
+},
+"0069a7f0": {
+"evidence": null,
+"role": "logic"
+},
+"0069a860": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0069a890": {
+"evidence": null,
+"role": "logic"
+},
+"0069a900": {
+"evidence": null,
+"role": "logic"
+},
+"0069a950": {
+"evidence": null,
+"role": "logic"
+},
+"0069aac0": {
+"evidence": null,
+"role": "logic"
+},
+"0069adb0": {
+"evidence": null,
+"role": "logic"
+},
+"0069af60": {
+"evidence": null,
+"role": "logic"
+},
+"0069b520": {
+"evidence": null,
+"role": "logic"
+},
+"0069bc10": {
+"evidence": null,
+"role": "logic"
+},
+"0069c020": {
+"evidence": null,
+"role": "logic"
+},
+"0069c050": {
+"evidence": null,
+"role": "logic"
+},
+"0069c090": {
+"evidence": null,
+"role": "logic"
+},
+"0069c230": {
+"evidence": null,
+"role": "logic"
+},
+"0069c400": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0069c470": {
+"evidence": null,
+"role": "logic"
+},
+"0069c5d0": {
+"evidence": null,
+"role": "logic"
+},
+"0069c740": {
+"evidence": null,
+"role": "logic"
+},
+"0069c7c0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0069cb00": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0069cb40": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"0069cec0": {
+"evidence": null,
+"role": "logic"
+},
+"0069d190": {
+"evidence": null,
+"role": "logic"
+},
+"0069d340": {
+"evidence": null,
+"role": "logic"
+},
+"0069d450": {
+"evidence": null,
+"role": "logic"
+},
+"0069d600": {
+"evidence": null,
+"role": "logic"
+},
+"0069d750": {
+"evidence": null,
+"role": "logic"
+},
+"0069dd70": {
+"evidence": null,
+"role": "logic"
+},
+"0069e3b0": {
+"evidence": null,
+"role": "logic"
+},
+"0069e550": {
+"evidence": null,
+"role": "logic"
+},
+"0069f380": {
+"evidence": null,
+"role": "logic"
+},
+"0069f450": {
+"evidence": null,
+"role": "logic"
+},
+"0069f670": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0069f6a0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"0069f720": {
+"evidence": null,
+"role": "logic"
+},
+"0069fa90": {
+"evidence": null,
+"role": "logic"
+},
+"0069fb00": {
+"evidence": null,
+"role": "logic"
+},
+"0069fb90": {
+"evidence": null,
+"role": "logic"
+},
+"0069fdc0": {
+"evidence": null,
+"role": "logic"
+},
+"0069ff10": {
+"evidence": null,
+"role": "logic"
+},
+"0069ff50": {
+"evidence": null,
+"role": "logic"
+},
+"0069ffe0": {
+"evidence": null,
+"role": "logic"
+},
+"006a03d0": {
+"evidence": null,
+"role": "logic"
+},
+"006a0860": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006a0890": {
+"evidence": null,
+"role": "logic"
+},
+"006a0a80": {
+"evidence": null,
+"role": "logic"
+},
+"006a0b70": {
+"evidence": null,
+"role": "logic"
+},
+"006a0da0": {
+"evidence": null,
+"role": "logic"
+},
+"006a0dd0": {
+"evidence": null,
+"role": "logic"
+},
+"006a1010": {
+"evidence": null,
+"role": "logic"
+},
+"006a1820": {
+"evidence": null,
+"role": "logic"
+},
+"006a1ab0": {
+"evidence": null,
+"role": "logic"
+},
+"006a1c20": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006a1c60": {
+"evidence": null,
+"role": "logic"
+},
+"006a1d50": {
+"evidence": null,
+"role": "logic"
+},
+"006a1e90": {
+"evidence": null,
+"role": "logic"
+},
+"006a2240": {
+"evidence": "single-call forwarder -> 0x0068f3b0",
+"name": "fwd_0068f3b0",
+"role": "thunk"
+},
+"006a22d0": {
+"evidence": null,
+"role": "logic"
+},
+"006a23f0": {
+"evidence": null,
+"role": "logic"
+},
+"006a2460": {
+"evidence": null,
+"role": "logic"
+},
+"006a2530": {
+"evidence": null,
+"role": "logic"
+},
+"006a26f0": {
+"evidence": null,
+"role": "logic"
+},
+"006a2820": {
+"evidence": null,
+"role": "logic"
+},
+"006a2b20": {
+"evidence": null,
+"role": "logic"
+},
+"006a2c30": {
+"evidence": null,
+"role": "logic"
+},
+"006a2e50": {
+"evidence": null,
+"role": "logic"
+},
+"006a2f20": {
+"evidence": null,
+"role": "logic"
+},
+"006a30a0": {
+"evidence": null,
+"role": "logic"
+},
+"006a31d0": {
+"evidence": null,
+"role": "logic"
+},
+"006a3210": {
+"evidence": null,
+"role": "logic"
+},
+"006a33d0": {
+"evidence": null,
+"role": "logic"
+},
+"006a3780": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006a37c0": {
+"evidence": null,
+"role": "logic"
+},
+"006a3840": {
+"evidence": null,
+"role": "logic"
+},
+"006a38b0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006a3910": {
+"evidence": null,
+"role": "logic"
+},
+"006a3970": {
+"evidence": null,
+"role": "logic"
+},
+"006a3a20": {
+"evidence": null,
+"role": "logic"
+},
+"006a3aa0": {
+"evidence": null,
+"role": "logic"
+},
+"006a3b10": {
+"evidence": null,
+"role": "logic"
+},
+"006a3bc0": {
+"evidence": null,
+"role": "logic"
+},
+"006a3c20": {
+"evidence": null,
+"role": "logic"
+},
+"006a3cb0": {
+"evidence": null,
+"role": "logic"
+},
+"006a3e30": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006a3e80": {
+"evidence": null,
+"role": "logic"
+},
+"006a3ff0": {
+"evidence": null,
+"role": "logic"
+},
+"006a4060": {
+"evidence": null,
+"role": "logic"
+},
+"006a41a0": {
+"evidence": null,
+"role": "logic"
+},
+"006a4300": {
+"evidence": null,
+"role": "logic"
+},
+"006a4490": {
+"evidence": null,
+"role": "logic"
+},
+"006a47f0": {
+"evidence": null,
+"role": "logic"
+},
+"006a4910": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"006a4920": {
+"evidence": null,
+"role": "logic"
+},
+"006a4950": {
+"evidence": null,
+"role": "logic"
+},
+"006a4970": {
+"evidence": null,
+"role": "logic"
+},
+"006a4a40": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006a4eb0": {
+"evidence": null,
+"role": "logic"
+},
+"006a51d0": {
+"evidence": null,
+"role": "logic"
+},
+"006a52f0": {
+"evidence": null,
+"role": "logic"
+},
+"006a5420": {
+"evidence": "returns a constant \u2014 stub / trivial predicate",
+"name": "ret_const",
+"role": "stub"
+},
+"006a5430": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006a54e0": {
+"evidence": null,
+"role": "logic"
+},
+"006a5680": {
+"evidence": null,
+"role": "logic"
+},
+"006a58a0": {
+"evidence": "single-call forwarder -> 0x00691290",
+"name": "fwd_00691290",
+"role": "thunk"
+},
+"006a58c0": {
+"evidence": null,
+"role": "logic"
+},
+"006a5900": {
+"evidence": null,
+"role": "logic"
+},
+"006a5950": {
+"evidence": "single-call forwarder -> 0x00691290",
+"name": "fwd_00691290",
+"role": "thunk"
+},
+"006a5970": {
+"evidence": null,
+"role": "logic"
+},
+"006a59d0": {
+"evidence": null,
+"role": "logic"
+},
+"006a59f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006a5a10": {
+"evidence": null,
+"role": "logic"
+},
+"006a5a60": {
+"evidence": null,
+"role": "logic"
+},
+"006a5aa0": {
+"evidence": null,
+"role": "logic"
+},
+"006a5ae0": {
+"evidence": null,
+"role": "logic"
+},
+"006a5b30": {
+"evidence": "single-call forwarder -> 0x006a5ae0",
+"name": "fwd_006a5ae0",
+"role": "thunk"
+},
+"006a5b70": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006a5c00": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006a5c60": {
+"evidence": null,
+"role": "logic"
+},
+"006a5d80": {
+"evidence": null,
+"role": "logic"
+},
+"006a5de0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006a5e10": {
+"evidence": null,
+"role": "logic"
+},
+"006a5e20": {
+"evidence": null,
+"role": "logic"
+},
+"006a5e40": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006a5e60": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006a5e90": {
+"evidence": null,
+"role": "logic"
+},
+"006a5f50": {
+"evidence": null,
+"role": "logic"
+},
+"006a6000": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006a6020": {
+"evidence": "single-call forwarder -> 0x006a5de0",
+"name": "fwd_006a5de0",
+"role": "thunk"
+},
+"006a6050": {
+"evidence": "single-call forwarder -> 0x0068d7b0",
+"name": "fwd_0068d7b0",
+"role": "thunk"
+},
+"006a6070": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006a60a0": {
+"evidence": null,
+"role": "logic"
+},
+"006a6100": {
+"evidence": null,
+"role": "logic"
+},
+"006a61f0": {
+"evidence": null,
+"role": "logic"
+},
+"006a6250": {
+"evidence": null,
+"role": "logic"
+},
+"006a6370": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006a64e0": {
+"evidence": null,
+"role": "logic"
+},
+"006a6560": {
+"evidence": null,
+"role": "logic"
+},
+"006a66a0": {
+"evidence": null,
+"role": "logic"
+},
+"006a67e0": {
+"evidence": null,
+"role": "logic"
+},
+"006a69c0": {
+"evidence": null,
+"role": "logic"
+},
+"006a6c10": {
+"evidence": null,
+"role": "logic"
+},
+"006a6c90": {
+"evidence": null,
+"role": "logic"
+},
+"006a6cb0": {
+"evidence": null,
+"role": "logic"
+},
+"006a6cd0": {
+"evidence": "single-call forwarder -> 0x00691290",
+"name": "fwd_00691290",
+"role": "thunk"
+},
+"006a6d10": {
+"evidence": null,
+"role": "logic"
+},
+"006a6d30": {
+"evidence": null,
+"role": "logic"
+},
+"006a6db0": {
+"evidence": null,
+"role": "logic"
+},
+"006a6e00": {
+"evidence": null,
+"role": "logic"
+},
+"006a6f10": {
+"evidence": null,
+"role": "logic"
+},
+"006a6fd0": {
+"evidence": null,
+"role": "logic"
+},
+"006a7040": {
+"evidence": null,
+"role": "logic"
+},
+"006a7070": {
+"evidence": null,
+"role": "logic"
+},
+"006a7310": {
+"evidence": "single-call forwarder -> 0x006a7070",
+"name": "fwd_006a7070",
+"role": "thunk"
+},
+"006a7340": {
+"evidence": null,
+"role": "logic"
+},
+"006a74e0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006a7520": {
+"evidence": null,
+"role": "logic"
+},
+"006a7570": {
+"evidence": null,
+"role": "logic"
+},
+"006a75c0": {
+"evidence": null,
+"role": "logic"
+},
+"006a7610": {
+"evidence": null,
+"role": "logic"
+},
+"006a7890": {
+"evidence": null,
+"role": "logic"
+},
+"006a7990": {
+"evidence": null,
+"role": "logic"
+},
+"006a7b70": {
+"evidence": null,
+"role": "logic"
+},
+"006a7cc0": {
+"evidence": null,
+"role": "logic"
+},
+"006a7dd0": {
+"evidence": null,
+"role": "logic"
+},
+"006a7e80": {
+"evidence": null,
+"role": "logic"
+},
+"006a8090": {
+"evidence": null,
+"role": "logic"
+},
+"006a84c0": {
+"evidence": null,
+"role": "logic"
+},
+"006a84f0": {
+"evidence": null,
+"role": "logic"
+},
+"006a8560": {
+"evidence": null,
+"role": "logic"
+},
+"006a8640": {
+"evidence": null,
+"role": "logic"
+},
+"006a8770": {
+"evidence": null,
+"role": "logic"
+},
+"006a87e0": {
+"evidence": null,
+"role": "logic"
+},
+"006a8800": {
+"evidence": null,
+"role": "logic"
+},
+"006a8b20": {
+"evidence": null,
+"role": "logic"
+},
+"006a8c20": {
+"evidence": null,
+"role": "logic"
+},
+"006a8cd0": {
+"evidence": null,
+"role": "logic"
+},
+"006a8d00": {
+"evidence": null,
+"role": "logic"
+},
+"006a8e80": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006a8ed0": {
+"evidence": null,
+"role": "logic"
+},
+"006a8ef0": {
+"evidence": null,
+"role": "logic"
+},
+"006a8f40": {
+"evidence": null,
+"role": "logic"
+},
+"006a9020": {
+"evidence": null,
+"role": "logic"
+},
+"006a9080": {
+"evidence": null,
+"role": "logic"
+},
+"006a9190": {
+"evidence": null,
+"role": "logic"
+},
+"006a92c0": {
+"evidence": "single-call forwarder -> 0x006a8ef0",
+"name": "fwd_006a8ef0",
+"role": "thunk"
+},
+"006a92d0": {
+"evidence": null,
+"role": "logic"
+},
+"006a93f0": {
+"evidence": null,
+"role": "logic"
+},
+"006a94c0": {
+"evidence": null,
+"role": "logic"
+},
+"006a9560": {
+"evidence": null,
+"role": "logic"
+},
+"006a95f0": {
+"evidence": null,
+"role": "logic"
+},
+"006a9620": {
+"evidence": null,
+"role": "logic"
+},
+"006a9660": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006a96c0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006a9700": {
+"evidence": null,
+"role": "logic"
+},
+"006a9770": {
+"evidence": null,
+"role": "logic"
+},
+"006a97b0": {
+"evidence": null,
+"role": "logic"
+},
+"006a9840": {
+"evidence": null,
+"role": "logic"
+},
+"006a98d0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006a98e0": {
+"evidence": null,
+"role": "logic"
+},
+"006a99a0": {
+"evidence": null,
+"role": "logic"
+},
+"006a9a00": {
+"evidence": null,
+"role": "logic"
+},
+"006a9a90": {
+"evidence": "single-call forwarder -> 0x006a9a00",
+"name": "fwd_006a9a00",
+"role": "thunk"
+},
+"006a9b80": {
+"evidence": null,
+"role": "logic"
+},
+"006a9c50": {
+"evidence": null,
+"role": "logic"
+},
+"006a9cc0": {
+"evidence": null,
+"role": "logic"
+},
+"006a9d30": {
+"evidence": null,
+"role": "logic"
+},
+"006a9d80": {
+"evidence": null,
+"role": "logic"
+},
+"006a9e10": {
+"evidence": null,
+"role": "logic"
+},
+"006a9eb0": {
+"evidence": "single-call forwarder -> 0x00691290",
+"name": "fwd_00691290",
+"role": "thunk"
+},
+"006a9ed0": {
+"evidence": null,
+"role": "logic"
+},
+"006a9f00": {
+"evidence": null,
+"role": "logic"
+},
+"006a9f80": {
+"evidence": null,
+"role": "logic"
+},
+"006aa020": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006aa050": {
+"evidence": null,
+"role": "logic"
+},
+"006aa1c0": {
+"evidence": null,
+"role": "logic"
+},
+"006aa260": {
+"evidence": null,
+"role": "logic"
+},
+"006aa2e0": {
+"evidence": null,
+"role": "logic"
+},
+"006aa3e0": {
+"evidence": null,
+"role": "logic"
+},
+"006aa4d0": {
+"evidence": null,
+"role": "logic"
+},
+"006aa8b0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006aa8d0": {
+"evidence": null,
+"role": "logic"
+},
+"006aa950": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006aa970": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006aa9a0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006aa9f0": {
+"evidence": null,
+"role": "logic"
+},
+"006aabd0": {
+"evidence": null,
+"role": "logic"
+},
+"006abbc0": {
+"evidence": null,
+"role": "logic"
+},
+"006abd10": {
+"evidence": "single-call forwarder -> 0x006abbc0",
+"name": "fwd_006abbc0",
+"role": "thunk"
+},
+"006abd50": {
+"evidence": null,
+"role": "logic"
+},
+"006abf20": {
+"evidence": null,
+"role": "logic"
+},
+"006ac110": {
+"evidence": null,
+"role": "logic"
+},
+"006ac1e0": {
+"evidence": null,
+"role": "logic"
+},
+"006ac4e0": {
+"evidence": null,
+"role": "logic"
+},
+"006ac520": {
+"evidence": null,
+"role": "logic"
+},
+"006ac550": {
+"evidence": null,
+"role": "logic"
+},
+"006ac580": {
+"evidence": null,
+"role": "logic"
+},
+"006ac770": {
+"evidence": null,
+"role": "logic"
+},
+"006ac800": {
+"evidence": null,
+"role": "logic"
+},
+"006ac880": {
+"evidence": null,
+"role": "logic"
+},
+"006ac8a0": {
+"evidence": null,
+"role": "logic"
+},
+"006ac920": {
+"evidence": null,
+"role": "logic"
+},
+"006acc20": {
+"evidence": null,
+"role": "logic"
+},
+"006acde0": {
+"evidence": null,
+"role": "logic"
+},
+"006acfc0": {
+"evidence": null,
+"role": "logic"
+},
+"006ad220": {
+"evidence": null,
+"role": "logic"
+},
+"006ad370": {
+"evidence": null,
+"role": "logic"
+},
+"006ad550": {
+"evidence": null,
+"role": "logic"
+},
+"006ad990": {
+"evidence": null,
+"role": "logic"
+},
+"006adad0": {
+"evidence": null,
+"role": "logic"
+},
+"006adfd0": {
+"evidence": null,
+"role": "logic"
+},
+"006ae030": {
+"evidence": null,
+"role": "logic"
+},
+"006ae0f0": {
+"evidence": null,
+"role": "logic"
+},
+"006af030": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006af100": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006af140": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006af1a0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006af220": {
+"evidence": null,
+"role": "logic"
+},
+"006af450": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006af480": {
+"evidence": null,
+"role": "logic"
+},
+"006af4b0": {
+"evidence": null,
+"role": "logic"
+},
+"006af5b0": {
+"evidence": null,
+"role": "logic"
+},
+"006af8e0": {
+"evidence": null,
+"role": "logic"
+},
+"006afcd0": {
+"evidence": null,
+"role": "logic"
+},
+"006b00f0": {
+"evidence": null,
+"role": "logic"
+},
+"006b0170": {
+"evidence": null,
+"role": "logic"
+},
+"006b0370": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006b03a0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006b04d0": {
+"evidence": null,
+"role": "logic"
+},
+"006b0500": {
+"evidence": null,
+"role": "logic"
+},
+"006b0770": {
+"evidence": null,
+"role": "logic"
+},
+"006b0a80": {
+"evidence": null,
+"role": "logic"
+},
+"006b0b20": {
+"evidence": null,
+"role": "logic"
+},
+"006b0b50": {
+"evidence": null,
+"role": "logic"
+},
+"006b0b80": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006b0bc0": {
+"evidence": null,
+"role": "logic"
+},
+"006b0eb0": {
+"evidence": null,
+"role": "logic"
+},
+"006b1050": {
+"evidence": null,
+"role": "logic"
+},
+"006b1190": {
+"evidence": null,
+"role": "logic"
+},
+"006b1650": {
+"evidence": "single-call forwarder -> 0x0068f020",
+"name": "fwd_0068f020",
+"role": "thunk"
+},
+"006b1680": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006b16c0": {
+"evidence": null,
+"role": "logic"
+},
+"006b1730": {
+"evidence": "small field store(s), no calls",
+"role": "mutator"
+},
+"006b1740": {
+"evidence": null,
+"role": "logic"
+},
+"006b17a0": {
+"evidence": null,
+"role": "logic"
+},
+"006b1830": {
+"evidence": null,
+"role": "logic"
+},
+"006b1890": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006b1960": {
+"evidence": null,
+"role": "logic"
+},
+"006b1a80": {
+"evidence": "single-call forwarder -> 0x006b1680",
+"name": "fwd_006b1680",
+"role": "thunk"
+},
+"006b1aa0": {
+"evidence": null,
+"role": "logic"
+},
+"006b1e00": {
+"evidence": null,
+"role": "logic"
+},
+"006b1e40": {
+"evidence": null,
+"role": "logic"
+},
+"006b1f00": {
+"evidence": null,
+"role": "logic"
+},
+"006b2000": {
+"evidence": null,
+"role": "logic"
+},
+"006b20c0": {
+"evidence": null,
+"role": "logic"
+},
+"006b21e0": {
+"evidence": null,
+"role": "logic"
+},
+"006b2440": {
+"evidence": null,
+"role": "logic"
+},
+"006b24c0": {
+"evidence": null,
+"role": "logic"
+},
+"006b27b0": {
+"evidence": "single-call forwarder -> 0x006b0a80",
+"name": "fwd_006b0a80",
+"role": "thunk"
+},
+"006b27c0": {
+"evidence": null,
+"role": "logic"
+},
+"006b2a70": {
+"evidence": null,
+"role": "logic"
+},
+"006b2f40": {
+"evidence": null,
+"role": "logic"
+},
+"006b3230": {
+"evidence": null,
+"role": "logic"
+},
+"006b33d0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006b3400": {
+"evidence": null,
+"role": "logic"
+},
+"006b3740": {
+"evidence": null,
+"role": "logic"
+},
+"006b3970": {
+"evidence": null,
+"role": "logic"
+},
+"006b3c40": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006b3c60": {
+"evidence": null,
+"role": "logic"
+},
+"006b3c90": {
+"evidence": null,
+"role": "logic"
+},
+"006b3d50": {
+"evidence": null,
+"role": "logic"
+},
+"006b3f40": {
+"evidence": null,
+"role": "logic"
+},
+"006b4090": {
+"evidence": null,
+"role": "logic"
+},
+"006b43d0": {
+"evidence": "single-call forwarder -> 0x0068d7b0",
+"name": "fwd_0068d7b0",
+"role": "thunk"
+},
+"006b43e0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006b43f0": {
+"evidence": null,
+"role": "logic"
+},
+"006b4550": {
+"evidence": null,
+"role": "logic"
+},
+"006b46c0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006b4700": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006b4730": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006b4930": {
+"evidence": null,
+"role": "logic"
+},
+"006b4ba0": {
+"evidence": null,
+"role": "logic"
+},
+"006b4c60": {
+"evidence": null,
+"role": "logic"
+},
+"006b5520": {
+"evidence": null,
+"role": "logic"
+},
+"006b5570": {
+"evidence": "single-call forwarder -> 0x0068d7b0",
+"name": "fwd_0068d7b0",
+"role": "thunk"
+},
+"006b55b0": {
+"evidence": null,
+"role": "logic"
+},
+"006b5650": {
+"evidence": null,
+"role": "logic"
+},
+"006b5920": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006b5950": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006b5980": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006b5bf0": {
+"evidence": null,
+"role": "logic"
+},
+"006b5e50": {
+"evidence": null,
+"role": "logic"
+},
+"006b5e70": {
+"evidence": null,
+"role": "logic"
+},
+"006b5ec0": {
+"evidence": null,
+"role": "logic"
+},
+"006b5fe0": {
+"evidence": null,
+"role": "logic"
+},
+"006b6030": {
+"evidence": null,
+"role": "logic"
+},
+"006b61b0": {
+"evidence": "zero-inits 5 fields, returns this",
+"role": "ctor-like"
+},
+"006b6310": {
+"evidence": null,
+"role": "logic"
+},
+"006b6430": {
+"evidence": "single-call forwarder -> 0x00691ee0",
+"name": "fwd_00691ee0",
+"role": "thunk"
+},
+"006b6450": {
+"evidence": null,
+"role": "logic"
+},
+"006b64d0": {
+"evidence": null,
+"role": "logic"
+},
+"006b64f0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006b6530": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006b6560": {
+"evidence": null,
+"role": "logic"
+},
+"006b6670": {
+"evidence": null,
+"role": "logic"
+},
+"006b66f0": {
+"evidence": null,
+"role": "logic"
+},
+"006b6700": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006b6720": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006b6750": {
+"evidence": null,
+"role": "logic"
+},
+"006b6a70": {
+"evidence": null,
+"role": "logic"
+},
+"006b6a80": {
+"evidence": null,
+"role": "logic"
+},
+"006b6dd0": {
+"evidence": null,
+"role": "logic"
+},
+"006b7000": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006b7030": {
+"evidence": null,
+"role": "logic"
+},
+"006b7420": {
+"evidence": null,
+"role": "logic"
+},
+"006b7540": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006b75d0": {
+"evidence": null,
+"role": "logic"
+},
+"006b7880": {
+"evidence": null,
+"role": "logic"
+},
+"006b7970": {
+"evidence": null,
+"role": "logic"
+},
+"006b7b00": {
+"evidence": "single-call forwarder -> 0x00691310",
+"name": "fwd_00691310",
+"role": "thunk"
+},
+"006b7b10": {
+"evidence": null,
+"role": "logic"
+},
+"006b8400": {
+"evidence": null,
+"role": "logic"
+},
+"006b8660": {
+"evidence": null,
+"role": "logic"
+},
+"006b8690": {
+"evidence": null,
+"role": "logic"
+},
+"006b86d0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006b8700": {
+"evidence": null,
+"role": "logic"
+},
+"006b8760": {
+"evidence": null,
+"role": "logic"
+},
+"006b8790": {
+"evidence": null,
+"role": "logic"
+},
+"006b8820": {
+"evidence": null,
+"role": "logic"
+},
+"006b8860": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006b88c0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006b8910": {
+"evidence": null,
+"role": "logic"
+},
+"006b8b40": {
+"evidence": null,
+"role": "logic"
+},
+"006ba4b0": {
+"evidence": null,
+"role": "logic"
+},
+"006bace0": {
+"evidence": null,
+"role": "logic"
+},
+"006bad90": {
+"evidence": "single-call forwarder -> 0x00691290",
+"name": "fwd_00691290",
+"role": "thunk"
+},
+"006bae00": {
+"evidence": null,
+"role": "logic"
+},
+"006bae50": {
+"evidence": null,
+"role": "logic"
+},
+"006bb130": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006bb190": {
+"evidence": null,
+"role": "logic"
+},
+"006bb260": {
+"evidence": null,
+"role": "logic"
+},
+"006bb3c0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006bb400": {
+"evidence": null,
+"role": "logic"
+},
+"006bb770": {
+"evidence": null,
+"role": "logic"
+},
+"006bb970": {
+"evidence": null,
+"role": "logic"
+},
+"006bb9e0": {
+"evidence": null,
+"role": "logic"
+},
+"006bba60": {
+"evidence": null,
+"role": "logic"
+},
+"006bbb20": {
+"evidence": null,
+"role": "logic"
+},
+"006bbd60": {
+"evidence": null,
+"role": "logic"
+},
+"006bbdf0": {
+"evidence": null,
+"role": "logic"
+},
+"006bbf10": {
+"evidence": null,
+"role": "logic"
+},
+"006bbf90": {
+"evidence": null,
+"role": "logic"
+},
+"006bc0c0": {
+"evidence": null,
+"role": "logic"
+},
+"006bc720": {
+"evidence": null,
+"role": "logic"
+},
+"006bc830": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006bc890": {
+"evidence": null,
+"role": "logic"
+},
+"006bcd60": {
+"evidence": null,
+"role": "logic"
+},
+"006bcfa0": {
+"evidence": null,
+"role": "logic"
+},
+"006bd5a0": {
+"evidence": null,
+"role": "logic"
+},
+"006bd950": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006bd9a0": {
+"evidence": null,
+"role": "logic"
+},
+"006bda20": {
+"evidence": null,
+"role": "logic"
+},
+"006bdde0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006bde20": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006bdea0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006bdf90": {
+"evidence": null,
+"role": "logic"
+},
+"006bdff0": {
+"evidence": null,
+"role": "logic"
+},
+"006be140": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006be190": {
+"evidence": null,
+"role": "logic"
+},
+"006be8e0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006be910": {
+"evidence": null,
+"role": "logic"
+},
+"006be990": {
+"evidence": null,
+"role": "logic"
+},
+"006beb80": {
+"evidence": null,
+"role": "logic"
+},
+"006bed90": {
+"evidence": null,
+"role": "logic"
+},
+"006bee10": {
+"evidence": null,
+"role": "logic"
+},
+"006beeb0": {
+"evidence": null,
+"role": "logic"
+},
+"006bf050": {
+"evidence": null,
+"role": "logic"
+},
+"006bf430": {
+"evidence": null,
+"role": "logic"
+},
+"006bf480": {
+"evidence": null,
+"role": "logic"
+},
+"006bf5b0": {
+"evidence": null,
+"role": "logic"
+},
+"006bf680": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006bf6a0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006bf6f0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006bf740": {
+"evidence": null,
+"role": "logic"
+},
+"006bf8d0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006bf910": {
+"evidence": null,
+"role": "logic"
+},
+"006bf970": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006bf9b0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006bf9f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006bfa80": {
+"evidence": null,
+"role": "logic"
+},
+"006bfb20": {
+"evidence": null,
+"role": "logic"
+},
+"006bfc40": {
+"evidence": null,
+"role": "logic"
+},
+"006c0030": {
+"evidence": null,
+"role": "logic"
+},
+"006c0280": {
+"evidence": null,
+"role": "logic"
+},
+"006c02c0": {
+"evidence": null,
+"role": "logic"
+},
+"006c0310": {
+"evidence": null,
+"role": "logic"
+},
+"006c04a0": {
+"evidence": null,
+"role": "logic"
+},
+"006c06f0": {
+"evidence": null,
+"role": "logic"
+},
+"006c07c0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006c0820": {
+"evidence": "zero-inits 9 fields, returns this",
+"role": "ctor-like"
+},
+"006c0910": {
+"evidence": null,
+"role": "logic"
+},
+"006c0950": {
+"evidence": null,
+"role": "logic"
+},
+"006c0a20": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006c0a40": {
+"evidence": null,
+"role": "logic"
+},
+"006c0bb0": {
+"evidence": null,
+"role": "logic"
+},
+"006c0be0": {
+"evidence": null,
+"role": "logic"
+},
+"006c0c00": {
+"evidence": null,
+"role": "logic"
+},
+"006c0c20": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006c0c90": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006c0d00": {
+"evidence": "single-call forwarder -> 0x00693a60",
+"name": "fwd_00693a60",
+"role": "thunk"
+},
+"006c0d40": {
+"evidence": null,
+"role": "logic"
+},
+"006c0f30": {
+"evidence": null,
+"role": "logic"
+},
+"006c0fb0": {
+"evidence": null,
+"role": "logic"
+},
+"006c1070": {
+"evidence": null,
+"role": "logic"
+},
+"006c10c0": {
+"evidence": null,
+"role": "logic"
+},
+"006c1110": {
+"evidence": null,
+"role": "logic"
+},
+"006c11a0": {
+"evidence": "single-call forwarder -> 0x00691170",
+"name": "fwd_00691170",
+"role": "thunk"
+},
+"006c11c0": {
+"evidence": null,
+"role": "logic"
+},
+"006c1250": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006c1290": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006c12e0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006c1360": {
+"evidence": null,
+"role": "logic"
+},
+"006c1390": {
+"evidence": null,
+"role": "logic"
+},
+"006c13f0": {
+"evidence": null,
+"role": "logic"
+},
+"006c1480": {
+"evidence": null,
+"role": "logic"
+},
+"006c1590": {
+"evidence": null,
+"role": "logic"
+},
+"006c1780": {
+"evidence": null,
+"role": "logic"
+},
+"006c1810": {
+"evidence": null,
+"role": "logic"
+},
+"006c1aa0": {
+"evidence": null,
+"role": "logic"
+},
+"006c1c00": {
+"evidence": null,
+"role": "logic"
+},
+"006c1d20": {
+"evidence": null,
+"role": "logic"
+},
+"006c1d80": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006c1dd0": {
+"evidence": null,
+"role": "logic"
+},
+"006c1df0": {
+"evidence": null,
+"role": "logic"
+},
+"006c1e80": {
+"evidence": null,
+"role": "logic"
+},
+"006c1ed0": {
+"evidence": null,
+"role": "logic"
+},
+"006c1f00": {
+"evidence": null,
+"role": "logic"
+},
+"006c1fc0": {
+"evidence": null,
+"role": "logic"
+},
+"006c2010": {
+"evidence": null,
+"role": "logic"
+},
+"006c20d0": {
+"evidence": null,
+"role": "logic"
+},
+"006c21a0": {
+"evidence": null,
+"role": "logic"
+},
+"006c2260": {
+"evidence": null,
+"role": "logic"
+},
+"006c22d0": {
+"evidence": null,
+"role": "logic"
+},
+"006c2340": {
+"evidence": null,
+"role": "logic"
+},
+"006c23a0": {
+"evidence": null,
+"role": "logic"
+},
+"006c2400": {
+"evidence": null,
+"role": "logic"
+},
+"006c2470": {
+"evidence": null,
+"role": "logic"
+},
+"006c24f0": {
+"evidence": null,
+"role": "logic"
+},
+"006c25f0": {
+"evidence": null,
+"role": "logic"
+},
+"006c26a0": {
+"evidence": null,
+"role": "logic"
+},
+"006c26f0": {
+"evidence": null,
+"role": "logic"
+},
+"006c2740": {
+"evidence": null,
+"role": "logic"
+},
+"006c2790": {
+"evidence": null,
+"role": "logic"
+},
+"006c2810": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006c2850": {
+"evidence": null,
+"role": "logic"
+},
+"006c2910": {
+"evidence": null,
+"role": "logic"
+},
+"006c2920": {
+"evidence": null,
+"role": "logic"
+},
+"006c29a0": {
+"evidence": null,
+"role": "logic"
+},
+"006c29f0": {
+"evidence": null,
+"role": "logic"
+},
+"006c2a40": {
+"evidence": null,
+"role": "logic"
+},
+"006c2b20": {
+"evidence": null,
+"role": "logic"
+},
+"006c2b80": {
+"evidence": null,
+"role": "logic"
+},
+"006c2c30": {
+"evidence": null,
+"role": "logic"
+},
+"006c2d30": {
+"evidence": null,
+"role": "logic"
+},
+"006c2e00": {
+"evidence": null,
+"role": "logic"
+},
+"006c2eb0": {
+"evidence": null,
+"role": "logic"
+},
+"006c2fb0": {
+"evidence": null,
+"role": "logic"
+},
+"006c3030": {
+"evidence": null,
+"role": "logic"
+},
+"006c3140": {
+"evidence": null,
+"role": "logic"
+},
+"006c3320": {
+"evidence": null,
+"role": "logic"
+},
+"006c3550": {
+"evidence": null,
+"role": "logic"
+},
+"006c3620": {
+"evidence": null,
+"role": "logic"
+},
+"006c3850": {
+"evidence": null,
+"role": "logic"
+},
+"006c38e0": {
+"evidence": null,
+"role": "logic"
+},
+"006c3b00": {
+"evidence": null,
+"role": "logic"
+},
+"006c3b40": {
+"evidence": null,
+"role": "logic"
+},
+"006c3b80": {
+"evidence": null,
+"role": "logic"
+},
+"006c3cc0": {
+"evidence": null,
+"role": "logic"
+},
+"006c3e60": {
+"evidence": null,
+"role": "logic"
+},
+"006c3f50": {
+"evidence": null,
+"role": "logic"
+},
+"006c4040": {
+"evidence": null,
+"role": "logic"
+},
+"006c4090": {
+"evidence": null,
+"role": "logic"
+},
+"006c4ee0": {
+"evidence": null,
+"role": "logic"
+},
+"006c5010": {
+"evidence": null,
+"role": "logic"
+},
+"006c5120": {
+"evidence": null,
+"role": "logic"
+},
+"006c52d0": {
+"evidence": null,
+"role": "logic"
+},
+"006c5520": {
+"evidence": null,
+"role": "logic"
+},
+"006c5630": {
+"evidence": null,
+"role": "logic"
+},
+"006c5a90": {
+"evidence": null,
+"role": "logic"
+},
+"006c5e40": {
+"evidence": null,
+"role": "logic"
+},
+"006c6340": {
+"evidence": null,
+"role": "logic"
+},
+"006c63d0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006c6480": {
+"evidence": null,
+"role": "logic"
+},
+"006c64d0": {
+"evidence": null,
+"role": "logic"
+},
+"006c6540": {
+"evidence": null,
+"role": "logic"
+},
+"006c6620": {
+"evidence": null,
+"role": "logic"
+},
+"006c6890": {
+"evidence": "zero-inits 5 fields, returns this",
+"role": "ctor-like"
+},
+"006c6a90": {
+"evidence": null,
+"role": "logic"
+},
+"006c6ce0": {
+"evidence": null,
+"role": "logic"
+},
+"006c7400": {
+"evidence": null,
+"role": "logic"
+},
+"006c7530": {
+"evidence": null,
+"role": "logic"
+},
+"006c75e0": {
+"evidence": null,
+"role": "logic"
+},
+"006c7700": {
+"evidence": null,
+"role": "logic"
+},
+"006c77d0": {
+"evidence": "zero-inits 10 fields, returns this",
+"role": "ctor-like"
+},
+"006c7970": {
+"evidence": null,
+"role": "logic"
+},
+"006c7ab0": {
+"evidence": null,
+"role": "logic"
+},
+"006c7c30": {
+"evidence": null,
+"role": "logic"
+},
+"006c7e30": {
+"evidence": null,
+"role": "logic"
+},
+"006c8020": {
+"evidence": null,
+"role": "logic"
+},
+"006c83c0": {
+"evidence": null,
+"role": "logic"
+},
+"006c8670": {
+"evidence": null,
+"role": "logic"
+},
+"006c8710": {
+"evidence": null,
+"role": "logic"
+},
+"006c87f0": {
+"evidence": null,
+"role": "logic"
+},
+"006c8850": {
+"evidence": "single-call forwarder -> 0x0068d7b0",
+"name": "fwd_0068d7b0",
+"role": "thunk"
+},
+"006c8870": {
+"evidence": null,
+"role": "logic"
+},
+"006c8910": {
+"evidence": null,
+"role": "logic"
+},
+"006c8f80": {
+"evidence": null,
+"role": "logic"
+},
+"006c9b20": {
+"evidence": null,
+"role": "logic"
+},
+"006c9ca0": {
+"evidence": null,
+"role": "logic"
+},
+"006ca150": {
+"evidence": null,
+"role": "logic"
+},
+"006ca2c0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006ca2f0": {
+"evidence": null,
+"role": "logic"
+},
+"006ca960": {
+"evidence": null,
+"role": "logic"
+},
+"006cac40": {
+"evidence": null,
+"role": "logic"
+},
+"006cb000": {
+"evidence": null,
+"role": "logic"
+},
+"006cb050": {
+"evidence": null,
+"role": "logic"
+},
+"006cb180": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006cb1a0": {
+"evidence": null,
+"role": "logic"
+},
+"006cb1b0": {
+"evidence": null,
+"role": "logic"
+},
+"006cb340": {
+"evidence": null,
+"role": "logic"
+},
+"006cb7b0": {
+"evidence": null,
+"role": "logic"
+},
+"006cb7e0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006cb810": {
+"evidence": null,
+"role": "logic"
+},
+"006cc020": {
+"evidence": "single-call forwarder -> 0x006cb7e0",
+"name": "fwd_006cb7e0",
+"role": "thunk"
+},
+"006cc5a0": {
+"evidence": "single-call forwarder -> 0x0068d770",
+"name": "fwd_0068d770",
+"role": "thunk"
+},
+"006cc610": {
+"evidence": null,
+"role": "logic"
+},
+"006cc6c0": {
+"evidence": null,
+"role": "logic"
+},
+"006cc700": {
+"evidence": null,
+"role": "logic"
+},
+"006cc7e0": {
+"evidence": null,
+"role": "logic"
+},
+"006cc850": {
+"evidence": null,
+"role": "logic"
+},
+"006cc890": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006cc8e0": {
+"evidence": null,
+"role": "logic"
+},
+"006cc9b0": {
+"evidence": null,
+"role": "logic"
+},
+"006cca10": {
+"evidence": null,
+"role": "logic"
+},
+"006cca80": {
+"evidence": null,
+"role": "logic"
+},
+"006ccab0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006ccb10": {
+"evidence": null,
+"role": "logic"
+},
+"006ccb70": {
+"evidence": null,
+"role": "logic"
+},
+"006cce10": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006cce60": {
+"evidence": "single-call forwarder -> 0x006ccb10",
+"name": "fwd_006ccb10",
+"role": "thunk"
+},
+"006cce80": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006ccec0": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006ccf00": {
+"evidence": null,
+"role": "logic"
+},
+"006ccf70": {
+"evidence": null,
+"role": "logic"
+},
+"006cd030": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006cd080": {
+"evidence": null,
+"role": "logic"
+},
+"006cd130": {
+"evidence": null,
+"role": "logic"
+},
+"006cd620": {
+"evidence": null,
+"role": "logic"
+},
+"006cd6c0": {
+"evidence": null,
+"role": "logic"
+},
+"006cd850": {
+"evidence": null,
+"role": "logic"
+},
+"006cd870": {
+"evidence": null,
+"role": "logic"
+},
+"006cd960": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006cd9a0": {
+"evidence": null,
+"role": "logic"
+},
+"006cdf30": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006cdf40": {
+"evidence": null,
+"role": "logic"
+},
+"006cdfb0": {
+"evidence": null,
+"role": "logic"
+},
+"006ce050": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006cead0": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006ceb10": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006ceb50": {
+"evidence": "virtual dispatch through vtable",
+"name": "vdispatch",
+"role": "dispatch"
+},
+"006cef50": {
+"evidence": null,
+"role": "logic"
+},
+"006cf090": {
+"evidence": "single-call forwarder -> 0x00692230",
+"name": "fwd_00692230",
+"role": "thunk"
+},
+"006cf0c0": {
+"evidence": null,
+"role": "logic"
+},
+"006cf0e0": {
+"evidence": null,
+"role": "logic"
+},
+"006cf230": {
+"evidence": "single-call forwarder -> 0x006ceb50",
+"name": "fwd_006ceb50",
+"role": "thunk"
+},
+"006cf260": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006cf2b0": {
+"evidence": null,
+"role": "logic"
+},
+"006cf330": {
+"evidence": null,
+"role": "logic"
+},
+"006cf3a0": {
+"evidence": null,
+"role": "logic"
+},
+"006cf3f0": {
+"evidence": null,
+"role": "logic"
+},
+"006cf4e0": {
+"evidence": null,
+"role": "logic"
+},
+"006cf530": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006cf620": {
+"evidence": null,
+"role": "logic"
+},
+"006cf6b0": {
+"evidence": null,
+"role": "logic"
+},
+"006d0440": {
+"evidence": null,
+"role": "logic"
+},
+"006d07c0": {
+"evidence": null,
+"role": "logic"
+},
+"006d0800": {
+"evidence": null,
+"role": "logic"
+},
+"006d1b80": {
+"evidence": null,
+"role": "logic"
+},
+"006d2140": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006d2870": {
+"evidence": null,
+"role": "logic"
+},
+"006d2a00": {
+"evidence": null,
+"role": "logic"
+},
+"006d2a60": {
+"evidence": null,
+"role": "logic"
+},
+"006d2d60": {
+"evidence": null,
+"role": "logic"
+},
+"006d30d0": {
+"evidence": null,
+"role": "logic"
+},
+"006d3250": {
+"evidence": null,
+"role": "logic"
+},
+"006d3600": {
+"evidence": null,
+"role": "logic"
+},
+"006d3630": {
+"evidence": null,
+"role": "logic"
+},
+"006d3790": {
+"evidence": null,
+"role": "logic"
+},
+"006d3800": {
+"evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"006d3c20": {
+"evidence": null,
+"role": "logic"
+},
+"006d4490": {
+"evidence": null,
+"role": "logic"
+},
+"006d47e0": {
+"evidence": null,
+"role": "logic"
+},
+"006d4870": {
+"evidence": null,
+"role": "logic"
+},
+"006d48a0": {
+"evidence": null,
+"role": "logic"
+},
+"006d49c0": {
+"evidence": null,
+"role": "logic"
+},
+"006d4b20": {
+"evidence": null,
+"role": "logic"
+},
+"006d4e80": {
+"evidence": null,
+"role": "logic"
+},
+"006d54c0": {
+"evidence": null,
+"role": "logic"
+},
+"006d55d0": {
+"evidence": null,
+"role": "logic"
+},
+"006d5760": {
+"evidence": null,
+"role": "logic"
+},
+"006d5910": {
+"evidence": null,
+"role": "logic"
+},
+"006d59d0": {
+"evidence": null,
+"role": "logic"
+},
+"006d6460": {
+"evidence": "empty body",
+"name": "empty_stub",
+"role": "stub"
+},
+"006d6550": {
+"evidence": null,
+"role": "logic"
+},
+"006d6e60": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006d6eb0": {
+"evidence": null,
+"role": "logic"
+},
+"006d70c0": {
+"evidence": null,
+"role": "logic"
+},
+"006d7fc0": {
+"evidence": null,
+"role": "logic"
+},
+"006d8420": {
+"evidence": null,
+"role": "logic"
+},
+"006d8650": {
+"evidence": "single-call forwarder -> 0x006d8670",
+"name": "fwd_006d8670",
+"role": "thunk"
+},
+"006d8670": {
+"evidence": null,
+"role": "logic"
+},
+"006d8870": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006d88c0": {
+"evidence": null,
+"role": "logic"
+},
+"006d8990": {
+"evidence": null,
+"role": "logic"
+},
+"006d8d10": {
+"evidence": null,
+"role": "logic"
+},
+"006d8ec0": {
+"evidence": null,
+"role": "logic"
+},
+"006d9130": {
+"evidence": null,
+"role": "logic"
+},
+"006d9300": {
+"evidence": null,
+"role": "logic"
+},
+"006d94c0": {
+"evidence": null,
+"role": "logic"
+},
+"006d9c20": {
+"evidence": null,
+"role": "logic"
+},
+"006d9e90": {
+"evidence": null,
+"role": "logic"
+},
+"006d9f50": {
+"evidence": null,
+"role": "logic"
+},
+"006da4b0": {
+"evidence": null,
+"role": "logic"
+},
+"006da4e0": {
+"evidence": null,
+"role": "logic"
+},
+"006da730": {
+"evidence": null,
+"role": "logic"
+},
+"006da8d0": {
+"evidence": null,
+"role": "logic"
+},
+"006da9f0": {
+"evidence": null,
+"role": "logic"
+},
+"006dac00": {
+"evidence": null,
+"role": "logic"
+},
+"006dac60": {
+"evidence": null,
+"role": "logic"
+},
+"006daee0": {
+"evidence": null,
+"role": "logic"
+},
+"006daf40": {
+"evidence": null,
+"role": "logic"
+},
+"006dafa0": {
+"evidence": null,
+"role": "logic"
+},
+"006db230": {
+"evidence": null,
+"role": "logic"
+},
+"006db470": {
+"evidence": null,
+"role": "logic"
+},
+"006db650": {
+"evidence": null,
+"role": "logic"
+},
+"006db8a0": {
+"evidence": null,
+"role": "logic"
+},
+"006db930": {
+"evidence": null,
+"role": "logic"
+},
+"006dbd20": {
+"evidence": null,
+"role": "logic"
+},
+"006dbf30": {
+"evidence": null,
+"role": "logic"
+},
+"006dc0f0": {
+"evidence": null,
+"role": "logic"
+},
+"006dc210": {
+"evidence": null,
+"role": "logic"
+},
+"006dc280": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006dc2b0": {
+"evidence": null,
+"role": "logic"
+},
+"006dc5c0": {
+"evidence": null,
+"role": "logic"
+},
+"006dd4b0": {
+"evidence": "empty body",
+"name": "empty_stub",
+"role": "stub"
+},
+"006dd500": {
+"evidence": null,
+"role": "logic"
+},
+"006dd730": {
+"evidence": null,
+"role": "logic"
+},
+"006dd8b0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006dd8e0": {
+"evidence": null,
+"role": "logic"
+},
+"006ddaa0": {
+"evidence": null,
+"role": "logic"
+},
+"006dddb0": {
+"evidence": null,
+"role": "logic"
+},
+"006ddde0": {
+"evidence": null,
+"role": "logic"
+},
+"006de000": {
+"evidence": null,
+"role": "logic"
+},
+"006de2c0": {
+"evidence": null,
+"role": "logic"
+},
+"006de430": {
+"evidence": null,
+"role": "logic"
+},
+"006de4d0": {
+"evidence": null,
+"role": "logic"
+},
+"006de5c0": {
+"evidence": null,
+"role": "logic"
+},
+"006de610": {
+"evidence": null,
+"role": "logic"
+},
+"006de900": {
+"evidence": null,
+"role": "logic"
+},
+"006dec50": {
+"evidence": "single field-derived expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"006dec70": {
+"evidence": null,
+"role": "logic"
+},
+"006dee70": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006deea0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006deed0": {
+"evidence": null,
+"role": "logic"
+},
+"006df4c0": {
+"evidence": null,
+"role": "logic"
+},
+"006df570": {
+"evidence": null,
+"role": "logic"
+},
+"006dfba0": {
+"evidence": null,
+"role": "logic"
+},
+"006dfc30": {
+"evidence": null,
+"role": "logic"
+},
+"006dfd70": {
+"evidence": "single-call forwarder -> 0xexternal:00000148",
+"name": "fwd_external:00000148",
+"role": "thunk"
+},
+"006dfdb0": {
+"evidence": null,
+"role": "logic"
+},
+"006dff90": {
+"evidence": null,
+"role": "logic"
+},
+"006e0090": {
+"evidence": null,
+"role": "logic"
+},
+"006e00f0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006e0120": {
+"evidence": null,
+"role": "logic"
+},
+"006e0150": {
+"evidence": null,
+"role": "logic"
+},
+"006e0390": {
+"evidence": null,
+"role": "logic"
+},
+"006e03b0": {
+"evidence": null,
+"role": "logic"
+},
+"006e0b70": {
+"evidence": null,
+"role": "logic"
+},
+"006e0ba0": {
+"evidence": null,
+"role": "logic"
+},
+"006e0bd0": {
+"evidence": null,
+"role": "logic"
+},
+"006e0ec0": {
+"evidence": null,
+"role": "logic"
+},
+"006f93e0": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"006f93f0": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"006f9400": {
+"evidence": "trivial expression, no calls",
+"name": "compute",
+"role": "computed"
+},
+"006f9430": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006f9450": {
+"evidence": null,
+"role": "logic"
+},
+"006f9480": {
+"evidence": null,
+"role": "logic"
+},
+"006f94b0": {
+"evidence": null,
+"role": "logic"
+},
+"006f94e0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9510": {
+"evidence": null,
+"role": "logic"
+},
+"006f9540": {
+"evidence": null,
+"role": "logic"
+},
+"006f9570": {
+"evidence": null,
+"role": "logic"
+},
+"006f95a0": {
+"evidence": null,
+"role": "logic"
+},
+"006f95d0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9600": {
+"evidence": null,
+"role": "logic"
+},
+"006f9630": {
+"evidence": null,
+"role": "logic"
+},
+"006f9660": {
+"evidence": null,
+"role": "logic"
+},
+"006f9690": {
+"evidence": null,
+"role": "logic"
+},
+"006f96c0": {
+"evidence": null,
+"role": "logic"
+},
+"006f96f0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9720": {
+"evidence": null,
+"role": "logic"
+},
+"006f9750": {
+"evidence": null,
+"role": "logic"
+},
+"006f9780": {
+"evidence": null,
+"role": "logic"
+},
+"006f97b0": {
+"evidence": null,
+"role": "logic"
+},
+"006f97e0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9810": {
+"evidence": null,
+"role": "logic"
+},
+"006f9840": {
+"evidence": null,
+"role": "logic"
+},
+"006f9870": {
+"evidence": null,
+"role": "logic"
+},
+"006f98a0": {
+"evidence": null,
+"role": "logic"
+},
+"006f98d0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9900": {
+"evidence": null,
+"role": "logic"
+},
+"006f9930": {
+"evidence": null,
+"role": "logic"
+},
+"006f9960": {
+"evidence": null,
+"role": "logic"
+},
+"006f9990": {
+"evidence": null,
+"role": "logic"
+},
+"006f99c0": {
+"evidence": null,
+"role": "logic"
+},
+"006f99f0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9a20": {
+"evidence": null,
+"role": "logic"
+},
+"006f9a50": {
+"evidence": null,
+"role": "logic"
+},
+"006f9a80": {
+"evidence": null,
+"role": "logic"
+},
+"006f9ab0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9ae0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9b10": {
+"evidence": null,
+"role": "logic"
+},
+"006f9b40": {
+"evidence": null,
+"role": "logic"
+},
+"006f9b70": {
+"evidence": null,
+"role": "logic"
+},
+"006f9ba0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9bd0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9c00": {
+"evidence": null,
+"role": "logic"
+},
+"006f9c30": {
+"evidence": null,
+"role": "logic"
+},
+"006f9c60": {
+"evidence": null,
+"role": "logic"
+},
+"006f9c90": {
+"evidence": null,
+"role": "logic"
+},
+"006f9cc0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9cf0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9d20": {
+"evidence": null,
+"role": "logic"
+},
+"006f9d50": {
+"evidence": null,
+"role": "logic"
+},
+"006f9d80": {
+"evidence": null,
+"role": "logic"
+},
+"006f9db0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9de0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9e10": {
+"evidence": null,
+"role": "logic"
+},
+"006f9e40": {
+"evidence": null,
+"role": "logic"
+},
+"006f9ee0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9f20": {
+"evidence": null,
+"role": "logic"
+},
+"006f9f50": {
+"evidence": null,
+"role": "logic"
+},
+"006f9f80": {
+"evidence": null,
+"role": "logic"
+},
+"006f9fb0": {
+"evidence": null,
+"role": "logic"
+},
+"006f9ff0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa020": {
+"evidence": null,
+"role": "logic"
+},
+"006fa050": {
+"evidence": null,
+"role": "logic"
+},
+"006fa080": {
+"evidence": null,
+"role": "logic"
+},
+"006fa0b0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa0e0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa110": {
+"evidence": null,
+"role": "logic"
+},
+"006fa140": {
+"evidence": null,
+"role": "logic"
+},
+"006fa170": {
+"evidence": null,
+"role": "logic"
+},
+"006fa1a0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa1d0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa200": {
+"evidence": null,
+"role": "logic"
+},
+"006fa230": {
+"evidence": null,
+"role": "logic"
+},
+"006fa260": {
+"evidence": null,
+"role": "logic"
+},
+"006fa290": {
+"evidence": null,
+"role": "logic"
+},
+"006fa2c0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa2f0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa320": {
+"evidence": null,
+"role": "logic"
+},
+"006fa350": {
+"evidence": null,
+"role": "logic"
+},
+"006fa380": {
+"evidence": null,
+"role": "logic"
+},
+"006fa3b0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa3e0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa410": {
+"evidence": null,
+"role": "logic"
+},
+"006fa440": {
+"evidence": null,
+"role": "logic"
+},
+"006fa470": {
+"evidence": null,
+"role": "logic"
+},
+"006fa4a0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa4d0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa500": {
+"evidence": null,
+"role": "logic"
+},
+"006fa530": {
+"evidence": null,
+"role": "logic"
+},
+"006fa560": {
+"evidence": null,
+"role": "logic"
+},
+"006fa590": {
+"evidence": null,
+"role": "logic"
+},
+"006fa5c0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa5f0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa620": {
+"evidence": null,
+"role": "logic"
+},
+"006fa650": {
+"evidence": null,
+"role": "logic"
+},
+"006fa680": {
+"evidence": null,
+"role": "logic"
+},
+"006fa6b0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa6e0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa710": {
+"evidence": null,
+"role": "logic"
+},
+"006fa740": {
+"evidence": null,
+"role": "logic"
+},
+"006fa770": {
+"evidence": null,
+"role": "logic"
+},
+"006fa7a0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa7d0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa800": {
+"evidence": null,
+"role": "logic"
+},
+"006fa830": {
+"evidence": null,
+"role": "logic"
+},
+"006fa860": {
+"evidence": null,
+"role": "logic"
+},
+"006fa890": {
+"evidence": null,
+"role": "logic"
+},
+"006fa8c0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa8f0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa920": {
+"evidence": null,
+"role": "logic"
+},
+"006fa950": {
+"evidence": null,
+"role": "logic"
+},
+"006fa980": {
+"evidence": null,
+"role": "logic"
+},
+"006fa9b0": {
+"evidence": null,
+"role": "logic"
+},
+"006fa9e0": {
+"evidence": null,
+"role": "logic"
+},
+"006faa10": {
+"evidence": null,
+"role": "logic"
+},
+"006faa40": {
+"evidence": null,
+"role": "logic"
+},
+"006faa70": {
+"evidence": null,
+"role": "logic"
+},
+"006faaa0": {
+"evidence": null,
+"role": "logic"
+},
+"006faad0": {
+"evidence": null,
+"role": "logic"
+},
+"006fab00": {
+"evidence": null,
+"role": "logic"
+},
+"006fab30": {
+"evidence": null,
+"role": "logic"
+},
+"006fab60": {
+"evidence": null,
+"role": "logic"
+},
+"006fab90": {
+"evidence": null,
+"role": "logic"
+},
+"006fabc0": {
+"evidence": null,
+"role": "logic"
+},
+"006fabf0": {
+"evidence": null,
+"role": "logic"
+},
+"006fac20": {
+"evidence": null,
+"role": "logic"
+},
+"006fac50": {
+"evidence": null,
+"role": "logic"
+},
+"006fac80": {
+"evidence": null,
+"role": "logic"
+},
+"006facb0": {
+"evidence": null,
+"role": "logic"
+},
+"006face0": {
+"evidence": null,
+"role": "logic"
+},
+"006fad10": {
+"evidence": null,
+"role": "logic"
+},
+"006fad40": {
+"evidence": null,
+"role": "logic"
+},
+"006fad70": {
+"evidence": null,
+"role": "logic"
+},
+"006fada0": {
+"evidence": null,
+"role": "logic"
+},
+"006fadd0": {
+"evidence": null,
+"role": "logic"
+},
+"006fae00": {
+"evidence": null,
+"role": "logic"
+},
+"006fae30": {
+"evidence": null,
+"role": "logic"
+},
+"006fae60": {
+"evidence": null,
+"role": "logic"
+},
+"006fae90": {
+"evidence": null,
+"role": "logic"
+},
+"006faec0": {
+"evidence": null,
+"role": "logic"
+},
+"006faef0": {
+"evidence": null,
+"role": "logic"
+},
+"006faf20": {
+"evidence": null,
+"role": "logic"
+},
+"006faf50": {
+"evidence": null,
+"role": "logic"
+},
+"006faf80": {
+"evidence": null,
+"role": "logic"
+},
+"006fafb0": {
+"evidence": null,
+"role": "logic"
+},
+"006faff0": {
+"evidence": null,
+"role": "logic"
+},
+"006fb020": {
+"evidence": null,
+"role": "logic"
+},
+"006fb050": {
+"evidence": null,
+"role": "logic"
+},
+"006fb0f0": {
+"evidence": "thin wrapper around 2 call(s)",
+"role": "wrapper"
+},
+"006fb10f": {
+"evidence": "single-call forwarder -> 0x0068d755",
+"name": "fwd_0068d755",
+"role": "thunk"
+},
+"006fb150": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006fb1b0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006fb270": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006fb2d0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006fb330": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006fb3b0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006fb430": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006fb5f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006fb9f0": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
+"006fbab5": {
+"evidence": "single-call forwarder -> 0x0068d593",
+"name": "fwd_0068d593",
+"role": "thunk"
+}
+}

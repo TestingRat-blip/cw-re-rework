@@ -1,0 +1,175 @@
+#!/usr/bin/env python3
+"""Emit ADJUDICATION.md -- the settled verdicts for the label conflicts.
+
+Rulings below were made by reading the decompiled body (and, where the decompiler was
+untrustworthy, the raw bytes), not by preferring a source. Evidence classes used:
+
+  * VC11 STL diagnostics verified against the extracted headers in
+    ../msvc_vs2012_rtm/vc11_librarycore86/.../VC/include
+  * the shipped CRT symbols in ../crt_symbols/
+  * raw disassembly where Ghidra collapsed a /GS function body
+  * the corpus' own bit-exact gate records
+
+A = cw_callgraph.py (working names)   B = CW_CONFIDENCE_XREF.md
+"""
+import json
+import os
+from collections import Counter
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+RAW = os.path.join(HERE, "..", "raw")
+OUT = os.path.join(HERE, "..", "ADJUDICATION.md")
+
+# addr -> (winner, settled-name, evidence)
+RULINGS = {
+    # --- B correct: A applied game semantics to an STL/CRT primitive -------------
+    "004013d0": ("B", "getElemPtr4", "`return this + i*4` -- a generic element pointer; no chunk semantics"),
+    "004013f0": ("B", "std_vector_int_at", "bounds-checked `if (0<=i && i < (end-begin)>>2) return begin[i]` -- vector index"),
+    "0042f440": ("B", "std_vector_free", "`operator_delete(*p)` then zeroes the 3 pointers -- vector deallocate"),
+    "00402990": ("B", "vec3_store", "stores 3 dwords, returns this; A's `size3_write` is the same thing, less precise"),
+    "004f2be0": ("B", "std_vector_push_back_int", "grow-if-full then append 4-byte element"),
+    "0052dee0": ("B", "World_falloffSquared", "`f=1-falloff; f<=0?0:f*f`; A's `road_probe` adds unsupported semantics"),
+    "00405fd0": ("B", "World_getBlockAt", "column lookup + Z bounds, returns block or sentinel"),
+    "00406290": ("B", "Region_getChunkCell", "coord bounds, >>6 to chunk, &63 to cell"),
+    "004286f0": ("B", "World_getTileAtCoords", "same shape at 8x tile scale"),
+    "004d1950": ("B", "VoxelGrid_cellAt3D", "3D bounds-checked grid index"),
+    "00405f20": ("B", "Column_getBlockChecked", "checked column read with sentinel fallbacks"),
+    "00406100": ("B", "Chunk_getColumnAt", "coord -> chunk -> column lookup, 37 callers"),
+    "0041fe60": ("B", "VoxelColumn_setBlock", "writes a 4-byte voxel, grows the column; but kind is GAME, not lib"),
+
+    # --- A correct: B is a placeholder or a bad extraction -----------------------
+    "0052bf40": ("A", "rarityRoll", "`rand()%(n+1)`, +1 at 1/100, 1/1000, 1/10000, clamped to 4 -- rarity tiers"),
+    "004d7870": ("A", "region_tier", "distance from world centre (512,512), sqrt, tier = 2 - d*-0.75"),
+    "00522290": ("A", "feature_count_range", "climate floats at +0xc/+0x10 select (min,max) count pairs"),
+    "004ff340": ("A", "fill_box", "triple nested loop calling writeVoxel with material 0x46"),
+    "00522cc0": ("A", "dist2_16_16", "DISASSEMBLED: `shld edi,esi,0x10` + `sub`/`sbb` = 64-bit 16.16 fixed-point "
+                                     "squared distance. Ghidra collapsed the body to the /GS epilogue; B's "
+                                     "`stub_securityCookie` is that artifact. Already flagged in "
+                                     "CW_RE_MASTER_INDEX.md:153 as `x cookie-stub`"),
+    "00518630": ("A", "zone_builder", "the proven zone builder; B's `lib_fn_518630` is badly wrong"),
+    "004e28e0": ("A", "town_builder", "proven plan-then-populate village/ruins builder"),
+    "00500300": ("A", "dungeon_assembler", "bit-exact proven dungeon assembler"),
+    "005236d0": ("A", "room_carve", "CW_RE_MASTER_INDEX.md:159 -- bit-exact vs captures"),
+    "005234b0": ("A", "seg_carve", "CW_RE_MASTER_INDEX.md:159 -- bit-exact vs captures"),
+    "004f9010": ("A", "corridor_connect", "CW_RE_MASTER_INDEX.md:159 -- bit-exact vs captures"),
+    "0054a910": ("A", "ftol_helper", "x87 ROUND gated on the SSE2 flag = the CRT `_ftol2`; B's name is a placeholder "
+                                     "but B's `lib` kind is right"),
+
+    # --- neither name is right ---------------------------------------------------
+    "004f79f0": ("NEITHER", "int128_sub", "4x32 subtract with borrow propagation = ONE 128-bit integer, not a vector"),
+    "00428590": ("NEITHER", "std_list_push_back (role: conn edge)",
+                 "`_Xlength_error(\"list<T> too long\")` -- VC11 <list>:1951 `_Incsize`. Identity is "
+                 "std::list::push_back; A's name is its caller-side role. Both capture something true"),
+    "00528450": ("NEITHER", "std_list_push_back", "same VC11 <list> signature; A's `prop_scatter` is wrong"),
+    "004f2c50": ("NEITHER", "std_vector_push_back (32B elem)", "`& 0xffffffe0` element stride; A's `npc_schedule_b` wrong"),
+    "004d6670": ("NEITHER", "std_vector_push_back (with EH)", "SEH frame + vector grow/append"),
+    "00411090": ("NEITHER", "unproven -- kind is GAME",
+                 "`(1/(1-x) - 1)*20 + 1`. No CRT routine has this shape, so B's `lib` kind is wrong; "
+                 "A's `monster_level_formula` asserts semantics the body alone does not establish"),
+
+    # --- compatible: both describe the same function -----------------------------
+    "00413710": ("COMPATIBLE", "ItemData_copy (0x118)", "field-wise copy of the 0x118 ItemData struct -- A gives the "
+                                                        "role, B the structure; both correct"),
+    "0041ff00": ("COMPATIBLE", "writeVoxel", "three-way conflict; single-voxel write via column lookup. "
+                                             "`World_fillVoxelColumn` overstates it -- it writes at one Z"),
+    "00431400": ("COMPATIBLE", "loadVoxelModels", "A and B agree in substance"),
+
+    # --- kind correction only: B's `lib` is wrong, A's name unproven -------------
+    "004c84b0": ("A-KIND", "unproven ctor -- GAME", "initialises fields to +0x184; an object ctor, not library code"),
+    "004f84a0": ("A-KIND", "grid_cell_accessor -- GAME", "3D grid index, stride 2, into the +0x18 buffer"),
+    "004d23f0": ("A-KIND", "checked cell read -- GAME", "bounds-checked read with sentinel globals"),
+    "004f3630": ("A-KIND", "unproven ctor -- GAME", "large struct init + copy; B's `lib` kind unsupported"),
+
+    # --- genuinely unresolved ----------------------------------------------------
+    "004496a0": ("UNRESOLVED", "-", "no body: the address is not a function in our analysis"),
+    "004e20d0": ("UNRESOLVED", "-", "generic 7-field copy; neither name is evidenced"),
+    "00406050": ("UNRESOLVED", "-", "64-bit coordinate normalisation; neither name clearly fits"),
+}
+
+
+def main():
+    rows = json.load(open(os.path.join(RAW, "adjudication.json"), encoding="utf-8"))
+    seen, tally = set(), Counter()
+    lines = []
+
+    for r in sorted(rows, key=lambda x: x["addr"]):
+        a = r["addr"]
+        if a in RULINGS:
+            w, name, ev = RULINGS[a]
+        elif r["verdict"] in ("B", "B-kind/A-name"):
+            w, name, ev = "B", r["b_name"], r["note"]
+        elif r["verdict"] == "NEITHER":
+            w, name, ev = "NEITHER", "-", r["note"]
+        elif r["verdict"] == "NO-BODY":
+            w, name, ev = "UNRESOLVED", "-", "no decompiled body"
+        else:
+            w, name, ev = "UNRESOLVED", "-", "not individually reviewed; B is a placeholder, A unproven"
+        key = (a, r["a_name"], r["b_name"])
+        if key in seen:
+            continue
+        seen.add(key)
+        tally[w] += 1
+        lines.append((a, r["a_name"], r["b_name"], w, name, ev, r["size"]))
+
+    with open(OUT, "w", encoding="utf-8") as g:
+        g.write("# Adjudication of the label conflicts\n\n")
+        g.write("Every conflict between `cw_callgraph.py` (**A**) and `CW_CONFIDENCE_XREF.md` (**B**),\n")
+        g.write("settled against the decompiled body -- or the raw bytes where the decompiler lied.\n\n")
+        g.write("## Verdicts\n\n| verdict | count |\n|---|---|\n")
+        for k, v in tally.most_common():
+            g.write("| %s | %d |\n" % (k, v))
+        g.write("""
+## The systematic finding
+
+**`CW_CONFIDENCE_XREF.md`'s `lib_fn_*` rows are an extraction artifact, not an assessment.**
+`0x4f9010`, `0x5234b0` and `0x5236d0` are filed there as `lib_fn_*` / kind `lib`, each citing
+`CW_RE_MASTER_INDEX.md:158`. Line **159** of that same document records them as
+*room carve / corridor / seg carve -- bit-exact vs captures*. The citation is off by one row,
+so proven worldgen functions were imported as library placeholders. `0x518630` (zone builder),
+`0x4e28e0` (town builder) and `0x500300` (dungeon assembler) are mislabelled the same way.
+
+**The opposite error runs through `cw_callgraph.py`:** it gives game semantics to STL and CRT
+primitives. `0x4013f0` is `std::vector<int>` indexing, not `model_db_lookup`; `0x428590` and
+`0x528450` are `std::list::push_back`, not `conn_edge_append` and `prop_scatter`;
+`0x42f440` is a vector deallocate, not `temp_list_free`.
+
+Neither source is reliable as a whole. They fail in opposite directions, which is why reading
+the body was the only way to settle these.
+
+## Full verdict table
+
+| addr | A (callgraph) | B (xref) | winner | settled name | evidence |
+|---|---|---|---|---|---|
+""")
+        for a, an, bn, w, name, ev, size in lines:
+            g.write("| `0x%s` | %s | %s | **%s** | %s | %s |\n"
+                    % (a, an[:30], bn[:30], w, name[:36], ev[:180]))
+
+    # Feed the settled identities back as the top-authority ledger, so the emitted tree
+    # reflects the adjudication instead of whichever source happened to win precedence.
+    settled = {}
+    for a, an, bn, w, name, ev, size in lines:
+        if w == "UNRESOLVED" or name == "-":
+            continue                       # no claim -> stays unattributed, by design
+        low = name.lower()
+        if w in ("A", "A-KIND"):
+            kind = "game"
+        elif low.startswith(("std_", "stl_", "int128", "lib")) or "push_back" in low:
+            kind = "lib"
+        elif w == "B":
+            kind = "lib" if low.startswith(("std_", "stl_")) else "gamemisc"
+        else:
+            kind = "gamemisc"
+        settled[a] = {"name": name, "kind": kind, "verdict": w}
+
+    with open(os.path.join(RAW, "adjudicated.json"), "w", encoding="utf-8") as g:
+        json.dump({"Server.exe": settled}, g, indent=1, sort_keys=True)
+
+    for k, v in tally.most_common():
+        print("  %-12s %d" % (k, v))
+    print("\nsettled identities exported: %d (unresolved stay unattributed)" % len(settled))
+    print("-> %s" % os.path.normpath(OUT))
+
+
+if __name__ == "__main__":
+    main()

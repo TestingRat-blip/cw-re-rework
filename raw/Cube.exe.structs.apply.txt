@@ -1,0 +1,2125 @@
+# Struct recovery (apply) for Cube.exe
+
+== CRefTime  (1 member fns, 1 used, 2 fields, ~0x8 bytes)
+   +0x0     undefined4
+   +0x4     undefined4
+
+== Concurrency::details::_Chore  (2 member fns, 2 used, 1 fields, ~0x4 bytes)
+   +0x0     _Chore_vftable *
+
+== Concurrency::details::_MallocaArrayHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_9843e8019373a7557d3f3e498d32c258>,Concurrency::auto_partitioner,1>_>_>  (3 member fns, 3 used, 1 fields, ~0x4 bytes)
+   +0x0     _MallocaArrayHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_9843e8019373a7557d3f3e498d32c258>,Concurrency::auto_partitioner,1>_>_>_vftable *
+
+== Concurrency::details::_MallocaArrayHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_e3fd6255bcf168381cb2d01c4cfc52ca>,Concurrency::auto_partitioner,1>_>_>  (3 member fns, 3 used, 1 fields, ~0x4 bytes)
+   +0x0     _MallocaArrayHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_e3fd6255bcf168381cb2d01c4cfc52ca>,Concurrency::auto_partitioner,1>_>_>_vftable *
+
+== Concurrency::details::_MallocaArrayHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadFace,std::allocator<plasma::QuadFace>_>,plasma::QuadFace>,int,<lambda_37224fa58ba67e25838a8994307bb82e>,Concurrency::auto_partitioner,1>_>_>  (3 member fns, 3 used, 1 fields, ~0x4 bytes)
+   +0x0     _MallocaArrayHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadFace,std::allocator<plasma::QuadFace>_>,plasma::QuadFace>,int,<lambda_37224fa58ba67e25838a8994307bb82e>,Concurrency::auto_partitioner,1>_>_>_vftable *
+
+== Concurrency::details::_MallocaArrayHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_c31a3785b8ee29a1ce8445e019cbe6ee>,Concurrency::auto_partitioner,1>_>_>  (3 member fns, 3 used, 1 fields, ~0x4 bytes)
+   +0x0     _MallocaArrayHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_c31a3785b8ee29a1ce8445e019cbe6ee>,Concurrency::auto_partitioner,1>_>_>_vftable *
+
+== Concurrency::details::_MallocaArrayHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_fe4ce4a6aaf0318c62c756eaccc0431b>,Concurrency::auto_partitioner,1>_>_>  (3 member fns, 3 used, 1 fields, ~0x4 bytes)
+   +0x0     _MallocaArrayHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_fe4ce4a6aaf0318c62c756eaccc0431b>,Concurrency::auto_partitioner,1>_>_>_vftable *
+
+== Concurrency::details::_MallocaListHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_9843e8019373a7557d3f3e498d32c258>,Concurrency::auto_partitioner,1>_>_>  (2 member fns, 2 used, 1 fields, ~0x4 bytes)
+   +0x0     _MallocaListHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_9843e8019373a7557d3f3e498d32c258>,Concurrency::auto_partitioner,1>_>_>_vftable *
+
+== Concurrency::details::_MallocaListHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_e3fd6255bcf168381cb2d01c4cfc52ca>,Concurrency::auto_partitioner,1>_>_>  (2 member fns, 2 used, 1 fields, ~0x4 bytes)
+   +0x0     _MallocaListHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_e3fd6255bcf168381cb2d01c4cfc52ca>,Concurrency::auto_partitioner,1>_>_>_vftable *
+
+== Concurrency::details::_MallocaListHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadFace,std::allocator<plasma::QuadFace>_>,plasma::QuadFace>,int,<lambda_37224fa58ba67e25838a8994307bb82e>,Concurrency::auto_partitioner,1>_>_>  (2 member fns, 2 used, 1 fields, ~0x4 bytes)
+   +0x0     _MallocaListHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadFace,std::allocator<plasma::QuadFace>_>,plasma::QuadFace>,int,<lambda_37224fa58ba67e25838a8994307bb82e>,Concurrency::auto_partitioner,1>_>_>_vftable *
+
+== Concurrency::details::_MallocaListHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_c31a3785b8ee29a1ce8445e019cbe6ee>,Concurrency::auto_partitioner,1>_>_>  (2 member fns, 2 used, 1 fields, ~0x4 bytes)
+   +0x0     _MallocaListHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_c31a3785b8ee29a1ce8445e019cbe6ee>,Concurrency::auto_partitioner,1>_>_>_vftable *
+
+== Concurrency::details::_MallocaListHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_fe4ce4a6aaf0318c62c756eaccc0431b>,Concurrency::auto_partitioner,1>_>_>  (2 member fns, 2 used, 1 fields, ~0x4 bytes)
+   +0x0     _MallocaListHolder<Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_fe4ce4a6aaf0318c62c756eaccc0431b>,Concurrency::auto_partitioner,1>_>_>_vftable *
+
+== Concurrency::details::_UnrealizedChore  (2 member fns, 2 used, 2 fields, ~0xc bytes)
+   +0x0     _UnrealizedChore_vftable *
+   +0x8     _AllocBase
+
+== Concurrency::missing_wait  (2 member fns, 2 used, 1 fields, ~0x4 bytes)
+   +0x0     missing_wait_vftable *
+
+== Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_9843e8019373a7557d3f3e498d32c258>,Concurrency::auto_partitioner,1>_>  (2 member fns, 2 used, 6 fields, ~0x18 bytes)
+   +0x0     task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_9843e8019373a7557d3f3e498d32c258>,Concurrency::auto_partitioner,1>_>_vftable *
+   +0x4     int *
+   +0x8     _AllocBase
+   +0xc     task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_9843e8019373a7557d3f3e498d32c258>,Concurrency::auto_partitioner,1>_>_vftable *
+   +0x10    int
+   +0x14    _AllocBase
+
+== Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_e3fd6255bcf168381cb2d01c4cfc52ca>,Concurrency::auto_partitioner,1>_>  (2 member fns, 2 used, 6 fields, ~0x18 bytes)
+   +0x0     task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_e3fd6255bcf168381cb2d01c4cfc52ca>,Concurrency::auto_partitioner,1>_>_vftable *
+   +0x4     int *
+   +0x8     _AllocBase
+   +0xc     task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadEdge,std::allocator<plasma::QuadEdge>_>,plasma::QuadEdge>,int,<lambda_e3fd6255bcf168381cb2d01c4cfc52ca>,Concurrency::auto_partitioner,1>_>_vftable *
+   +0x10    int
+   +0x14    _AllocBase
+
+== Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadFace,std::allocator<plasma::QuadFace>_>,plasma::QuadFace>,int,<lambda_37224fa58ba67e25838a8994307bb82e>,Concurrency::auto_partitioner,1>_>  (2 member fns, 2 used, 6 fields, ~0x18 bytes)
+   +0x0     task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadFace,std::allocator<plasma::QuadFace>_>,plasma::QuadFace>,int,<lambda_37224fa58ba67e25838a8994307bb82e>,Concurrency::auto_partitioner,1>_>_vftable *
+   +0x4     int *
+   +0x8     _AllocBase
+   +0xc     task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadFace,std::allocator<plasma::QuadFace>_>,plasma::QuadFace>,int,<lambda_37224fa58ba67e25838a8994307bb82e>,Concurrency::auto_partitioner,1>_>_vftable *
+   +0x10    int
+   +0x14    _AllocBase
+
+== Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_c31a3785b8ee29a1ce8445e019cbe6ee>,Concurrency::auto_partitioner,1>_>  (2 member fns, 2 used, 6 fields, ~0x18 bytes)
+   +0x0     task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_c31a3785b8ee29a1ce8445e019cbe6ee>,Concurrency::auto_partitioner,1>_>_vftable *
+   +0x4     int *
+   +0x8     _AllocBase
+   +0xc     task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_c31a3785b8ee29a1ce8445e019cbe6ee>,Concurrency::auto_partitioner,1>_>_vftable *
+   +0x10    int
+   +0x14    _AllocBase
+
+== Concurrency::task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_fe4ce4a6aaf0318c62c756eaccc0431b>,Concurrency::auto_partitioner,1>_>  (2 member fns, 2 used, 6 fields, ~0x18 bytes)
+   +0x0     task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_fe4ce4a6aaf0318c62c756eaccc0431b>,Concurrency::auto_partitioner,1>_>_vftable *
+   +0x4     int *
+   +0x8     _AllocBase
+   +0xc     task_handle<Concurrency::_Parallel_chunk_helper<Concurrency::details::_Vector_iterator<Concurrency::concurrent_vector<plasma::QuadVertex*,std::allocator<plasma::QuadVertex*>_>,plasma::QuadVertex*>,int,<lambda_fe4ce4a6aaf0318c62c756eaccc0431b>,Concurrency::auto_partitioner,1>_>_vftable *
+   +0x10    int
+   +0x14    _AllocBase
+
+== abstr::HelperCmpClass  (2 member fns, 2 used, 4 fields, ~0x34 bytes)
+   +0x0     HelperCmpClass_vftable *
+   +0x4     undefined4
+   +0x2c    int
+   +0x30    int
+
+== abstr::HelperIdentityClass  (2 member fns, 1 used, 1 fields, ~0x4 bytes)
+   +0x0     HelperIdentityClass_vftable *
+
+== abstr::Machine  (3 member fns, 3 used, 2 fields, ~0x54 bytes)
+   +0x0     Machine_vftable *
+   +0x4     Machine_data
+
+== abstr::Method0<abstr::Machine,int>  (1 member fns, 1 used, 2 fields, ~0x8 bytes)
+   +0x0     Method0<abstr::Machine,int>_vftable *
+   +0x4     undefined *
+
+== abstr::Method0<cube::System,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>_>  (1 member fns, 1 used, 2 fields, ~0x10 bytes)
+   +0x0     Method0<cube::System,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>_>_vftable *
+   +0x4     Method0<cube::System,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>_>_data
+
+== abstr::Method1<cube::System,int,int>  (1 member fns, 1 used, 2 fields, ~0x10 bytes)
+   +0x0     Method1<cube::System,int,int>_vftable *
+   +0x4     Method1<cube::System,int,int>_data
+
+== abstr::Method1<cube::System,int,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>_>  (1 member fns, 1 used, 2 fields, ~0x10 bytes)
+   +0x0     Method1<cube::System,int,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>_>_vftable *
+   +0x4     Method1<cube::System,int,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>_>_data
+
+== abstr::Method1<cube::System,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,int>  (1 member fns, 1 used, 2 fields, ~0x10 bytes)
+   +0x0     Method1<cube::System,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,int>_vftable *
+   +0x4     Method1<cube::System,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,int>_data
+
+== abstr::Method1<cube::System,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>_>  (1 member fns, 1 used, 1 fields, ~0x4 bytes)
+   +0x0     Method1<cube::System,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>_>_vftable *
+
+== abstr::Method1<cube::System,void,int>  (1 member fns, 1 used, 2 fields, ~0x10 bytes)
+   +0x0     Method1<cube::System,void,int>_vftable *
+   +0x4     Method1<cube::System,void,int>_data
+
+== abstr::Method1<cube::System,void,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>_>  (1 member fns, 1 used, 2 fields, ~0x10 bytes)
+   +0x0     Method1<cube::System,void,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>_>_vftable *
+   +0x4     Method1<cube::System,void,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>_>_data
+
+== abstr::Method2<cube::System,int,int,int>  (1 member fns, 1 used, 1 fields, ~0x4 bytes)
+   +0x0     Method2<cube::System,int,int,int>_vftable *
+
+== abstr::Method2<cube::System,int,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>_>  (1 member fns, 1 used, 2 fields, ~0x10 bytes)
+   +0x0     Method2<cube::System,int,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>_>_vftable *
+   +0x4     Method2<cube::System,int,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>_>_data
+
+== abstr::Method2<cube::System,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>_>  (1 member fns, 1 used, 2 fields, ~0x10 bytes)
+   +0x0     Method2<cube::System,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>_>_vftable *
+   +0x4     Method2<cube::System,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>_>_data
+
+== abstr::Method2<cube::System,void,int,int>  (1 member fns, 1 used, 1 fields, ~0x4 bytes)
+   +0x0     Method2<cube::System,void,int,int>_vftable *
+
+== abstr::Method2<cube::System,void,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>_>  (1 member fns, 1 used, 2 fields, ~0x10 bytes)
+   +0x0     Method2<cube::System,void,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>_>_vftable *
+   +0x4     Method2<cube::System,void,std::basic_string<char,std::char_traits<char>,std::allocator<char>_>,std::basic_string<char,struct_std::char_traits<char>,class_std::allocator<char>_>_>_data
+
+== abstr::Method3<cube::System,void,int,int,int>  (1 member fns, 1 used, 1 fields, ~0x4 bytes)
+   +0x0     Method3<cube::System,void,int,int,int>_vftable *
+
+== cube::AdaptionWidget  (3 member fns, 3 used, 58 fields, ~0x178 bytes)
+   +0x0     AdaptionWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    AdaptionWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x16c   basic_stringstream<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_> *
+   +0x170   int
+   +0x174   int
+
+== cube::BlueprintPreviewWidget  (3 member fns, 3 used, 56 fields, ~0x3c8 bytes)
+   +0x0     BlueprintPreviewWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    BlueprintPreviewWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   void *
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   BlueprintPreviewWidget_data
+
+== cube::CharacterPreviewWidget  (2 member fns, 2 used, 56 fields, ~0x168 bytes)
+   +0x0     CharacterPreviewWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    CharacterPreviewWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   CharacterPreviewWidget_data
+
+== cube::CharacterStyleWidget  (2 member fns, 1 used, 56 fields, ~0x1a8 bytes)
+   +0x0     CharacterStyleWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    CharacterStyleWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   CharacterStyleWidget_data
+
+== cube::CharacterWidget  (1 member fns, 1 used, 56 fields, ~0x164 bytes)
+   +0x0     CharacterWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    CharacterWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   CharacterWidget_data
+
+== cube::ChatWidget  (4 member fns, 4 used, 58 fields, ~0x190 bytes)
+   +0x0     ChatWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    ChatWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   ChatWidget_data
+   +0x188   int
+   +0x18c   int
+
+== cube::Chunk  (3 member fns, 3 used, 2 fields, ~0x254 bytes)
+   +0x0     Chunk_vftable *
+   +0x4     Chunk_data
+
+== cube::ChunkBuffer  (2 member fns, 2 used, 2 fields, ~0x24 bytes)
+   +0x0     ChunkBuffer_vftable *
+   +0x4     ChunkBuffer_data
+
+== cube::CombatBehavior  (3 member fns, 3 used, 2 fields, ~0x14 bytes)
+   +0x0     CombatBehavior_vftable *
+   +0x4     CombatBehavior_data
+
+== cube::CompanionBehavior  (4 member fns, 4 used, 2 fields, ~0x10 bytes)
+   +0x0     CompanionBehavior_vftable *
+   +0x4     CompanionBehavior_data
+
+== cube::Controller  (11 member fns, 7 used, 2 fields, ~0x138 bytes)
+   +0x0     Controller_vftable *
+   +0x4     Controller_data
+
+== cube::Creature  (3 member fns, 3 used, 2 fields, ~0x10 bytes)
+   +0x0     Creature_vftable *
+   +0x4     Creature_data
+
+== cube::CubeShader  (3 member fns, 3 used, 2 fields, ~0x8 bytes)
+   +0x0     CubeShader_vftable *
+   +0x4     int *
+
+== cube::Database  (3 member fns, 3 used, 2 fields, ~0x8 bytes)
+   +0x0     Database_vftable *
+   +0x4     Database_data
+
+== cube::Dungeon  (3 member fns, 3 used, 2 fields, ~0x8 bytes)
+   +0x0     Dungeon_vftable *
+   +0x4     undefined2 *
+
+== cube::EnchantWidget  (2 member fns, 2 used, 57 fields, ~0x174 bytes)
+   +0x0     EnchantWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    EnchantWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   EnchantWidget_data
+   +0x170   int
+
+== cube::Field  (3 member fns, 3 used, 2 fields, ~0x20 bytes)
+   +0x0     Field_vftable *
+   +0x4     Field_data
+
+== cube::GameController  (14 member fns, 11 used, 3 fields, ~0x13c bytes)
+   +0x0     GameController_vftable *
+   +0x4     Controller_data
+   +0x138   int *
+
+== cube::House  (3 member fns, 3 used, 2 fields, ~0x8 bytes)
+   +0x0     House_vftable *
+   +0x4     int
+
+== cube::InventoryWidget  (4 member fns, 4 used, 72 fields, ~0x1b8 bytes)
+   +0x0     InventoryWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    InventoryWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   InventoryWidget_data
+   +0x164   int
+   +0x168   int
+   +0x16c   int
+   +0x170   int
+   +0x174   int
+   +0x178   int
+   +0x184   undefined4
+   +0x188   basic_streambuf<wchar_t,std::char_traits<wchar_t>_> *
+   +0x190   int
+   +0x194   int
+   +0x198   undefined4
+   +0x19c   int
+   +0x1a8   int
+   +0x1ac   int
+   +0x1b0   int
+   +0x1b4   int
+
+== cube::LandscapeTile  (1 member fns, 1 used, 1 fields, ~0x4 bytes)
+   +0x0     LandscapeTile_vftable *
+
+== cube::LookAtPlayerBehavior  (3 member fns, 2 used, 1 fields, ~0x4 bytes)
+   +0x0     LookAtPlayerBehavior_vftable *
+
+== cube::MapOverlayWidget  (1 member fns, 1 used, 56 fields, ~0x164 bytes)
+   +0x0     MapOverlayWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    MapOverlayWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   MapOverlayWidget_data
+
+== cube::Music  (2 member fns, 2 used, 1 fields, ~0x4 bytes)
+   +0x0     Music_vftable *
+
+== cube::ObjectiveWidget  (1 member fns, 1 used, 56 fields, ~0x170 bytes)
+   +0x0     ObjectiveWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    ObjectiveWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   void *
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   ObjectiveWidget_data
+
+== cube::OptionsWidget  (2 member fns, 1 used, 66 fields, ~0x208 bytes)
+   +0x0     OptionsWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    OptionsWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x1d4   int
+   +0x1e0   int
+   +0x1e4   int
+   +0x1e8   int
+   +0x1ec   int
+   +0x1f0   int
+   +0x1f4   int
+   +0x1f8   int
+   +0x1fc   int
+   +0x200   int
+   +0x204   int
+
+== cube::PreviewWidget  (3 member fns, 3 used, 62 fields, ~0x180 bytes)
+   +0x0     PreviewWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    PreviewWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   PreviewWidget_data
+   +0x168   int
+   +0x16c   undefined4
+   +0x170   int
+   +0x174   int *
+   +0x178   undefined4
+   +0x17c   basic_stringstream<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_> *
+
+== cube::QuestText  (4 member fns, 4 used, 2 fields, ~0x10 bytes)
+   +0x0     QuestText_vftable *
+   +0x4     QuestText_data
+
+== cube::QuestTextNode  (3 member fns, 3 used, 2 fields, ~0x44 bytes)
+   +0x0     QuestTextNode_vftable *
+   +0x4     QuestTextNode_data
+
+== cube::RandomInteractionBehavior  (3 member fns, 2 used, 2 fields, ~0x8 bytes)
+   +0x0     RandomInteractionBehavior_vftable *
+   +0x4     RandomInteractionBehavior_data
+
+== cube::RandomWalkBehavior  (3 member fns, 2 used, 2 fields, ~0x8 bytes)
+   +0x0     RandomWalkBehavior_vftable *
+   +0x4     RandomWalkBehavior_data
+
+== cube::Region  (3 member fns, 3 used, 2 fields, ~0x2c bytes)
+   +0x0     Region_vftable *
+   +0x4     Region_data
+
+== cube::SequentialBehavior  (6 member fns, 6 used, 2 fields, ~0x8 bytes)
+   +0x0     SequentialBehavior_vftable *
+   +0x4     int
+
+== cube::SkillWidget  (1 member fns, 1 used, 56 fields, ~0x194 bytes)
+   +0x0     SkillWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    SkillWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   SkillWidget_data
+
+== cube::Spawn  (3 member fns, 3 used, 2 fields, ~0xf74 bytes)
+   +0x0     Spawn_vftable *
+   +0x4     Spawn_data
+
+== cube::SpawnLocationBehavior  (3 member fns, 2 used, 1 fields, ~0x4 bytes)
+   +0x0     SpawnLocationBehavior_vftable *
+
+== cube::Speech  (2 member fns, 2 used, 2 fields, ~0x8 bytes)
+   +0x0     Speech_vftable *
+   +0x4     void *
+
+== cube::SpeechWidget  (3 member fns, 3 used, 56 fields, ~0x1dc bytes)
+   +0x0     SpeechWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    SpeechWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   void *
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   SpeechWidget_data
+
+== cube::Sprite  (3 member fns, 3 used, 2 fields, ~0x60 bytes)
+   +0x0     Sprite_vftable *
+   +0x4     Sprite_data
+
+== cube::SpriteManager  (3 member fns, 3 used, 2 fields, ~0x14 bytes)
+   +0x0     SpriteManager_vftable *
+   +0x4     SpriteManager_data
+
+== cube::SpriteWidget  (1 member fns, 1 used, 56 fields, ~0x16c bytes)
+   +0x0     SpriteWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    SpriteWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x168   int
+
+== cube::StartMenuWidget  (1 member fns, 1 used, 56 fields, ~0x168 bytes)
+   +0x0     StartMenuWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    StartMenuWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   StartMenuWidget_data
+
+== cube::SystemWidget  (1 member fns, 1 used, 56 fields, ~0x168 bytes)
+   +0x0     SystemWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    SystemWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   SystemWidget_data
+
+== cube::VoxelWidget  (2 member fns, 2 used, 81 fields, ~0x440 bytes)
+   +0x0     VoxelWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    VoxelWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   void *
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   int
+   +0x164   float
+   +0x168   float
+   +0x16c   float
+   +0x170   float *
+   +0x174   float *
+   +0x178   float *
+   +0x17c   float *
+   +0x180   undefined1
+   +0x181   char
+   +0x18c   undefined1
+   +0x18d   undefined1
+   +0x190   undefined2
+   +0x298   int
+   +0x29c   int
+   +0x2a0   int
+   +0x2a4   int
+   +0x2a8   undefined1
+   +0x2ac   float *
+   +0x3c8   char
+   +0x3cc   undefined1
+   +0x3d0   undefined1
+   +0x3d4   undefined1
+   +0x3d8   int
+   +0x3dc   undefined2
+   +0x3e0   Sprite
+
+== cube::WalkPathBehavior  (4 member fns, 4 used, 2 fields, ~0x1c bytes)
+   +0x0     WalkPathBehavior_vftable *
+   +0x4     WalkPathBehavior_data
+
+== cube::World  (3 member fns, 3 used, 2 fields, ~0xc0 bytes)
+   +0x0     World_vftable *
+   +0x4     World_data
+
+== cube::WorldInfo  (3 member fns, 3 used, 2 fields, ~0x28 bytes)
+   +0x0     WorldInfo_vftable *
+   +0x4     WorldInfo_data
+
+== cube::WorldMap  (3 member fns, 3 used, 2 fields, ~0xb0 bytes)
+   +0x0     WorldMap_vftable *
+   +0x4     WorldMap_data
+
+== cube::WorldPreviewWidget  (1 member fns, 1 used, 56 fields, ~0x16c bytes)
+   +0x0     WorldPreviewWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    WorldPreviewWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   WorldPreviewWidget_data
+
+== cube::XAudio2Engine  (11 member fns, 10 used, 2 fields, ~0x34 bytes)
+   +0x0     XAudio2Engine_vftable *
+   +0x4     XAudio2Engine_data
+
+== cube::XAudio2Engine::Sound  (1 member fns, 1 used, 1 fields, ~0x4 bytes)
+   +0x0     Sound_vftable *
+
+== cube::Zone  (3 member fns, 3 used, 2 fields, ~0xb4 bytes)
+   +0x0     Zone_vftable *
+   +0x4     Zone_data
+
+== cube::ZoneTile  (3 member fns, 3 used, 2 fields, ~0x34 bytes)
+   +0x0     ZoneTile_vftable *
+   +0x4     ZoneTile_data
+
+== plasma::Attribute  (3 member fns, 3 used, 2 fields, ~0x4c bytes)
+   +0x0     Attribute_vftable *
+   +0x4     Attribute_data
+
+== plasma::Button  (12 member fns, 12 used, 58 fields, ~0x238 bytes)
+   +0x0     Button_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    Button_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    float
+   +0x54    float
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   Button_data
+   +0x230   Button_vftable_for_NamedObject *
+   +0x234   int
+
+== plasma::ContinuousArrayAttribute<float>  (7 member fns, 7 used, 3 fields, ~0x58 bytes)
+   +0x0     ContinuousArrayAttribute<float>_vftable *
+   +0x4     Attribute_data
+   +0x4c    ContinuousArrayAttribute<float>_data
+
+== plasma::ContinuousArrayAttribute<plasma::Vector<2,float>_>  (7 member fns, 7 used, 3 fields, ~0x58 bytes)
+   +0x0     ContinuousArrayAttribute<plasma::Vector<2,float>_>_vftable *
+   +0x4     Attribute_data
+   +0x4c    ContinuousArrayAttribute<plasma::Vector<2,float>_>_data
+
+== plasma::ContinuousArrayAttribute<plasma::Vector<4,float>_>  (9 member fns, 9 used, 3 fields, ~0x58 bytes)
+   +0x0     ContinuousArrayAttribute<plasma::Vector<4,float>_>_vftable *
+   +0x4     Attribute_data
+   +0x4c    ContinuousArrayAttribute<plasma::Vector<4,float>_>_data
+
+== plasma::ContinuousAttribute<float>  (2 member fns, 2 used, 2 fields, ~0x4c bytes)
+   +0x0     ContinuousAttribute<float>_vftable *
+   +0x4     Attribute_data
+
+== plasma::ContinuousAttribute<plasma::Matrix<float>_>  (7 member fns, 7 used, 3 fields, ~0x58 bytes)
+   +0x0     ContinuousAttribute<plasma::Matrix<float>_>_vftable *
+   +0x4     Attribute_data
+   +0x4c    ContinuousAttribute<plasma::Matrix<float>_>_data
+
+== plasma::ContinuousAttribute<plasma::Vector<2,float>_>  (7 member fns, 7 used, 3 fields, ~0x58 bytes)
+   +0x0     ContinuousAttribute<plasma::Vector<2,float>_>_vftable *
+   +0x4     Attribute_data
+   +0x4c    ContinuousAttribute<plasma::Vector<2,float>_>_data
+
+== plasma::ContinuousAttribute<plasma::Vector<3,float>_>  (8 member fns, 8 used, 2 fields, ~0x4c bytes)
+   +0x0     ContinuousAttribute<plasma::Vector<3,float>_>_vftable *
+   +0x4     Attribute_data
+
+== plasma::ContinuousAttribute<plasma::Vector<4,float>_>  (7 member fns, 7 used, 3 fields, ~0x58 bytes)
+   +0x0     ContinuousAttribute<plasma::Vector<4,float>_>_vftable *
+   +0x4     Attribute_data
+   +0x4c    ContinuousAttribute<plasma::Vector<4,float>_>_data
+
+== plasma::CurveShape  (11 member fns, 11 used, 5 fields, ~0x3f8 bytes)
+   +0x0     CurveShape_vftable *
+   +0x4     Object_data
+   +0xc     NamedObject_data
+   +0x10    ContinuousArrayAttribute<plasma::Vector<2,float>_>
+   +0x160   CurveShape_data
+
+== plasma::D3D9Drawing  (5 member fns, 5 used, 3 fields, ~0x128 bytes)
+   +0x0     D3D9Drawing_vftable *
+   +0x4     Drawing_data
+   +0x124   void *
+
+== plasma::D3D9Engine  (22 member fns, 22 used, 3 fields, ~0x2cc bytes)
+   +0x0     D3D9Engine_vftable *
+   +0x4     ObjectManager_data
+   +0x194   D3D9Engine_data
+
+== plasma::D3D9RenderSurface  (11 member fns, 11 used, 3 fields, ~0x48 bytes)
+   +0x0     D3D9RenderSurface_vftable *
+   +0x4     RenderSurface_data
+   +0x2c    D3D9RenderSurface_data
+
+== plasma::D3D9Texture  (4 member fns, 4 used, 3 fields, ~0x160 bytes)
+   +0x0     D3D9Texture_vftable *
+   +0x4     Object_data
+   +0xc     NamedObject_data
+
+== plasma::DiscreteAttribute<int>  (7 member fns, 7 used, 3 fields, ~0x58 bytes)
+   +0x0     DiscreteAttribute<int>_vftable *
+   +0x4     Attribute_data
+   +0x4c    DiscreteAttribute<int>_data
+
+== plasma::DiscreteAttribute<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>_>  (8 member fns, 8 used, 3 fields, ~0x58 bytes)
+   +0x0     DiscreteAttribute<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>_>_vftable *
+   +0x4     Attribute_data
+   +0x4c    DiscreteAttribute<std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>_>_data
+
+== plasma::Display  (3 member fns, 3 used, 4 fields, ~0x210 bytes)
+   +0x0     Display_vftable *
+   +0x4     Object_data
+   +0xc     NamedObject_data
+   +0x160   Display_data
+
+== plasma::Drawing  (4 member fns, 4 used, 2 fields, ~0x124 bytes)
+   +0x0     Drawing_vftable *
+   +0x4     Drawing_data
+
+== plasma::Edit  (12 member fns, 10 used, 59 fields, ~0x17c bytes)
+   +0x0     Edit_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    Edit_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   Edit_data
+   +0x168   undefined1
+   +0x174   int
+   +0x178   int
+
+== plasma::Engine  (5 member fns, 3 used, 2 fields, ~0x194 bytes)
+   +0x0     Engine_vftable *
+   +0x4     ObjectManager_data
+
+== plasma::Exception  (2 member fns, 2 used, 2 fields, ~0x34 bytes)
+   +0x0     Exception_vftable *
+   +0x4     Exception_data
+
+== plasma::FloatFilter  (1 member fns, 1 used, 1 fields, ~0x4 bytes)
+   +0x0     FloatFilter_vftable *
+
+== plasma::Font  (3 member fns, 3 used, 3 fields, ~0x15c bytes)
+   +0x0     Font_vftable *
+   +0x4     int *
+   +0x8     NamedObject_data
+
+== plasma::FontEngine  (3 member fns, 3 used, 2 fields, ~0x28 bytes)
+   +0x0     FontEngine_vftable *
+   +0x4     FontEngine_data
+
+== plasma::GenericShape  (7 member fns, 7 used, 3 fields, ~0x160 bytes)
+   +0x0     GenericShape_vftable *
+   +0x4     Object_data
+   +0xc     NamedObject_data
+
+== plasma::IOException  (1 member fns, 1 used, 2 fields, ~0x34 bytes)
+   +0x0     IOException_vftable *
+   +0x4     Exception_data
+
+== plasma::IntegerFilter  (1 member fns, 1 used, 1 fields, ~0x4 bytes)
+   +0x0     IntegerFilter_vftable *
+
+== plasma::InvalidDemoLicenseException  (2 member fns, 2 used, 2 fields, ~0x34 bytes)
+   +0x0     InvalidDemoLicenseException_vftable *
+   +0x4     Exception_data
+
+== plasma::InvalidFileFormatException  (2 member fns, 2 used, 2 fields, ~0x34 bytes)
+   +0x0     InvalidFileFormatException_vftable *
+   +0x4     Exception_data
+
+== plasma::InvalidVersionException  (2 member fns, 2 used, 2 fields, ~0x34 bytes)
+   +0x0     InvalidVersionException_vftable *
+   +0x4     Exception_data
+
+== plasma::Keyable  (3 member fns, 3 used, 3 fields, ~0x15c bytes)
+   +0x0     Keyable_vftable *
+   +0x4     int *
+   +0x8     NamedObject_data
+
+== plasma::ListWidget  (3 member fns, 3 used, 55 fields, ~0x15d bytes)
+   +0x0     ListWidget_vftable_for_NamedObject *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    ListWidget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+
+== plasma::MeshShape  (11 member fns, 11 used, 4 fields, ~0x14 bytes)
+   +0x0     MeshShape_vftable *
+   +0x4     Object_data
+   +0xc     undefined4
+   +0x10    int
+
+== plasma::Movie  (3 member fns, 3 used, 3 fields, ~0x15c bytes)
+   +0x0     Movie_vftable *
+   +0x4     int *
+   +0x8     NamedObject_data
+
+== plasma::NamedObject  (1 member fns, 1 used, 3 fields, ~0x15c bytes)
+   +0x0     NamedObject_vftable *
+   +0x4     int *
+   +0x8     NamedObject_data
+
+== plasma::Node  (3 member fns, 3 used, 3 fields, ~0x15c bytes)
+   +0x0     Node_vftable *
+   +0x4     int *
+   +0x8     NamedObject_data
+
+== plasma::Object  (3 member fns, 3 used, 2 fields, ~0x8 bytes)
+   +0x0     Object_vftable *
+   +0x4     int *
+
+== plasma::ObjectManager  (2 member fns, 2 used, 2 fields, ~0x194 bytes)
+   +0x0     ObjectManager_vftable *
+   +0x4     ObjectManager_data
+
+== plasma::PixelFont  (7 member fns, 7 used, 3 fields, ~0x160 bytes)
+   +0x0     PixelFont_vftable *
+   +0x4     Object_data
+   +0xc     NamedObject_data
+
+== plasma::PlasmaFont  (8 member fns, 8 used, 3 fields, ~0x160 bytes)
+   +0x0     PlasmaFont_vftable *
+   +0x4     Object_data
+   +0xc     NamedObject_data
+
+== plasma::PopUpButton  (7 member fns, 7 used, 57 fields, ~0x240 bytes)
+   +0x0     PopUpButton_vftable0 *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    PopUpButton_vftable1 *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   Button_data
+   +0x230   PopUpButton_data
+
+== plasma::RenderSurface  (5 member fns, 3 used, 2 fields, ~0x2c bytes)
+   +0x0     RenderSurface_vftable *
+   +0x4     RenderSurface_data
+
+== plasma::ScalableFont  (3 member fns, 3 used, 2 fields, ~0x110 bytes)
+   +0x0     ScalableFont_vftable *
+   +0x4     ScalableFont_data
+
+== plasma::ScrollButton  (6 member fns, 6 used, 61 fields, ~0x248 bytes)
+   +0x0     ScrollButton_vftable0 *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    ScrollButton_vftable1 *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   Button_data
+   +0x230   ScrollButton_data
+   +0x234   int
+   +0x238   undefined4
+   +0x240   int *
+   +0x244   ScrollButton_vftable0 *
+
+== plasma::ScrollSlider  (7 member fns, 7 used, 70 fields, ~0x250 bytes)
+   +0x0     ScrollSlider_vftable0 *
+   +0x4     Object_data
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    ScrollSlider_vftable1 *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    char
+   +0x54    undefined1
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x90    undefined4
+   +0x94    undefined4
+   +0x98    float
+   +0x9c    float
+   +0xa0    float
+   +0xa4    float
+   +0xa8    undefined4
+   +0xc8    undefined4
+   +0xcc    undefined1
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x14c   undefined1
+   +0x14d   undefined1
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+   +0x160   Button_data
+   +0x230   ScrollSlider_data
+   +0x234   int
+   +0x238   undefined4
+   +0x23c   undefined4
+   +0x240   undefined4
+   +0x244   undefined4
+   +0x248   undefined4
+   +0x24c   int
+
+== plasma::Shape  (6 member fns, 3 used, 3 fields, ~0x160 bytes)
+   +0x0     Shape_vftable *
+   +0x4     Object_data
+   +0xc     NamedObject_data
+
+== plasma::SmoothMeshShape  (12 member fns, 12 used, 5 fields, ~0x3ec bytes)
+   +0x0     SmoothMeshShape_vftable *
+   +0x4     Object_data
+   +0xc     ContinuousArrayAttribute<plasma::Vector<4,float>_>
+   +0x64    Attribute
+   +0xb0    SmoothMeshShape_data
+
+== plasma::StaticMeshShape  (7 member fns, 7 used, 3 fields, ~0x160 bytes)
+   +0x0     StaticMeshShape_vftable *
+   +0x4     Object_data
+   +0xc     NamedObject_data
+
+== plasma::TextShape  (11 member fns, 11 used, 4 fields, ~0x14 bytes)
+   +0x0     TextShape_vftable *
+   +0x4     Object_data
+   +0xc     undefined4
+   +0x10    int
+
+== plasma::Texture  (3 member fns, 3 used, 3 fields, ~0x15c bytes)
+   +0x0     Texture_vftable *
+   +0x4     Object_vftable *
+   +0x8     NamedObject_data
+
+== plasma::Transformation  (4 member fns, 4 used, 4 fields, ~0x234 bytes)
+   +0x0     Transformation_vftable *
+   +0x4     Object_data
+   +0xc     NamedObject_data
+   +0x160   Transformation_data
+
+== plasma::UnsignedFloatFilter  (1 member fns, 1 used, 1 fields, ~0x4 bytes)
+   +0x0     UnsignedFloatFilter_vftable *
+
+== plasma::UnsignedIntegerFilter  (1 member fns, 1 used, 1 fields, ~0x4 bytes)
+   +0x0     UnsignedIntegerFilter_vftable *
+
+== plasma::Widget  (19 member fns, 17 used, 69 fields, ~0x15d bytes)
+   +0x0     Widget_vftable_for_NamedObject *
+   +0x4     int *
+   +0x8     Object_vftable *
+   +0xc     undefined2
+   +0x1c    undefined4
+   +0x20    undefined4
+   +0x24    Widget_vftable_for_Deformer *
+   +0x28    undefined4
+   +0x2c    undefined4
+   +0x30    int
+   +0x34    void *
+   +0x38    int
+   +0x3c    int
+   +0x40    undefined4
+   +0x44    undefined4
+   +0x48    undefined4
+   +0x4c    int
+   +0x50    float
+   +0x54    float
+   +0x58    undefined4
+   +0x5c    undefined4
+   +0x60    undefined4
+   +0x64    undefined4
+   +0x68    undefined4
+   +0x6c    undefined4
+   +0x70    undefined4
+   +0x74    undefined4
+   +0x78    undefined4
+   +0x7c    undefined4
+   +0x80    undefined2
+   +0x84    float
+   +0x90    undefined4
+   +0x94    undefined4
+   +0x98    undefined4
+   +0x9c    undefined4
+   +0xa0    undefined4
+   +0xa4    undefined4
+   +0xa8    undefined4
+   +0xc4    float
+   +0xc8    undefined4
+   +0xcc    float
+   +0xd0    undefined4
+   +0xd4    undefined4
+   +0xd8    undefined4
+   +0xdc    undefined4
+   +0xe0    undefined4
+   +0xe4    undefined4
+   +0xe8    undefined4
+   +0xec    undefined4
+   +0xf4    float
+   +0xf8    float
+   +0xfc    float
+   +0x100   float
+   +0x124   int
+   +0x128   undefined4
+   +0x12c   undefined4
+   +0x130   undefined4
+   +0x134   undefined1
+   +0x138   undefined4
+   +0x13c   undefined4
+   +0x140   undefined4
+   +0x144   undefined4
+   +0x148   int
+   +0x14c   undefined1
+   +0x14d   undefined1
+   +0x150   undefined4
+   +0x154   undefined4
+   +0x158   undefined4
+   +0x15c   undefined1
+
+== plasma::Widget::MemberFunctionConnection<cube::CharacterStyleWidget>  (1 member fns, 1 used, 2 fields, ~0x18 bytes)
+   +0x0     MemberFunctionConnection<cube::CharacterStyleWidget>_vftable *
+   +0x4     MemberFunctionConnection<cube::CharacterStyleWidget>_data
+
+== plasma::Widget::MemberFunctionConnection<cube::GameController>  (1 member fns, 1 used, 2 fields, ~0x8 bytes)
+   +0x0     MemberFunctionConnection<cube::GameController>_vftable *
+   +0x4     undefined *
+
+== type_info  (1 member fns, 1 used, 1 fields, ~0x4 bytes)
+   +0x0     type_info_vftable *

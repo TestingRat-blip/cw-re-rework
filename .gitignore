@@ -1,0 +1,11 @@
+# Ghidra project databases — regenerable binary DBs (see Docs/PIPELINE.md to recreate)
+/ghidra/
+/ghidra_srv/
+/ghidra_crt/
+
+# reccmp build objects — regenerable
+/reccmp/*.obj
+
+# Python bytecode
+__pycache__/
+*.pyc

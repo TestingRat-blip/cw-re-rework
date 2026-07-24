@@ -1,0 +1,99 @@
+# Struct recovery (dry) for Server.exe
+
+== CRefTime  (1 member fns, 1 used, 2 fields, ~0x8 bytes)
+   +0x0     uint
+   +0x4     uint
+
+== cube::CombatBehavior  (3 member fns, 3 used, 2 fields, ~0x14 bytes)
+   +0x0     CombatBehavior_vftable *
+   +0x4     CombatBehavior_data
+
+== cube::CompanionBehavior  (4 member fns, 4 used, 2 fields, ~0x10 bytes)
+   +0x0     CompanionBehavior_vftable *
+   +0x4     CompanionBehavior_data
+
+== cube::Connection  (3 member fns, 3 used, 2 fields, ~0x9c bytes)
+   +0x0     Connection_vftable *
+   +0x4     Connection_data
+
+== cube::Creature  (3 member fns, 3 used, 2 fields, ~0x14 bytes)
+   +0x0     Creature_vftable *
+   +0x4     Creature_data
+
+== cube::Database  (3 member fns, 3 used, 2 fields, ~0x8 bytes)
+   +0x0     Database_vftable *
+   +0x4     Database_data
+
+== cube::Dungeon  (3 member fns, 3 used, 2 fields, ~0x8 bytes)
+   +0x0     Dungeon_vftable *
+   +0x4     undefined2 *
+
+== cube::Field  (3 member fns, 3 used, 2 fields, ~0x20 bytes)
+   +0x0     Field_vftable *
+   +0x4     Field_data
+
+== cube::House  (3 member fns, 3 used, 2 fields, ~0x8 bytes)
+   +0x0     House_vftable *
+   +0x4     int
+
+== cube::LookAtPlayerBehavior  (3 member fns, 3 used, 1 fields, ~0x4 bytes)
+   +0x0     LookAtPlayerBehavior_vftable *
+
+== cube::QuestText  (3 member fns, 3 used, 2 fields, ~0x10 bytes)
+   +0x0     QuestText_vftable *
+   +0x4     QuestText_data
+
+== cube::QuestTextNode  (3 member fns, 3 used, 2 fields, ~0x44 bytes)
+   +0x0     QuestTextNode_vftable *
+   +0x4     QuestTextNode_data
+
+== cube::RandomInteractionBehavior  (3 member fns, 3 used, 2 fields, ~0x8 bytes)
+   +0x0     RandomInteractionBehavior_vftable *
+   +0x4     RandomInteractionBehavior_data
+
+== cube::RandomWalkBehavior  (3 member fns, 3 used, 2 fields, ~0x8 bytes)
+   +0x0     RandomWalkBehavior_vftable *
+   +0x4     RandomWalkBehavior_data
+
+== cube::Region  (3 member fns, 3 used, 2 fields, ~0x2c bytes)
+   +0x0     Region_vftable *
+   +0x4     Region_data
+
+== cube::SequentialBehavior  (6 member fns, 6 used, 2 fields, ~0x8 bytes)
+   +0x0     SequentialBehavior_vftable *
+   +0x4     int
+
+== cube::Server  (3 member fns, 3 used, 2 fields, ~0x54 bytes)
+   +0x0     Server_vftable *
+   +0x4     Server_data
+
+== cube::Spawn  (3 member fns, 3 used, 2 fields, ~0xf78 bytes)
+   +0x0     Spawn_vftable *
+   +0x4     Spawn_data
+
+== cube::SpawnLocationBehavior  (3 member fns, 3 used, 1 fields, ~0x4 bytes)
+   +0x0     SpawnLocationBehavior_vftable *
+
+== cube::Speech  (2 member fns, 2 used, 2 fields, ~0x8 bytes)
+   +0x0     Speech_vftable *
+   +0x4     void *
+
+== cube::Sprite  (2 member fns, 2 used, 2 fields, ~0x60 bytes)
+   +0x0     Sprite_vftable *
+   +0x4     Sprite_data
+
+== cube::SpriteManager  (3 member fns, 3 used, 2 fields, ~0x14 bytes)
+   +0x0     SpriteManager_vftable *
+   +0x4     SpriteManager_data
+
+== cube::WalkPathBehavior  (4 member fns, 4 used, 2 fields, ~0x1c bytes)
+   +0x0     WalkPathBehavior_vftable *
+   +0x4     WalkPathBehavior_data
+
+== cube::World  (3 member fns, 3 used, 2 fields, ~0xc0 bytes)
+   +0x0     World_vftable *
+   +0x4     World_data
+
+== cube::Zone  (3 member fns, 3 used, 2 fields, ~0xb4 bytes)
+   +0x0     Zone_vftable *
+   +0x4     Zone_data
