@@ -178,8 +178,8 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
 1. **The rest of the dungeon entity layer** — the `cell.flags & 4` block at `0x5078b3` (fires
    on exactly one cell per dungeon, the apex/boss room), the chandelier at `0x507760`
    (`style == 3 && rand() % 10 == 0`), the kind-4 entrance marker at `0x504832`, and the
-   loot/item generation loop that runs earlier in the same cell body. **Both decoration
-   containers are now DONE and gated**: `site+0xc` (lights in `RE_dungeon_lights.md`, furniture
+   loot pass (DONE -- `RE_dungeon_loot.md`). **Every emitter the assembler feeds is now
+   reproducible**: `site+0xc` (lights in `RE_dungeon_lights.md`, furniture
    in `RE_52a830_scatter.md`) and all six `site+4` emitters (`RE_52c370_wall_decor.md`,
    `RE_hanging_decor.md`). Also gated:
    the `cell.flags & 4` boss block at `0x5078b3`, and the whole item-generation family

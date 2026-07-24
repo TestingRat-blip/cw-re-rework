@@ -48,6 +48,8 @@ const torchRands = [];      // the torch block's three draws, by exact return ad
 let scatterRands = [];      // FUN_0052a830's draws since the last prop push
 let decorRands = [];        // FUN_0052c370's draws since the last decor push
 const decor = [];           // site+4 records (wall decor, chandelier, liana, cobwebs)
+const lootRands = [];       // every draw of the loot pass, by exact return address
+const loot = [];            // site+0x30 ground-item records (stride 0x148)
 const ASM = [0x100300, 0x10931c];
 // return addresses of the three `call ebx` sites in the torch block (0x5058ed..0x5059e0):
 // the 1-in-40 gate, the rand()%4 direction, and the rand()%4000 flicker phase.
@@ -62,7 +64,10 @@ const SCATTER = [0x12a830, 0x12a830 + 1448];
 const DECOR = [0x12c370, 0x12c370 + 341];
 // the three OTHER site+4 emitters, all inline in the assembler: the liana + the four cobweb
 // blocks (0x105a54..0x106118) and the chandelier gate (0x10775a..0x1078b0).
-const HANG1 = [0x105a54, 0x106118], HANG2 = [0x10775a, 0x1078b0];   // BYTE size, not the decompiled-C length:
+const HANG1 = [0x105a54, 0x106118], HANG2 = [0x10775a, 0x1078b0];
+// the loot pass: the chest fill's item-count draw, and the scattered ground-loot loop
+// (its 9 rand sites all sit between 0x107070 and 0x107330).
+const CHEST_RA = 0x106ee5, LOOT = [0x107070, 0x107330];   // BYTE size, not the decompiled-C length:
 // 4820 is how long its C is, and that range runs past FUN_0052b470's entry at 0x12b470 and
 // swallows 72 of the item generator's draws.
 
@@ -78,6 +83,12 @@ Interceptor.attach(m.getExportByName('rand'), { onLeave(rv){
   randN++;
   let rva = 0; try { rva = this.returnAddress.sub(b).toUInt32(); } catch(e){ return; }
   if (rva >= SCATTER[0] && rva < SCATTER[1]) { scatterRands.push([rva, rv.toInt32()]); return; }
+  if (rva === CHEST_RA || (rva >= LOOT[0] && rva < LOOT[1])) {
+    const ebp = this.context.ebp;
+    lootRands.push({ ra: rva, v: rv.toInt32(), n: randN - 1, m: i32(ebp, 0x2b90),
+                     I: i32(ebp,0x2b50), J: i32(ebp,0x2b4c), K: i32(ebp,0x2b48) });
+    return;
+  }
   if ((rva >= DECOR[0] && rva < DECOR[1]) || (rva >= HANG1[0] && rva < HANG1[1])
       || (rva >= HANG2[0] && rva < HANG2[1])) { decorRands.push([rva, rv.toInt32()]); return; }
   if (rva === T_GATE || rva === T_ROT || rva === T_FLICKER || (rva in STUB_COINS)) {
@@ -129,6 +140,20 @@ Interceptor.attach(b.add(0x128450), { onEnter(args){
   decor.push(r);
 }});
 
+// FUN_0041f5b0 = push_back on site+0x30, the ground-item vector (stride 0x148)
+Interceptor.attach(b.add(0x1f5b0), { onEnter(args){
+  if (!cap || this.threadId !== genTid) return;
+  let rva = 0; try { rva = this.returnAddress.sub(b).toUInt32(); } catch(e){ return; }
+  if (rva < ASM[0] || rva >= ASM[1]) return;
+  const ebp = this.context.ebp;
+  const r = { ra: rva, randN: randN, m: i32(ebp, 0x2b90),
+              I: i32(ebp,0x2b50), J: i32(ebp,0x2b4c), K: i32(ebp,0x2b48),
+              // the 4-way case-1 subtype byte, plus the pass's level and rarity inputs
+              p2b2c: i32(ebp,0x2b2c), level: i32(ebp,0x2bac), rankByte: i32(ebp,0x2bd4) };
+  try { r.b = Array.from(new Uint8Array(args[0].readByteArray(0x148))); } catch(e){}
+  loot.push(r);
+}});
+
 const zb = new NativeFunction(b.add(0x118630), 'void', ['pointer','uint32','uint32'], 'thiscall');
 rpc.exports = {
   ready(){ return world ? world.toString() : null; },
@@ -142,6 +167,9 @@ rpc.exports = {
   slice(a, n){ return props.slice(a, a + n); },
   torchRands(){ return torchRands; },
   decorCount(){ return decor.length; },
+  lootRands(){ return lootRands; },
+  lootCount(){ return loot.length; },
+  lootSlice(a, n){ return loot.slice(a, a + n); },
   decorSlice(a, n){ return decor.slice(a, a + n); },
   grids(){ return grids.map(g => { const o = Object.assign({}, g); o.bytes = null; return o; }); },
   gridBytes(i){ return grids[i] && grids[i].bytes ? grids[i].bytes : null; }
@@ -183,6 +211,10 @@ def main():
         decor = []
         for a in range(0, api.decor_count(), 500):
             decor.extend(api.decor_slice(a, 500))
+        loot_rands = api.loot_rands()
+        loot = []
+        for a in range(0, api.loot_count(), 200):
+            loot.extend(api.loot_slice(a, 200))
         grids = api.grids()
         for i, g in enumerate(grids):
             raw = api.grid_bytes(i)
@@ -207,9 +239,14 @@ def main():
     for d_ in decor:
         if d_.get("b"):
             d_["b"] = base64.b64encode(bytes(d_["b"])).decode()
+    print(f"  loot: {len(loot)} ground items, {len(loot_rands)} loot-pass draws", flush=True)
+    for l_ in loot:
+        if l_.get("b"):
+            l_["b"] = base64.b64encode(bytes(l_["b"])).decode()
     with open(OUT, "w") as f:
         json.dump({"seed": 42069, "zone": ZONE, "grids": grids, "props": props,
-                   "torch_rands": torch_rands, "decor": decor}, f)
+                   "torch_rands": torch_rands, "decor": decor,
+                   "loot": loot, "loot_rands": loot_rands}, f)
     print(f"wrote {os.path.normpath(OUT)}", flush=True)
     sys.stdout.flush()
     os._exit(0)

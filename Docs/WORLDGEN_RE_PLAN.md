@@ -145,6 +145,12 @@ for style 3" note to all six styles.
 flag and position. **`site+4` is now complete: all six of its emitters are modelled**, and with
 `site+0xc` both of the assembler's decoration containers are reproducible.
 
+**Loot pass — ✅ DONE, gated (`RE_dungeon_loot.md`).** Chest fills (`rand()%4+1` items from
+`FUN_0052b470` at rank `rankByte+1`) and the scattered ground loot (1-in-10 per prop footprint
+cell, then a common 4-way / rare 6-way table including a `powf`-based coin). **48/48 ground
+items and 4/4 chest fills**, with the chest counts cross-checked against the independent
+`itemgen_capture` run. **With this every emitter the dungeon assembler feeds is reproducible.**
+
 Still open in this phase:
 - the stub's third gate, a `World_getBlockAt` probe at points **off** the 10-unit lattice;
 - the chandelier at `0x507760` (`style == 3 && rand() % 10 == 0`) and the kind-4 entrance
