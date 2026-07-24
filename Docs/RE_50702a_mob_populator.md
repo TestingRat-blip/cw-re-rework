@@ -220,6 +220,105 @@ remaining dependency on captured booleans and none on assembly *order*.
 
 ---
 
+## The boss spawn — the `cell.flags & 4` block at `0x5078b3`
+
+The last statement of the same per-cell body, and the other half of what that flag byte is
+for. **Exactly one cell per dungeon** carries bit 2 — always a kind-3 room cell — and it builds
+a single `cube::Spawn` of **0x10f0 bytes**, an order of magnitude larger than the ordinary mob
+spawns, with its own equipment roll and a `CombatBehavior`. Gated on the same 6 dungeons:
+
+```
+python tools/frida_dungeon_boss.py [zx zz]     # capture -> raw/dungeon_boss_capture*.json
+python tools/gate_5078b3_boss.py --all         # gate
+```
+
+```c
+if (cell.flags & 4) {                                    // 0x5078b3
+    boss = new cube::Spawn();                            // 0x10f0, ctor cube::Spawn::Spawn
+    boss[0x10] = ftol((float)((float)(baseX + I*10) + 4.5f) * 65536.0f);   // 0x402a10
+    boss[0x18] = ftol((float)((float)(baseY + J*10) + 4.5f) * 65536.0f);
+    boss[0x20] = (int64)(baseZ + K*10 + 1) << 16;                          // 0x4cde40
+    boss[0x28] = 1;
+    boss[0x34] = max(1, level);                          // level from [ebp-0x2bac]
+    boss[0x58] = (byte)[ebp-0x2bd4];
+    boss[0x2c] = species[ rand() % species.size() ];     // draw A  <- the species pick
+    rank = FUN_0052bf40(boss[0x58], /*forced*/ 1);       // 4 rands, then forced to byte+1
+    addItem(boss.equip, FUN_0052b470(level, rank));      // the item generator
+    boss[0x7a] |= 0x1000; ... |= 0x200;
+    boss[0x109c] = new cube::CombatBehavior(20.0f);
+    emit(site+0x48, record{kind 6, boss.pos, boss[0x2c], site->spawns.size()});
+    n = rand() % 4;                                      // draw B  <- extra items
+    for (i = 0; i < n; i++) addItem(boss.equip, <fixed item 0x0101, quality = level>);
+    boss[0x08] = 150.0f;  boss[0x10e8] = 1;
+    site->spawns.push_back(boss);                        // 0x4f2be0
+}
+```
+
+### The position hides a float32 rounding that changes the answer
+
+`FUN_00402a10` decompiles as a bare `ftol` wrapper — **the decompiler drops a `mulss`.** The
+disassembly is `movss / mulss xmm0, [0x55878c] / fld / call ftol_trunc`, and `DAT_0055878c` is
+`65536.0`, so it is a float→16.16 converter, not a truncation. (`FUN_004cde40`, used for z, is
+an exact integer `<< 16`.)
+
+That matters because of what the `+ 4.5f` does at world scale. Dungeon coordinates are ~8.4e6,
+past float32's 2^23 integer-exact range, so `(float)(baseX + I*10) + 4.5f` cannot hold the
+half — it rounds to an even integer and **the `.5` disappears**. Computing the same expression
+in double puts the boss **32768 fixed-point units — half a block — off, in all 6 dungeons**.
+The gate reproduces the float32 rounding and matches the captured `int64` exactly, 6/6.
+
+This is the same shape as the forest-pass lesson: *the decompiler hides SSE conversion
+scaling; check the disassembly before trusting an arithmetic tail.*
+
+### The two `rand()` draws
+
+The block consumes 134 or 142 draws, but only two are its own — the rest are inside the item
+generator `FUN_0052b470` and the rank roll `FUN_0052bf40`.
+
+| draw | expression | outcome | verified |
+|---|---|---|---|
+| A, first of the block | `rand() % species.size()` | `boss[0x2c]`, the species | 6/6 |
+| B, last of the block | `rand() % 4` | how many extra items | 6/6 |
+
+Draw B is the *last* rand the block consumes, which pins it: `addItem` (`FUN_00427000`) draws
+none. The `n` extra items are identical, so they **stack into one slot** — the equipment vector
+ends up with `1 + (n > 0 ? 1 : 0)` entries, not `1 + n`. That is what the gate checks, and it
+separates `n = 0` from `n > 0` correctly in all 6 (`n` was 0, 1, 0, 3, 0, 2).
+
+`FUN_0052bf40(byte, 1)` is a rarity roll — `rand() % (byte+1)` plus 1-in-100 / 1-in-1000 /
+1-in-10000 bumps, capped at 4 — but its second argument is the constant `1`, which **discards
+all of that and returns `byte + 1`**. It still burns its 4 draws. Worth knowing before porting:
+the draws are load-bearing for the stream, the result is not.
+
+### Gate results — 6 dungeons, 6 bosses
+
+| zone | style | flag cell (I,J,K) | level | species | draw A → picked | n | equip slots |
+|---|---|---|---|---|---|---|---|
+| (32795, 32796) | 3 | (17, 17, 11) | 3 | `[2, 3]` | 30506 → 2 | 0 | 1 |
+| (32780, 32788) | 1 | (18, 18, 9) | 23 | `[15, 16]` | 9714 → 15 | 1 | 2 |
+| (32787, 32796) | 2 | (10, 11, 2) | 6 | `[15, 16]` | 8316 → 15 | 0 | 1 |
+| (32796, 32787) | 0 | (3, 3, 10) | 30 | `[11, 12]` | 32696 → 11 | 3 | 2 |
+| (32804, 32788) | 3 | (2, 2, 12) | 52 | `[2, 3]` | 15892 → 2 | 0 | 1 |
+| (32804, 32811) | 2 | (12, 11, 3) | 1 | `[15, 16]` | 20917 → 16 | 2 | 2 |
+
+All derived: the flag cell is found in the cell grid, the position from the origin, every
+deterministic field, and both rand-driven outcomes. **6/6 on every check.**
+
+Three inputs are *taken from the capture*, not derived — they are computed earlier in the
+assembler and belong to other threads: the dungeon `level` (`[ebp-0x2bac]`), the
+`[ebp-0x2bd4]` byte that seeds the rarity roll, and the 2-entry species vector. The species
+list is always 2 consecutive ids (`[2,3]`, `[11,12]`, `[15,16]`) — the dungeon's monster pair.
+
+### One field the flag cell does *not* change
+
+The flag-4 cell is a normal room cell for every other purpose: it goes through the mob pass
+first (it is kind 3), gets its wall mobs, and only then builds the boss. The 218 cells reaching
+`0x5078b3` in zone (32795, 32796) are the 217 mob-pass cells **plus the single kind-4
+entrance**, which arrives via the `0x5058d0` shortcut — a useful cross-check that the two
+control-flow paths into this block are the ones the mob-pass model says they are.
+
+---
+
 ## Gate results
 
 `python tools/gate_50702a_mobs.py --all`
@@ -239,9 +338,10 @@ every terrain-probe verdict is computed rather than replayed.
 Coverage gaps, stated plainly: rotation 2 and dungeon styles 4/5 (jungle temple, pyramid) had
 no scanned instance, and every dungeon seen was 22³.
 
-## Rig
+## Rigs
 
-`tools/frida_dungeon_grid.py` — same dungeon recipe as `frida_dungeon_spawn.py` (sandbox
+`tools/frida_dungeon_boss.py` captures the boss block; `tools/frida_dungeon_grid.py` the mob
+pass — same dungeon recipe as `frida_dungeon_spawn.py` (sandbox
 seed 42069, stub the region-cache scheduler at `0xd78e0` + `0x149550`, force-build via the
 zone builder), plus three probes:
 
@@ -268,7 +368,14 @@ zone builder), plus three probes:
    perimeter-placement effect comes from `FUN_004f84a0` returning kind `1` off the grid — and
    symmetrically, the terrain probe's three "no block" returns are all permanently zero, so
    every out-of-column case is a *reject*. Both fallbacks are load-bearing.
-5. **Check whether a value is stable before deciding it is underivable.** The terrain probe
+5. **This body resists instrumentation in three specific ways** (all cost a run to find):
+   patching mid-instruction at the two `call ebx` sites to read the draw values faults the
+   generator; Frida cannot place a trampoline on `FUN_00427000` at all ("unable to intercept
+   function"); and hooking `FUN_0052b470` / `FUN_005284a0` kills the process. Hooking the
+   *call site* `0x507b30` also faults — hook `FUN_004f2be0`'s own entry instead. Snapshot
+   points on `ebp`-relative addresses are safe. Confirm a run is clean by checking the total
+   `rand()` count against an uninstrumented capture — it matched to the draw here.
+6. **Check whether a value is stable before deciding it is underivable.** The terrain probe
    looked like it needed the world's state mid-assembly. Re-reading the same coordinates after
    the assembler finished showed 170/170 identical — so it only ever needed the *finished*
    world, which is already bit-exact.

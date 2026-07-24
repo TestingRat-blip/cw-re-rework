@@ -175,13 +175,16 @@ is the entity layer. Two functions are freshly RE'd:
 
 The dungeon mob pass is done. Pick up from there, in rough priority order:
 
-1. **The rest of the dungeon entity layer** — the `cell.flags & 4` block at `0x5078b3` (fires
+1. **The server item generator `FUN_0052b470`** — most of the boss block's 134-142 `rand()`
+   draws are inside it, and it is shared with the dungeon loot loop. Biggest remaining lever.
+2. **The rest of the dungeon entity layer** — the `cell.flags & 4` block at `0x5078b3` (fires
    on exactly one cell per dungeon, the apex/boss room), the chandelier at `0x507760`
    (`style == 3 && rand() % 10 == 0`), the kind-4 entrance marker at `0x504832`, and the
-   loot/item generation loop that runs earlier in the same cell body.
-2. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,
+   loot/item generation loop that runs earlier in the same cell body. The `cell.flags & 4`
+   boss block at `0x5078b3` is DONE and gated.
+3. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,
    still the largest genuinely-new slice.
-3. **Port the mob pass into `cw_rederive`.** It now depends only on the finished dungeon voxel
+4. **Port the mob pass + boss spawn into `cw_rederive`.** It now depends only on the finished dungeon voxel
    stamp, which the port already produces bit-exact — no captured booleans, no order state.
 
 **Gate data is on disk:** `raw/dungeon_grid_capture*.json` (6 dungeons). Re-capture with

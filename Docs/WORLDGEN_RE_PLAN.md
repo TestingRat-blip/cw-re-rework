@@ -112,13 +112,22 @@ dungeon's own stamped ceiling, which is already final when the pass runs (re-rea
 probed coordinate at `asmLeave` returns 170/170 identical). So the layer needs no captured
 booleans and no assembly-order state.
 
+**Boss spawn — ✅ DONE, gated (same doc).** The `cell.flags & 4` block at `0x5078b3` fires on
+exactly one kind-3 cell per dungeon and builds a 0x10f0-byte `cube::Spawn` with a
+`CombatBehavior` and an equipment roll. Derived: the flag cell (from the grid), the position,
+every deterministic field, and both of its `rand()` draws (species pick, extra-item count) —
+**6/6 on every check across the 6 dungeons**. Its position needs float32 rounding reproduced:
+`FUN_00402a10` is a float→16.16 converter whose `mulss` the decompiler drops, and the `+4.5f`
+is lost to float32 at world scale — computing in double is half a block off, 6/6.
+
 Still open in this phase:
 
-- the `cell.flags & 4` block at `0x5078b3` — fires on exactly one cell per dungeon (the apex /
-  boss room);
 - the chandelier at `0x507760` (`style == 3 && rand() % 10 == 0`) and the kind-4 entrance
   marker at `0x504832`;
-- the loot/item generation loop earlier in the same cell body.
+- the loot/item generation loop earlier in the same cell body, and the server item generator
+  `FUN_0052b470` it shares with the boss (most of the boss block's 134-142 draws are inside it);
+- the three per-dungeon inputs the boss block reads but does not compute: the dungeon `level`,
+  the `[ebp-0x2bd4]` rarity byte, and the 2-entry species vector.
 
 AI *behaviour* stays a separate track (the Behavior classes are already RTTI-recovered).
 
