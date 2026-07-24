@@ -175,20 +175,14 @@ is the entity layer. Two functions are freshly RE'd:
 
 The dungeon mob pass is done. Pick up from there, in rough priority order:
 
-1. **The one input the mob gate replays rather than derives** — `World_getBlockAt(x, y,
-   baseZ+(K+1)*10)` at `0x5074a1`. It genuinely rejects cells (6 across the 6 dungeons), so
-   deriving it needs the terrain column state at assembly time. Closing it makes the mob layer
-   derivable from the seed alone.
-2. **Feed `nop_split_audit.py` back into the pipeline.** 90 Server.exe "functions" are body
-   splits; `adjudicate_none.py` should merge them into their owner instead of counting them as
-   artifacts/`_indirect_*`, and the 8 dungeon-assembler splits should stop being separate
-   entries. Cube.exe needs nothing (0 hits).
-3. **The rest of the dungeon entity layer** — the `cell.flags & 4` block at `0x5078b3` (fires
+1. **The rest of the dungeon entity layer** — the `cell.flags & 4` block at `0x5078b3` (fires
    on exactly one cell per dungeon, the apex/boss room), the chandelier at `0x507760`
    (`style == 3 && rand() % 10 == 0`), the kind-4 entrance marker at `0x504832`, and the
    loot/item generation loop that runs earlier in the same cell body.
-4. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,
+2. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,
    still the largest genuinely-new slice.
+3. **Port the mob pass into `cw_rederive`.** It now depends only on the finished dungeon voxel
+   stamp, which the port already produces bit-exact — no captured booleans, no order state.
 
 **Gate data is on disk:** `raw/dungeon_grid_capture*.json` (6 dungeons). Re-capture with
 `python tools/frida_dungeon_grid.py [zx zz]` (~1-2 min each); verify with

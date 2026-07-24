@@ -23,8 +23,19 @@ Model (static decode, Docs/RE_50702a_mob_populator.md), for the mob pass at 0x50
 array of 2-byte cells; **any out-of-range index reads back kind 1** (the DAT_005842c8 fallback),
 which is what makes the dungeon's outer boundary count as a wall.
 
-The one input this model does not derive from the grid is the `solid()` block probe, which
-reads the terrain column; it is replayed from the capture (and reported on separately).
+`solid()` is the one input that is not the cell grid: FUN_00405fd0 + FUN_004061f0 read the
+world voxel at (x, y, baseZ+(K+1)*10). It reduces to
+
+    solid  <=>  a block exists there and (block[3] & 0x1f) not in (0, 2)
+
+because all three of FUN_00405fd0's "no block" returns (DAT_00583d0c / _10 / _14, for below /
+above / no column) are zero in the image and nothing in .text ever writes them -- so every
+out-of-column case reads material 0 and fails the test.
+
+The model evaluates that itself against a dump of the finished world sampled on the dungeon's
+own 10-unit lattice, rather than replaying the probe's boolean answer. That is sound because
+the dungeon geometry is already final when the mob pass runs: re-reading every probed
+coordinate at `asmLeave` returns exactly what the probe saw (170/170 on zone 32804,32811).
 
 Reads raw/dungeon_grid_capture.json (tools/frida_dungeon_grid.py).
 """
@@ -86,6 +97,21 @@ class CellGrid:
             return (OOB_KIND, 0)
         off = ((self.ry * k + j) * self.rx + i) * 2
         return (self.data[off], self.data[off + 1])
+
+
+class Lattice:
+    """The finished world sampled on the dungeon lattice: material byte at
+    (baseX+I*10, baseY+J*10, baseZ+L*10). Only the material byte is kept -- it is all
+    FUN_004061f0 looks at."""
+
+    def __init__(self, nx, ny, nz, data):
+        self.nx, self.ny, self.nz, self.data = nx, ny, nz, data
+
+    def solid(self, i, j, l):
+        """FUN_00405fd0 + FUN_004061f0. Out of range = the zero sentinels = material 0."""
+        if not (0 <= i < self.nx and 0 <= j < self.ny and 0 <= l < self.nz):
+            return False
+        return (self.data[(i * self.ny + j) * self.nz + l] & 0x1f) not in (0, 2)
 
 
 # the 4 neighbour probes, in call order: (dI, dJ, orient, call-site RVA)
@@ -154,15 +180,25 @@ def one(name):
     grid = CellGrid(g["rot"], g["mirror"], g["dimX"], g["dimY"], g["dimZ"],
                     base64.b64decode(g["bytes_b64"]))
 
-    # the block-solid probe, replayed in call order from the capture
-    solid_seq = list(cap["solids"])
-    it = iter(solid_seq)
+    # the terrain probe -- DERIVED from the finished world sampled on the dungeon lattice,
+    # falling back to replaying the capture only for older captures that predate the dump
+    lat = g.get("lattice")
+    derived = lat is not None and lat.get("bytes_b64")
     probes = []
+    if derived:
+        L = Lattice(lat["nx"], lat["ny"], lat["nz"], base64.b64decode(lat["bytes_b64"]))
 
-    def solid(i, j, k):
-        v = next(it, None)
-        probes.append(((i, j, k), v))
-        return bool(v)
+        def solid(i, j, k):
+            v = L.solid(i, j, k + 1)
+            probes.append(((i, j, k), v))
+            return v
+    else:
+        it = iter(cap["solids"])
+
+        def solid(i, j, k):
+            v = next(it, None)
+            probes.append(((i, j, k), bool(v)))
+            return bool(v)
 
     cells, spawns = run(grid, g["baseX"], g["baseY"], g["baseZ"], g["src"], solid)
 
@@ -172,14 +208,13 @@ def one(name):
     live = [(c["I"], c["J"], c["K"], c["c0"]) for c in cap["cells"]]
     ok &= report("mob-pass cells (order + kind)", cells, live)
 
-    # --- gate B: the block-solid probe fired at exactly the capture's cells -------------
-    # the probe's *result* is replayed (it reads the terrain column, not the grid); matching
-    # its call count proves the model reaches it at the right cells, and the rejects prove
-    # the gate is live rather than vacuous.
-    rej = sum(1 for _, v in probes if not v)
-    print(f"  block-solid probes: model {len(probes)} vs capture {len(solid_seq)} "
-          f"({rej} rejected)")
-    ok &= len(probes) == len(solid_seq)
+    # --- gate B: the terrain probe, derived -> compared against the live gate result ----
+    live_solid = [bool(v) for v in cap["solids"]]
+    model_solid = [v for _, v in probes]
+    rej = sum(1 for v in model_solid if not v)
+    src = "derived from the lattice dump" if derived else "REPLAYED (capture predates the dump)"
+    print(f"  terrain probe ({src}): {len(model_solid)} probes, {rej} rejected")
+    ok &= report("terrain-probe verdicts (in call order)", model_solid, live_solid)
 
     # --- gate C: the spawns ------------------------------------------------------------
     live_sp = [{"pos": s["pos"], "orient": s["orient"], "ra": s["ra"]}

@@ -52,6 +52,7 @@ let randN = 0;
 const spawns = [];
 const cells  = [];          // every cell reaching the mob pass (0x507401)
 const solids = [];          // result of the block-solid gate (0x507499), in call order
+const probes = [];          // the terrain probe's raw block read (0x507492), in call order
 const grids  = [];          // grid dumps (expect 1 per dungeon)
 let cur = null;
 
@@ -64,9 +65,46 @@ Interceptor.attach(m.getExportByName('rand'), { onLeave(rv){
   if (cap && this.threadId === genTid) randN++;
 }});
 
+const getBlock = new NativeFunction(b.add(0x5fd0), 'pointer',
+                                    ['pointer','uint32','uint32','int32','pointer'], 'thiscall');
+
 Interceptor.attach(b.add(0x100300), {
   onEnter(){ if (this.threadId === genTid){ inAsm = true; send({ev:'asm', randN:randN}); } },
-  onLeave(){ if (this.threadId === genTid){ inAsm = false; send({ev:'asmLeave', randN:randN}); } }
+  onLeave(){
+    if (this.threadId !== genTid) return;
+    inAsm = false;
+    // Re-read every probed coordinate now that the assembler has finished. If the values
+    // match what the probe saw mid-scan, the dungeon geometry was already final when the
+    // mob pass ran -- which is what makes the probe derivable from the (already bit-exact)
+    // stamped world rather than from an intermediate assembly state.
+    for (const r of probes) {
+      try {
+        const p = getBlock(world, r.x>>>0, r.y>>>0, r.z, ptr(r.zone));
+        const w = p.readU32();
+        r.after = [w & 0xff, (w>>>8)&0xff, (w>>>16)&0xff, (w>>>24)&0xff];
+      } catch(e){ r.after = null; }
+    }
+    // Sample the FINISHED world on the dungeon's own 10-unit lattice: every (I,J,L) the mob
+    // pass could ever address, whether or not that cell qualifies. This is what lets the gate
+    // *derive* the terrain probe -- it reads the voxel and applies FUN_00405fd0 +
+    // FUN_004061f0 itself -- instead of replaying the probe's boolean answer.
+    for (const g of grids) {
+      const nx = (g.rot & 1) ? g.dimY : g.dimX, ny = (g.rot & 1) ? g.dimX : g.dimY;
+      const nz = g.dimZ + 1;                       // the pass reads level K+1, so K+1 == dimZ
+      const buf = new Uint8Array(nx * ny * nz);
+      const z0 = g.zone ? ptr(g.zone) : (probes.length ? ptr(probes[0].zone) : NULL);
+      for (let I = 0; I < nx; I++)
+        for (let J = 0; J < ny; J++)
+          for (let L = 0; L < nz; L++) {
+            let v = 0;
+            try { v = getBlock(world, (g.baseX + I*10)>>>0, (g.baseY + J*10)>>>0,
+                               g.baseZ + L*10, z0).add(3).readU8(); } catch(e){}
+            buf[(I*ny + J)*nz + L] = v;
+          }
+      g.lattice = { nx: nx, ny: ny, nz: nz, bytes: buf.buffer };
+    }
+    send({ev:'asmLeave', randN:randN});
+  }
 });
 
 function i32(ebp, off){ return ebp.sub(off).readS32(); }
@@ -89,6 +127,7 @@ Interceptor.attach(b.add(0x104784), { onEnter(){
                 style:  i32(ebp, 0x2b88),
                 src:    i32(ebp, 0x2b9c),
                 site:   this.context.esi.toString(),
+                zone:   this.context.esi.toString(),
                 randN:  randN };
   try {
     const n = rec.dimX * rec.dimY * rec.dimZ * 2;
@@ -105,6 +144,31 @@ Interceptor.attach(b.add(0x107401), { onEnter(){
   cells.push({ I: i32(ebp,0x2b50), J: i32(ebp,0x2b4c), K: i32(ebp,0x2b48),
                c0: cp.readU8(), c1: cp.add(1).readU8(),
                src: i32(ebp,0x2b9c), baseZ: i32(ebp,0x2b54), randN: randN });
+}});
+
+// ---- the terrain probe, 0x107492: eax = FUN_00405fd0's returned block pointer ----
+// The three "no block" returns are fixed sentinels: DAT_00583d0c / _10 / _14 are zero in
+// the image and nothing in .text ever writes them, so all three read back material 0.
+const SENT = { }; SENT[b.add(0x183d0c).toString()] = 'no_block_z_le_0';
+SENT[b.add(0x183d10).toString()] = 'above_column'; SENT[b.add(0x183d14).toString()] = 'below_or_no_column';
+const getColumn = new NativeFunction(b.add(0x6100), 'pointer',
+                                     ['pointer','uint32','uint32','pointer'], 'thiscall');
+Interceptor.attach(b.add(0x107492), { onEnter(){
+  if (!cap || this.threadId !== genTid) return;
+  const ebp = this.context.ebp, p = this.context.eax;
+  const x = i32(ebp,0x2b30), y = i32(ebp,0x2b20);
+  const z = i32(ebp,0x2b54) + i32(ebp,0x2b28) * 10;
+  const r = { I: i32(ebp,0x2b50), J: i32(ebp,0x2b4c), K: i32(ebp,0x2b48),
+              x: x, y: y, z: z, ptr: p.toString(), zone: this.context.esi.toString(),
+              sentinel: SENT[p.toString()] || null };
+  try { const w = p.readU32(); r.b = [w & 0xff, (w>>>8)&0xff, (w>>>16)&0xff, (w>>>24)&0xff]; }
+  catch(e){ r.b = null; }
+  try {
+    const col = getColumn(this.context.edi, x>>>0, y>>>0, this.context.esi);
+    if (!col.isNull()) { r.colBase = col.add(0x10).readS32(); r.colCount = col.add(0x1c).readS32(); }
+    else r.colBase = null;
+  } catch(e){ r.colErr = ''+e; }
+  probes.push(r);
 }});
 
 // ---- the block-solid gate result: 0x507499, eax = FUN_004061f0 return ----
@@ -143,15 +207,18 @@ rpc.exports = {
   spawns(){ return spawns; },
   cells(){ return cells; },
   solids(){ return solids; },
+  probes(){ return probes; },
   grids(){
     // ArrayBuffer -> base64 for transport
     return grids.map(g => {
       const o = Object.assign({}, g);
       if (g.bytes){ o.bytes = null; }
+      if (g.lattice){ o.lattice = { nx: g.lattice.nx, ny: g.lattice.ny, nz: g.lattice.nz }; }
       return o;
     });
   },
-  gridBytes(i){ return grids[i] && grids[i].bytes ? grids[i].bytes : null; }
+  gridBytes(i){ return grids[i] && grids[i].bytes ? grids[i].bytes : null; },
+  latticeBytes(i){ return grids[i] && grids[i].lattice ? grids[i].lattice.bytes : null; }
 };
 """
 
@@ -186,11 +253,15 @@ def main():
         spawns = api.spawns()
         cells = api.cells()
         solids = api.solids()
+        probes = api.probes()
         grids = api.grids()
         for i, g in enumerate(grids):
             raw = api.grid_bytes(i)
             g["bytes_b64"] = base64.b64encode(bytes(raw)).decode() if raw else None
             g.pop("bytes", None)
+            lat = api.lattice_bytes(i)
+            if lat and g.get("lattice"):
+                g["lattice"]["bytes_b64"] = base64.b64encode(bytes(lat)).decode()
     finally:
         try:
             frida.kill(pid)
@@ -201,11 +272,12 @@ def main():
     for g in grids:
         print("  ", {k: v for k, v in g.items() if k != "bytes_b64"}, flush=True)
     print(f"mob-pass cells: {len(cells)}   solid-gate results: {len(solids)}   "
-          f"spawns: {len(spawns)}", flush=True)
+          f"probes: {len(probes)}   spawns: {len(spawns)}", flush=True)
 
     with open(OUT, "w") as f:
         json.dump({"seed": 42069, "zone": ZONE, "grids": grids, "cells": cells,
-                   "solids": solids, "spawns": spawns, "events": events}, f)
+                   "solids": solids, "probes": probes, "spawns": spawns,
+                   "events": events}, f)
     print(f"wrote {os.path.normpath(OUT)}", flush=True)
     sys.stdout.flush()
     os._exit(0)

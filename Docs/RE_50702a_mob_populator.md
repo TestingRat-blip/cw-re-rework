@@ -164,13 +164,59 @@ Combined with `524540` itself consuming zero `rand()` for type 0, **the dungeon 
 fully deterministic**: it is a pure function of the cell grid, the dungeon origin, and the
 terrain probe. There is no RNG stream to align, which is why this gated on the first try.
 
-### The one input that isn't the grid
+### The terrain probe at `0x5074a1` — derived
 
-`World_getBlockAt(x, y, baseZ+(K+1)*10)` reads the *terrain column*, not the grid, so the gate
-replays its result from the capture rather than deriving it. It is not vacuous — it rejects
-1, 2 and 3 cells in three of the six dungeons — and the model calling it at exactly the
-capture's cell sequence (1,350/1,350) is what proves the rest of the qualification is right.
-Deriving it needs the column state at assembly time; that is the one open thread here.
+This is the one input that is not the cell grid. It is now **derived, not replayed**: the gate
+evaluates it itself and matches the live verdict **757/757**, including all 6 rejects.
+
+**It reduces to a single material test.** `FUN_00405fd0` has three "no block" returns —
+`DAT_00583d14` (no column, or `z` below it), `DAT_00583d0c` and `DAT_00583d10` (`z` at or above
+the column top). All three are **zero in the image, and nothing in `.text` ever writes them**:
+disassembling the whole `.text` finds exactly five references to those addresses and all five
+are the `mov eax, 0x583dxx` loads inside `FUN_00405fd0` itself. So every out-of-column case
+reads material 0 and fails `FUN_004061f0`. The gate is therefore
+
+```c
+solid(x,y,z)  ==  block exists at (x,y,z)  &&  (block[3] & 0x1f) not in {0, 2}
+```
+
+**It reads the finished dungeon, not the terrain.** Live, every probe lands *inside* the
+column (0 of 757 hit a sentinel), and the byte it reads is one of only three values:
+
+| block[3] | material | count | what it is |
+|---|---|---|---|
+| `0x46` | 6 | 748 | dungeon stone — the room's ceiling |
+| `0x4d` | 13 | 3 | a second dungeon material |
+| `0xc0` | **0** | **6** | **carved air — the only rejects** |
+
+So the pass is asking *"does this room have a ceiling?"*, and the answer comes from the
+dungeon's own stamped voxels.
+
+**The stamp is already final when the pass runs** — which is what makes deriving it sound.
+Re-reading every probed coordinate at `asmLeave`, after the assembler has done all its
+remaining work, returns exactly what the probe saw: **170/170 unchanged** on zone
+(32804, 32811). The probe is not observing a half-built world.
+
+**How the gate derives it.** `frida_dungeon_grid.py` samples the finished world on the
+dungeon's own 10-unit lattice — the material byte at `(baseX+I*10, baseY+J*10, baseZ+L*10)`
+for every `I,J` and every `L` in `0..dimZ`, whether or not that cell qualifies — and the model
+applies the `FUN_00405fd0` + `FUN_004061f0` reduction above to it. Nothing about which cells
+get probed is fed in. That replaces the replayed boolean with a real check of the reduction.
+
+**What it is *not* derivable from: the cell grid.** Worth stating because it is the obvious
+guess. Every probed ceiling cell is kind 2 whether the probe passes or fails (449 solid / 5 air
+in one split), so the grid carries no bit that decides it. The closest the grid gets is a
+*necessary* condition: all 6 rejects have a room (kind 3) cell directly **west or south** at
+level `K+1` — never east or north — but 92 cells with that same property are solid. The
+direction asymmetry is consistent with the room carve `FUN_004d2500(x, y, z, vec3(10,10,10))`
+covering its `+10` face inclusively, so a west/south room's carve reaches exactly the probe
+point while an east/north room's does not; the 92 are then cells the box pass stamped back
+solid and the 6 are openings it left. That last step is inferred from the arithmetic, not
+separately proven.
+
+**Where this leaves the port.** The mob layer now depends only on the finished dungeon voxel
+stamp, which `cw_rederive` already produces bit-exact (box list + writes). There is no
+remaining dependency on captured booleans and none on assembly *order*.
 
 ---
 
@@ -178,17 +224,18 @@ Deriving it needs the column state at assembly time; that is the one open thread
 
 `python tools/gate_50702a_mobs.py --all`
 
-| zone | style | rot / mirror | mob-pass cells | solid rejects | spawns |
-|---|---|---|---|---|---|
-| (32795, 32796) | 3 | 3 / 1 | 217/217 | 0 | **137/137** |
-| (32780, 32788) | 1 | 0 / 0 | 187/187 | 1 | **163/163** |
-| (32787, 32796) | 2 | 0 / 0 | 204/204 | 2 | **210/210** |
-| (32796, 32787) | 0 | 1 / 1 | 244/244 | 0 | **197/197** |
-| (32804, 32788) | 3 | 1 / 1 | 217/217 | 0 | **152/152** |
-| (32804, 32811) | 2 | 1 / 0 | 281/281 | 3 | **263/263** |
-| **total** | | | **1,350/1,350** | 6 | **1,122/1,122** |
+| zone | style | rot / mirror | mob-pass cells | terrain probe (derived) | rejects | spawns |
+|---|---|---|---|---|---|---|
+| (32795, 32796) | 3 | 3 / 1 | 217/217 | 101/101 | 0 | **137/137** |
+| (32780, 32788) | 1 | 0 / 0 | 187/187 | 107/107 | 1 | **163/163** |
+| (32787, 32796) | 2 | 0 / 0 | 204/204 | 120/120 | 2 | **210/210** |
+| (32796, 32787) | 0 | 1 / 1 | 244/244 | 143/143 | 0 | **197/197** |
+| (32804, 32788) | 3 | 1 / 1 | 217/217 | 116/116 | 0 | **152/152** |
+| (32804, 32811) | 2 | 1 / 0 | 281/281 | 170/170 | 3 | **263/263** |
+| **total** | | | **1,350/1,350** | **757/757** | 6 | **1,122/1,122** |
 
-Every spawn matches on position, orientation **and** originating call site, in call order.
+Every spawn matches on position, orientation **and** originating call site, in call order, and
+every terrain-probe verdict is computed rather than replayed.
 Coverage gaps, stated plainly: rotation 2 and dungeon styles 4/5 (jungle temple, pyramid) had
 no scanned instance, and every dungeon seen was 22³.
 
@@ -200,8 +247,11 @@ zone builder), plus three probes:
 
 - `0x104784` — one-shot at the loop head: dumps the grid header + all 10,648 cells, the
   origin (`baseX/baseY/baseZ`), the style and `src`.
+- `0x107492` / `0x107499` — the terrain probe's raw block read and the gate's verdict, in
+  call order (the verdict is the cross-check the derived value is compared against).
 - `0x107401` — every cell entering the mob pass, with `I/J/K`, both cell bytes and `src`.
-- `0x107499` — the terrain-probe result, in call order.
+- at `asmLeave` — a re-read of every probed coordinate (the "geometry is final" proof) and the
+  lattice sample of the finished world that the derivation runs on.
 
 ## Lessons this one paid out
 
@@ -215,4 +265,10 @@ zone builder), plus three probes:
    C aliased `K` and `K+1` onto the same name, which made the qualification test unreadable.
    Twelve lines of `objdump`-equivalent settled it.
 4. **Reproduce the out-of-bounds behaviour, not just the in-bounds math.** The whole
-   perimeter-placement effect comes from `FUN_004f84a0` returning kind `1` off the grid.
+   perimeter-placement effect comes from `FUN_004f84a0` returning kind `1` off the grid — and
+   symmetrically, the terrain probe's three "no block" returns are all permanently zero, so
+   every out-of-column case is a *reject*. Both fallbacks are load-bearing.
+5. **Check whether a value is stable before deciding it is underivable.** The terrain probe
+   looked like it needed the world's state mid-assembly. Re-reading the same coordinates after
+   the assembler finished showed 170/170 identical — so it only ever needed the *finished*
+   world, which is already bit-exact.

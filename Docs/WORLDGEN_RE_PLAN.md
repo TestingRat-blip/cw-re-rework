@@ -105,10 +105,15 @@ cell places one mob facing it. The 4 `524540` call sites are those 4 directions
 Gate: **6 dungeons, 4 styles, 3 rotations, both mirror states — 1,350/1,350 qualifying cells
 and 1,122/1,122 spawns** reproduced ab-initio (`tools/gate_50702a_mobs.py --all`).
 
+The one non-grid input, the terrain probe at `0x5074a1`, is **also derived** (757/757, all 6
+rejects included). It reduces to a single material test — all three of `FUN_00405fd0`'s
+"no block" returns are permanently zero, so out-of-column is always a reject — and it reads the
+dungeon's own stamped ceiling, which is already final when the pass runs (re-reading every
+probed coordinate at `asmLeave` returns 170/170 identical). So the layer needs no captured
+booleans and no assembly-order state.
+
 Still open in this phase:
 
-- the terrain probe at `0x5074a1` is *replayed* from the capture, not derived — the only
-  non-grid input to mob placement (it rejects 6 cells across the 6 dungeons);
 - the `cell.flags & 4` block at `0x5078b3` — fires on exactly one cell per dungeon (the apex /
   boss room);
 - the chandelier at `0x507760` (`style == 3 && rand() % 10 == 0`) and the kind-4 entrance
