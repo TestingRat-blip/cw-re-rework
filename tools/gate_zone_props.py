@@ -1,6 +1,21 @@
 #!/usr/bin/env python3
 """Gate: the OVERWORLD per-zone prop scatter (Phase 2 -- first cut).
 
+>>> SUPERSEDED by tools/gate_zone_props2.py.  Everything below is still true of what it
+>>> measures -- the OUT-OF-LINE push_back -- but two of its conclusions do not survive
+>>> reading the vector itself (Docs/RE_zone_props.md):
+>>>
+>>>   * "exactly one prop per zone" is an artifact of the hook.  FUN_004e0740's second
+>>>     stage pushes into the same site+0xc through an INLINED push_back, so an odd zone
+>>>     actually carries 0-5 props.  The check below is really "at most one out-of-line
+>>>     push_back per zone".
+>>>   * the caller census that scoped the layer is incomplete for the same reason.  The
+>>>     census that holds is over FUN_004ce8e0 (vector<PropRecord>::_Reserve), which an
+>>>     inlined push_back still needs, and it turns up a FIFTH emitter: FUN_005104e0.
+>>>
+>>> Its rand attribution was also capped at 64 draws per record, which silently dropped
+>>> the caller's retry loop -- so no position arithmetic could be checked here.
+
 A caller census of the 0x188 prop record's push_back (`FUN_004d6670`) and ctor (`FUN_004c84b0`)
 enumerates every prop emitter in the game, and it is a short list:
 

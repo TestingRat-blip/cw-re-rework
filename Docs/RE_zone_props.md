@@ -1,74 +1,193 @@
-# The overworld prop scatter — opened, and Phase 2's premise retired
+# The overworld prop scatter — derived record for record
 
-Phase 2 of `WORLDGEN_RE_PLAN.md` said to start at `FUN_004c8420`, "the Phase-12 prop/decoration
-entity emitter". That is wrong — `004c8420` is `DungeonProp_copy_0x188`, the record's copy ctor
-(relabelled 2026-07-24 while doing the dungeon lights). This is where the layer actually lives.
+Phase 2 of `WORLDGEN_RE_PLAN.md` said to start at `FUN_004c8420`, "the Phase-12
+prop/decoration entity emitter". That is wrong — `004c8420` is `DungeonProp_copy_0x188`,
+the record's copy ctor (relabelled 2026-07-24 while doing the dungeon lights). This is
+where the layer actually lives.
 
 ```
-python tools/frida_zone_props.py     # 56 zones -> raw/zone_props_capture.json
-python tools/gate_zone_props.py      # the invariants below
+python tools/frida_zone_props2.py    # 56 zones -> raw/zone_props2_capture.json
+python tools/gate_zone_props2.py     # 7,256 checks
 ```
+
+**Status:** the zone builder's parity emitters are derived record-for-record from the
+`rand()` stream — **336 + 4,364 + 2,556 checks green over 56 live zones**. Two emitters
+remain: the town builder, and a fifth zone emitter this session found.
 
 ---
 
-## The census that scopes the whole layer
+## ⚠ Two corrections to the first cut
 
-Rather than guess which function emits props, ask who *can*: every prop is a 0x188 record pushed
-by `FUN_004d6670` and built by `FUN_004c84b0`. Their combined caller list is nine sites, and it
-covers the entire game:
+The first pass (`frida_zone_props.py` / `gate_zone_props.py`, still in the tree and still
+passing what it actually claims) hooked `FUN_004d6670`, the *out-of-line* `push_back` on
+the 0x188 prop record. Both of its headline claims were shaped by that choice.
 
-| caller | subsystem | state |
-|---|---|---|
-| `004e310a`, `004eaa7a`, `004ee3aa` | **town builder** | open |
-| `00502dca`, `005054fa` | dungeon assembler | ✅ done (`RE_dungeon_lights.md`, `RE_52a830_scatter.md`) |
-| `00524540` | `creature_spawn_builder` | ✅ done (the mob pass) |
-| `004e0740` | called **only** by the zone builder | this document |
-| `0051c90a`, `0051ed6a` | **zone builder** (NOP-split fragments of `FUN_00518630`) | this document |
-
-So the remaining prop work is exactly two subsystems: the overworld zone builder and the town
-builder. Nothing else in Server.exe can produce one.
-
-## The zone builder's four emit sites
+**1. "Exactly one prop per zone" is an artifact.** `FUN_004e0740`'s second stage pushes
+into the *same* `site+0xc` through an **inlined** `push_back`, so those records were
+invisible. Reading the vector instead gives 0–5 props on an odd zone:
 
 ```
-0x51cd1e  -> FUN_004e0740   inside a retry loop, up to 10 candidate positions (@0x51cd34)
-0x51dbf5  inline emitter A  -- never fired in 56 zones
-0x51e796  inline emitter B
-0x51fcdb  inline emitter C  -- never fired in 56 zones
+props per odd zone: 0 0 1 1 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 4 4 4 4 5 5 5 5
 ```
 
-## What 56 live zones establish
+150 records across the 56 zones, of which only 98 went through the out-of-line call.
 
-The sample is a 6×6 block plus 20 zones scattered across other regions. ⚠ The first attempt at
-the scattered set drew every one of them with an **even** `zx + zz` by accident, which tested
-nothing; it is now balanced on purpose, 10 odd and 10 even.
+**2. The caller census that scoped the layer is incomplete.** Asking who calls
+`FUN_004d6670` finds only the emitters whose `push_back` the compiler left out of line.
+The census that actually holds is **who calls `FUN_004ce8e0`** — `vector<PropRecord>::
+_Reserve`, stride 0x188 — because an inlined `push_back` still has to call it to grow:
 
-- **Exactly one prop per zone**, pushed into that zone's *own* `site+0xc` — 54 props, 54
-  distinct vectors.
-- **Which emitter runs is `(zx + zz) & 1`.** Even → emitter B, odd → `FUN_004e0740`. 54/54,
-  including out of sample.
-- **Emitter B** always emits type **0** — `goddess2`, the client's `Statue` entity — sized
-  `(2, 2, 8)`, with `dir = rand() % 4` (`0x51e774`). Its Z is one above the first solid block
-  found by scanning **down**: `0x51e647` calls `World_getBlockAt`, `0x51e650` masks
-  `& 0x1f` and loops while the class is 0 or 2. That is `Block_isSolid` again — a third
-  independent call site for the predicate the mob pass and the wall stub already proved.
-- **`FUN_004e0740`** always emits type **0x41** sized `(2.4, 2.4, 0.5)`, and may place nothing:
-  it opens by evaluating `FUN_0052cd50` — the climate/river field — and returns immediately when
-  `1.0 - gate*50.0 >= 0.0`, i.e. **on a river band** (`gate <= 0.02`, the same constant the
-  river RE proved). 2 of the 26 odd-parity zones produced no prop.
+| caller of `004ce8e0` | what it is |
+|---|---|
+| `004d6670` | the out-of-line `push_back` itself, and its nine callers |
+| `004e0740` | stage 2, inlined — this document |
+| `005104e0` / `0051210a` | **a fifth zone-builder emitter, inlined — missed entirely** |
+| `00524540` | `creature_spawn_builder` |
 
-The gate locks all of that plus "the prop lands inside its own zone's 256-block square".
+So the open set is not "the zone builder and the town builder". It is the town builder
+(`004e310a` / `004eaa7a` / `004ee3aa`) **and `FUN_005104e0`**, which the old census could
+not see. Both showed up in the 56-zone sample and both are reported by the new gate
+rather than skipped — 44 town-builder records in `(33020, 32660)`, one `FUN_005104e0`
+record in `(32811, 32742)`.
+
+This is the same blind spot in a different guise as the one the dungeon work hit: a
+census over an out-of-line helper undercounts wherever MSVC inlined it. Census over the
+helper the inlined form still needs.
+
+## Which emitter runs: `(zx + zz) & 1`, and it is literal
+
+The first cut observed this correlation 54/54. It is not a correlation. At `0x51cb66`
+the zone builder computes
+
+```
+0051cb66  mov  eax, [ebp-0x1364]      ; zz
+0051cb6c  add  eax, ecx               ; + zx
+0051cb6e  and  eax, 0x80000001        ; signed % 2
+0051cb7a  mov  [ebp-0x1360], eax
+0051cb80  je   0x51cd6d               ; parity 0 -> skip FUN_004e0740 entirely
+```
+
+and emitter B reads the same slot at `0x51e5c7` (`cmp [ebp-0x1360], 0; jne skip`).
+One `(zx + zz) % 2`, two consumers.
+
+## Emitter B — even parity, `0x51e5c7`
+
+Unconditional; it runs no placement test and always emits exactly one record.
+
+```
+x   = zx*256 + 0x10 + rand() % 0xe0          draw @0x51e5d4   (X first)
+y   = zz*256 + 0x10 + rand() % 0xe0          draw @0x51e5f3
+col = Chunk_getColumnAt(x, y);  if (!col) give up
+z   = col.baseZ + col.count;  while (!solid(x,y,z)) z--        (0x51e647)
+rec = { type 0, pos (x+.5, y+.5, z+1), dir rand()%4, size (2,2,8) }
+```
+
+`type 0` is `goddess2`, the client's `Statue` entity. The `solid` test is
+`(block[3] & 0x1f) not in {0, 2}` — a third independent call site for the predicate the
+mob pass and the wall stub already proved.
+
+## Emitter `FUN_004e0740` — odd parity, via a retry loop at `0x51cbb0`
+
+The caller tries up to **10** candidate anchors. Each attempt draws **Y first**:
+
+```
+y = zz*256 + 0x30 + rand() % 0xa0            draw @0x51cbbb
+x = zx*256 + 0x30 + rand() % 0xa0            draw @0x51cbf6
+```
+
+so props land in the middle 160 of the zone's 256 blocks. If the zone's site type is
+1 or 5 the attempt is additionally rejected when `World_objectFalloffWeight(y, x) < 1.0`
+(`0x51cc8e`). The anchor's Z is the column top, `(col.baseZ + col.count) << 16`.
+
+Both emitters bias positions by `+0x8000` — `ftol(-32768.0)` at `0x51cb86` and
+`0x51e676` — so a prop sits at the **centre** of its block, not its corner.
+
+`FUN_004e0740(world, site, int64 pos[3])` then:
+
+* **river gate.** Returns immediately when `1.0 - climateGate(x,y)*50.0 >= 0.0`, i.e.
+  `gate <= 0.02` — the same constant the river RE proved. 2 of the 26 odd zones in the
+  sample placed nothing at all.
+* **Stage 1.** Draws `dir = rand()%4` once (`0x4e0825`), then walks a **3×3 block grid**
+  offset from the anchor — X outer `0..2`, Y inner `0..2` — testing each with
+  `FUN_005287b0` and pushing the **first** that passes: type `0x41`, size
+  `(2.4, 2.4, 0.5)`. Returns whether anything was placed.
+* **Stage 2.** Only if stage 1 placed something. Four candidates at **±3.5 blocks from
+  the anchor** (`{0,7}*0x10000 - ftol(229376.0)`), X outer, Y inner. Each draws a type
+  then a direction, is tested, and is pushed if it passes — through the inlined
+  `push_back`, into the same `site+0xc`:
+
+  | `rand()%4` | id | size |
+  |---|---|---|
+  | 1 | `0x10` | (1, 1, 0.5) |
+  | 2 | `0x0c` | (3, 3, 1) |
+  | 3 | `0x45` | (2, 2, 0.1) |
+  | 0 (else) | `0x42` | (4, 4, 3) |
+
+  Both draws happen **before** the test, so a rejected candidate still burns two.
+  Stage 2 offsets from the **anchor**, not from stage 1's accepted position.
+
+## `FUN_005287b0` — the placement test, and it is pure
+
+Filed `lib_fn_5287b0` under `_library`. It is game code, and it is the whole reason this
+layer is portable: **a pure function of the finished terrain voxels**, no rand, no order
+state. `FUN_005287b0(world, rec, site, flag)`:
+
+1. Half-extents `hx = ftol(sizeX*0.5*65536)`, `hy` likewise, with **X and Y swapped when
+   `dir & 1`** — an odd direction rotates the footprint 90°.
+2. **Drop:** up to 50 times, if no block in the `x0..x1 × y0..y1` footprint at `z` is
+   solid, `Z -= 1` block. Stops on the first solid.
+3. **Raise:** up to 50 times, if any block in the footprint at `z` is solid, `Z += 1`.
+   Stops when the layer is clear.
+4. Reject if `Z <= 0`.
+5. If `flag` (always 1 here): reject unless **every** block one layer below the footprint
+   is solid — full support, no overhang.
+6. Return `(block at the record's own position) & 0x1f != 2` — **not standing in water**.
+
+It **rewrites the record's Z in place**; the caller pushes the mutated record. The gate
+checks that separately (2,556 invariants): only Z ever changes, always by a whole number
+of blocks, never more than 50, and an accepted record always sits above Z = 0.
+
+## What the gate proves
+
+`tools/gate_zone_props2.py`, over `raw/zone_props2_capture.json` (56 zones, seed 42069):
+
+| claim | checks |
+|---|---|
+| emitter B's record derived from its three draws | 336 |
+| the retry loop's anchors + both `FUN_004e0740` stages, record for record, and the vector is exactly the accepted records in order | 4,364 |
+| `FUN_005287b0` settles the record in place | 2,556 |
+
+The two shared zones are named in the output, not silently dropped: in them the derived
+records are still required to appear in the vector, in order, and the residual is counted
+and attributed.
 
 ## Open, in order
 
-1. **The position.** Both emitters jitter within the zone; the draws are captured
-   (`rands` per record) but the arithmetic is not decoded yet.
-2. **`FUN_004e0740`'s second stage.** After its first push it runs a `rand() % 4` switch
-   selecting ids `0x10` / `0x0c` / `0x45` / `0x42` with sizes `(1,1,0.5)` / `(3,3,1)` /
-   `(2,2,0.1)` / `(4,4,3)`. Only one `FUN_004d6670` call exists in its body, so those records go
-   to a **different container** — find it.
-3. **Emitters A and C**, which no sampled zone reached. Read their gates statically rather than
-   sampling blindly for them.
-4. **Ids beyond the table.** `assets/props/prop_ids.json` stops at 0x37; `0x41`, `0x42` and
-   `0x45` are unnamed. The client's type→slot table is the source the existing rows came from.
-5. **The town builder's three emitters**, the other half of the census.
+1. **`FUN_005104e0`** — the fifth emitter, 7,192 bytes, called only from the zone builder
+   (`0x51c90a`), with a NOP-split fragment at `0x51210a`. It calls `FUN_005287b0`, pushes
+   prop records through the inlined `push_back`, and its decompile is full of `Spawn`,
+   `CombatBehavior`, `WalkPathBehavior`, `CompanionBehavior` and `RandomWalkBehavior`
+   construction. That is *suggestive* of an overworld camp/encampment populator and
+   nothing here proves it — 26 placement tests and 1 record in one sampled zone is all
+   the live evidence there is. Capture it deliberately before naming it.
+2. **The town builder's three emitters** (`004e310a` / `004eaa7a` / `004ee3aa`), the other
+   half of the census. A town zone contributes ~44 records to the same vector.
+3. **Emitters A and C** inside the zone builder, which no sampled zone reached. Their
+   record content is already read off statically:
+   * **A** (`0x51dbf5`): type `0x2d`, size `(4, 4, 5)`, `dir = rand()%4`, raised from its
+     start position until it is in a non-solid block (`0x51db56` loop).
+   * **C** (`0x51fcdb`): type `0x33` size `(1, 1, 8)` or type `0x32` size `(2, 2, 8)`
+     chosen by a float compare against `[0x5586d8]`, and it builds a **string** on the way
+     (`FUN_004cde40` × 3, `FUN_00406380`, `FUN_00402a40`) — a named prop, not a plain one.
+   Read their gates statically rather than sampling blindly for them.
+4. **Ids beyond the table.** `assets/props/prop_ids.json` stops at 0x37; `0x41`, `0x42`
+   and `0x45` are unnamed. The client's type→slot table is the source the existing rows
+   came from.
+
+## Identities settled here
+
+| addr | name | how |
+|---|---|---|
+| `005287b0` | `Prop_settleOnTerrain` | full disassembly + 2,556 live invariants; **was `lib_fn_5287b0` in `_library` — it is game code** |
+| `004ce8e0` | `PropVector_reserve` | body is `vector::_Reserve` with stride 0x188; its five callers are exactly the prop pushers |
+| `005104e0` | `zone_prop_emitter_5104e0` | **was `lib_fn_5104e0` in `_library`**. Only its *prop-emitter* role is proven (live pushes + `FUN_005287b0` calls); the Spawn/behaviour reading is a lead, not a label |

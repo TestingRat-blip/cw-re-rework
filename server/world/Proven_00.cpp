@@ -1,4 +1,4 @@
-// Proven_00 (world) -- server. 31 functions. Bodies = Ghidra pseudo-C.
+// Proven_00 (world) -- server. 32 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Proven_00.h"
 
@@ -21009,6 +21009,42 @@ void __thiscall cube::World::World(World *this,undefined4 param_1,char param_2)
   FUN_004f2be0(ppvVar16,&local_40);
   ExceptionList = local_10;
   __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+/* PropVector_reserve @ 004ce8e0  kind=gamemisc  attributed-by=ledger  size=162 */
+
+void __thiscall FUN_004ce8e0(void *this,uint param_1)
+
+{
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  if (param_1 <= (uint)((*(int *)((int)this + 8) - *(int *)((int)this + 4)) / 0x188)) {
+    return;
+  }
+  iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x188;
+  if (0xa72f05U - iVar1 < param_1) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("vector<T> too long");
+  }
+  uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x188;
+  uVar3 = iVar1 + param_1;
+  if (0xa72f05 - (uVar2 >> 1) < uVar2) {
+    uVar2 = 0;
+    if (uVar3 != 0) {
+      uVar2 = uVar3;
+    }
+    FUN_004ce7e0(this,uVar2);
+    return;
+  }
+  uVar2 = uVar2 + (uVar2 >> 1);
+  if (uVar2 < uVar3) {
+    uVar2 = uVar3;
+  }
+  FUN_004ce7e0(this,uVar2);
   return;
 }
 

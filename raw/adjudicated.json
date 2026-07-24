@@ -182,6 +182,11 @@
    "name": "DungeonProp_ctor_0x188",
    "verdict": "DEEP-RE"
   },
+  "004ce8e0": {
+   "kind": "gamemisc",
+   "name": "PropVector_reserve",
+   "verdict": "DEEP-RE"
+  },
   "004d1950": {
    "kind": "gamemisc",
    "name": "VoxelGrid_cellAt3D",
@@ -393,9 +398,14 @@
    "verdict": "B"
   },
   "005104e0": {
-   "kind": "lib",
-   "name": "lib_fn_5104e0",
-   "verdict": "B"
+   "kind": "game",
+   "name": "zone_prop_emitter_5104e0",
+   "verdict": "DEEP-RE"
+  },
+  "0051210a": {
+   "kind": "game",
+   "name": "zone_prop_emitter_5104e0__split_51210a",
+   "verdict": "DEEP-RE"
   },
   "00513400": {
    "kind": "lib",
@@ -470,6 +480,11 @@
   "005285c0": {
    "kind": "gamemisc",
    "name": "SpeciesGroup_push_back",
+   "verdict": "DEEP-RE"
+  },
+  "005287b0": {
+   "kind": "game",
+   "name": "Prop_settleOnTerrain",
    "verdict": "DEEP-RE"
   },
   "00528bf0": {

@@ -218,8 +218,32 @@ the body was the only way to settle these.
         # the OVERWORLD prop scatter (Docs/RE_zone_props.md). Was lib_fn_4e0740, but its only
         # caller is the zone builder (0x51cd1e, in a 10-try retry loop) and it pushes a 0x188
         # prop record into site+0xc: type 0x41, size (2.4, 2.4, 0.5), after returning early on
-        # river bands (FUN_0052cd50 <= 0.02). Gated over 56 live zones.
+        # river bands (FUN_0052cd50 <= 0.02). Both its stages are now derived record-for-record
+        # from the rand stream over 56 live zones (tools/gate_zone_props2.py, 4364 checks).
         "004e0740": {"name": "zone_prop_emitter", "kind": "game", "verdict": "DEEP-RE"},
+        # the placement test both prop emitters use, and the reason the layer is portable:
+        # a PURE function of the finished terrain voxels -- drop <=50 blocks to the first
+        # solid under the (dir-rotated) footprint, raise <=50 until the layer is clear,
+        # then reject unless Z > 0, the whole footprint one block below is solid, and the
+        # record's own block is not water. It rewrites the record's Z in place. Was filed
+        # `lib_fn_5287b0` under `_library`; it is game code. Full disassembly plus 2,556
+        # live before/after invariants (Docs/RE_zone_props.md).
+        "005287b0": {"name": "Prop_settleOnTerrain", "kind": "game", "verdict": "DEEP-RE"},
+        # vector<PropRecord>::_Reserve -- the body divides by the 0x188 record stride, and
+        # its five callers are exactly the prop pushers. It is the census that actually
+        # scopes the prop layer: an INLINED push_back skips FUN_004d6670 but still has to
+        # call this to grow, which is how FUN_005104e0 was found.
+        "004ce8e0": {"name": "PropVector_reserve", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # a FIFTH prop emitter, invisible to the old census because its push_back is inlined.
+        # Called only from the zone builder (0x51c90a); observed live pushing a prop record
+        # and running 26 Prop_settleOnTerrain tests in zone (32811, 32742). Was `lib_fn_5104e0`
+        # under `_library` -- it is game code. ONLY the prop-emitter role is proven here; the
+        # Spawn / CombatBehavior / CompanionBehavior construction in its body is a lead.
+        "005104e0": {"name": "zone_prop_emitter_5104e0", "kind": "game", "verdict": "DEEP-RE"},
+        # its MSVC alignment-NOP body split, pinned here because adjudicate_none.py stamped
+        # the fragment with the parent's OLD name and must not be re-run on a structured tree
+        "0051210a": {"name": "zone_prop_emitter_5104e0__split_51210a", "kind": "game",
+                     "verdict": "DEEP-RE"},
         # the creature-species containers the dungeon assembler builds in its prologue and
         # the three helpers that index them (Docs/RE_dungeon_species.md, gated 6/6).
         # 402bb0 / 41fff0 / 4e28d0 are vector<int> operator[] / size / empty: proven by the

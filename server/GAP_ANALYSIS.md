@@ -31,6 +31,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `0054687a` | 8010 | 0 | 70 | orphan |  |
 | `005343fa` | 7810 | 0 | 101 | orphan |  |
 | `004816ca` | 7194 | 0 | 22 | orphan | ORDER |
+| `005104e0` | 7192 | 1 | 15 |  |  |
 | `004db200` | 7104 | 1 | 28 |  | list<T> too long |
 | `005054fa` | 6960 | 0 | 35 | orphan |  |
 | `004cfd50` | 6604 | 4 | 29 |  | list<T> too long |
@@ -98,6 +99,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `00522840` | 1137 | 2 | 4 |  |  |
 | `0053778c` | 1110 | 0 | 20 | orphan |  |
 | `004f9010` | 1085 | 1 | 3 |  |  |
+| `005287b0` | 1077 | 6 | 6 |  |  |
 | `00415dd0` | 1074 | 1 | 12 |  |  |
 | `004dd9da` | 1061 | 0 | 3 | orphan |  |
 | `00406ad0` | 1054 | 2 | 1 |  |  |
@@ -410,7 +412,5 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `00422b10` | 240 | 1 | 1 |  |  |
 | `0042af50` | 239 | 1 | 8 |  | bad cast |
 | `0042e9a0` | 239 | 2 | 8 |  | bad cast |
-| `004672d0` | 238 | 0 | 4 | orphan | %.*s"%w"%s, string or blob too big |
-| `004311f0` | 237 | 2 | 4 |  | invalid string position, string too long |
 
-**Total unnamed non-library functions: 1647** (117 of the listed 400 are orphans)
+**Total unnamed non-library functions: 1649** (116 of the listed 400 are orphans)

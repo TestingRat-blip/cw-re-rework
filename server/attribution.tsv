@@ -2260,7 +2260,7 @@ addr	name	kind	module	class	attributed_by	size
 004ce780	FUN_004ce780	gamemisc	entity	Unsorted	logic:caller-vote	84
 004ce7e0	FUN_004ce7e0	gamemisc	world	_helpers_dtor-like	role:dtor-like	231
 004ce8c7	Catch_All@004ce8c7	lib	_library	eh_funclets	eh	20
-004ce8e0	FUN_004ce8e0	gamemisc	world	Unsorted	logic:caller-vote	162
+004ce8e0	PropVector_reserve	gamemisc	world	Proven	ledger	162
 004ce990	FUN_004ce990	gamemisc	world	_helpers_wrapper	role:wrapper	89
 004ce9f0	FUN_004ce9f0	gamemisc	ai	Helpers	caller-vote	139
 004cea80	FUN_004cea80	gamemisc	game_misc	Unsorted_002	none	4604
@@ -2600,8 +2600,8 @@ addr	name	kind	module	class	attributed_by	size
 0050d8d0	FUN_0050d8d0	gamemisc	game_misc	Unsorted_002	none	419
 0050da73	FUN_0050D8D0__split_50da73	gamemisc	game_misc	_body_splits	role:body-split	1541
 0050e080	featureGrid	game	world	Proven	ledger	9264
-005104e0	lib_fn_5104e0	lib	_library	cw_lib	ledger	7192
-0051210a	lib_fn_5104e0__split_51210a	gamemisc	game_misc	_body_splits	role:body-split	4767
+005104e0	zone_prop_emitter_5104e0	game	world	Proven	ledger	7192
+0051210a	zone_prop_emitter_5104e0__split_51210a	game	world	Proven	ledger	4767
 00513400	lib_fn_513400	lib	_library	cw_lib	ledger	864
 00513760	lib_fn_513760	lib	_library	cw_lib	ledger	7494
 005154aa	lib_fn_513760__split_5154aa	gamemisc	game_misc	_body_splits	role:body-split	2225
@@ -2638,7 +2638,7 @@ addr	name	kind	module	class	attributed_by	size
 005285c0	SpeciesGroup_push_back	gamemisc	game_misc	Game	ledger	213
 005286a0	UNRESOLVED_5286a0	gamemisc	game_misc	Game	ledger	143
 00528730	FUN_00528730	gamemisc	world	Unsorted	logic:caller-vote	115
-005287b0	lib_fn_5287b0	lib	_library	cw_lib	ledger	1077
+005287b0	Prop_settleOnTerrain	game	world	Proven	ledger	1077
 00528bf0	item_gen_kinds_4_9	game	entity	Proven	ledger	1240
 005290d0	FUN_005290d0	gamemisc	world	Unsorted	logic:caller-vote	5775
 0052a760	item_special_candidate	game	entity	Proven	ledger	194

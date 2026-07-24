@@ -582,6 +582,11 @@
    "name": "lib_fn_4cde40",
    "src": "CW_CONFIDENCE_XREF.md"
   },
+  "004ce8e0": {
+   "kind": "gamemisc",
+   "name": "PropVector_reserve",
+   "src": "ADJUDICATION.md"
+  },
   "004d1950": {
    "kind": "gamemisc",
    "name": "VoxelGrid_cellAt3D",
@@ -938,8 +943,13 @@
    "src": "CUBEWORLD_ALPHA_SOURCE.md"
   },
   "005104e0": {
-   "kind": "lib",
-   "name": "lib_fn_5104e0",
+   "kind": "game",
+   "name": "zone_prop_emitter_5104e0",
+   "src": "ADJUDICATION.md"
+  },
+  "0051210a": {
+   "kind": "game",
+   "name": "zone_prop_emitter_5104e0__split_51210a",
    "src": "ADJUDICATION.md"
   },
   "00513400": {
@@ -1043,9 +1053,9 @@
    "src": "CW_CONFIDENCE_XREF.md"
   },
   "005287b0": {
-   "kind": "lib",
-   "name": "lib_fn_5287b0",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "kind": "game",
+   "name": "Prop_settleOnTerrain",
+   "src": "ADJUDICATION.md"
   },
   "00528bf0": {
    "kind": "game",

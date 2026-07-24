@@ -226,14 +226,25 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    terrain rule `z <= surfH + 1` reproduces 476/480 live verdicts and is what the port already
    did. **The dungeon assembler now has no known port gap.**
 3. **Prop / vegetation placement** — Phase 2, the largest genuinely-new slice. ⚠ Its old
-   `FUN_004c8420` starting point is WRONG (that is `DungeonProp_copy_0x188`). Re-scoped by a
-   caller census in `Docs/RE_zone_props.md`: every prop in the game is a 0x188 record pushed by
-   `FUN_004d6670`, and its nine callers leave exactly two subsystems open — **the zone builder**
-   (4 emit sites in `FUN_00518630`) and **the town builder** (`004e310a`/`004eaa7a`/`004ee3aa`).
-   First cut captured + gated over 56 zones (`frida_zone_props.py`, `gate_zone_props.py`): one
-   prop per zone, emitter chosen by `(zx+zz)&1`, statue vs type-0x41. ▶ Next: the position
-   jitter, `FUN_004e0740`'s second stage (ids 0x10/0x0c/0x45/0x42 go to a container that is NOT
-   `site+0xc` -- find it), the two emitters no sampled zone reached, then the town builder.
+   `FUN_004c8420` starting point is WRONG (that is `DungeonProp_copy_0x188`). The zone
+   builder's own two parity emitters are now **derived record-for-record** over 56 live zones
+   — 7,256 checks green (`frida_zone_props2.py`, `gate_zone_props2.py`,
+   `Docs/RE_zone_props.md`): parity is a literal `(zx+zz)%2` at `0x51cb66`, both emitters'
+   positions come out of named `rand()` draws, and `FUN_005287b0` (`Prop_settleOnTerrain`) is
+   a **pure function of the finished terrain** — drop ≤50 / raise ≤50 / needs full support /
+   not in water — so the layer is portable with no captured state.
+   ⚠ **Two claims from the first cut are RETRACTED** (both caused by hooking the out-of-line
+   `push_back`): "exactly one prop per zone" is an artifact — an odd zone carries **0–5**,
+   because `FUN_004e0740`'s stage 2 pushes into the SAME `site+0xc` through an **inlined**
+   `push_back`; and the nine-caller census does not scope the layer, because an inlined
+   `push_back` never calls `FUN_004d6670`. The census that holds is over **`FUN_004ce8e0`**
+   (`PropVector_reserve`), and it turns up a **fifth emitter, `FUN_005104e0`**, that the old
+   one could not see.
+   ▶ Next, in order: **`FUN_005104e0`** (7 KB, zone-builder-only, pushes props and constructs
+   `Spawn`/`CombatBehavior`/`CompanionBehavior` — capture it before naming it); the **town
+   builder's three emitters**; then zone emitters **A** (`0x51dbf5`, type 0x2d) and **C**
+   (`0x51fcdb`, type 0x32/0x33 with a string), whose record content is already read off
+   statically but whose gates are not — read those statically rather than sampling blindly.
 4. **Port the mob pass + boss spawn + light sources into `cw_rederive`** (the item-generation
    family is ported, and now fed with a real level/rank). Then the RatForge engine half of
    "light emission" — rendering the kind-7 / kind-4 records as actual lights — which is engine
