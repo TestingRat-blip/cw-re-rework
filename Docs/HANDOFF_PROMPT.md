@@ -175,7 +175,11 @@ is the entity layer. Two functions are freshly RE'd:
 
 The dungeon mob pass is done. Pick up from there, in rough priority order:
 
-1. **The rest of the dungeon entity layer** — the `cell.flags & 4` block at `0x5078b3` (fires
+1. **Identify the `counter` feeding `monster_level_formula`** (`[esp+0x28]` in
+   `FUN_0050e080` @0x50ea8b). It is the last input the loot layer needs; the function is
+   already ported bit-exact, so this is matching a value to existing port state, not new RE.
+   Live values: 34, 38, 46 for levels 23, 30, 52 (`Docs/RE_dungeon_level_rank.md`).
+2. **The rest of the dungeon entity layer** — the `cell.flags & 4` block at `0x5078b3` (fires
    on exactly one cell per dungeon, the apex/boss room), the chandelier at `0x507760`
    (`style == 3 && rand() % 10 == 0`), the kind-4 entrance marker at `0x504832`, and the
    loot pass (DONE -- `RE_dungeon_loot.md`). **Every emitter the assembler feeds is now

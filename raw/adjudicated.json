@@ -108,9 +108,9 @@
    "verdict": "B"
   },
   "00411090": {
-   "kind": "gamemisc",
-   "name": "unproven -- kind is GAME",
-   "verdict": "NEITHER"
+   "kind": "game",
+   "name": "monster_level_formula",
+   "verdict": "DEEP-RE"
   },
   "00413420": {
    "kind": "gamemisc",

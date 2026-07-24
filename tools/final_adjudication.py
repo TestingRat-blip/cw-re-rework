@@ -63,7 +63,10 @@ RULINGS = {
     "00528450": ("NEITHER", "std_list_push_back", "same VC11 <list> signature; A's `prop_scatter` is wrong"),
     "004f2c50": ("NEITHER", "std_vector_push_back (32B elem)", "`& 0xffffffe0` element stride; A's `npc_schedule_b` wrong"),
     "004d6670": ("NEITHER", "std_vector_push_back (with EH)", "SEH frame + vector grow/append"),
-    "00411090": ("NEITHER", "unproven -- kind is GAME",
+    # SETTLED 2026-07-24 (Docs/RE_dungeon_level_rank.md): FUN_0050e080 @0x50eab1 stores this
+    # function's result, fed `counter/64`, as a dungeon's LEVEL -- which is exactly the
+    # semantics A asserted and this ruling had withheld. Superseded by the DEEP_RE entry below.
+    "00411090_superseded": ("NEITHER", "unproven -- kind is GAME",
                  "`(1/(1-x) - 1)*20 + 1`. No CRT routine has this shape, so B's `lib` kind is wrong; "
                  "A's `monster_level_formula` asserts semantics the body alone does not establish"),
 
@@ -205,6 +208,11 @@ the body was the only way to settle these.
         # 0x118 stride calling ItemData_copy -- so it is specifically vector<ItemData>.
         "00528530": {"name": "ItemData_vector_push_back", "kind": "gamemisc",
                      "verdict": "DEEP-RE"},
+        # `(1/(1-x) - 1)*20 + 1`. ADJUDICATION left this "unproven -- kind is GAME" because
+        # the body alone did not establish cw_callgraph's `monster_level_formula`. Its one
+        # real call site does: FUN_0050e080 @0x50eab1 stores ftol(FUN_00411090(counter/64))
+        # as the dungeon's level (Docs/RE_dungeon_level_rank.md).
+        "00411090": {"name": "monster_level_formula", "kind": "game", "verdict": "DEEP-RE"},
         # the dungeon prop record (0x188) that lives in the assembler's site+0xc vector, and
         # the two emitters that fill it (Docs/RE_dungeon_lights.md, RE_52a830_scatter.md).
         # 004c8420 was filed lib_fn_*; it copies base fields, a vec at +0x48, an ItemData at

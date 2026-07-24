@@ -211,7 +211,7 @@ addr	name	kind	module	class	attributed_by	size
 00410f00	FUN_00410f00	gamemisc	ai	Helpers	caller-vote	134
 00410f90	FUN_00410f90	gamemisc	ai	Helpers	caller-vote	173
 00411040	FUN_00411040	gamemisc	game_misc	_helpers_wrapper	role:wrapper	67
-00411090	unproven -- kind is GAME	gamemisc	game_misc	Game	ledger	52
+00411090	monster_level_formula	game	entity	Proven	ledger	52
 004110d0	FUN_004110d0	gamemisc	game_misc	Unsorted_000	none	655
 00411360	FUN_00411360	gamemisc	game_misc	Unsorted_000	none	472
 00411540	FUN_00411540	gamemisc	game_misc	Unsorted_000	none	419

@@ -468,8 +468,8 @@
    "src": "ADJUDICATION.md"
   },
   "00411090": {
-   "kind": "gamemisc",
-   "name": "unproven -- kind is GAME",
+   "kind": "game",
+   "name": "monster_level_formula",
    "src": "ADJUDICATION.md"
   },
   "00413130": {
