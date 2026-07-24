@@ -101,9 +101,17 @@ to be emitted — it **predicts the whole stub set, in emit order**:
 **What the rejects actually are matters for the port.** In the reference dungeon 79 of the 84
 rejects read `(200, 200, 200, class 1)` — the *dungeon's own stone*, not terrain; only 5 are
 terrain materials (`0x24`, `0x06`). So a terrain-height test alone does not model this gate.
-RatForge's `Dungeons.cpp` currently rejects on `terr()` surface height at exactly these probe
-offsets, which means it **over-emits stubs** wherever the wall backs onto the dungeon's own
-mass. That is the one place this RE is ahead of the port.
+
+Checked against RatForge: its `Dungeons.cpp` already probes at exactly these four offsets
+(`kSpx`/`kSpz`) and in the right emit order, but it rejects on `terr()` **surface height**, so it
+**over-emits stubs wherever a wall backs onto the dungeon's own mass** — the majority case. The
+fix is to evaluate the finished dungeon-plus-terrain block class at the probe point instead;
+the engine has the box lists at that point, so it is a local change. This is the one place the
+RE is now ahead of the port.
+
+The **entrance marker needs no port change** — `dungeonDecorWalk` already emits
+`DunPropKind::Entrance` at `(X0+5, Z0+5, Y0)`, including the missing `+5` on the vertical axis.
+That was a guess when it was written; it is now proven 6/6.
 
 ---
 
