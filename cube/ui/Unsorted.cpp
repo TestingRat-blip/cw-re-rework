@@ -1,6 +1,72 @@
-// Unsorted (ui) -- cube. 10 functions. Bodies = Ghidra pseudo-C.
+// Unsorted (ui) -- cube. 15 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Unsorted.h"
+
+/* FUN_0040e696 @ 0040e696  kind=gamemisc  attributed-by=logic:caller-vote  size=90 */
+
+undefined4 FUN_0040e696(void)
+
+{
+  basic_ostream<wchar_t,std::char_traits<wchar_t>_> *this;
+  int *piVar1;
+  bool bVar2;
+  int *in_EDX;
+  int unaff_EBP;
+  int unaff_ESI;
+  
+  *(undefined4 *)(unaff_EBP + -4) = 1;
+  std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::setstate
+            ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(*(int *)(*in_EDX + 4) + (int)in_EDX),
+             unaff_ESI,false);
+  *(undefined4 *)(unaff_EBP + -4) = 0xffffffff;
+  bVar2 = std::uncaught_exception();
+  this = *(basic_ostream<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x30);
+  if (!bVar2) {
+    std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::_Osfx(this);
+  }
+  piVar1 = *(int **)((int)&this[0xe].vbtablePtr +
+                    this->vbtablePtr->basic_ios<wchar_t,std::char_traits<wchar_t>_>_offset);
+  if (piVar1 != (int *)0x0) {
+    (**(code **)(*piVar1 + 8))();
+  }
+  ExceptionList = *(void **)(unaff_EBP + -0xc);
+  return *(undefined4 *)(unaff_EBP + 8);
+}
+
+
+/* FUN_0040e8d6 @ 0040e8d6  kind=gamemisc  attributed-by=logic:caller-vote  size=92 */
+
+int FUN_0040e8d6(void)
+
+{
+  int iVar1;
+  basic_ostream<wchar_t,std::char_traits<wchar_t>_> *this;
+  int *piVar2;
+  bool bVar3;
+  int *in_ECX;
+  int unaff_EBP;
+  int unaff_ESI;
+  
+  *(undefined4 *)(unaff_EBP + -4) = 1;
+  iVar1 = *(int *)(unaff_EBP + 8);
+  std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::setstate
+            ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(*(int *)(*in_ECX + 4) + iVar1),
+             unaff_ESI,false);
+  *(undefined4 *)(unaff_EBP + -4) = 0xffffffff;
+  bVar3 = std::uncaught_exception();
+  this = *(basic_ostream<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x20);
+  if (!bVar3) {
+    std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::_Osfx(this);
+  }
+  piVar2 = *(int **)((int)&this[0xe].vbtablePtr +
+                    this->vbtablePtr->basic_ios<wchar_t,std::char_traits<wchar_t>_>_offset);
+  if (piVar2 != (int *)0x0) {
+    (**(code **)(*piVar2 + 8))();
+  }
+  ExceptionList = *(void **)(unaff_EBP + -0xc);
+  return iVar1;
+}
+
 
 /* FUN_0040f3c0 @ 0040f3c0  kind=gamemisc  attributed-by=logic:caller-vote  size=197 */
 
@@ -52,23 +118,6 @@ void FUN_0040f3c0(void *param_1,uint param_2,undefined4 param_3)
 }
 
 
-/* FUN_004288e0 @ 004288e0  kind=gamemisc  attributed-by=logic:caller-vote  size=52 */
-
-int FUN_004288e0(undefined4 *param_1)
-
-{
-  int in_ECX;
-  undefined4 *puVar1;
-  
-  puVar1 = (undefined4 *)(*(int *)(in_ECX + 0x20) * 0x10 + *(int *)(in_ECX + 0x4c));
-  *puVar1 = *param_1;
-  puVar1[1] = param_1[1];
-  puVar1[2] = param_1[2];
-  puVar1[3] = param_1[3];
-  return *(int *)(in_ECX + 0x20) * 0x10 + *(int *)(in_ECX + 0x4c);
-}
-
-
 /* FUN_00448f10 @ 00448f10  kind=gamemisc  attributed-by=logic:caller-vote  size=187 */
 
 void FUN_00448f10(undefined4 param_1,int param_2)
@@ -98,6 +147,76 @@ void FUN_00448f10(undefined4 param_1,int param_2)
   } while (iVar4 != 0);
   (**(code **)(**(int **)(in_ECX + 0x1c) + 0x178))
             (*(int **)(in_ECX + 0x1c),*(undefined4 *)(in_ECX + 0x6c),local_108,10);
+  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+/* FUN_00471b60 @ 00471b60  kind=gamemisc  attributed-by=logic:caller-vote  size=486 */
+
+void FUN_00471b60(char *param_1,float *param_2,undefined4 param_3,undefined4 param_4,
+                 undefined4 param_5,undefined4 param_6)
+
+{
+  char cVar1;
+  int iVar2;
+  char *pcVar3;
+  float *pfVar4;
+  float *pfVar5;
+  float10 fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  int local_60;
+  undefined1 local_58 [16];
+  float local_48 [4];
+  float local_38;
+  float local_34;
+  float local_30;
+  float local_2c;
+  float local_28;
+  float local_24;
+  float local_20;
+  float local_1c;
+  float local_18;
+  float local_14;
+  float local_10;
+  float local_c;
+  uint local_8;
+  
+  local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  if (*param_1 != '\0') {
+    fVar6 = (float10)FUN_004c7be0();
+    FUN_00448fe0((float)fVar6);
+    local_60 = 0;
+    if (0 < *(int *)(param_1 + 0x114)) {
+      pcVar3 = param_1 + 0x15;
+      do {
+        cVar1 = pcVar3[1];
+        fVar9 = (float)(int)pcVar3[-1];
+        fVar7 = (float)(int)*pcVar3;
+        pfVar4 = param_2;
+        pfVar5 = local_48;
+        for (iVar2 = 0x10; iVar2 != 0; iVar2 = iVar2 + -1) {
+          *pfVar5 = *pfVar4;
+          pfVar4 = pfVar4 + 1;
+          pfVar5 = pfVar5 + 1;
+        }
+        fVar8 = (float)(int)cVar1;
+        local_18 = local_38 * fVar7 + local_48[0] * fVar9 + local_28 * fVar8 + local_18;
+        local_14 = local_34 * fVar7 + local_48[1] * fVar9 + local_24 * fVar8 + local_14;
+        local_10 = local_30 * fVar7 + local_48[2] * fVar9 + local_20 * fVar8 + local_10;
+        local_c = local_2c * fVar7 + local_48[3] * fVar9 + local_1c * fVar8 + local_c;
+        FUN_004c7250(local_58,pcVar3[2],param_5,param_6);
+        FUN_00448280(local_58);
+        FUN_004482a0(local_48,param_3,param_4);
+        FUN_004e6df0();
+        local_60 = local_60 + 1;
+        pcVar3 = pcVar3 + 8;
+      } while (local_60 < *(int *)(param_1 + 0x114));
+    }
+    FUN_00448fe0(0);
+  }
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
   return;
 }
@@ -380,6 +499,23 @@ LAB_0047664b:
 }
 
 
+/* FUN_004c7be0 @ 004c7be0  kind=gamemisc  attributed-by=logic:caller-vote  size=30 */
+
+float10 FUN_004c7be0(void)
+
+{
+  char cVar1;
+  char *in_ECX;
+  
+  if ((*in_ECX != '\0') &&
+     ((((cVar1 = in_ECX[0xd], cVar1 == '\x01' || (cVar1 == '\v')) || (cVar1 == '\f')) ||
+      (cVar1 == '\x16')))) {
+    return (float10)1;
+  }
+  return (float10)0;
+}
+
+
 /* FUN_004e0730 @ 004e0730  kind=gamemisc  attributed-by=logic:caller-vote  size=513 */
 
 void FUN_004e0730(undefined4 *param_1,char param_2,undefined4 *param_3,undefined4 param_4,
@@ -570,6 +706,38 @@ void FUN_004e15e0(int param_1,undefined4 *param_2,undefined4 *param_3)
   }
                     /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
+}
+
+
+/* FUN_004ec370 @ 004ec370  kind=gamemisc  attributed-by=logic:caller-vote  size=25 */
+
+undefined4 FUN_004ec370(undefined4 param_1)
+
+{
+  switch(param_1) {
+  case 0:
+    return 0x354;
+  case 1:
+    return 0x351;
+  case 2:
+    return 0x352;
+  case 3:
+    return 0x353;
+  case 4:
+    return 0x95b;
+  case 5:
+    return 0x82c;
+  case 6:
+    return 0x959;
+  case 7:
+    return 0x9f2;
+  case 8:
+    return 0x91f;
+  case 9:
+    return 0x91d;
+  default:
+    return 0x34b;
+  }
 }
 
 
@@ -1566,6 +1734,196 @@ LAB_004ed71e:
     }
   }
   return 0;
+}
+
+
+/* FUN_0051be60 @ 0051be60  kind=gamemisc  attributed-by=logic:caller-vote  size=29 */
+
+int FUN_0051be60(undefined4 param_1,int param_2,int param_3,int param_4)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  switch(param_1) {
+  case 0:
+    break;
+  case 1:
+    if (param_4 == 5) {
+      return 0x80c;
+    }
+    if (param_4 == 7) {
+      return 0x81a;
+    }
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return (param_2 % 0xb + 0x162) * 5 + iVar2;
+  case 2:
+    if (param_4 == 2) {
+      iVar2 = 4;
+      if (param_3 < 4) {
+        iVar2 = param_3;
+      }
+      return iVar2 + 0x298;
+    }
+    if (param_4 == 7) {
+      return 0x819;
+    }
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return iVar2 + 0x261 + (param_2 % 0xb) * 5;
+  case 3:
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return iVar2 + 0x3ba + (param_2 % 0xb) * 5;
+  case 4:
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return iVar2 + 0x3f1 + (param_2 % 0xb) * 5;
+  case 5:
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return (param_2 % 0xb + 0x178) * 5 + iVar2;
+  case 6:
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return iVar2 + 0x2a2 + (param_2 % 0xb) * 5;
+  case 7:
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return iVar2 + 0x2d9 + (param_2 % 0xb) * 5;
+  case 8:
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return iVar2 + 0x310 + (param_2 % 0xb) * 5;
+  case 9:
+    return 0x348;
+  case 10:
+    if (param_4 == 5) {
+      iVar2 = 4;
+      if (param_3 < 4) {
+        iVar2 = param_3;
+      }
+      return iVar2 + 0x25c;
+    }
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return iVar2 + 0x1b2 + (param_2 % 0xb) * 5;
+  case 0xb:
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return iVar2 + 0x1e9 + (param_2 % 0xb) * 5;
+  case 0xc:
+    iVar2 = (param_2 % 6) * 5;
+    if (param_4 != 0xb) {
+      iVar1 = 4;
+      if (param_3 < 4) {
+        iVar1 = param_3;
+      }
+      return iVar1 + 0x23e + iVar2;
+    }
+    iVar1 = 4;
+    if (param_3 < 4) {
+      iVar1 = param_3;
+    }
+    return iVar1 + 0x220 + iVar2;
+  case 0xd:
+    if (param_4 == 2) {
+      iVar2 = 4;
+      if (param_3 < 4) {
+        iVar2 = param_3;
+      }
+      return iVar2 + 0x45f;
+    }
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return iVar2 + 0x428 + (param_2 % 0xb) * 5;
+  case 0xe:
+    return 0x347;
+  case 0xf:
+    if (param_4 == 5) {
+      return 0x790;
+    }
+    if (param_4 == 7) {
+      return 0x78f;
+    }
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return (param_2 % 0xb + 0x16d) * 5 + iVar2;
+  case 0x10:
+    if (param_4 == 5) {
+      return 0x7c9;
+    }
+    if (param_4 == 7) {
+      return 0x7c8;
+    }
+    if (param_4 == 0x12) {
+      return 0x7ca;
+    }
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return iVar2 + 0x791 + (param_2 % 0xb) * 5;
+  case 0x11:
+    if (param_4 == 2) {
+      return 0x7cb;
+    }
+    if (param_4 == 5) {
+      return 0x805;
+    }
+    if (param_4 == 7) {
+      return 0x804;
+    }
+    iVar2 = 4;
+    if (param_3 < 4) {
+      iVar2 = param_3;
+    }
+    return iVar2 + 0x7cc + (param_2 % 0xb) * 5;
+  case 0x12:
+    return 0x91b;
+  case 0x13:
+    return 0x803;
+  case 0x14:
+    return 0x34a;
+  default:
+    return 899;
+  }
+  if (param_4 == 5) {
+    return 0x80b;
+  }
+  if (param_4 == 7) {
+    return 0x818;
+  }
+  iVar2 = 4;
+  if (param_3 < 4) {
+    iVar2 = param_3;
+  }
+  return iVar2 + 899 + (param_2 % 0xb) * 5;
 }
 
 

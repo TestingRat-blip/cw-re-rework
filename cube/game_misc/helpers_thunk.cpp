@@ -1,4 +1,4 @@
-// helpers_thunk (game_misc) -- cube. 84 functions. Bodies = Ghidra pseudo-C.
+// helpers_thunk (game_misc) -- cube. 89 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_thunk.h"
 
@@ -104,6 +104,16 @@ void FUN_0040b380(undefined4 param_1)
 }
 
 
+/* fwd_0040e030_40e140 @ 0040e140  kind=gamemisc  attributed-by=role:thunk  size=31 */
+
+undefined4 FUN_0040e140(undefined4 param_1)
+
+{
+  FUN_0040e030(param_1);
+  return param_1;
+}
+
+
 /* fwd_00411ad0_411bc0 @ 00411bc0  kind=gamemisc  attributed-by=role:thunk  size=31 */
 
 undefined4 FUN_00411bc0(undefined4 param_1)
@@ -175,6 +185,19 @@ void FUN_004499c0(undefined4 param_1,int *param_2)
   }
   FUN_004499f0(param_1,iVar2,iVar1);
   return;
+}
+
+
+/* fwd_0044aa20_449cb0 @ 00449cb0  kind=gamemisc  attributed-by=role:thunk  size=44 */
+
+int FUN_00449cb0(int param_1,int param_2,int param_3)
+
+{
+  for (; param_1 != param_2; param_1 = param_1 + 0xc) {
+    FUN_0044aa20(param_1);
+    param_3 = param_3 + 0xc;
+  }
+  return param_3;
 }
 
 
@@ -319,6 +342,16 @@ void FUN_0051d0e0(int param_1)
 }
 
 
+/* fwd_0054fc20_520620 @ 00520620  kind=gamemisc  attributed-by=role:thunk  size=18 */
+
+void FUN_00520620(undefined4 param_1)
+
+{
+  FUN_0054fc20(param_1,0);
+  return;
+}
+
+
 /* fwd_0051f3c0_5211a0 @ 005211a0  kind=gamemisc  attributed-by=role:thunk  size=23 */
 
 void FUN_005211a0(void)
@@ -394,6 +427,17 @@ void FUN_00525590(undefined4 param_1,undefined4 param_2)
 }
 
 
+/* fwd_0055d830_526480 @ 00526480  kind=gamemisc  attributed-by=role:thunk  size=32 */
+
+void FUN_00526480(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 undefined4 param_5)
+
+{
+  FUN_0055d830(param_1,param_2,param_3,0,0,param_4,param_5);
+  return;
+}
+
+
 /* fwd_0052e070_5267a0 @ 005267a0  kind=gamemisc  attributed-by=role:thunk  size=30 */
 
 void FUN_005267a0(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
@@ -401,6 +445,17 @@ void FUN_005267a0(undefined4 param_1,undefined4 param_2,undefined4 param_3,undef
 
 {
   FUN_0052e070(param_1,param_2,param_3,param_4,param_5,0);
+  return;
+}
+
+
+/* fwd_0052e070_526b60 @ 00526b60  kind=gamemisc  attributed-by=role:thunk  size=30 */
+
+void FUN_00526b60(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 undefined4 param_5)
+
+{
+  FUN_0052e070(param_1,param_2,param_3,param_4,param_5,1);
   return;
 }
 

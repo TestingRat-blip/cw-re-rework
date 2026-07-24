@@ -5,7 +5,10 @@ This does not invent names. It reads each function's decompiled body and assigns
 that is mechanically verifiable from the code, so the review surface splits into:
 
   * trivial mechanical helpers a reviewer can skip (accessors, mutators, thunks, stubs,
-    ctor/dtor-shaped, dispatchers, thin wrappers), and
+    ctor/dtor-shaped, dispatchers, thin wrappers),
+  * **fragments of a bigger function** that Ghidra split off at an MSVC alignment NOP
+    (`body-split`, from `nop_split_audit.detect()`) -- real code, but not a function, and
+    reviewable only as part of its owner, and
   * genuine unknown game logic that still needs RE.
 
 For the trivial roles it also emits a descriptive name (`get_0x1c`, `thunk_to_...`) and,
@@ -21,6 +24,8 @@ import os
 import re
 from collections import Counter, defaultdict
 
+from nop_split_audit import detect as detect_nop_splits
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(HERE, "..", "raw")
 FOLDER = {"Server.exe": "server", "Cube.exe": "cube"}
@@ -28,6 +33,31 @@ FOLDER = {"Server.exe": "server", "Cube.exe": "cube"}
 # roles a reviewer can skip entirely vs. real functions recovered via indirect refs
 SKIP_ROLES = {"accessor", "mutator", "thunk", "identity", "stub", "dispatch", "computed", "artifact"}
 INDIRECT_ROLES = {"vfunc-indirect", "dispatch-target", "callback"}
+
+# Which attribution.tsv rows this pass owns.
+#
+# It used to read only `attributed_by == "none"`, which made it destructive on a re-run: the
+# rows it classified last time now read `role:*`, so a second run did not see them and
+# silently dropped every classification it had made -- the same failure family as the
+# `flirt_islands.py` island wipe. Rows it claimed must therefore stay in the pool.
+#
+# `caller-vote` rows are NOT ours: structure.py applies caller-vote only after the role step,
+# to rows no role claimed, so claiming them here would invert that precedence. But a row this
+# pass classified as `logic` can later be promoted to `caller-vote`, and it would then leave
+# the pool for good -- the pool would ratchet downwards run after run (1248 -> 1181 -> 1177 in
+# testing). So the pass also remembers its own previous output and keeps those addresses,
+# unless a hard source (ledger / RTTI / library) has since claimed them.
+HARD_SOURCES = {"ledger", "lib-island", "stl-ns", "import-ns", "eh", "crt-name", "lib-string",
+                "rtti", "rtti-lib-ns", "rtti-sdk", "rtti-other"}
+
+
+def owned_by_this_pass(why):
+    return why == "none" or why.startswith("role:") or why.startswith("logic:")
+
+
+def previous_pool(exe):
+    p = os.path.join(RAW, exe + ".none_roles.json")
+    return set(json.load(open(p, encoding="utf-8"))) if os.path.exists(p) else set()
 
 # module a caller belongs to -> subsystem, for majority assignment
 def body_of(c):
@@ -138,22 +168,50 @@ def run(exe):
     meta = {r["addr"].lower(): r for r in (json.loads(l) for l in open(os.path.join(RAW, exe + ".meta.jsonl"), encoding="utf-8"))}
     dec = {r["addr"].lower(): r for r in (json.loads(l) for l in open(os.path.join(RAW, exe + ".decomp.jsonl"), encoding="utf-8"))}
     indir = load_indirefs(exe)
+    splits = detect_nop_splits(exe)
 
-    modmap, kindmap, none = {}, {}, []
+    prev = previous_pool(exe)
+    modmap, kindmap, namemap, none = {}, {}, {}, []
     for line in open(os.path.join(HERE, "..", folder, "attribution.tsv"), encoding="utf-8"):
         p = line.rstrip("\n").split("\t")
         if len(p) < 6 or p[0] == "addr":
             continue
         a = p[0].lower()
         modmap[a] = p[3]
+        namemap[a] = p[1]
         kindmap[a] = p[5]
-        if p[5] == "none":
+        if owned_by_this_pass(p[5]) or (a in prev and p[5] not in HARD_SOURCES):
             none.append(a)
 
     out = {}
     roles = Counter()
     for a in none:
         role, name, ev = classify(a, meta, dec, kindmap)
+
+        # A body split is not a function at all -- Ghidra started one on the alignment NOP
+        # MSVC emits to 16-align a loop head, mid-body. Its structural shape is meaningless
+        # (it is a fragment), so this overrides `classify` outright, and it must be tested
+        # before the indirect-reference block or it lands in `artifact` as the mob-pass one
+        # did. See Docs/RE_50702a_mob_populator.md.
+        sp = splits.get(a)
+        if sp:
+            owner = sp["owner"]
+            oname = namemap.get(owner, "") if owner else ""
+            if oname.startswith("FUN_") or not oname:
+                oname = "FUN_%s" % (owner.upper() if owner else "?")
+            ev = ("entry bytes `%s` are an MSVC alignment NOP%s -- a fragment of %s (0x%s), "
+                  "not a function" % (sp["nop"], ", jumped over by the preceding `jmp`"
+                                      if sp["jmp_over"] else "", oname, owner))
+            rec = {"role": "body-split", "evidence": ev,
+                   "name": "%s__split_%s" % (oname, a.lstrip("0") or "0")}
+            if owner:
+                rec["owner"] = owner
+                if modmap.get(owner) not in (None, "game_misc", "_library"):
+                    rec["module"] = modmap[owner]
+                    rec["module_conf"] = 1.0
+            roles["body-split"] += 1
+            out[a] = rec
+            continue
 
         # indirect-reference resolution: recover callers Ghidra's direct graph missed
         ir = indir.get(a, {})
@@ -226,24 +284,27 @@ def main():
                 "vfunc-indirect": "REVIEW — vtable method (indirect)",
                 "dispatch-target": "REVIEW — dispatch-table handler",
                 "callback": "REVIEW — callback",
-                "artifact": "SKIP — no refs (EH/GS fragment or dead code)",
+                "body-split": "MERGE — fragment of its owner, not a function",
+                "artifact": "SKIP — no refs (dead code / EH fragment)",
                 "logic": "**REVIEW — genuine logic**"}
             for role, c in roles.most_common():
                 g.write("| %s | %d | %s |\n" % (role, c, action.get(role, "")))
             skippable = sum(roles[k] for k in roles if k in SKIP_ROLES)
             indirect = sum(roles[k] for k in roles if k in INDIRECT_ROLES)
             g.write("\n**%d skippable (trivial helpers + artifacts); %d indirect real functions "
-                    "recovered (vtable/dispatch/callback); %d remain genuine logic.**\n\n"
-                    % (skippable, indirect, roles.get("logic", 0)))
+                    "recovered (vtable/dispatch/callback); %d body splits merged into their "
+                    "owner; %d remain genuine logic.**\n\n"
+                    % (skippable, indirect, roles.get("body-split", 0), roles.get("logic", 0)))
         g.write("Consumed by `structure.py` as the `role` source: skippables get a descriptive name\n")
         g.write("in `game_misc/_helpers_*` / `_artifacts`, indirect-real go to `_indirect_*` under\n")
-        g.write("their subsystem, isolating true `logic` in the `Unsorted` files.\n")
+        g.write("their subsystem, body splits go to `_body_splits` under their **owner's**\n")
+        g.write("subsystem, isolating true `logic` in the `Unsorted` files.\n")
 
     for exe, n, roles, trivial in results:
         skippable = sum(roles[k] for k in roles if k in SKIP_ROLES)
         indirect = sum(roles[k] for k in roles if k in INDIRECT_ROLES)
-        print("%-11s none=%d  skip=%d  indirect-real=%d  glance=%d  LOGIC=%d"
-              % (exe, n, skippable, indirect,
+        print("%-11s pool=%d  skip=%d  indirect-real=%d  body-split=%d  glance=%d  LOGIC=%d"
+              % (exe, n, skippable, indirect, roles.get("body-split", 0),
                  sum(roles[k] for k in roles if k in ("wrapper", "ctor-like", "dtor-like")),
                  roles.get("logic", 0)))
         print("   " + "  ".join("%s:%d" % (k, v) for k, v in roles.most_common()))

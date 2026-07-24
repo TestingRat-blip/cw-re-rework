@@ -120,10 +120,15 @@ python tools/structure.py             # re-emit with islands + roles
 > results — the next `structure.py` silently emits a degraded tree. **If you only changed
 > labels, run `final_adjudication.py` -> `harvest_labels.py` -> `structure.py` and stop.**
 
-Audits and live gates, run on demand rather than as part of the fixpoint:
+`adjudicate_none.py` calls `nop_split_audit.detect()` itself, so the alignment-NOP body
+splits are merged in the same pass. It is also safe to re-run now — it remembers the
+addresses it classified last time instead of only reading `none`, which used to make a second
+run silently discard the first run's work.
+
+Live gates and standalone audits:
 
 ```
-python tools/nop_split_audit.py       # zero-ref "functions" that are alignment NOPs mid-body
+python tools/nop_split_audit.py              # the body-split report on its own
 python tools/frida_dungeon_grid.py [zx zz]   # live: dungeon cell grid + mob-pass trace
 python tools/gate_50702a_mobs.py --all       # gate: reproduce every dungeon mob ab-initio
 ```

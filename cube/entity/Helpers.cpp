@@ -1,34 +1,6 @@
-// Helpers (entity) -- cube. 25 functions. Bodies = Ghidra pseudo-C.
+// Helpers (entity) -- cube. 24 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Helpers.h"
-
-/* FUN_0040eaf0 @ 0040eaf0  kind=gamemisc  attributed-by=caller-vote  size=106 */
-
-void FUN_0040eaf0(undefined4 *param_1)
-
-{
-  undefined4 *in_ECX;
-  
-  in_ECX[5] = 7;
-  in_ECX[4] = 0;
-  *(undefined2 *)in_ECX = 0;
-  if ((uint)param_1[5] < 8) {
-    if (param_1[4] + 1 != 0) {
-      memmove(in_ECX,param_1,(param_1[4] + 1) * 2);
-    }
-  }
-  else {
-    *in_ECX = *param_1;
-    *param_1 = 0;
-  }
-  in_ECX[4] = param_1[4];
-  in_ECX[5] = param_1[5];
-  param_1[5] = 7;
-  param_1[4] = 0;
-  *(undefined2 *)param_1 = 0;
-  return;
-}
-
 
 /* FUN_00411e50 @ 00411e50  kind=gamemisc  attributed-by=caller-vote  size=558 */
 

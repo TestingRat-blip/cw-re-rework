@@ -2,46 +2,6 @@
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_wrapper_00.h"
 
-/* FUN_00402210 @ 00402210  kind=gamemisc  attributed-by=role:wrapper  size=89 */
-
-void FUN_00402210(undefined4 param_1,undefined4 param_2)
-
-{
-  undefined4 *in_ECX;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  puStack_c = &LAB_006e1200;
-  local_10 = ExceptionList;
-  ExceptionList = &local_10;
-  local_8 = 0;
-  FUN_00402370(*in_ECX,param_1,param_2,param_2);
-  ExceptionList = local_10;
-  return;
-}
-
-
-/* FUN_00402280 @ 00402280  kind=gamemisc  attributed-by=role:wrapper  size=89 */
-
-void FUN_00402280(undefined4 param_1,undefined4 param_2)
-
-{
-  undefined4 *in_ECX;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  puStack_c = &LAB_006e1220;
-  local_10 = ExceptionList;
-  ExceptionList = &local_10;
-  local_8 = 0;
-  FUN_00402500(*in_ECX,param_1,param_2,param_2);
-  ExceptionList = local_10;
-  return;
-}
-
-
 /* FUN_00403ee0 @ 00403ee0  kind=gamemisc  attributed-by=role:wrapper  size=28 */
 
 void FUN_00403ee0(void)
@@ -53,25 +13,6 @@ void FUN_00403ee0(void)
   FUN_0040c790(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
                     /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
-}
-
-
-/* FUN_00405470 @ 00405470  kind=gamemisc  attributed-by=role:wrapper  size=53 */
-
-void FUN_00405470(size_t param_1,char *param_2)
-
-{
-  void *_Dst;
-  char cVar1;
-  undefined4 *in_ECX;
-  
-  cVar1 = FUN_0064e310(param_1);
-  if (cVar1 != '\0') {
-    _Dst = (void *)*in_ECX;
-    memset(_Dst,(int)*param_2,param_1);
-    in_ECX[1] = (int)_Dst + param_1;
-  }
-  return;
 }
 
 
@@ -92,50 +33,26 @@ void FUN_00405810(void *param_1)
 }
 
 
-/* FUN_0040bac0 @ 0040bac0  kind=gamemisc  attributed-by=role:wrapper  size=105 */
+/* FUN_0040b4e0 @ 0040b4e0  kind=gamemisc  attributed-by=role:wrapper  size=86 */
 
-void FUN_0040bac0(int param_1,int param_2,int param_3)
+void FUN_0040b4e0(void)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
+  int in_ECX;
   
-  iVar3 = param_1;
-  iVar1 = *(int *)(param_1 + 0x38);
-  param_1 = (*(int *)(param_1 + 0x30) - *(int *)(param_1 + 0x2c)) / 0xc + param_2 * param_3;
-  iVar4 = FUN_00583cb0(iVar1,*(undefined4 *)(iVar1 + 4),&param_1);
-  iVar2 = *(int *)(iVar3 + 0x3c);
-  if (iVar2 == 0x15555554) {
+  if ((*(byte *)(in_ECX + 0x3c) & 1) != 0) {
                     /* WARNING: Subroutine does not return */
-    std::_Xlength_error("list<T> too long");
+    operator_delete((void *)**(undefined4 **)(in_ECX + 0xc));
   }
-  *(int *)(iVar3 + 0x3c) = iVar2 + 1;
-  *(int *)(iVar1 + 4) = iVar4;
-  **(int **)(iVar4 + 4) = iVar4;
+  **(undefined4 **)(in_ECX + 0xc) = 0;
+  **(undefined4 **)(in_ECX + 0x1c) = 0;
+  **(undefined4 **)(in_ECX + 0x2c) = 0;
+  **(undefined4 **)(in_ECX + 0x10) = 0;
+  **(undefined4 **)(in_ECX + 0x20) = 0;
+  **(undefined4 **)(in_ECX + 0x30) = 0;
+  *(uint *)(in_ECX + 0x3c) = *(uint *)(in_ECX + 0x3c) & 0xfffffffe;
+  *(undefined4 *)(in_ECX + 0x38) = 0;
   return;
-}
-
-
-/* FUN_0040bb30 @ 0040bb30  kind=gamemisc  attributed-by=role:wrapper  size=81 */
-
-undefined4 * FUN_0040bb30(undefined4 *param_1,undefined4 param_2,uint param_3)
-
-{
-  uint uVar1;
-  
-  uVar1 = param_3;
-  if (param_3 == 0) {
-    FUN_0040d800(param_1);
-    return param_1;
-  }
-  param_3 = param_3 & 0xffffff;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = 0;
-  FUN_00405470(uVar1,(int)&param_3 + 3);
-  return param_1;
 }
 
 
@@ -394,24 +311,6 @@ int FUN_00452260(int param_1)
   if (iVar1 != -0x10) {
     FUN_0040eaf0(param_1);
     FUN_0040eaf0(param_1 + 0x18);
-  }
-  return iVar1;
-}
-
-
-/* FUN_004522a0 @ 004522a0  kind=gamemisc  attributed-by=role:wrapper  size=52 */
-
-int FUN_004522a0(undefined4 *param_1)
-
-{
-  int iVar1;
-  
-  iVar1 = FUN_0046d910();
-  *(undefined2 *)(iVar1 + 0xc) = 0;
-  if ((undefined4 *)(iVar1 + 0x10) != (undefined4 *)0x0) {
-    *(undefined4 *)(iVar1 + 0x10) = *param_1;
-    *(undefined4 *)(iVar1 + 0x14) = param_1[1];
-    *(undefined4 *)(iVar1 + 0x18) = param_1[2];
   }
   return iVar1;
 }
@@ -910,20 +809,6 @@ void FUN_00477280(void)
 }
 
 
-/* FUN_004815c0 @ 004815c0  kind=gamemisc  attributed-by=role:wrapper  size=23 */
-
-void FUN_004815c0(int param_1)
-
-{
-  int in_ECX;
-  
-  if (param_1 == *(int *)(in_ECX + 0x80095c)) {
-    FUN_004a2300();
-  }
-  return;
-}
-
-
 /* FUN_00486050 @ 00486050  kind=gamemisc  attributed-by=role:wrapper  size=37 */
 
 void FUN_00486050(void)
@@ -1006,21 +891,6 @@ void FUN_00486560(undefined4 param_1)
   *(int *)(iVar1 + 4) = iVar2;
   **(int **)(iVar2 + 4) = iVar2;
   return;
-}
-
-
-/* FUN_00487ff0 @ 00487ff0  kind=gamemisc  attributed-by=role:wrapper  size=55 */
-
-undefined1 * FUN_00487ff0(undefined1 *param_1,undefined4 param_2,undefined4 param_3)
-
-{
-  undefined4 in_ECX;
-  
-  *(undefined4 *)(param_1 + 0x14) = 0xf;
-  *(undefined4 *)(param_1 + 0x10) = 0;
-  *param_1 = 0;
-  FUN_0040c0a0(in_ECX,param_2,param_3);
-  return param_1;
 }
 
 
@@ -1703,23 +1573,6 @@ void FUN_00583cb0(undefined4 param_1,undefined4 param_2,undefined4 *param_3)
 }
 
 
-/* FUN_0058d8f0 @ 0058d8f0  kind=gamemisc  attributed-by=role:wrapper  size=52 */
-
-int FUN_0058d8f0(int param_1)
-
-{
-  int iVar1;
-  
-  iVar1 = FUN_004050c0();
-  *(undefined2 *)(iVar1 + 0xc) = 0;
-  if (iVar1 != -0x10) {
-    FUN_0040eaf0(param_1);
-    *(undefined4 *)(iVar1 + 0x28) = *(undefined4 *)(param_1 + 0x18);
-  }
-  return iVar1;
-}
-
-
 /* FUN_0058e990 @ 0058e990  kind=gamemisc  attributed-by=role:wrapper  size=43 */
 
 void FUN_0058e990(int param_1)
@@ -1804,6 +1657,47 @@ void FUN_005947a0(void *param_1)
 }
 
 
+/* FUN_005a6ba0 @ 005a6ba0  kind=gamemisc  attributed-by=role:wrapper  size=113 */
+
+int FUN_005a6ba0(undefined4 param_1)
+
+{
+  int iVar1;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006f3441;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  iVar1 = FUN_006819e0();
+  *(undefined2 *)(iVar1 + 0xc) = 0;
+  local_8 = 1;
+  if (iVar1 != -0x10) {
+    FUN_005a7990(param_1);
+  }
+  ExceptionList = local_10;
+  return iVar1;
+}
+
+
+/* FUN_005a6c30 @ 005a6c30  kind=gamemisc  attributed-by=role:wrapper  size=41 */
+
+int FUN_005a6c30(undefined4 param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = FUN_005a7b90();
+  *(undefined2 *)(iVar1 + 0xc) = 0;
+  if (iVar1 != -0x10) {
+    FUN_005a6a00(param_1,0);
+  }
+  return iVar1;
+}
+
+
 /* FUN_005a7bd0 @ 005a7bd0  kind=gamemisc  attributed-by=role:wrapper  size=26 */
 
 void FUN_005a7bd0(void *param_1)
@@ -1885,6 +1779,21 @@ void FUN_00627670(void)
   in_ECX[2].Object_data.offset_0x0 = 0;
   *(undefined2 *)&in_ECX[1].vftablePtr = 0;
   plasma::Object::~Object(in_ECX);
+  return;
+}
+
+
+/* FUN_006291d0 @ 006291d0  kind=gamemisc  attributed-by=role:wrapper  size=42 */
+
+void FUN_006291d0(void)
+
+{
+  undefined1 local_10 [8];
+  uint local_8;
+  
+  local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  FUN_0062de60(local_10);
+  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
   return;
 }
 
@@ -1997,20 +1906,6 @@ void FUN_00639390(undefined4 param_1)
   *(int *)(iVar1 + 4) = iVar2;
   **(int **)(iVar2 + 4) = iVar2;
   return;
-}
-
-
-/* FUN_0063a710 @ 0063a710  kind=gamemisc  attributed-by=role:wrapper  size=43 */
-
-void * FUN_0063a710(void *param_1,int param_2,void *param_3)
-
-{
-  size_t _Size;
-  void *pvVar1;
-  
-  _Size = (param_2 - (int)param_1 >> 2) * 4;
-  pvVar1 = memmove(param_3,param_1,_Size);
-  return (void *)((int)pvVar1 + _Size);
 }
 
 
@@ -2362,6 +2257,20 @@ void FUN_00661540(void)
 }
 
 
+/* FUN_00663eb0 @ 00663eb0  kind=gamemisc  attributed-by=role:wrapper  size=39 */
+
+void FUN_00663eb0(int param_1)
+
+{
+  int in_ECX;
+  
+  if (*(int *)(in_ECX + 0xa8) + *(int *)(in_ECX + 0x7c) * 0x18 != param_1) {
+    FUN_0040f680(param_1,0,0xffffffff);
+  }
+  return;
+}
+
+
 /* FUN_0066df80 @ 0066df80  kind=gamemisc  attributed-by=role:wrapper  size=102 */
 
 void FUN_0066df80(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
@@ -2681,43 +2590,6 @@ void FUN_006712c0(int *param_1,int *param_2)
 }
 
 
-/* FUN_00677790 @ 00677790  kind=gamemisc  attributed-by=role:wrapper  size=103 */
-
-void FUN_00677790(int param_1)
-
-{
-  undefined4 *in_ECX;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  puStack_c = &LAB_006f8388;
-  local_10 = ExceptionList;
-  ExceptionList = &local_10;
-  *in_ECX = 0;
-  in_ECX[1] = 0;
-  in_ECX[2] = 0;
-  local_8 = 0;
-  in_ECX[3] = *(undefined4 *)(param_1 + 0xc);
-  FUN_00677800(param_1);
-  ExceptionList = local_10;
-  return;
-}
-
-
-/* FUN_00677970 @ 00677970  kind=gamemisc  attributed-by=role:wrapper  size=28 */
-
-void FUN_00677970(int param_1)
-
-{
-  int in_ECX;
-  
-  *(undefined4 *)(in_ECX + 0xc) = *(undefined4 *)(param_1 + 0xc);
-  FUN_00677800(param_1);
-  return;
-}
-
-
 /* FUN_00681240 @ 00681240  kind=gamemisc  attributed-by=role:wrapper  size=28 */
 
 float10 FUN_00681240(void)
@@ -2760,24 +2632,6 @@ void FUN_0068d593(void)
   FUN_0068d57e();
                     /* WARNING: Subroutine does not return */
   operator_delete(puVar1);
-}
-
-
-/* FUN_0068d85f @ 0068d85f  kind=gamemisc  attributed-by=role:wrapper  size=16 */
-
-void FUN_0068d85f(void)
-
-{
-  int in_EAX;
-  uint unaff_EBX;
-  int unaff_EBP;
-  void *unaff_ESI;
-  int unaff_EDI;
-  
-  if (in_EAX == 0) {
-    __ArrayUnwind(unaff_ESI,unaff_EBX,unaff_EDI,*(_func_void_void_ptr **)(unaff_EBP + 0x14));
-  }
-  return;
 }
 
 
@@ -3767,6 +3621,149 @@ undefined4 FUN_006c0c20(void)
   *unaff_ESI = 0;
   FUN_00691290(uVar1);
   return 0;
+}
+
+
+/* FUN_006c0c90 @ 006c0c90  kind=gamemisc  attributed-by=role:wrapper  size=102 */
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int FUN_006c0c90(void)
+
+{
+  undefined4 in_EAX;
+  undefined4 uVar1;
+  int in_ECX;
+  
+  *(undefined4 *)(in_ECX + 8) = in_EAX;
+  *(undefined4 *)(in_ECX + 0x1b0) = 0x20;
+  uVar1 = FUN_00693a60();
+  *(undefined4 *)(in_ECX + 0x1b4) = uVar1;
+  if (in_ECX != 0) {
+    FUN_006c0c20();
+    return in_ECX;
+  }
+  uRam00000014 = 0;
+  uRam00000184 = 0;
+  uRam00000018 = 0;
+  uRam00000188 = 0;
+  _DAT_00000000 = 0;
+  uRam00000004 = 0;
+  uRam000001b8 = 0;
+  return 0;
+}
+
+
+/* FUN_006c1250 @ 006c1250  kind=gamemisc  attributed-by=role:wrapper  size=27 */
+
+void FUN_006c1250(void)
+
+{
+  int in_EAX;
+  undefined4 uVar1;
+  
+  uVar1 = FUN_006c11c0();
+  FUN_0068ebc0(*(undefined2 *)(in_EAX + 0xfc),uVar1);
+  return;
+}
+
+
+/* FUN_006c1290 @ 006c1290  kind=gamemisc  attributed-by=role:wrapper  size=35 */
+
+void FUN_006c1290(int param_1,int param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = FUN_006c11c0();
+  FUN_0068ebc0(*(undefined4 *)(*(int *)(param_1 + 0x180) + param_2 * 4),uVar1);
+  return;
+}
+
+
+/* FUN_006c12e0 @ 006c12e0  kind=gamemisc  attributed-by=role:wrapper  size=39 */
+
+void FUN_006c12e0(int param_1,int param_2,undefined4 param_3)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = FUN_006c11c0();
+  uVar1 = FUN_0068ec40(param_3,uVar1);
+  *(undefined4 *)(*(int *)(param_1 + 0x180) + param_2 * 4) = uVar1;
+  return;
+}
+
+
+/* FUN_006c1d80 @ 006c1d80  kind=gamemisc  attributed-by=role:wrapper  size=66 */
+
+void FUN_006c1d80(void)
+
+{
+  void *_Dst;
+  int iVar1;
+  undefined4 uVar2;
+  int *in_EAX;
+  int iVar3;
+  int unaff_ESI;
+  
+  iVar1 = *in_EAX;
+  if ((0 < iVar1) && (iVar1 <= *(int *)(unaff_ESI + 0x1c))) {
+    iVar3 = *(int *)(unaff_ESI + 0x1c) - iVar1;
+    uVar2 = *(undefined4 *)(*(int *)(unaff_ESI + 0x18) + iVar3 * 4);
+    _Dst = (void *)(*(int *)(unaff_ESI + 0x18) + iVar3 * 4);
+    memmove(_Dst,(void *)((int)_Dst + 4),iVar1 * 4 - 4);
+    *(undefined4 *)(*(int *)(unaff_ESI + 0x18) + -4 + *(int *)(unaff_ESI + 0x1c) * 4) = uVar2;
+    return;
+  }
+  *(undefined4 *)(unaff_ESI + 0xc) = 0x86;
+  return;
+}
+
+
+/* FUN_006ca2c0 @ 006ca2c0  kind=gamemisc  attributed-by=role:wrapper  size=35 */
+
+void FUN_006ca2c0(void)
+
+{
+  int iVar1;
+  int unaff_ESI;
+  int unaff_EDI;
+  
+  iVar1 = FUN_006ca150(*(undefined1 *)(unaff_EDI + 0xc),*(undefined1 *)(unaff_ESI + 0xc));
+  *(int *)(unaff_ESI + 8) = iVar1 + *(int *)(unaff_EDI + 8);
+  return;
+}
+
+
+/* FUN_006cb180 @ 006cb180  kind=gamemisc  attributed-by=role:wrapper  size=26 */
+
+void __fastcall FUN_006cb180(undefined4 param_1)
+
+{
+  int iVar1;
+  int unaff_ESI;
+  int unaff_EDI;
+  
+  iVar1 = FUN_006cb050(param_1);
+  *(int *)(unaff_ESI + 8) = iVar1 + *(int *)(unaff_EDI + 8);
+  return;
+}
+
+
+/* FUN_006cb7e0 @ 006cb7e0  kind=gamemisc  attributed-by=role:wrapper  size=42 */
+
+void FUN_006cb7e0(void)
+
+{
+  undefined4 *unaff_ESI;
+  
+  FUN_006c8870(unaff_ESI + 3);
+  *unaff_ESI = 0;
+  unaff_ESI[1] = 0;
+  FUN_006915b0(unaff_ESI[2]);
+  unaff_ESI[2] = 0;
+  return;
 }
 
 

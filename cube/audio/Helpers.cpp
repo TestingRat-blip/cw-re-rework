@@ -1,4 +1,4 @@
-// Helpers (audio) -- cube. 87 functions. Bodies = Ghidra pseudo-C.
+// Helpers (audio) -- cube. 85 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Helpers.h"
 
@@ -907,61 +907,6 @@ LAB_0040caae:
   *(undefined1 *)(param_2 + 4) = 0;
                     /* WARNING: Subroutine does not return */
   operator_delete(param_2);
-}
-
-
-/* FUN_00428aa0 @ 00428aa0  kind=gamemisc  attributed-by=caller-vote  size=31 */
-
-int FUN_00428aa0(int param_1)
-
-{
-  char cVar1;
-  int iVar2;
-  int iVar3;
-  
-  cVar1 = *(char *)(*(int *)(param_1 + 8) + 0xd);
-  iVar2 = *(int *)(param_1 + 8);
-  while (iVar3 = iVar2, cVar1 == '\0') {
-    iVar2 = *(int *)(iVar3 + 8);
-    cVar1 = *(char *)(iVar2 + 0xd);
-    param_1 = iVar3;
-  }
-  return param_1;
-}
-
-
-/* FUN_0042cac0 @ 0042cac0  kind=gamemisc  attributed-by=caller-vote  size=88 */
-
-void FUN_0042cac0(int *param_1)
-
-{
-  int iVar1;
-  int *piVar2;
-  int *in_ECX;
-  
-  iVar1 = *param_1;
-  *param_1 = *(int *)(iVar1 + 8);
-  if (*(char *)(*(int *)(iVar1 + 8) + 0xd) == '\0') {
-    *(int **)(*(int *)(iVar1 + 8) + 4) = param_1;
-  }
-  *(int *)(iVar1 + 4) = param_1[1];
-  if (param_1 == *(int **)(*in_ECX + 4)) {
-    *(int *)(*in_ECX + 4) = iVar1;
-    *(int **)(iVar1 + 8) = param_1;
-    param_1[1] = iVar1;
-    return;
-  }
-  piVar2 = (int *)param_1[1];
-  if (param_1 == (int *)piVar2[2]) {
-    piVar2[2] = iVar1;
-    *(int **)(iVar1 + 8) = param_1;
-    param_1[1] = iVar1;
-    return;
-  }
-  *piVar2 = iVar1;
-  *(int **)(iVar1 + 8) = param_1;
-  param_1[1] = iVar1;
-  return;
 }
 
 

@@ -1,4 +1,4 @@
-// helpers_wrapper (world) -- cube. 2 functions. Bodies = Ghidra pseudo-C.
+// helpers_wrapper (world) -- cube. 3 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_wrapper.h"
 
@@ -42,6 +42,24 @@ void FUN_00468fc0(int *param_1)
   uVar2 = in_ECX[1];
   *param_1 = uVar1 - (uint)uVar3;
   param_1[1] = (uVar2 - (int)((ulonglong)uVar3 >> 0x20)) - (uint)(uVar1 < (uint)uVar3);
+  return;
+}
+
+
+/* FUN_0068d85f @ 0068d85f  kind=gamemisc  attributed-by=role:wrapper  size=16 */
+
+void FUN_0068d85f(void)
+
+{
+  int in_EAX;
+  uint unaff_EBX;
+  int unaff_EBP;
+  void *unaff_ESI;
+  int unaff_EDI;
+  
+  if (in_EAX == 0) {
+    __ArrayUnwind(unaff_ESI,unaff_EBX,unaff_EDI,*(_func_void_void_ptr **)(unaff_EBP + 0x14));
+  }
   return;
 }
 

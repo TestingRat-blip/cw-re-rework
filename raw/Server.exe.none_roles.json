@@ -1,14 +1,20 @@
 {
 "00401000": {
 "evidence": "small field store(s), no calls",
+"module": "world",
+"module_conf": 1.0,
 "role": "mutator"
 },
 "004010b0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00401370": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004013e0": {
@@ -30,14 +36,20 @@
 },
 "004014b0": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004014f0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00401530": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00401570": {
@@ -54,6 +66,8 @@
 },
 "00401610": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00401650": {
@@ -62,6 +76,8 @@
 },
 "004016c0": {
 "evidence": "virtual dispatch through vtable",
+"module": "world",
+"module_conf": 1.0,
 "name": "vdispatch",
 "role": "dispatch"
 },
@@ -77,6 +93,8 @@
 },
 "00401ca0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00401d40": {
@@ -125,20 +143,42 @@
 },
 "004024a0": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004024c0": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004024e0": {
 "evidence": "thin wrapper around 1 call(s)",
 "role": "wrapper"
 },
+"00402510": {
+"evidence": null,
+"role": "logic"
+},
 "00402a10": {
 "evidence": "single-call forwarder -> 0x0054a946",
+"module": "world",
+"module_conf": 1.0,
 "name": "fwd_0054a946",
 "role": "thunk"
+},
+"00402a40": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.69,
+"role": "logic"
+},
+"00402a70": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
 },
 "00402c10": {
 "evidence": null,
@@ -148,12 +188,20 @@
 "evidence": null,
 "role": "logic"
 },
+"00402cb0": {
+"evidence": null,
+"role": "logic"
+},
 "00402d10": {
 "evidence": null,
 "role": "logic"
 },
 "00402d40": {
 "evidence": "thin wrapper around 1 call(s)",
+"role": "wrapper"
+},
+"00402db0": {
+"evidence": "thin wrapper around 2 call(s)",
 "role": "wrapper"
 },
 "00402e30": {
@@ -170,12 +218,14 @@
 },
 "00402eb0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00405330": {
 "evidence": "frees memory \u2014 destructor-shaped",
 "module": "ai",
-"module_conf": 0.86,
+"module_conf": 0.88,
 "role": "dtor-like"
 },
 "00405420": {
@@ -185,7 +235,7 @@
 "00405450": {
 "evidence": null,
 "module": "ai",
-"module_conf": 0.83,
+"module_conf": 0.89,
 "role": "logic"
 },
 "00405510": {
@@ -202,18 +252,26 @@
 },
 "004055a0": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00405610": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00405660": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00405690": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00405750": {
@@ -222,11 +280,15 @@
 },
 "004061e0": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "00406250": {
 "evidence": "field getter: return *(this+0x1c)",
+"module": "world",
+"module_conf": 1.0,
 "name": "get_0x1c",
 "role": "accessor"
 },
@@ -237,13 +299,15 @@
 },
 "00406280": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "00406310": {
 "evidence": "frees memory \u2014 destructor-shaped",
 "module": "world",
-"module_conf": 0.75,
+"module_conf": 0.9,
 "role": "dtor-like"
 },
 "00406350": {
@@ -252,10 +316,14 @@
 },
 "00406380": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004063b0": {
 "evidence": "single-call forwarder -> 0x00407be0",
+"module": "world",
+"module_conf": 1.0,
 "name": "fwd_00407be0",
 "role": "thunk"
 },
@@ -275,6 +343,8 @@
 },
 "00406fd0": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004072a0": {
@@ -296,14 +366,20 @@
 },
 "004078f0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004079c0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004079f0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00407a50": {
@@ -316,6 +392,14 @@
 },
 "00407b30": {
 "evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
+},
+"00407be0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.83,
 "role": "logic"
 },
 "00407c80": {
@@ -324,6 +408,8 @@
 },
 "00407d60": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00408230": {
@@ -376,6 +462,12 @@
 },
 "0040a1d0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
+"role": "logic"
+},
+"0040a4f0": {
+"evidence": null,
 "role": "logic"
 },
 "0040a7f0": {
@@ -384,6 +476,8 @@
 },
 "0040a840": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0040ef90": {
@@ -392,10 +486,14 @@
 },
 "0040efc0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0040f0a0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0040f220": {
@@ -478,11 +576,13 @@
 "00412710": {
 "evidence": "zero-inits 8 fields, returns this",
 "module": "world",
-"module_conf": 0.8,
+"module_conf": 0.86,
 "role": "ctor-like"
 },
 "004128da": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00412980": {
@@ -500,6 +600,18 @@
 },
 "00412b00": {
 "evidence": null,
+"role": "logic"
+},
+"00412b60": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
+"role": "dtor-like"
+},
+"00412bd0": {
+"evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00412c40": {
@@ -531,6 +643,12 @@
 "evidence": "single field-derived expression, no calls",
 "name": "compute",
 "role": "computed"
+},
+"00413180": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.75,
+"role": "logic"
 },
 "00413200": {
 "evidence": "single field-derived expression, no calls",
@@ -587,6 +705,8 @@
 },
 "00414470": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00414550": {
@@ -993,6 +1113,8 @@
 },
 "00419f80": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
@@ -1014,10 +1136,14 @@
 },
 "0041a090": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "entity",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0041a120": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "entity",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0041a180": {
@@ -1028,12 +1154,14 @@
 },
 "0041a240": {
 "evidence": null,
+"module": "entity",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041a510": {
 "evidence": null,
 "module": "entity",
-"module_conf": 0.8,
+"module_conf": 0.67,
 "role": "logic"
 },
 "0041a5d0": {
@@ -1078,23 +1206,33 @@
 },
 "0041b930": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041ba70": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "0041ba90": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0041bb80": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041c9e0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041cae0": {
@@ -1108,11 +1246,15 @@
 },
 "0041cb40": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "0041cba0": {
 "evidence": "return param_1 (this) \u2014 often a no-op ctor/cast",
+"module": "world",
+"module_conf": 1.0,
 "name": "identity",
 "role": "identity"
 },
@@ -1122,10 +1264,14 @@
 },
 "0041d160": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041d190": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041d240": {
@@ -1134,6 +1280,8 @@
 },
 "0041d270": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041d340": {
@@ -1142,6 +1290,8 @@
 },
 "0041d390": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0041d410": {
@@ -1154,6 +1304,8 @@
 },
 "0041d500": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041d550": {
@@ -1162,26 +1314,38 @@
 },
 "0041d5d0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041d600": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041d680": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041d6c0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041d720": {
 "evidence": "zero-inits 4 fields, returns this",
+"module": "world",
+"module_conf": 1.0,
 "role": "ctor-like"
 },
 "0041d7e0": {
 "evidence": "small field store(s), no calls",
+"module": "world",
+"module_conf": 1.0,
 "role": "mutator"
 },
 "0041d820": {
@@ -1192,6 +1356,8 @@
 },
 "0041d8d0": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0041d950": {
@@ -1200,6 +1366,8 @@
 },
 "0041dae0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041dc60": {
@@ -1220,19 +1388,27 @@
 },
 "0041e2e0": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "0041e300": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041e320": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041e390": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041e400": {
@@ -1241,6 +1417,8 @@
 },
 "0041e450": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0041e540": {
@@ -1249,14 +1427,20 @@
 },
 "0041e640": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0041e740": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0041e840": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041e8f0": {
@@ -1265,10 +1449,14 @@
 },
 "0041e960": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041ea10": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041eab0": {
@@ -1277,23 +1465,33 @@
 },
 "0041eb20": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041ebb0": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "0041ee20": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041f4d0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041f5b0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041f640": {
@@ -1302,18 +1500,28 @@
 },
 "0041f770": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041faa0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0041ff9a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of writeVoxel (0x0041ff00), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "writeVoxel__split_41ff9a",
+"owner": "0041ff00",
+"role": "body-split"
 },
 "0041fff0": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
@@ -1324,6 +1532,8 @@
 },
 "00420020": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
@@ -1471,6 +1681,8 @@
 },
 "00422af0": {
 "evidence": "zero-inits 4 fields, returns this",
+"module": "world",
+"module_conf": 1.0,
 "role": "ctor-like"
 },
 "00422b10": {
@@ -1541,8 +1753,10 @@
 "role": "logic"
 },
 "004240ea": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00423DD0 (0x00423dd0), not a function",
+"name": "FUN_00423DD0__split_4240ea",
+"owner": "00423dd0",
+"role": "body-split"
 },
 "004254a0": {
 "evidence": null,
@@ -1574,15 +1788,29 @@
 },
 "00426b80": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00426c20": {
 "evidence": "frees memory \u2014 destructor-shaped",
 "role": "dtor-like"
 },
+"00426d30": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
+"role": "dtor-like"
+},
 "00426db0": {
 "evidence": "frees memory \u2014 destructor-shaped",
 "role": "dtor-like"
+},
+"00426eb0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
+"role": "logic"
 },
 "00426f60": {
 "evidence": "frees memory \u2014 destructor-shaped",
@@ -1671,8 +1899,12 @@
 "role": "computed"
 },
 "00428aca": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of cube::SpawnLocationBehavior::vfunction1 (0x00428940), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "cube::SpawnLocationBehavior::vfunction1__split_428aca",
+"owner": "00428940",
+"role": "body-split"
 },
 "00428ee0": {
 "evidence": "single field-derived expression, no calls",
@@ -1852,13 +2084,43 @@
 "evidence": "thin wrapper around 2 call(s)",
 "role": "wrapper"
 },
+"0042d140": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"role": "dtor-like"
+},
 "0042d300": {
 "evidence": null,
+"role": "logic"
+},
+"0042d420": {
+"evidence": null,
+"module": "entity",
+"module_conf": 0.75,
+"role": "logic"
+},
+"0042d440": {
+"evidence": null,
+"module": "entity",
+"module_conf": 0.75,
+"role": "logic"
+},
+"0042d460": {
+"evidence": null,
+"module": "entity",
+"module_conf": 0.75,
 "role": "logic"
 },
 "0042d4c0": {
 "evidence": "frees memory \u2014 destructor-shaped",
 "role": "dtor-like"
+},
+"0042d580": {
+"evidence": null,
+"role": "logic"
+},
+"0042d640": {
+"evidence": null,
+"role": "logic"
 },
 "0042e000": {
 "evidence": "frees memory \u2014 destructor-shaped",
@@ -1866,10 +2128,14 @@
 },
 "0042e220": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0042e880": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0042e900": {
@@ -1884,6 +2150,8 @@
 },
 "0042ede0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0042ee10": {
@@ -1910,11 +2178,19 @@
 },
 "0042feb0": {
 "evidence": null,
+"module": "world",
+"module_conf": 0.83,
 "role": "logic"
 },
 "00430ec0": {
 "evidence": "frees memory \u2014 destructor-shaped",
 "role": "dtor-like"
+},
+"0045f080": {
+"evidence": null,
+"module": "ai",
+"module_conf": 0.6,
+"role": "logic"
 },
 "0045f120": {
 "evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
@@ -2153,8 +2429,10 @@
 "role": "artifact"
 },
 "0046178a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00461420 (0x00461420), not a function",
+"name": "FUN_00461420__split_46178a",
+"owner": "00461420",
+"role": "body-split"
 },
 "00461bb0": {
 "evidence": null,
@@ -2468,8 +2746,10 @@
 "role": "dispatch"
 },
 "004667da": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00466700 (0x00466700), not a function",
+"name": "FUN_00466700__split_4667da",
+"owner": "00466700",
+"role": "body-split"
 },
 "00466ae0": {
 "evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
@@ -2859,12 +3139,16 @@
 "role": "callback"
 },
 "0046eada": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0046E7E0 (0x0046e7e0), not a function",
+"name": "FUN_0046E7E0__split_46eada",
+"owner": "0046e7e0",
+"role": "body-split"
 },
 "0046f5da": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0046E7E0 (0x0046e7e0), not a function",
+"name": "FUN_0046E7E0__split_46f5da",
+"owner": "0046e7e0",
+"role": "body-split"
 },
 "0046f880": {
 "evidence": null,
@@ -2875,8 +3159,10 @@
 "role": "logic"
 },
 "004700da": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0046F990 (0x0046f990), not a function",
+"name": "FUN_0046F990__split_4700da",
+"owner": "0046f990",
+"role": "body-split"
 },
 "00470300": {
 "evidence": null,
@@ -2903,8 +3189,10 @@
 "role": "callback"
 },
 "004721aa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00472090 (0x00472090), not a function",
+"name": "FUN_00472090__split_4721aa",
+"owner": "00472090",
+"role": "body-split"
 },
 "00472ef0": {
 "evidence": null,
@@ -2955,20 +3243,28 @@
 "role": "logic"
 },
 "0047693a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004768B0 (0x004768b0), not a function",
+"name": "FUN_004768B0__split_47693a",
+"owner": "004768b0",
+"role": "body-split"
 },
 "00476c10": {
 "evidence": null,
 "role": "logic"
 },
 "00476c8a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00476C60 (0x00476c60), not a function",
+"module": "db",
+"module_conf": 1.0,
+"name": "FUN_00476C60__split_476c8a",
+"owner": "00476c60",
+"role": "body-split"
 },
 "0047700a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00476FF0 (0x00476ff0), not a function",
+"name": "FUN_00476FF0__split_47700a",
+"owner": "00476ff0",
+"role": "body-split"
 },
 "00477290": {
 "evidence": null,
@@ -3055,8 +3351,10 @@
 "role": "logic"
 },
 "004816ca": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00481630 (0x00481630), not a function",
+"name": "FUN_00481630__split_4816ca",
+"owner": "00481630",
+"role": "body-split"
 },
 "00483460": {
 "evidence": "single-call forwarder -> 0x00468380 | address taken by 004834d0 (callback)",
@@ -3088,8 +3386,10 @@
 "role": "logic"
 },
 "00485faa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00485A80 (0x00485a80), not a function",
+"name": "FUN_00485A80__split_485faa",
+"owner": "00485a80",
+"role": "body-split"
 },
 "00486380": {
 "evidence": null,
@@ -3136,32 +3436,42 @@
 "role": "logic"
 },
 "0048866a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00488640 (0x00488640), not a function",
+"name": "FUN_00488640__split_48866a",
+"owner": "00488640",
+"role": "body-split"
 },
 "004886ea": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00488640 (0x00488640), not a function",
+"name": "FUN_00488640__split_4886ea",
+"owner": "00488640",
+"role": "body-split"
 },
 "004891f0": {
 "evidence": null,
 "role": "logic"
 },
 "0048935a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00489330 (0x00489330), not a function",
+"name": "FUN_00489330__split_48935a",
+"owner": "00489330",
+"role": "body-split"
 },
 "00489430": {
 "evidence": " | address taken by 0048951a (callback)",
 "role": "callback"
 },
 "0048951a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00489430 (0x00489430), not a function",
+"name": "FUN_00489430__split_48951a",
+"owner": "00489430",
+"role": "body-split"
 },
 "00489a0a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00489940 (0x00489940), not a function",
+"name": "FUN_00489940__split_489a0a",
+"owner": "00489940",
+"role": "body-split"
 },
 "0048a010": {
 "evidence": null,
@@ -3172,8 +3482,10 @@
 "role": "callback"
 },
 "0048a3ba": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0048A240 (0x0048a240), not a function",
+"name": "FUN_0048A240__split_48a3ba",
+"owner": "0048a240",
+"role": "body-split"
 },
 "0048b2c0": {
 "evidence": "field setter: *(this+0x10)=x | address taken by 0047e970 (callback)",
@@ -3189,12 +3501,16 @@
 "role": "logic"
 },
 "0048be0a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0048BD80 (0x0048bd80), not a function",
+"name": "FUN_0048BD80__split_48be0a",
+"owner": "0048bd80",
+"role": "body-split"
 },
 "0048be3a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0048BD80 (0x0048bd80), not a function",
+"name": "FUN_0048BD80__split_48be3a",
+"owner": "0048bd80",
+"role": "body-split"
 },
 "0048d6f0": {
 "evidence": null,
@@ -3205,8 +3521,10 @@
 "role": "logic"
 },
 "0048fb0a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0048F930 (0x0048f930), not a function",
+"name": "FUN_0048F930__split_48fb0a",
+"owner": "0048f930",
+"role": "body-split"
 },
 "004907e0": {
 "evidence": null,
@@ -3225,8 +3543,10 @@
 "role": "logic"
 },
 "00496e0a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00496DF0 (0x00496df0), not a function",
+"name": "FUN_00496DF0__split_496e0a",
+"owner": "00496df0",
+"role": "body-split"
 },
 "004975c0": {
 "evidence": null,
@@ -3237,28 +3557,38 @@
 "role": "logic"
 },
 "00499b6a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00499AF0 (0x00499af0), not a function",
+"name": "FUN_00499AF0__split_499b6a",
+"owner": "00499af0",
+"role": "body-split"
 },
 "00499c9a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_00499C30 (0x00499c30), not a function",
+"name": "FUN_00499C30__split_499c9a",
+"owner": "00499c30",
+"role": "body-split"
 },
 "0049a9aa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0049A610 (0x0049a610), not a function",
+"name": "FUN_0049A610__split_49a9aa",
+"owner": "0049a610",
+"role": "body-split"
 },
 "0049d5fa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0049D5C0 (0x0049d5c0), not a function",
+"name": "FUN_0049D5C0__split_49d5fa",
+"owner": "0049d5c0",
+"role": "body-split"
 },
 "0049f6a0": {
 "evidence": " | address taken by 00464130 (callback)",
 "role": "callback"
 },
 "0049fbea": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0049FAD0 (0x0049fad0), not a function",
+"name": "FUN_0049FAD0__split_49fbea",
+"owner": "0049fad0",
+"role": "body-split"
 },
 "004a0570": {
 "evidence": "trivial expression, no calls | address taken by 0046178a (callback)",
@@ -3278,24 +3608,32 @@
 "role": "logic"
 },
 "004a2cfa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004A2C80 (0x004a2c80), not a function",
+"name": "FUN_004A2C80__split_4a2cfa",
+"owner": "004a2c80",
+"role": "body-split"
 },
 "004a2f1a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004A2E90 (0x004a2e90), not a function",
+"name": "FUN_004A2E90__split_4a2f1a",
+"owner": "004a2e90",
+"role": "body-split"
 },
 "004a5e90": {
 "evidence": null,
 "role": "logic"
 },
 "004a6caa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004A6C80 (0x004a6c80), not a function",
+"name": "FUN_004A6C80__split_4a6caa",
+"owner": "004a6c80",
+"role": "body-split"
 },
 "004aac4a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004AAC10 (0x004aac10), not a function",
+"name": "FUN_004AAC10__split_4aac4a",
+"owner": "004aac10",
+"role": "body-split"
 },
 "004ad150": {
 "evidence": null,
@@ -3318,8 +3656,10 @@
 "role": "callback"
 },
 "004bb5da": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004BB240 (0x004bb240), not a function",
+"name": "FUN_004BB240__split_4bb5da",
+"owner": "004bb240",
+"role": "body-split"
 },
 "004bcb50": {
 "evidence": null,
@@ -3358,20 +3698,28 @@
 "role": "logic"
 },
 "004bec7a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004BEC40 (0x004bec40), not a function",
+"name": "FUN_004BEC40__split_4bec7a",
+"owner": "004bec40",
+"role": "body-split"
 },
 "004bedfa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP -- a fragment of FUN_004BEC40 (0x004bec40), not a function",
+"name": "FUN_004BEC40__split_4bedfa",
+"owner": "004bec40",
+"role": "body-split"
 },
 "004bf0fa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004BEC40 (0x004bec40), not a function",
+"name": "FUN_004BEC40__split_4bf0fa",
+"owner": "004bec40",
+"role": "body-split"
 },
 "004c166a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP -- a fragment of FUN_004C1640 (0x004c1640), not a function",
+"name": "FUN_004C1640__split_4c166a",
+"owner": "004c1640",
+"role": "body-split"
 },
 "004c2230": {
 "evidence": null,
@@ -3403,6 +3751,8 @@
 },
 "004c6470": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004c64b0": {
@@ -3423,10 +3773,14 @@
 },
 "004c7f70": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004c8020": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004c80d0": {
@@ -3435,6 +3789,8 @@
 },
 "004c8150": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004c8170": {
@@ -3443,6 +3799,8 @@
 },
 "004c8190": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004c8280": {
@@ -3452,6 +3810,8 @@
 },
 "004c82a0": {
 "evidence": "zero-inits 4 fields, returns this",
+"module": "world",
+"module_conf": 1.0,
 "role": "ctor-like"
 },
 "004c8350": {
@@ -3460,6 +3820,8 @@
 },
 "004c83b0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004c83d0": {
@@ -3488,16 +3850,25 @@
 },
 "004cd8f0": {
 "evidence": "thin wrapper around 2 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004cd98a": {
-"evidence": "virtual dispatch through vtable",
-"name": "vdispatch",
-"role": "dispatch"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP -- a fragment of cube::World::~World (0x004cd940), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "cube::World::~World__split_4cd98a",
+"owner": "004cd940",
+"role": "body-split"
 },
 "004cd99a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP -- a fragment of cube::World::~World (0x004cd940), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "cube::World::~World__split_4cd99a",
+"owner": "004cd940",
+"role": "body-split"
 },
 "004ce1d0": {
 "evidence": "single field-derived expression, no calls",
@@ -3506,6 +3877,8 @@
 },
 "004ce1f0": {
 "evidence": "return *this",
+"module": "world",
+"module_conf": 1.0,
 "name": "deref_get",
 "role": "accessor"
 },
@@ -3515,6 +3888,8 @@
 },
 "004ce220": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004ce250": {
@@ -3523,14 +3898,20 @@
 },
 "004ce270": {
 "evidence": "small field store(s), no calls",
+"module": "world",
+"module_conf": 1.0,
 "role": "mutator"
 },
 "004ce290": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004ce2d0": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004ce310": {
@@ -3540,14 +3921,20 @@
 },
 "004ce350": {
 "evidence": null,
+"module": "ai",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004ce380": {
 "evidence": null,
+"module": "ai",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004ce3e0": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004ce480": {
@@ -3560,12 +3947,12 @@
 },
 "004ce580": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004ce660": {
 "evidence": null,
-"module": "ai",
-"module_conf": 0.75,
 "role": "logic"
 },
 "004ce6e0": {
@@ -3574,18 +3961,32 @@
 },
 "004ce720": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
+},
+"004ce780": {
+"evidence": null,
+"module": "entity",
+"module_conf": 0.75,
+"role": "logic"
 },
 "004ce7e0": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004ce8e0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004ce990": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004cea80": {
@@ -3606,6 +4007,8 @@
 },
 "004d1a70": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004d2190": {
@@ -3614,10 +4017,14 @@
 },
 "004d2340": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004d24a0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004d2810": {
@@ -3630,6 +4037,8 @@
 },
 "004d3de0": {
 "evidence": "small field store(s), no calls",
+"module": "world",
+"module_conf": 1.0,
 "role": "mutator"
 },
 "004d3e00": {
@@ -3639,14 +4048,20 @@
 },
 "004d3e10": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004d3ed0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004d4180": {
 "evidence": null,
+"module": "entity",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004d4430": {
@@ -3655,6 +4070,8 @@
 },
 "004d4470": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004d4f60": {
@@ -3684,6 +4101,8 @@
 },
 "004d6620": {
 "evidence": "thin wrapper around 2 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004d7960": {
@@ -3700,11 +4119,15 @@
 },
 "004d81b0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004d863a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of seedInit (0x004d83a0), not a function",
+"name": "seedInit__split_4d863a",
+"owner": "004d83a0",
+"role": "body-split"
 },
 "004d8c90": {
 "evidence": null,
@@ -3712,14 +4135,20 @@
 },
 "004d8dc0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004d8de0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004d8e00": {
 "evidence": "field getter: return *(this+0x6c)",
+"module": "world",
+"module_conf": 1.0,
 "name": "get_0x6c",
 "role": "accessor"
 },
@@ -3729,6 +4158,8 @@
 },
 "004d8e30": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004d9160": {
@@ -3745,10 +4176,14 @@
 },
 "004d9960": {
 "evidence": "zero-inits 6 fields, returns this",
+"module": "ai",
+"module_conf": 1.0,
 "role": "ctor-like"
 },
 "004d99d0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004d9a10": {
@@ -3757,6 +4192,14 @@
 },
 "004d9ac0": {
 "evidence": "thin wrapper around 2 call(s)",
+"module": "ai",
+"module_conf": 1.0,
+"role": "wrapper"
+},
+"004d9b70": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 0.67,
 "role": "wrapper"
 },
 "004d9bb0": {
@@ -3779,6 +4222,8 @@
 },
 "004d9de0": {
 "evidence": null,
+"module": "ai",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004da010": {
@@ -3795,23 +4240,37 @@
 },
 "004da4a0": {
 "evidence": null,
+"module": "ai",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004da990": {
 "evidence": "thin wrapper around 1 call(s)",
 "role": "wrapper"
 },
+"004da9c0": {
+"evidence": null,
+"role": "logic"
+},
 "004da9f0": {
 "evidence": null,
 "role": "logic"
 },
+"004daa80": {
+"evidence": "zero-inits 4 fields, returns this",
+"role": "ctor-like"
+},
 "004dab30": {
 "evidence": "single-call forwarder -> 0x0054a946",
+"module": "world",
+"module_conf": 1.0,
 "name": "fwd_0054a946",
 "role": "thunk"
 },
 "004dab60": {
 "evidence": null,
+"module": "ai",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004dab90": {
@@ -3821,15 +4280,21 @@
 "004dad80": {
 "evidence": null,
 "module": "world",
-"module_conf": 0.75,
+"module_conf": 0.73,
 "role": "logic"
 },
 "004dade0": {
 "evidence": "thin wrapper around 1 call(s)",
 "role": "wrapper"
 },
+"004dae20": {
+"evidence": null,
+"role": "logic"
+},
 "004daed0": {
 "evidence": null,
+"module": "ai",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004daf10": {
@@ -3839,7 +4304,7 @@
 "004dafe0": {
 "evidence": null,
 "module": "ai",
-"module_conf": 0.8,
+"module_conf": 0.67,
 "role": "logic"
 },
 "004db1b0": {
@@ -3851,24 +4316,42 @@
 "role": "logic"
 },
 "004dcdca": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004DB200 (0x004db200), not a function",
+"name": "FUN_004DB200__split_4dcdca",
+"owner": "004db200",
+"role": "body-split"
 },
 "004dcff0": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "ai",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004dd090": {
 "evidence": null,
+"module": "ai",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004dd0f0": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "ai",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
+"004dd2e0": {
+"evidence": null,
+"module": "ai",
+"module_conf": 0.8,
+"role": "logic"
+},
 "004dd9da": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004DD2E0 (0x004dd2e0), not a function",
+"module": "ai",
+"module_conf": 1.0,
+"name": "FUN_004DD2E0__split_4dd9da",
+"owner": "004dd2e0",
+"role": "body-split"
 },
 "004dde00": {
 "evidence": null,
@@ -3877,35 +4360,49 @@
 "004dde90": {
 "evidence": null,
 "module": "ai",
-"module_conf": 0.8,
+"module_conf": 0.67,
 "role": "logic"
 },
 "004e0700": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004e1230": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004e1280": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004e1370": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004e1420": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004e14e0": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004e1520": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004e1560": {
@@ -3946,6 +4443,8 @@
 },
 "004e1d70": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004e1db0": {
@@ -3962,43 +4461,59 @@
 },
 "004e1e90": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004e1eb0": {
 "evidence": null,
-"module": "entity",
+"module": "world",
 "module_conf": 1.0,
 "role": "logic"
 },
 "004e1ed0": {
 "evidence": "zero-inits 4 fields, returns this",
+"module": "world",
+"module_conf": 1.0,
 "role": "ctor-like"
 },
 "004e2110": {
 "evidence": "thin wrapper around 2 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004e2190": {
 "evidence": "zero-inits 26 fields, returns this",
+"module": "world",
+"module_conf": 1.0,
 "role": "ctor-like"
 },
 "004e2320": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "004e2330": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "004e2350": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "004e2360": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004e23b0": {
@@ -4023,46 +4538,72 @@
 },
 "004e27b0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004e2830": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "004e28d0": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "004e310a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of town_builder (0x004e28e0), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "town_builder__split_4e310a",
+"owner": "004e28e0",
+"role": "body-split"
 },
 "004eaa7a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of town_builder (0x004e28e0), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "town_builder__split_4eaa7a",
+"owner": "004e28e0",
+"role": "body-split"
 },
 "004ee3aa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of town_builder (0x004e28e0), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "town_builder__split_4ee3aa",
+"owner": "004e28e0",
+"role": "body-split"
 },
 "004f3820": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "004f3840": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "004f3850": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f3880": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f38a0": {
@@ -4071,6 +4612,8 @@
 },
 "004f3940": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f3a80": {
@@ -4079,10 +4622,14 @@
 },
 "004f3b20": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004f3b60": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004f3bf0": {
@@ -4093,22 +4640,32 @@
 },
 "004f3c60": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f4080": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f42d0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f4560": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f46c0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f4860": {
@@ -4117,19 +4674,27 @@
 },
 "004f4940": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f4a5a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004F49D0 (0x004f49d0), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "FUN_004F49D0__split_4f4a5a",
+"owner": "004f49d0",
+"role": "body-split"
 },
 "004f4ab0": {
 "evidence": null,
 "role": "logic"
 },
 "004f4aea": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004F4AB0 (0x004f4ab0), not a function",
+"name": "FUN_004F4AB0__split_4f4aea",
+"owner": "004f4ab0",
+"role": "body-split"
 },
 "004f4b50": {
 "evidence": null,
@@ -4137,6 +4702,8 @@
 },
 "004f4cb0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f4f30": {
@@ -4145,6 +4712,8 @@
 },
 "004f5050": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f50e0": {
@@ -4157,6 +4726,8 @@
 },
 "004f5500": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f5940": {
@@ -4173,6 +4744,8 @@
 },
 "004f5b40": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f5c40": {
@@ -4181,6 +4754,8 @@
 },
 "004f5e00": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f6080": {
@@ -4193,6 +4768,8 @@
 },
 "004f6280": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f63f0": {
@@ -4204,16 +4781,24 @@
 "role": "logic"
 },
 "004f654a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004F64A0 (0x004f64a0), not a function",
+"name": "FUN_004F64A0__split_4f654a",
+"owner": "004f64a0",
+"role": "body-split"
 },
 "004f67f0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f6b0a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_004F6A60 (0x004f6a60), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "FUN_004F6A60__split_4f6b0a",
+"owner": "004f6a60",
+"role": "body-split"
 },
 "004f6db0": {
 "evidence": null,
@@ -4221,6 +4806,8 @@
 },
 "004f70f0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f7130": {
@@ -4243,36 +4830,54 @@
 },
 "004f72d0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f72f0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f7310": {
 "evidence": "single-call forwarder -> 0x0042f040",
+"module": "world",
+"module_conf": 1.0,
 "name": "fwd_0042f040",
 "role": "thunk"
 },
 "004f7330": {
 "evidence": "single-call forwarder -> 0x00407b00",
+"module": "world",
+"module_conf": 1.0,
 "name": "fwd_00407b00",
 "role": "thunk"
 },
 "004f7350": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f73ca": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of dungeon_grid_init (0x004f7370), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "dungeon_grid_init__split_4f73ca",
+"owner": "004f7370",
+"role": "body-split"
 },
 "004f7400": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f7490": {
 "evidence": "zero-inits 13 fields, returns this",
+"module": "world",
+"module_conf": 1.0,
 "role": "ctor-like"
 },
 "004f7540": {
@@ -4283,27 +4888,39 @@
 },
 "004f7710": {
 "evidence": "thin wrapper around 2 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004f7740": {
 "evidence": "thin wrapper around 2 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004f7890": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f7910": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f79b0": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "004f79d0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f7a30": {
@@ -4316,18 +4933,32 @@
 },
 "004f7ab0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f7b60": {
 "evidence": null,
+"module": "world",
+"module_conf": 0.6,
+"role": "logic"
+},
+"004f7ba0": {
+"evidence": null,
+"module": "world",
+"module_conf": 0.67,
 "role": "logic"
 },
 "004f7ca0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f7d00": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004f7fe0": {
@@ -4336,20 +4967,30 @@
 },
 "004f80d0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004f8230": {
 "evidence": null,
 "role": "logic"
 },
+"004f8520": {
+"evidence": "frees memory \u2014 destructor-shaped",
+"module": "ai",
+"module_conf": 0.67,
+"role": "dtor-like"
+},
 "004fc060": {
 "evidence": null,
 "module": "world",
-"module_conf": 0.67,
+"module_conf": 0.83,
 "role": "logic"
 },
 "004fc100": {
 "evidence": "thin wrapper around 2 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004feec0": {
@@ -4358,43 +4999,15 @@
 },
 "004ff1a0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004ff59a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
-},
-"00501e0a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
-},
-"00502a7a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
-},
-"00502dca": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
-},
-"0050529a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
-},
-"005053ca": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
-},
-"005054fa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
-},
-"0050702a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
-},
-"0050998a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of lib_fn_4ff3f0 (0x004ff3f0), not a function",
+"name": "lib_fn_4ff3f0__split_4ff59a",
+"owner": "004ff3f0",
+"role": "body-split"
 },
 "0050c550": {
 "evidence": null,
@@ -4402,6 +5015,8 @@
 },
 "0050d260": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0050d8d0": {
@@ -4409,51 +5024,87 @@
 "role": "logic"
 },
 "0050da73": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8da42400000000` are an MSVC alignment NOP -- a fragment of FUN_0050D8D0 (0x0050d8d0), not a function",
+"name": "FUN_0050D8D0__split_50da73",
+"owner": "0050d8d0",
+"role": "body-split"
 },
 "0051210a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of lib_fn_5104e0 (0x005104e0), not a function",
+"name": "lib_fn_5104e0__split_51210a",
+"owner": "005104e0",
+"role": "body-split"
 },
 "005154aa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of lib_fn_513760 (0x00513760), not a function",
+"name": "lib_fn_513760__split_5154aa",
+"owner": "00513760",
+"role": "body-split"
 },
 "00515d6a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of lib_fn_513760 (0x00513760), not a function",
+"name": "lib_fn_513760__split_515d6a",
+"owner": "00513760",
+"role": "body-split"
 },
 "0051819a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of lib_fn_513760 (0x00513760), not a function",
+"name": "lib_fn_513760__split_51819a",
+"owner": "00513760",
+"role": "body-split"
 },
 "0051880a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of zone_builder (0x00518630), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "zone_builder__split_51880a",
+"owner": "00518630",
+"role": "body-split"
 },
 "0051ae9a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of zone_builder (0x00518630), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "zone_builder__split_51ae9a",
+"owner": "00518630",
+"role": "body-split"
 },
 "0051b12a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP -- a fragment of zone_builder (0x00518630), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "zone_builder__split_51b12a",
+"owner": "00518630",
+"role": "body-split"
 },
 "0051b26a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of zone_builder (0x00518630), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "zone_builder__split_51b26a",
+"owner": "00518630",
+"role": "body-split"
 },
 "0051c90a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of zone_builder (0x00518630), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "zone_builder__split_51c90a",
+"owner": "00518630",
+"role": "body-split"
 },
 "0051ed6a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP -- a fragment of zone_builder (0x00518630), not a function",
+"module": "world",
+"module_conf": 1.0,
+"name": "zone_builder__split_51ed6a",
+"owner": "00518630",
+"role": "body-split"
 },
 "00521ed0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00522580": {
@@ -4462,6 +5113,8 @@
 },
 "00522820": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00524500": {
@@ -4470,22 +5123,32 @@
 },
 "005283b0": {
 "evidence": "thin wrapper around 2 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00528400": {
 "evidence": "thin wrapper around 2 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "005284a0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00528730": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "005290d0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0052ae10": {
@@ -4502,23 +5165,33 @@
 },
 "0052bfa0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0052d820": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0052d840": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0052d860": {
 "evidence": "field getter: return *(this+0x14)",
+"module": "world",
+"module_conf": 1.0,
 "name": "get_0x14",
 "role": "accessor"
 },
 "0052de60": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0052df20": {
@@ -4528,6 +5201,14 @@
 },
 "0052df40": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
+"role": "wrapper"
+},
+"0052dfb0": {
+"evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 0.75,
 "role": "wrapper"
 },
 "0052dfd0": {
@@ -4575,8 +5256,10 @@
 "role": "logic"
 },
 "0052e73a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0052E710 (0x0052e710), not a function",
+"name": "FUN_0052E710__split_52e73a",
+"owner": "0052e710",
+"role": "body-split"
 },
 "0052e7c0": {
 "evidence": null,
@@ -4605,6 +5288,8 @@
 },
 "0052eb90": {
 "evidence": "single field-derived expression, no calls",
+"module": "world",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
@@ -4620,6 +5305,8 @@
 },
 "0052ebf0": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0052ec10": {
@@ -4647,12 +5334,20 @@
 "role": "logic"
 },
 "0052f6fa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0052EF00 (0x0052ef00), not a function",
+"module": "ai",
+"module_conf": 1.0,
+"name": "FUN_0052EF00__split_52f6fa",
+"owner": "0052ef00",
+"role": "body-split"
 },
 "0052fc3a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0052EF00 (0x0052ef00), not a function",
+"module": "ai",
+"module_conf": 1.0,
+"name": "FUN_0052EF00__split_52fc3a",
+"owner": "0052ef00",
+"role": "body-split"
 },
 "00530470": {
 "evidence": null,
@@ -4673,8 +5368,6 @@
 },
 "00530600": {
 "evidence": null,
-"module": "ai",
-"module_conf": 0.67,
 "role": "logic"
 },
 "00530680": {
@@ -4708,32 +5401,46 @@
 "role": "logic"
 },
 "00530a7a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_005308B0 (0x005308b0), not a function",
+"name": "FUN_005308B0__split_530a7a",
+"owner": "005308b0",
+"role": "body-split"
 },
 "00531c6a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_005308B0 (0x005308b0), not a function",
+"name": "FUN_005308B0__split_531c6a",
+"owner": "005308b0",
+"role": "body-split"
 },
 "00532473": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8da42400000000` are an MSVC alignment NOP -- a fragment of lib_fn_5322d0 (0x005322d0), not a function",
+"name": "lib_fn_5322d0__split_532473",
+"owner": "005322d0",
+"role": "body-split"
 },
 "00532cfa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of lib_fn_5322d0 (0x005322d0), not a function",
+"name": "lib_fn_5322d0__split_532cfa",
+"owner": "005322d0",
+"role": "body-split"
 },
 "00533e0a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of lib_fn_5322d0 (0x005322d0), not a function",
+"name": "lib_fn_5322d0__split_533e0a",
+"owner": "005322d0",
+"role": "body-split"
 },
 "00533e8a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of lib_fn_5322d0 (0x005322d0), not a function",
+"name": "lib_fn_5322d0__split_533e8a",
+"owner": "005322d0",
+"role": "body-split"
 },
 "005343fa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of lib_fn_5322d0 (0x005322d0), not a function",
+"name": "lib_fn_5322d0__split_5343fa",
+"owner": "005322d0",
+"role": "body-split"
 },
 "00536290": {
 "evidence": null,
@@ -4804,24 +5511,34 @@
 "role": "dispatch-target"
 },
 "0054140a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0053CBA1 (0x0053cba1), not a function",
+"name": "FUN_0053CBA1__split_54140a",
+"owner": "0053cba1",
+"role": "body-split"
 },
 "00541aaa": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0053CBA1 (0x0053cba1), not a function",
+"name": "FUN_0053CBA1__split_541aaa",
+"owner": "0053cba1",
+"role": "body-split"
 },
 "00541d9a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0053CBA1 (0x0053cba1), not a function",
+"name": "FUN_0053CBA1__split_541d9a",
+"owner": "0053cba1",
+"role": "body-split"
 },
 "0054687a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0053CBA1 (0x0053cba1), not a function",
+"name": "FUN_0053CBA1__split_54687a",
+"owner": "0053cba1",
+"role": "body-split"
 },
 "0054709a": {
-"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
-"role": "artifact"
+"evidence": "entry bytes `8d9b00000000` are an MSVC alignment NOP, jumped over by the preceding `jmp` -- a fragment of FUN_0053CBA1 (0x0053cba1), not a function",
+"name": "FUN_0053CBA1__split_54709a",
+"owner": "0053cba1",
+"role": "body-split"
 },
 "00548b00": {
 "evidence": "thin wrapper around 1 call(s)",
@@ -4854,7 +5571,7 @@
 "0054a6ce": {
 "evidence": "single-call forwarder -> 0x0054a7b6",
 "module": "world",
-"module_conf": 0.8,
+"module_conf": 0.83,
 "name": "fwd_0054a7b6",
 "role": "thunk"
 },
@@ -4878,8 +5595,6 @@
 },
 "0054aa30": {
 "evidence": null,
-"module": "ai",
-"module_conf": 0.71,
 "role": "logic"
 },
 "0054ab26": {
@@ -4911,10 +5626,14 @@
 },
 "0054ae15": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "world",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0054ae25": {
 "evidence": null,
+"module": "world",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0054ae90": {

@@ -14,9 +14,10 @@ Signature of the pattern, all four parts required:
   4. the previous function's body ends exactly at this address (contiguous tiling)
 
 Anything matching should be merged into its predecessor, not counted as an artifact or a
-`_indirect_*` handler.
+`_indirect_*` handler. `adjudicate_none.py` imports `detect()` from here and gives every hit
+the `body-split` role, so the merge happens in the pipeline rather than only in this report.
 
--> raw/<prog>.nopsplits.md
+-> raw/<prog>.nopsplits.md, raw/<prog>.nopsplits.json
 """
 import json
 import os
@@ -52,6 +53,21 @@ def pe_reader(path):
                 return d[ra + (r - va):ra + (r - va) + n]
         return b""
     return rd
+
+
+def detect(prog):
+    """-> {addr8: {nop, jmp_over, owner, size}} for every zero-reference alignment-NOP split.
+
+    Importable entry point; `adjudicate_none.py` calls this. Returns {} rather than raising
+    if the binary is not on disk, so the pipeline still runs without the game installed.
+    """
+    try:
+        hits, _ = audit(prog)
+    except (OSError, KeyError, struct.error):
+        return {}
+    return {"%08x" % a: {"nop": b, "jmp_over": j, "owner": ("%08x" % o) if o else None,
+                         "size": sz}
+            for a, sz, b, j, o in hits}
 
 
 def audit(prog):
@@ -107,6 +123,8 @@ def main():
                 f.write("| `0x%08x` | %d | `%s` | %s | %s |\n"
                         % (a, sz, b, "yes" if jumped else "-",
                            ("`0x%08x`" % owner) if owner else "unresolved"))
+        with open(os.path.join(RAW, "%s.nopsplits.json" % prog), "w", encoding="utf-8") as f:
+            json.dump(detect(prog), f, indent=0, sort_keys=True)
         named = sum(1 for h in hits if h[4])
         jmp = sum(1 for h in hits if h[3])
         print("%-11s %4d/%d zero-ref functions are alignment NOPs (%d with the jmp-over, "

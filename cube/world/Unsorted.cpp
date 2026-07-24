@@ -1,6 +1,38 @@
-// Unsorted (world) -- cube. 25 functions. Bodies = Ghidra pseudo-C.
+// Unsorted (world) -- cube. 30 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Unsorted.h"
+
+/* FUN_0040217e @ 0040217e  kind=gamemisc  attributed-by=logic:caller-vote  size=89 */
+
+void FUN_0040217e(void)
+
+{
+  basic_ostream<char,std::char_traits<char>_> *this;
+  int *piVar1;
+  bool bVar2;
+  int *unaff_EBX;
+  int unaff_EBP;
+  int unaff_EDI;
+  
+  *(undefined4 *)(unaff_EBP + -4) = 1;
+  std::basic_ios<char,std::char_traits<char>_>::setstate
+            ((basic_ios<char,std::char_traits<char>_> *)(*(int *)(*unaff_EBX + 4) + (int)unaff_EBX),
+             unaff_EDI,false);
+  *(undefined4 *)(unaff_EBP + -4) = 0xffffffff;
+  bVar2 = std::uncaught_exception();
+  this = *(basic_ostream<char,std::char_traits<char>_> **)(unaff_EBP + -0x24);
+  if (!bVar2) {
+    std::basic_ostream<char,std::char_traits<char>_>::_Osfx(this);
+  }
+  piVar1 = *(int **)((int)&this[0xe].vbtablePtr +
+                    this->vbtablePtr->basic_ios<char,std::char_traits<char>_>_offset);
+  if (piVar1 != (int *)0x0) {
+    (**(code **)(*piVar1 + 8))();
+  }
+  ExceptionList = *(void **)(unaff_EBP + -0xc);
+  return;
+}
+
 
 /* FUN_0042c500 @ 0042c500  kind=gamemisc  attributed-by=logic:caller-vote  size=26 */
 
@@ -16,35 +48,33 @@ void FUN_0042c500(undefined4 param_1,undefined4 param_2,undefined4 param_3)
 }
 
 
-/* FUN_0042f7e0 @ 0042f7e0  kind=gamemisc  attributed-by=logic:caller-vote  size=119 */
+/* FUN_0042f730 @ 0042f730  kind=gamemisc  attributed-by=logic:caller-vote  size=174 */
 
-undefined * FUN_0042f7e0(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined * FUN_0042f730(int param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  undefined *puVar3;
+  int in_ECX;
   
-  iVar2 = FUN_004347a0(param_1,param_2,param_4);
-  if (iVar2 == 0) {
-    return &DAT_0076afc4;
-  }
-  iVar1 = *(int *)(iVar2 + 0x10);
-  if (param_3 < iVar1) {
-    return &DAT_0076afc4;
-  }
-  if (*(int *)(iVar2 + 0x1c) + iVar1 <= param_3) {
-    puVar3 = &DAT_0076afbc;
-    if (0 < param_3) {
-      puVar3 = &DAT_0076afc0;
+  if (param_1 < 0) {
+    if ((DAT_0076afcc & 1) == 0) {
+      DAT_0076afcc = DAT_0076afcc | 1;
     }
-    return puVar3;
+    _DAT_0076afc8 = 0;
+    _DAT_0076afca = 0x100;
+    return &DAT_0076afc8;
   }
-  puVar3 = (undefined *)FUN_0042f730(param_3 - iVar1);
-  if ((((puVar3[3] & 0x1f) == 0) && (param_3 < 1)) && ((puVar3[3] & 0x40) == 0)) {
-    puVar3 = &DAT_0076afbc;
+  if (*(int *)(in_ECX + 0x1c) <= param_1) {
+    if ((DAT_0076afcc & 2) == 0) {
+      DAT_0076afcc = DAT_0076afcc | 2;
+    }
+    _DAT_0076afd0 = 0xffff;
+    DAT_0076afd2 = 0xff;
+    DAT_0076afd3 = 0;
+    return &DAT_0076afd0;
   }
-  return puVar3;
+  return (undefined *)(*(int *)(in_ECX + 0x18) + param_1 * 4);
 }
 
 
@@ -105,6 +135,47 @@ undefined4 FUN_00434a90(int param_1,int param_2)
     return *(undefined4 *)(in_ECX + 0xbc + (param_1 * 0x400 + param_2) * 4);
   }
   return 0;
+}
+
+
+/* FUN_004462f0 @ 004462f0  kind=gamemisc  attributed-by=logic:caller-vote  size=52 */
+
+float10 FUN_004462f0(float param_1)
+
+{
+  return (float10)((1.0 / (1.0 - param_1) - 1.0) * 20.0 + 1.0);
+}
+
+
+/* FUN_0044931a @ 0044931a  kind=gamemisc  attributed-by=logic:caller-vote  size=90 */
+
+undefined4 FUN_0044931a(void)
+
+{
+  basic_ostream<char,std::char_traits<char>_> *this;
+  int *piVar1;
+  bool bVar2;
+  int *in_EDX;
+  int unaff_EBP;
+  int unaff_EDI;
+  
+  *(undefined4 *)(unaff_EBP + -4) = 1;
+  std::basic_ios<char,std::char_traits<char>_>::setstate
+            ((basic_ios<char,std::char_traits<char>_> *)(*(int *)(*in_EDX + 4) + (int)in_EDX),
+             unaff_EDI,false);
+  *(undefined4 *)(unaff_EBP + -4) = 0xffffffff;
+  bVar2 = std::uncaught_exception();
+  this = *(basic_ostream<char,std::char_traits<char>_> **)(unaff_EBP + -0x24);
+  if (!bVar2) {
+    std::basic_ostream<char,std::char_traits<char>_>::_Osfx(this);
+  }
+  piVar1 = *(int **)((int)&this[0xe].vbtablePtr +
+                    this->vbtablePtr->basic_ios<char,std::char_traits<char>_>_offset);
+  if (piVar1 != (int *)0x0) {
+    (**(code **)(*piVar1 + 8))();
+  }
+  ExceptionList = *(void **)(unaff_EBP + -0xc);
+  return *(undefined4 *)(unaff_EBP + 8);
 }
 
 
@@ -174,33 +245,6 @@ void FUN_0044e7a0(undefined4 param_1,undefined4 param_2,int param_3,undefined *p
 }
 
 
-/* FUN_00456f20 @ 00456f20  kind=gamemisc  attributed-by=logic:caller-vote  size=72 */
-
-void FUN_00456f20(undefined1 *param_1,undefined1 *param_2,undefined1 *param_3)
-
-{
-  undefined1 *puVar1;
-  undefined1 *puVar2;
-  
-  if (param_1 != param_2) {
-    puVar2 = param_1 + 2;
-    do {
-      if (param_3 != (undefined1 *)0x0) {
-        *param_3 = puVar2[-2];
-        param_3[1] = puVar2[-1];
-        param_3[2] = *puVar2;
-        param_3[3] = puVar2[1];
-        *(undefined4 *)(param_3 + 4) = *(undefined4 *)(puVar2 + 2);
-      }
-      param_3 = param_3 + 8;
-      puVar1 = puVar2 + 6;
-      puVar2 = puVar2 + 8;
-    } while (puVar1 != param_2);
-  }
-  return;
-}
-
-
 /* FUN_00457ea0 @ 00457ea0  kind=gamemisc  attributed-by=logic:caller-vote  size=23 */
 
 void FUN_00457ea0(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
@@ -215,106 +259,46 @@ void FUN_00457ea0(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
 }
 
 
-/* FUN_0046ebe0 @ 0046ebe0  kind=gamemisc  attributed-by=logic:caller-vote  size=717 */
+/* FUN_004c67b0 @ 004c67b0  kind=gamemisc  attributed-by=logic:caller-vote  size=61 */
 
-void FUN_0046ebe0(char *param_1,int param_2)
+int FUN_004c67b0(int param_1,int param_2,int param_3)
 
 {
-  int *piVar1;
-  char cVar2;
-  int *piVar3;
+  if (param_1 == param_2) {
+    return param_3;
+  }
+  do {
+    if (param_3 != 0) {
+      FUN_0040ee70(param_1);
+    }
+    param_1 = param_1 + 0x118;
+    param_3 = param_3 + 0x118;
+  } while (param_1 != param_2);
+  return param_3;
+}
+
+
+/* FUN_004c67f0 @ 004c67f0  kind=gamemisc  attributed-by=logic:caller-vote  size=75 */
+
+uint FUN_004c67f0(uint param_1)
+
+{
   int *in_ECX;
-  undefined4 extraout_EDX;
-  int iVar4;
-  int iVar5;
-  char *pcVar6;
-  int local_244;
-  int *local_240;
-  int local_23c [71];
-  char local_120;
-  char local_11f;
-  short local_110;
-  uint local_8;
+  uint uVar1;
   
-  local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  pcVar6 = param_1;
-  if (param_2 == -1) {
-    param_2 = FUN_0047fa30(param_1);
-  }
-  if (*param_1 == '\0') goto LAB_0046ee9a;
-  if ((in_ECX[1] - *in_ECX) / 0xc <= param_2) {
-    FUN_00487380(param_2 + 1);
-  }
-  FUN_0040ee70(param_1);
-  iVar4 = 1;
-  if (((local_120 == '\f') || (local_120 == '\r')) || (local_120 == '\x15')) {
-LAB_0046ec90:
-    iVar4 = (int)local_110;
-    local_110 = 1;
-  }
-  else if (local_120 == '\v') {
-    if (local_11f != '\x0e') goto LAB_0046ec90;
-  }
-  else if (((local_120 == '\0') || (local_120 == '\x19')) ||
-          ((local_120 == '\x14' || ((local_120 == '\x18' || (local_120 == '\x17'))))))
-  goto LAB_0046ec90;
-  if (*param_1 == '\f') {
-    cVar2 = param_1[0xd];
-    if (cVar2 == '\n') {
-LAB_0046ecbc:
-      in_ECX[0x4a] = in_ECX[0x4a] + iVar4;
-      __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc,extraout_EDX,pcVar6);
-      return;
+  uVar1 = (in_ECX[2] - *in_ECX) / 0x118;
+  if (0xea0ea0 - (uVar1 >> 1) < uVar1) {
+    uVar1 = 0;
+    if (param_1 != 0) {
+      uVar1 = param_1;
     }
-    if (cVar2 == '\v') {
-      in_ECX[0x4a] = in_ECX[0x4a] + iVar4 * 10000;
-      __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc,extraout_EDX,pcVar6);
-      return;
-    }
-    if (cVar2 == '\f') {
-      iVar4 = iVar4 * 100;
-      goto LAB_0046ecbc;
-    }
+    return uVar1;
   }
-  if (*param_1 == '\r') {
-    in_ECX[0x4b] = in_ECX[0x4b] + iVar4;
-    __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc,extraout_EDX,pcVar6);
-    return;
+  uVar1 = uVar1 + (uVar1 >> 1);
+  if (uVar1 < param_1) {
+    uVar1 = param_1;
   }
-  iVar5 = -1;
-  piVar3 = (int *)(*in_ECX + param_2 * 0xc);
-  local_244 = 0;
-  if (0 < (piVar3[1] - *piVar3) / 0x11c) {
-    piVar1 = (int *)*piVar3;
-    local_240 = piVar1;
-    do {
-      if ((*local_240 == 0) && (iVar5 < 0)) {
-        iVar5 = local_244;
-      }
-      cVar2 = FUN_0047f9f0();
-      if ((cVar2 != '\0') && (cVar2 = FUN_0042f4a0(&local_120), cVar2 != '\0')) {
-        piVar1 = piVar1 + local_244 * 0x47;
-        *piVar1 = *piVar1 + iVar4;
-        __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-        return;
-      }
-      local_244 = local_244 + 1;
-      local_240 = local_240 + 0x47;
-    } while (local_244 < (piVar3[1] - *piVar3) / 0x11c);
-    if (-1 < iVar5) {
-      FUN_0042c5e0(&local_120);
-      *(int *)(iVar5 * 0x11c + *(int *)(param_2 * 0xc + *in_ECX)) = iVar4;
-      __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-      return;
-    }
-  }
-  FUN_0043c0a0();
-  FUN_0042c5e0(&local_120);
-  local_23c[0] = iVar4;
-  FUN_00486700(local_23c);
-LAB_0046ee9a:
-  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-  return;
+  return uVar1;
 }
 
 
@@ -1237,6 +1221,33 @@ int FUN_005c36e0(int param_1,int param_2,int param_3)
   }
   ExceptionList = local_10;
   return param_3;
+}
+
+
+/* FUN_005c3ef0 @ 005c3ef0  kind=gamemisc  attributed-by=logic:caller-vote  size=61 */
+
+uint * FUN_005c3ef0(uint *param_1,uint *param_2)
+
+{
+  uint *puVar1;
+  uint uVar2;
+  uint uVar3;
+  uint *in_ECX;
+  
+  *param_1 = *in_ECX;
+  param_1[1] = in_ECX[1];
+  param_1[2] = in_ECX[2];
+  param_1[3] = in_ECX[3];
+  uVar3 = *param_2;
+  uVar2 = *param_1;
+  *param_1 = *param_1 - uVar3;
+  param_1[1] = (param_1[1] - param_2[1]) - (uint)(uVar2 < uVar3);
+  uVar3 = param_2[2];
+  puVar1 = param_1 + 2;
+  uVar2 = *puVar1;
+  *puVar1 = *puVar1 - uVar3;
+  param_1[3] = (param_1[3] - param_2[3]) - (uint)(uVar2 < uVar3);
+  return param_1;
 }
 
 
@@ -2180,6 +2191,29 @@ void _eh_vector_destructor_iterator_
     (*param_4)(in_stack_ffffffd0);
   }
   FUN_0068d85f();
+  return;
+}
+
+
+/* __ArrayUnwind @ 0068d86f  kind=gamemisc  attributed-by=logic:caller-vote  size=50 */
+
+/* WARNING: Function: __SEH_prolog4 replaced with injection: SEH_prolog4 */
+/* WARNING: Function: __SEH_epilog4 replaced with injection: EH_epilog3 */
+/* Library Function - Single Match
+    void __stdcall __ArrayUnwind(void *,unsigned int,int,void (__thiscall*)(void *))
+   
+   Library: Visual Studio 2012 Release */
+
+void __ArrayUnwind(void *param_1,uint param_2,int param_3,_func_void_void_ptr *param_4)
+
+{
+  void *in_stack_ffffffc8;
+  
+  while( true ) {
+    param_3 = param_3 + -1;
+    if (param_3 < 0) break;
+    (*param_4)(in_stack_ffffffc8);
+  }
   return;
 }
 

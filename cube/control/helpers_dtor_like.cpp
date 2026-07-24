@@ -1,4 +1,4 @@
-// helpers_dtor_like (control) -- cube. 21 functions. Bodies = Ghidra pseudo-C.
+// helpers_dtor_like (control) -- cube. 43 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_dtor_like.h"
 
@@ -67,6 +67,176 @@ LAB_004042b5:
 }
 
 
+/* FUN_004054f0 @ 004054f0  kind=gamemisc  attributed-by=role:dtor-like  size=242 */
+
+void FUN_004054f0(uint param_1,size_t param_2)
+
+{
+  uint uVar1;
+  undefined4 *in_ECX;
+  uint uVar2;
+  undefined4 *_Src;
+  uint uVar3;
+  undefined4 *local_18;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  puStack_c = &LAB_006e1430;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  uVar3 = param_1 | 0xf;
+  if (uVar3 != 0xffffffff) {
+    uVar1 = in_ECX[5];
+    uVar2 = uVar1 >> 1;
+    param_1 = uVar3;
+    if ((uVar3 / 3 < uVar2) && (param_1 = uVar2 + uVar1, -uVar2 - 2 < uVar1)) {
+      param_1 = 0xfffffffe;
+    }
+  }
+  local_8 = 0;
+  local_18 = (undefined4 *)0x0;
+  if ((param_1 + 1 != 0) && (local_18 = operator_new(param_1 + 1), local_18 == (undefined4 *)0x0)) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xbad_alloc();
+  }
+  if (param_2 != 0) {
+    _Src = in_ECX;
+    if (0xf < (uint)in_ECX[5]) {
+      _Src = (undefined4 *)*in_ECX;
+    }
+    if (param_2 != 0) {
+      memcpy(local_18,_Src,param_2);
+    }
+  }
+  if (0xf < (uint)in_ECX[5]) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete((void *)*in_ECX);
+  }
+  *(undefined1 *)in_ECX = 0;
+  *in_ECX = local_18;
+  in_ECX[5] = param_1;
+  in_ECX[4] = param_2;
+  if (0xf < param_1) {
+    in_ECX = local_18;
+  }
+  *(undefined1 *)((int)in_ECX + param_2) = 0;
+  ExceptionList = local_10;
+  return;
+}
+
+
+/* FUN_0040f300 @ 0040f300  kind=gamemisc  attributed-by=role:dtor-like  size=178 */
+
+bool FUN_0040f300(uint param_1,char param_2)
+
+{
+  uint uVar1;
+  void *_Src;
+  undefined4 *in_ECX;
+  uint uVar2;
+  
+  if (0x7ffffffe < param_1) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("string too long");
+  }
+  uVar1 = in_ECX[5];
+  if (uVar1 < param_1) {
+    FUN_0040f170(param_1,in_ECX[4]);
+    return param_1 != 0;
+  }
+  if ((param_2 == '\0') || (7 < param_1)) {
+    if (param_1 == 0) {
+      in_ECX[4] = 0;
+      if (7 < uVar1) {
+        in_ECX = (undefined4 *)*in_ECX;
+      }
+      *(undefined2 *)in_ECX = 0;
+    }
+    return param_1 != 0;
+  }
+  uVar2 = in_ECX[4];
+  if (param_1 < (uint)in_ECX[4]) {
+    uVar2 = param_1;
+  }
+  if (7 < uVar1) {
+    _Src = (void *)*in_ECX;
+    if (uVar2 != 0) {
+      memcpy(in_ECX,_Src,uVar2 * 2);
+    }
+                    /* WARNING: Subroutine does not return */
+    operator_delete(_Src);
+  }
+  in_ECX[4] = uVar2;
+  in_ECX[5] = 7;
+  *(undefined2 *)((int)in_ECX + uVar2 * 2) = 0;
+  return param_1 != 0;
+}
+
+
+/* FUN_0043c920 @ 0043c920  kind=gamemisc  attributed-by=role:dtor-like  size=76 */
+
+void FUN_0043c920(void *param_1)
+
+{
+  if (*(char *)((int)param_1 + 0xd) != '\0') {
+    return;
+  }
+  FUN_0043c920(*(undefined4 *)((int)param_1 + 8));
+  if (0xf < *(uint *)((int)param_1 + 0x28)) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(*(void **)((int)param_1 + 0x14));
+  }
+  *(undefined4 *)((int)param_1 + 0x28) = 0xf;
+  *(undefined4 *)((int)param_1 + 0x24) = 0;
+  *(undefined1 *)((int)param_1 + 0x14) = 0;
+                    /* WARNING: Subroutine does not return */
+  operator_delete(param_1);
+}
+
+
+/* FUN_0044ba10 @ 0044ba10  kind=gamemisc  attributed-by=role:dtor-like  size=219 */
+
+void FUN_0044ba10(void *param_1)
+
+{
+  uint uVar1;
+  undefined4 *in_ECX;
+  void *pvVar2;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  uVar1 = (uint)param_1;
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006e2da0;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  pvVar2 = (void *)0x0;
+  if (param_1 != (void *)0x0) {
+    if (param_1 < 0xe6c2b5) {
+      pvVar2 = operator_new((int)param_1 * 0x11c);
+      if (pvVar2 != (void *)0x0) goto LAB_0044ba74;
+    }
+                    /* WARNING: Subroutine does not return */
+    std::_Xbad_alloc();
+  }
+LAB_0044ba74:
+  local_8 = 0;
+  FUN_0044a600(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
+  param_1 = (void *)*in_ECX;
+  if (param_1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(param_1);
+  }
+  in_ECX[2] = (void *)(uVar1 * 0x11c + (int)pvVar2);
+  in_ECX[1] = (void *)(((in_ECX[1] - (int)param_1) / 0x11c) * 0x11c + (int)pvVar2);
+  *in_ECX = pvVar2;
+  ExceptionList = local_10;
+  return;
+}
+
+
 /* FUN_00450e00 @ 00450e00  kind=gamemisc  attributed-by=role:dtor-like  size=87 */
 
 void FUN_00450e00(int *param_1)
@@ -91,6 +261,337 @@ void FUN_00450e00(int *param_1)
   }
                     /* WARNING: Subroutine does not return */
   operator_delete(param_1);
+}
+
+
+/* FUN_00452600 @ 00452600  kind=gamemisc  attributed-by=role:dtor-like  size=53 */
+
+void FUN_00452600(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  
+  if (param_1 != param_2) {
+    puVar2 = param_1 + 0x47;
+    do {
+      if ((void *)*puVar2 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+        operator_delete((void *)*puVar2);
+      }
+      puVar1 = puVar2 + 3;
+      puVar2 = puVar2 + 0x4a;
+    } while (puVar1 != param_2);
+  }
+  return;
+}
+
+
+/* FUN_004538c0 @ 004538c0  kind=gamemisc  attributed-by=role:dtor-like  size=223 */
+
+void FUN_004538c0(undefined4 *param_1,char param_2,int *param_3,void *param_4)
+
+{
+  int *piVar1;
+  int *piVar2;
+  int *piVar3;
+  undefined4 *puVar4;
+  undefined4 *in_ECX;
+  bool bVar5;
+  int *piVar6;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  piVar2 = param_3;
+  puStack_c = &LAB_006e33d0;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  piVar1 = (int *)*in_ECX;
+  bVar5 = true;
+  local_8 = 0;
+  piVar6 = piVar1;
+  if (*(char *)(piVar1[1] + 0xd) == '\0') {
+    piVar3 = (int *)piVar1[1];
+    do {
+      piVar6 = piVar3;
+      if (param_2 == '\0') {
+        bVar5 = *param_3 < piVar6[4];
+      }
+      else {
+        bVar5 = *param_3 <= piVar6[4];
+      }
+      if (bVar5 == false) {
+        piVar3 = (int *)piVar6[2];
+      }
+      else {
+        piVar3 = (int *)*piVar6;
+      }
+    } while (*(char *)((int)piVar3 + 0xd) == '\0');
+  }
+  _param_2 = piVar6;
+  if (bVar5 != false) {
+    if (piVar6 == (int *)*piVar1) {
+      bVar5 = true;
+      goto LAB_00453953;
+    }
+    FUN_0042c740();
+  }
+  if (*piVar2 <= _param_2[4]) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(param_4);
+  }
+LAB_00453953:
+  puVar4 = (undefined4 *)FUN_00452a10(&param_2,bVar5,piVar6,piVar2,param_4);
+  *param_1 = *puVar4;
+  *(undefined1 *)(param_1 + 1) = 1;
+  ExceptionList = local_10;
+  return;
+}
+
+
+/* FUN_00453b40 @ 00453b40  kind=gamemisc  attributed-by=role:dtor-like  size=284 */
+
+void FUN_00453b40(undefined4 *param_1,char param_2,uint *param_3,void *param_4)
+
+{
+  int *piVar1;
+  uint uVar2;
+  int *piVar3;
+  undefined4 *puVar4;
+  undefined4 *in_ECX;
+  int *piVar5;
+  bool bVar6;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  puStack_c = &LAB_006e3410;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  piVar1 = (int *)*in_ECX;
+  local_8 = 0;
+  bVar6 = true;
+  piVar5 = piVar1;
+  if (*(char *)(piVar1[1] + 0xd) == '\0') {
+    uVar2 = param_3[1];
+    piVar3 = (int *)piVar1[1];
+    do {
+      piVar5 = piVar3;
+      if (param_2 == '\0') {
+        if ((piVar5[5] < (int)uVar2) || ((piVar5[5] <= (int)uVar2 && ((uint)piVar5[4] <= *param_3)))
+           ) {
+          bVar6 = false;
+          goto LAB_00453bdc;
+        }
+        piVar3 = (int *)*piVar5;
+        bVar6 = true;
+      }
+      else {
+        if (((int)uVar2 < piVar5[5]) || (((int)uVar2 <= piVar5[5] && (*param_3 <= (uint)piVar5[4])))
+           ) {
+          bVar6 = false;
+        }
+        else {
+          bVar6 = true;
+        }
+        bVar6 = !bVar6;
+        if (bVar6) {
+          piVar3 = (int *)*piVar5;
+        }
+        else {
+LAB_00453bdc:
+          piVar3 = (int *)piVar5[2];
+        }
+      }
+    } while (*(char *)((int)piVar3 + 0xd) == '\0');
+  }
+  _param_2 = piVar5;
+  if (bVar6) {
+    if (piVar5 == (int *)*piVar1) {
+      bVar6 = true;
+      goto LAB_00453c01;
+    }
+    FUN_0042c740();
+  }
+  if (((int)param_3[1] < _param_2[5]) ||
+     (((int)param_3[1] <= _param_2[5] && (*param_3 <= (uint)_param_2[4])))) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(param_4);
+  }
+LAB_00453c01:
+  puVar4 = (undefined4 *)FUN_005c0420(&param_2,bVar6,piVar5,param_3,param_4);
+  *param_1 = *puVar4;
+  *(undefined1 *)(param_1 + 1) = 1;
+  ExceptionList = local_10;
+  return;
+}
+
+
+/* FUN_00454ef0 @ 00454ef0  kind=gamemisc  attributed-by=role:dtor-like  size=237 */
+
+void FUN_00454ef0(int param_1,int param_2,undefined4 param_3)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  undefined1 local_13c [280];
+  undefined4 local_24;
+  void *local_20;
+  uint local_14;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  puStack_c = &LAB_006e369b;
+  local_10 = ExceptionList;
+  uVar2 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  ExceptionList = &local_10;
+  iVar1 = (param_2 - param_1) / 0x128;
+  iVar3 = iVar1 / 2;
+  local_14 = uVar2;
+  if (0 < iVar3) {
+    iVar4 = param_1 + 0x11c + iVar3 * 0x128;
+    do {
+      local_8 = 0xffffffff;
+      iVar3 = iVar3 + -1;
+      FUN_0040ee70(iVar4 + -0x244);
+      local_24 = *(undefined4 *)(iVar4 + -300);
+      FUN_004592f0(iVar4 + -0x128);
+      local_8 = 0;
+      FUN_00451940(param_1,iVar3,iVar1,local_13c,param_3,uVar2);
+      local_8 = 0xffffffff;
+      if (local_20 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+        operator_delete(local_20);
+      }
+      iVar4 = iVar4 + -0x128;
+    } while (0 < iVar3);
+  }
+  local_8 = 0xffffffff;
+  ExceptionList = local_10;
+  __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+/* FUN_00455760 @ 00455760  kind=gamemisc  attributed-by=role:dtor-like  size=244 */
+
+void FUN_00455760(int param_1,int param_2,undefined4 param_3)
+
+{
+  uint uVar1;
+  undefined1 local_13c [280];
+  undefined4 local_24;
+  void *local_20;
+  uint local_14;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006e369b;
+  local_10 = ExceptionList;
+  uVar1 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  ExceptionList = &local_10;
+  local_14 = uVar1;
+  FUN_0040ee70(param_2 + -0x128);
+  local_24 = *(undefined4 *)(param_2 + -0x10);
+  FUN_004592f0(param_2 + -0xc);
+  local_8 = 0;
+  FUN_0042c5e0(param_1);
+  *(undefined4 *)(param_2 + -0x10) = *(undefined4 *)(param_1 + 0x118);
+  FUN_00468050(param_1 + 0x11c);
+  FUN_00451940(param_1,0,((param_2 - param_1) + -0x128) / 0x128,local_13c,param_3,uVar1);
+  if (local_20 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_20);
+  }
+  ExceptionList = local_10;
+  __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+/* FUN_00458c10 @ 00458c10  kind=gamemisc  attributed-by=role:dtor-like  size=204 */
+
+void FUN_00458c10(int param_1,int param_2)
+
+{
+  undefined1 local_13c [280];
+  undefined4 local_24;
+  void *local_20 [3];
+  uint local_14;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006e38cb;
+  local_10 = ExceptionList;
+  local_14 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  ExceptionList = &local_10;
+  FUN_0040ee70(param_1);
+  local_24 = *(undefined4 *)(param_1 + 0x118);
+  FUN_004592f0(param_1 + 0x11c);
+  local_8 = 0;
+  FUN_0042c5e0(param_2);
+  *(undefined4 *)(param_1 + 0x118) = *(undefined4 *)(param_2 + 0x118);
+  FUN_00468050(param_2 + 0x11c);
+  FUN_0042c5e0(local_13c);
+  *(undefined4 *)(param_2 + 0x118) = local_24;
+  FUN_00468050(local_20);
+  if (local_20[0] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_20[0]);
+  }
+  ExceptionList = local_10;
+  __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+/* FUN_0046e150 @ 0046e150  kind=gamemisc  attributed-by=role:dtor-like  size=227 */
+
+void FUN_0046e150(uint param_1)
+
+{
+  uint uVar1;
+  int *in_ECX;
+  void *pvVar2;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  uVar1 = param_1;
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006e5670;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  pvVar2 = (void *)0x0;
+  if (param_1 != 0) {
+    if (param_1 < 0xdd67c9) {
+      pvVar2 = operator_new(param_1 * 0x128);
+      if (pvVar2 != (void *)0x0) goto LAB_0046e1b1;
+    }
+                    /* WARNING: Subroutine does not return */
+    std::_Xbad_alloc();
+  }
+LAB_0046e1b1:
+  local_8 = 0;
+  FUN_00456dc0(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
+  if (*in_ECX != 0) {
+    FUN_00452600(*in_ECX,in_ECX[1],(int)&param_1 + 3,param_1);
+                    /* WARNING: Subroutine does not return */
+    operator_delete((void *)*in_ECX);
+  }
+  in_ECX[2] = (int)(uVar1 * 0x128 + (int)pvVar2);
+  in_ECX[1] = (int)(((in_ECX[1] - *in_ECX) / 0x128) * 0x128 + (int)pvVar2);
+  *in_ECX = (int)pvVar2;
+  ExceptionList = local_10;
+  return;
 }
 
 
@@ -148,6 +649,35 @@ LAB_0046e38b:
   }
                     /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
+}
+
+
+/* FUN_0046f990 @ 0046f990  kind=gamemisc  attributed-by=role:dtor-like  size=74 */
+
+void FUN_0046f990(void)
+
+{
+  undefined4 *puVar1;
+  void *pvVar2;
+  int *in_ECX;
+  
+  puVar1 = (undefined4 *)*in_ECX;
+  pvVar2 = (void *)*puVar1;
+  *puVar1 = puVar1;
+  *(int *)(*in_ECX + 4) = *in_ECX;
+  in_ECX[1] = 0;
+  if (pvVar2 == (void *)*in_ECX) {
+    return;
+  }
+  if (7 < *(uint *)((int)pvVar2 + 0x1c)) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(*(void **)((int)pvVar2 + 8));
+  }
+  *(undefined4 *)((int)pvVar2 + 0x1c) = 7;
+  *(undefined4 *)((int)pvVar2 + 0x18) = 0;
+  *(undefined2 *)((int)pvVar2 + 8) = 0;
+                    /* WARNING: Subroutine does not return */
+  operator_delete(pvVar2);
 }
 
 
@@ -271,6 +801,121 @@ void FUN_00484230(void)
   FUN_004a23d0(uVar1);
   ExceptionList = local_10;
   __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+/* FUN_00487ea0 @ 00487ea0  kind=gamemisc  attributed-by=role:dtor-like  size=173 */
+
+void FUN_00487ea0(undefined4 param_1,undefined4 *param_2,undefined4 param_3)
+
+{
+  int *piVar1;
+  undefined4 *puVar2;
+  undefined4 local_30;
+  void *local_2c [4];
+  undefined4 local_1c;
+  uint local_18;
+  uint local_14;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006e6db8;
+  local_10 = ExceptionList;
+  local_14 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  ExceptionList = &local_10;
+  puVar2 = param_2;
+  if (0xf < (uint)param_2[5]) {
+    puVar2 = (undefined4 *)*param_2;
+  }
+  piVar1 = param_2 + 4;
+  if (0xf < (uint)param_2[5]) {
+    param_2 = (undefined4 *)*param_2;
+  }
+  local_18 = 7;
+  local_1c = 0;
+  local_2c[0] = (void *)((uint)local_2c[0] & 0xffff0000);
+  FUN_00424da0(param_2,*piVar1 + (int)puVar2,local_30);
+  local_8 = 0;
+  FUN_00636a00(param_1,local_2c,param_3);
+  if (local_18 < 8) {
+    ExceptionList = local_10;
+    __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  operator_delete(local_2c[0]);
+}
+
+
+/* FUN_004cb220 @ 004cb220  kind=gamemisc  attributed-by=role:dtor-like  size=108 */
+
+void __thiscall FUN_004cb220(void *this)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+                    /* inlined constructor or destructor (approx location) for
+                       std::basic_ofstream<char,std::char_traits<char>_> */
+  *(basic_ofstream<char,std::char_traits<char>_>_vftable **)
+   (*(int *)(*(int *)((int)this + -0x60) + 4) + -0x60 + (int)this) =
+       &std::basic_ofstream<char,std::char_traits<char>_>::vftable;
+  iVar1 = *(int *)(*(int *)((int)this + -0x60) + 4);
+  *(int *)(iVar1 + -100 + (int)this) = iVar1 + -0x60;
+                    /* inlined constructor or destructor (approx location) for
+                       std::basic_filebuf<char,std::char_traits<char>_> */
+  *(basic_filebuf<char,std::char_traits<char>_>_vftable **)((int)this + -0x5c) =
+       &std::basic_filebuf<char,std::char_traits<char>_>::vftable;
+  if ((*(int *)((int)this + -0xc) != 0) && (**(int **)((int)this + -0x50) == (int)this + -0x18)) {
+    uVar2 = *(undefined4 *)((int)this + -0x20);
+    **(int **)((int)this + -0x50) = *(int *)((int)this + -0x24);
+    **(undefined4 **)((int)this + -0x40) = uVar2;
+    **(undefined4 **)((int)this + -0x30) = 0;
+  }
+  if (*(char *)((int)this + -0x10) != '\0') {
+    FUN_0040c4c0();
+  }
+  std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
+            ((basic_streambuf<char,std::char_traits<char>_> *)((int)this + -0x5c));
+                    /* WARNING: Could not recover jumptable at 0x004cb286. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  std::basic_ostream<char,std::char_traits<char>_>::~basic_ostream<char,std::char_traits<char>_>
+            ((basic_ostream<char,std::char_traits<char>_> *)((int)this + -0x58));
+  return;
+}
+
+
+/* FUN_004e6d00 @ 004e6d00  kind=gamemisc  attributed-by=role:dtor-like  size=117 */
+
+void FUN_004e6d00(uint param_1)
+
+{
+  void *pvVar1;
+  undefined4 *in_ECX;
+  void *_Dst;
+  
+  _Dst = (void *)0x0;
+  if (param_1 != 0) {
+    if (param_1 < 0x80000000) {
+      _Dst = operator_new(param_1 * 2);
+      if (_Dst != (void *)0x0) goto LAB_004e6d31;
+    }
+                    /* WARNING: Subroutine does not return */
+    std::_Xbad_alloc();
+  }
+LAB_004e6d31:
+  memmove(_Dst,(void *)*in_ECX,in_ECX[1] - (int)*in_ECX & 0xfffffffe);
+  pvVar1 = (void *)*in_ECX;
+  if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(pvVar1);
+  }
+  in_ECX[2] = (void *)((int)_Dst + param_1 * 2);
+  *in_ECX = _Dst;
+  in_ECX[1] = (void *)((int)_Dst + (in_ECX[1] - (int)pvVar1 >> 1) * 2);
   return;
 }
 
@@ -710,6 +1355,133 @@ undefined4 FUN_00587350(undefined4 *param_1)
 }
 
 
+/* FUN_00605a20 @ 00605a20  kind=gamemisc  attributed-by=role:dtor-like  size=174 */
+
+void FUN_00605a20(int param_1,int param_2,int *param_3)
+
+{
+  Widget *in_ECX;
+  void *local_28 [4];
+  undefined4 local_18;
+  uint local_14;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006f0eb8;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  local_14 = 7;
+  local_18 = 0;
+  local_28[0] = (void *)((uint)local_28[0] & 0xffff0000);
+  FUN_0040f7a0(&PTR_006fccac,0);
+  local_8 = 0;
+                    /* inlined constructor: cube::WorldPreviewWidget::WorldPreviewWidget */
+  plasma::Widget::Widget(in_ECX,param_1,param_2,local_28);
+  if (7 < local_14) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_28[0]);
+  }
+  in_ECX[1].Object_data.offset_0x4 = param_3;
+  in_ECX->vftablePtr =
+       (Widget_vftable_for_NamedObject *)&cube::WorldPreviewWidget::vftable_for_NamedObject;
+  in_ECX->vftablePtr =
+       (Widget_vftable_for_Deformer *)&cube::WorldPreviewWidget::vftable_for_Deformer;
+  in_ECX[1].vftablePtr = (Widget_vftable_for_NamedObject *)0x0;
+  in_ECX[1].Object_data.offset_0x0 = 0;
+  ExceptionList = local_10;
+  return;
+}
+
+
+/* FUN_00630a80 @ 00630a80  kind=gamemisc  attributed-by=role:dtor-like  size=77 */
+
+void FUN_00630a80(void *param_1)
+
+{
+  if (0xf < *(uint *)((int)param_1 + 0x3c)) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(*(void **)((int)param_1 + 0x28));
+  }
+  *(undefined4 *)((int)param_1 + 0x3c) = 0xf;
+  *(undefined4 *)((int)param_1 + 0x38) = 0;
+  *(undefined1 *)((int)param_1 + 0x28) = 0;
+  if (0xf < *(uint *)((int)param_1 + 0x24)) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(*(void **)((int)param_1 + 0x10));
+  }
+  *(undefined4 *)((int)param_1 + 0x24) = 0xf;
+  *(undefined4 *)((int)param_1 + 0x20) = 0;
+  *(undefined1 *)((int)param_1 + 0x10) = 0;
+                    /* WARNING: Subroutine does not return */
+  operator_delete(param_1);
+}
+
+
+/* FUN_00630b60 @ 00630b60  kind=gamemisc  attributed-by=role:dtor-like  size=108 */
+
+void FUN_00630b60(void *param_1)
+
+{
+  if (*(char *)((int)param_1 + 0xd) != '\0') {
+    return;
+  }
+  FUN_00630b60(*(undefined4 *)((int)param_1 + 8));
+  if (0xf < *(uint *)((int)param_1 + 0x3c)) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(*(void **)((int)param_1 + 0x28));
+  }
+  *(undefined4 *)((int)param_1 + 0x3c) = 0xf;
+  *(undefined4 *)((int)param_1 + 0x38) = 0;
+  *(undefined1 *)((int)param_1 + 0x28) = 0;
+  if (0xf < *(uint *)((int)param_1 + 0x24)) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(*(void **)((int)param_1 + 0x10));
+  }
+  *(undefined4 *)((int)param_1 + 0x24) = 0xf;
+  *(undefined4 *)((int)param_1 + 0x20) = 0;
+  *(undefined1 *)((int)param_1 + 0x10) = 0;
+                    /* WARNING: Subroutine does not return */
+  operator_delete(param_1);
+}
+
+
+/* FUN_00636870 @ 00636870  kind=gamemisc  attributed-by=role:dtor-like  size=91 */
+
+void FUN_00636870(int param_1)
+
+{
+  int *piVar1;
+  int iVar2;
+  int *piVar3;
+  int in_ECX;
+  
+  piVar1 = *(int **)(in_ECX + 0x2c);
+  piVar3 = (int *)*piVar1;
+  if (piVar3 != piVar1) {
+    while (piVar3[2] != param_1) {
+      piVar3 = (int *)*piVar3;
+      if (piVar3 == piVar1) {
+        return;
+      }
+    }
+    for (piVar3 = (int *)*piVar1; piVar3 != piVar1; piVar3 = (int *)*piVar3) {
+      if (piVar3[2] == param_1) {
+        piVar1 = (int *)piVar3[1];
+        iVar2 = *piVar3;
+        *piVar1 = iVar2;
+        *(int **)(iVar2 + 4) = piVar1;
+                    /* WARNING: Subroutine does not return */
+        operator_delete(piVar3);
+      }
+    }
+    *(undefined4 *)(param_1 + 0x28) = 0;
+  }
+  return;
+}
+
+
 /* FUN_00636ad0 @ 00636ad0  kind=gamemisc  attributed-by=role:dtor-like  size=158 */
 
 void FUN_00636ad0(undefined4 *param_1)
@@ -744,6 +1516,59 @@ void FUN_00636ad0(undefined4 *param_1)
       } while (piVar3 != (int *)*(int *)(in_ECX + 0x2c));
     }
   }
+  return;
+}
+
+
+/* FUN_00650890 @ 00650890  kind=gamemisc  attributed-by=role:dtor-like  size=78 */
+
+void FUN_00650890(undefined4 *param_1)
+
+{
+  int *piVar1;
+  int in_ECX;
+  
+  EnterCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x58));
+  piVar1 = (int *)param_1[0x8c];
+  if (piVar1 != *(int **)(in_ECX + 0x84)) {
+    *(int *)piVar1[1] = *piVar1;
+    *(int *)(*piVar1 + 4) = piVar1[1];
+                    /* WARNING: Subroutine does not return */
+    operator_delete(piVar1);
+  }
+  LeaveCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x58));
+  (**(code **)*param_1)(1);
+  return;
+}
+
+
+/* FUN_006508f0 @ 006508f0  kind=gamemisc  attributed-by=role:dtor-like  size=129 */
+
+void FUN_006508f0(undefined4 *param_1)
+
+{
+  int *piVar1;
+  int in_ECX;
+  
+  if (param_1 == *(undefined4 **)(in_ECX + 0xcc)) {
+    *(undefined4 *)(in_ECX + 0xcc) = 0;
+  }
+  if (param_1 == *(undefined4 **)(in_ECX + 0xd0)) {
+    *(undefined4 *)(in_ECX + 0xd0) = 0;
+  }
+  if (param_1 == *(undefined4 **)(in_ECX + 0xfc)) {
+    *(undefined4 *)(in_ECX + 0xfc) = 0;
+  }
+  EnterCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x58));
+  piVar1 = (int *)param_1[0x56];
+  if (piVar1 != *(int **)(in_ECX + 0x7c)) {
+    *(int *)piVar1[1] = *piVar1;
+    *(int *)(*piVar1 + 4) = piVar1[1];
+                    /* WARNING: Subroutine does not return */
+    operator_delete(piVar1);
+  }
+  LeaveCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x58));
+  (**(code **)*param_1)(1);
   return;
 }
 
@@ -904,6 +1729,25 @@ LAB_00677d75:
   in_ECX[1] = (int)((int)pvVar3 + ((in_ECX[1] - iVar1) / 0x1c) * 0x1c);
   ExceptionList = local_10;
   return;
+}
+
+
+/* FUN_006fb1b0 @ 006fb1b0  kind=gamemisc  attributed-by=role:dtor-like  size=74 */
+
+void FUN_006fb1b0(void)
+
+{
+  void *pvVar1;
+  
+  FUN_0046f990();
+  pvVar1 = DAT_0076b06c;
+  FUN_00458de0();
+  cube::Controller::vfunction6();
+  FUN_00458de0();
+  cube::Controller::vfunction6();
+  FUN_00458de0();
+                    /* WARNING: Subroutine does not return */
+  operator_delete(pvVar1);
 }
 
 

@@ -1,6 +1,275 @@
-// Unsorted (ai) -- cube. 2 functions. Bodies = Ghidra pseudo-C.
+// Unsorted (ai) -- cube. 6 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Unsorted.h"
+
+/* FUN_005a7090 @ 005a7090  kind=gamemisc  attributed-by=logic:caller-vote  size=511 */
+
+void FUN_005a7090(undefined4 *param_1,char param_2,undefined4 *param_3,undefined4 param_4)
+
+{
+  char cVar1;
+  int *piVar2;
+  int *piVar3;
+  int iVar4;
+  int *piVar5;
+  int *in_ECX;
+  int *piVar6;
+  int *piVar7;
+  
+  if (0x9249247 < (uint)in_ECX[1]) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("map/set<T> too long");
+  }
+  piVar3 = (int *)FUN_005a6ba0(param_4);
+  in_ECX[1] = in_ECX[1] + 1;
+  piVar3[1] = (int)param_3;
+  if (param_3 == (undefined4 *)*in_ECX) {
+    ((undefined4 *)*in_ECX)[1] = piVar3;
+    *(int **)*in_ECX = piVar3;
+    iVar4 = *in_ECX;
+  }
+  else {
+    if (param_2 != '\0') {
+      *param_3 = piVar3;
+      if (param_3 == *(undefined4 **)*in_ECX) {
+        *(int **)*in_ECX = piVar3;
+      }
+      goto LAB_005a70ee;
+    }
+    param_3[2] = piVar3;
+    iVar4 = *in_ECX;
+    if (param_3 != *(undefined4 **)(iVar4 + 8)) goto LAB_005a70ee;
+  }
+  *(int **)(iVar4 + 8) = piVar3;
+LAB_005a70ee:
+  cVar1 = *(char *)(piVar3[1] + 0xc);
+  piVar5 = piVar3;
+  do {
+    if (cVar1 != '\0') {
+      *(undefined1 *)(*(int *)(*in_ECX + 4) + 0xc) = 1;
+      *param_1 = piVar3;
+      return;
+    }
+    piVar7 = (int *)piVar5[1];
+    piVar6 = *(int **)piVar7[1];
+    if (piVar7 == piVar6) {
+      piVar6 = (int *)((undefined4 *)piVar7[1])[2];
+      if ((char)piVar6[3] != '\0') {
+        if (piVar5 == (int *)piVar7[2]) {
+          piVar5 = (int *)piVar7[2];
+          piVar7[2] = *piVar5;
+          if (*(char *)(*piVar5 + 0xd) == '\0') {
+            *(int **)(*piVar5 + 4) = piVar7;
+          }
+          piVar5[1] = piVar7[1];
+          if (piVar7 == *(int **)(*in_ECX + 4)) {
+            *(int **)(*in_ECX + 4) = piVar5;
+          }
+          else {
+            piVar6 = (int *)piVar7[1];
+            if (piVar7 == (int *)*piVar6) {
+              *piVar6 = (int)piVar5;
+            }
+            else {
+              piVar6[2] = (int)piVar5;
+            }
+          }
+          *piVar5 = (int)piVar7;
+          piVar7[1] = (int)piVar5;
+          piVar5 = piVar7;
+        }
+        *(undefined1 *)(piVar5[1] + 0xc) = 1;
+        *(undefined1 *)(*(int *)(piVar5[1] + 4) + 0xc) = 0;
+        piVar7 = *(int **)(piVar5[1] + 4);
+        piVar6 = (int *)*piVar7;
+        *piVar7 = piVar6[2];
+        if (*(char *)(piVar6[2] + 0xd) == '\0') {
+          *(int **)(piVar6[2] + 4) = piVar7;
+        }
+        piVar6[1] = piVar7[1];
+        if (piVar7 == *(int **)(*in_ECX + 4)) {
+          *(int **)(*in_ECX + 4) = piVar6;
+          piVar6[2] = (int)piVar7;
+        }
+        else {
+          piVar2 = (int *)piVar7[1];
+          if (piVar7 == (int *)piVar2[2]) {
+            piVar2[2] = (int)piVar6;
+            piVar6[2] = (int)piVar7;
+          }
+          else {
+            *piVar2 = (int)piVar6;
+            piVar6[2] = (int)piVar7;
+          }
+        }
+        goto LAB_005a726a;
+      }
+LAB_005a71c1:
+      *(undefined1 *)(piVar7 + 3) = 1;
+      *(undefined1 *)(piVar6 + 3) = 1;
+      *(undefined1 *)(*(int *)(piVar5[1] + 4) + 0xc) = 0;
+      piVar5 = *(int **)(piVar5[1] + 4);
+    }
+    else {
+      if ((char)piVar6[3] == '\0') goto LAB_005a71c1;
+      if (piVar5 == (int *)*piVar7) {
+        iVar4 = *piVar7;
+        *piVar7 = *(int *)(iVar4 + 8);
+        if (*(char *)(*(int *)(iVar4 + 8) + 0xd) == '\0') {
+          *(int **)(*(int *)(iVar4 + 8) + 4) = piVar7;
+        }
+        *(int *)(iVar4 + 4) = piVar7[1];
+        if (piVar7 == *(int **)(*in_ECX + 4)) {
+          *(int *)(*in_ECX + 4) = iVar4;
+        }
+        else {
+          piVar5 = (int *)piVar7[1];
+          if (piVar7 == (int *)piVar5[2]) {
+            piVar5[2] = iVar4;
+          }
+          else {
+            *piVar5 = iVar4;
+          }
+        }
+        *(int **)(iVar4 + 8) = piVar7;
+        piVar7[1] = iVar4;
+        piVar5 = piVar7;
+      }
+      *(undefined1 *)(piVar5[1] + 0xc) = 1;
+      *(undefined1 *)(*(int *)(piVar5[1] + 4) + 0xc) = 0;
+      piVar7 = *(int **)(piVar5[1] + 4);
+      piVar6 = (int *)piVar7[2];
+      piVar7[2] = *piVar6;
+      if (*(char *)(*piVar6 + 0xd) == '\0') {
+        *(int **)(*piVar6 + 4) = piVar7;
+      }
+      piVar6[1] = piVar7[1];
+      if (piVar7 == *(int **)(*in_ECX + 4)) {
+        *(int **)(*in_ECX + 4) = piVar6;
+      }
+      else {
+        piVar2 = (int *)piVar7[1];
+        if (piVar7 == (int *)*piVar2) {
+          *piVar2 = (int)piVar6;
+        }
+        else {
+          piVar2[2] = (int)piVar6;
+        }
+      }
+      *piVar6 = (int)piVar7;
+LAB_005a726a:
+      piVar7[1] = (int)piVar6;
+    }
+    cVar1 = *(char *)(piVar5[1] + 0xc);
+  } while( true );
+}
+
+
+/* FUN_005a7a40 @ 005a7a40  kind=gamemisc  attributed-by=logic:caller-vote  size=46 */
+
+void FUN_005a7a40(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 *param_4)
+
+{
+  undefined4 *in_ECX;
+  
+  *in_ECX = param_1;
+  in_ECX[1] = param_2;
+  in_ECX[2] = param_3;
+  in_ECX[3] = *param_4;
+  in_ECX[4] = param_4[1];
+  in_ECX[5] = param_4[2];
+  return;
+}
+
+
+/* FUN_005a9d40 @ 005a9d40  kind=gamemisc  attributed-by=logic:caller-vote  size=89 */
+
+int FUN_005a9d40(uint *param_1)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  uVar1 = (int)*param_1 >> 0x1f;
+  iVar3 = (*param_1 ^ uVar1) - uVar1;
+  uVar1 = (int)param_1[1] >> 0x1f;
+  iVar4 = (param_1[1] ^ uVar1) - uVar1;
+  uVar1 = (int)param_1[2] >> 0x1f;
+  iVar2 = (param_1[2] ^ uVar1) - uVar1;
+  if (iVar4 < iVar3) {
+    return (iVar3 * 10 + iVar4 * 4 + iVar2 * 10) * 2;
+  }
+  return (iVar3 * 4 + iVar4 * 10 + iVar2 * 10) * 2;
+}
+
+
+/* FUN_005a9e50 @ 005a9e50  kind=gamemisc  attributed-by=logic:caller-vote  size=304 */
+
+void FUN_005a9e50(int param_1,undefined4 param_2,undefined4 param_3,undefined4 *param_4)
+
+{
+  int iVar1;
+  char cVar2;
+  uint uVar3;
+  undefined4 *puVar4;
+  int in_ECX;
+  undefined4 *local_28;
+  undefined4 local_24;
+  undefined4 local_20;
+  undefined1 local_1c [8];
+  int local_14;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006f35c8;
+  local_10 = ExceptionList;
+  uVar3 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  ExceptionList = &local_10;
+  local_28 = (undefined4 *)0x0;
+  local_24 = 0;
+  local_20 = 0;
+  local_14 = in_ECX;
+  FUN_0040d9d0(3);
+  *local_28 = param_1;
+  local_28[1] = param_2;
+  local_28[2] = param_3;
+  local_8 = 0;
+  puVar4 = (undefined4 *)FUN_005a7a70(&local_28);
+  *puVar4 = *param_4;
+  puVar4[1] = param_4[1];
+  puVar4[2] = param_4[2];
+  puVar4[3] = param_4[3];
+  puVar4[4] = param_4[4];
+  puVar4[5] = param_4[5];
+  FUN_005a7700(local_1c,0,&local_28,DAT_0076dda2);
+  puVar4 = local_28;
+  iVar1 = *(int *)(in_ECX + 0x140c);
+  if ((*(int *)(in_ECX + 0x1408) != iVar1) &&
+     (*(int *)(*(int *)(in_ECX + 0x1408) + 0x20) <= (int)param_4[1])) goto LAB_005a9f62;
+  param_1 = FUN_005a7c10(&local_28);
+  if (param_1 == iVar1) {
+LAB_005a9f51:
+    param_1 = iVar1;
+  }
+  else {
+    cVar2 = FUN_005a78a0(puVar4,local_24,*(undefined4 *)(param_1 + 0x10),
+                         *(undefined4 *)(param_1 + 0x14),uVar3);
+    if (cVar2 != '\0') goto LAB_005a9f51;
+  }
+  *(int *)(local_14 + 0x1408) = param_1;
+LAB_005a9f62:
+  if (puVar4 != (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(puVar4);
+  }
+  ExceptionList = local_10;
+  return;
+}
+
 
 /* FUN_005a9f90 @ 005a9f90  kind=gamemisc  attributed-by=logic:caller-vote  size=2834 */
 

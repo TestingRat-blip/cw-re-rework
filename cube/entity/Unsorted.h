@@ -9,14 +9,14 @@ undefined FUN_0040ea90(void);
 /* 00411e30  gamemisc  [logic:caller-vote] */
 undefined FUN_00411e30(void);
 
+/* 004120c0  gamemisc  [logic:caller-vote] */
+undefined FUN_004120c0(void);
+
 /* 0043d1a0  gamemisc  [logic:caller-vote] */
 undefined FUN_0043d1a0(void);
 
 /* 00444270  gamemisc  [logic:caller-vote] */
 undefined FUN_00444270(void);
-
-/* 0044b5f0  gamemisc  [logic:caller-vote] */
-undefined FUN_0044b5f0(void);
 
 /* 004c6b80  gamemisc  [logic:caller-vote] */
 undefined FUN_004c6b80(void);

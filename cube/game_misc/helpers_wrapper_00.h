@@ -3,26 +3,14 @@
 #pragma once
 #include "../include/cw_types.h"
 
-/* 00402210  gamemisc  [role:wrapper] */
-undefined FUN_00402210(void);
-
-/* 00402280  gamemisc  [role:wrapper] */
-undefined FUN_00402280(void);
-
 /* 00403ee0  gamemisc  [role:wrapper] */
 undefined FUN_00403ee0(void);
-
-/* 00405470  gamemisc  [role:wrapper] */
-undefined FUN_00405470(void);
 
 /* 00405810  gamemisc  [role:wrapper] */
 undefined FUN_00405810(void);
 
-/* 0040bac0  gamemisc  [role:wrapper] */
-undefined FUN_0040bac0(void);
-
-/* 0040bb30  gamemisc  [role:wrapper] */
-undefined FUN_0040bb30(void);
+/* 0040b4e0  gamemisc  [role:wrapper] */
+undefined FUN_0040b4e0(void);
 
 /* 0040bfc0  gamemisc  [role:wrapper] */
 undefined FUN_0040bfc0(void);
@@ -68,9 +56,6 @@ undefined FUN_004514b0(void);
 
 /* 00452260  gamemisc  [role:wrapper] */
 undefined FUN_00452260(void);
-
-/* 004522a0  gamemisc  [role:wrapper] */
-undefined FUN_004522a0(void);
 
 /* 004522e0  gamemisc  [role:wrapper] */
 undefined FUN_004522e0(void);
@@ -156,9 +141,6 @@ undefined FUN_0046f450(void);
 /* 00477280  gamemisc  [role:wrapper] */
 undefined FUN_00477280(void);
 
-/* 004815c0  gamemisc  [role:wrapper] */
-undefined FUN_004815c0(void);
-
 /* 00486050  gamemisc  [role:wrapper] */
 undefined FUN_00486050(void);
 
@@ -170,9 +152,6 @@ undefined FUN_00486380(void);
 
 /* 00486560  gamemisc  [role:wrapper] */
 undefined FUN_00486560(void);
-
-/* 00487ff0  gamemisc  [role:wrapper] */
-undefined FUN_00487ff0(void);
 
 /* 00488bd0  gamemisc  [role:wrapper] */
 undefined FUN_00488bd0(void);
@@ -285,9 +264,6 @@ undefined FUN_00558820(void);
 /* 00583cb0  gamemisc  [role:wrapper] */
 undefined FUN_00583cb0(void);
 
-/* 0058d8f0  gamemisc  [role:wrapper] */
-undefined FUN_0058d8f0(void);
-
 /* 0058e990  gamemisc  [role:wrapper] */
 undefined FUN_0058e990(void);
 
@@ -303,6 +279,12 @@ undefined FUN_00594760(void);
 /* 005947a0  gamemisc  [role:wrapper] */
 undefined FUN_005947a0(void);
 
+/* 005a6ba0  gamemisc  [role:wrapper] */
+undefined FUN_005a6ba0(void);
+
+/* 005a6c30  gamemisc  [role:wrapper] */
+undefined FUN_005a6c30(void);
+
 /* 005a7bd0  gamemisc  [role:wrapper] */
 undefined FUN_005a7bd0(void);
 
@@ -317,6 +299,9 @@ undefined FUN_00624340(void);
 
 /* 00627670  gamemisc  [role:wrapper] */
 undefined FUN_00627670(void);
+
+/* 006291d0  gamemisc  [role:wrapper] */
+undefined FUN_006291d0(void);
 
 /* 0062a650  gamemisc  [role:wrapper] */
 undefined FUN_0062a650(void);
@@ -338,9 +323,6 @@ undefined FUN_00639060(void);
 
 /* 00639390  gamemisc  [role:wrapper] */
 undefined FUN_00639390(void);
-
-/* 0063a710  gamemisc  [role:wrapper] */
-undefined FUN_0063a710(void);
 
 /* 0063de60  gamemisc  [role:wrapper] */
 undefined FUN_0063de60(void);
@@ -396,6 +378,9 @@ undefined FUN_0065aeb0(void);
 /* 00661540  gamemisc  [role:wrapper] */
 undefined FUN_00661540(void);
 
+/* 00663eb0  gamemisc  [role:wrapper] */
+undefined FUN_00663eb0(void);
+
 /* 0066df80  gamemisc  [role:wrapper] */
 undefined FUN_0066df80(void);
 
@@ -429,12 +414,6 @@ undefined __thiscall FUN_0066eb20(void * this);
 /* 006712c0  gamemisc  [role:wrapper] */
 undefined FUN_006712c0(void);
 
-/* 00677790  gamemisc  [role:wrapper] */
-undefined FUN_00677790(void);
-
-/* 00677970  gamemisc  [role:wrapper] */
-undefined FUN_00677970(void);
-
 /* 00681240  gamemisc  [role:wrapper] */
 undefined FUN_00681240(void);
 
@@ -443,9 +422,6 @@ undefined FUN_00681820(void);
 
 /* 0068d593  gamemisc  [role:wrapper] */
 undefined FUN_0068d593(void);
-
-/* 0068d85f  gamemisc  [role:wrapper] */
-undefined FUN_0068d85f(void);
 
 /* 0068db1c  gamemisc  [role:wrapper] */
 undefined FUN_0068db1c(void);
@@ -602,4 +578,28 @@ undefined FUN_006c07c0(void);
 
 /* 006c0c20  gamemisc  [role:wrapper] */
 undefined FUN_006c0c20(void);
+
+/* 006c0c90  gamemisc  [role:wrapper] */
+undefined FUN_006c0c90(void);
+
+/* 006c1250  gamemisc  [role:wrapper] */
+undefined FUN_006c1250(void);
+
+/* 006c1290  gamemisc  [role:wrapper] */
+undefined FUN_006c1290(void);
+
+/* 006c12e0  gamemisc  [role:wrapper] */
+undefined FUN_006c12e0(void);
+
+/* 006c1d80  gamemisc  [role:wrapper] */
+undefined FUN_006c1d80(void);
+
+/* 006ca2c0  gamemisc  [role:wrapper] */
+undefined FUN_006ca2c0(void);
+
+/* 006cb180  gamemisc  [role:wrapper] */
+undefined __fastcall FUN_006cb180(undefined4 param_1);
+
+/* 006cb7e0  gamemisc  [role:wrapper] */
+undefined FUN_006cb7e0(void);
 

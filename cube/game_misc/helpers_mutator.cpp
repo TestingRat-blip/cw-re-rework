@@ -1,4 +1,4 @@
-// helpers_mutator (game_misc) -- cube. 21 functions. Bodies = Ghidra pseudo-C.
+// helpers_mutator (game_misc) -- cube. 22 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_mutator.h"
 
@@ -50,6 +50,18 @@ undefined4 FUN_0043b480(void)
     return 1;
   }
   return 0;
+}
+
+
+/* mutator_44be20 @ 0044be20  kind=gamemisc  attributed-by=role:mutator  size=6 */
+
+void FUN_0044be20(void)
+
+{
+  undefined4 *in_ECX;
+  
+  in_ECX[1] = *in_ECX;
+  return;
 }
 
 

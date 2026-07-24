@@ -30,6 +30,20 @@ void FUN_00411e30(undefined4 *param_1)
 }
 
 
+/* FUN_004120c0 @ 004120c0  kind=gamemisc  attributed-by=logic:caller-vote  size=38 */
+
+undefined4 FUN_004120c0(int param_1)
+
+{
+  int in_ECX;
+  
+  if ((-1 < param_1) && (param_1 < *(int *)(in_ECX + 8) - *(int *)(in_ECX + 4) >> 2)) {
+    return *(undefined4 *)(*(int *)(in_ECX + 4) + param_1 * 4);
+  }
+  return 0;
+}
+
+
 /* FUN_0043d1a0 @ 0043d1a0  kind=gamemisc  attributed-by=logic:caller-vote  size=2086 */
 
 int FUN_0043d1a0(void)
@@ -647,38 +661,6 @@ int FUN_00444270(uint param_1)
     return 200;
   }
   return (int)(fVar2 / (fVar3 * *(float *)(in_ECX + 0x17c)));
-}
-
-
-/* FUN_0044b5f0 @ 0044b5f0  kind=gamemisc  attributed-by=logic:caller-vote  size=104 */
-
-uint FUN_0044b5f0(uint param_1)
-
-{
-  uint in_EAX;
-  void *pvVar1;
-  undefined4 *in_ECX;
-  
-  *in_ECX = 0;
-  in_ECX[1] = 0;
-  in_ECX[2] = 0;
-  if (param_1 == 0) {
-    return in_EAX & 0xffffff00;
-  }
-  if (0xe6c2b4 < param_1) {
-                    /* WARNING: Subroutine does not return */
-    std::_Xlength_error("vector<T> too long");
-  }
-  pvVar1 = operator_new(param_1 * 0x11c);
-  if (pvVar1 != (void *)0x0) {
-    *in_ECX = pvVar1;
-    in_ECX[1] = pvVar1;
-    pvVar1 = (void *)((int)pvVar1 + param_1 * 0x11c);
-    in_ECX[2] = pvVar1;
-    return CONCAT31((int3)((uint)pvVar1 >> 8),1);
-  }
-                    /* WARNING: Subroutine does not return */
-  std::_Xbad_alloc();
 }
 
 

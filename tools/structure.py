@@ -233,7 +233,14 @@ def classify(fn, labels, class_names, islands, roles):
             if name.startswith("FUN_"):
                 name = "%s_%s" % (nm, fn["addr"].lstrip("0") or "0")
             return "gamemisc", "game_misc", "_helpers_" + role, name, "role:" + role
-        # true artifact: no incoming reference of any kind — EH/GS fragment or dead code
+        # not a function: Ghidra started one on an MSVC alignment NOP inside a bigger body
+        # (nop_split_audit.py). Real code, so it files under its OWNER's subsystem rather
+        # than the artifact bin — discarding it would discard e.g. the town builder.
+        if role == "body-split":
+            if name.startswith("FUN_") and r.get("name"):
+                name = r["name"]
+            return "gamemisc", r.get("module") or "game_misc", "_body_splits", name, "role:body-split"
+        # true artifact: no incoming reference of any kind — dead code or an EH fragment
         if role == "artifact":
             return "gamemisc", "game_misc", "_artifacts", name, "role:artifact"
         # real functions reached INDIRECTLY (recovered by IndirectRefs) — review surface,
@@ -374,9 +381,11 @@ def emit(binary, folder):
         g.write("Functions automation could not name (still `FUN_`), excluding library code.\n")
         g.write("Ordered by size: the big ones are where the remaining game logic is.\n\n")
         g.write("Rows flagged **orphan** have zero callers. At this size that usually means a\n")
-        g.write("Ghidra boundary artifact -- MSVC `/EHsc` landing pads and `/GS` epilogues get split\n")
-        g.write("into separate functions at unaligned addresses -- not a genuine top-level routine.\n")
-        g.write("Treat an orphan as a fragment of its preceding function until proven otherwise.\n\n")
+        g.write("**body split**: Ghidra started a function on the 6-byte alignment NOP MSVC emits\n")
+        g.write("to 16-align a loop head, mid-body, and gave it the rest of the enclosing function.\n")
+        g.write("The code is real -- `0x4eaa7a` is the town builder, `0x50702a` the dungeon\n")
+        g.write("assembler -- so treat an orphan as a fragment of its owner, not as dead code.\n")
+        g.write("`tools/nop_split_audit.py` identifies them and names the owner.\n\n")
         g.write("| addr | size | callers | callees | flag | sample strings |\n|---|---|---|---|---|---|\n")
         norphan = 0
         for addr, size, ncr, nce, strs in sorted(gaps, key=lambda x: -x[1])[:400]:

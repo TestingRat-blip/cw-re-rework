@@ -4,9 +4,11 @@ Functions automation could not name (still `FUN_`), excluding library code.
 Ordered by size: the big ones are where the remaining game logic is.
 
 Rows flagged **orphan** have zero callers. At this size that usually means a
-Ghidra boundary artifact -- MSVC `/EHsc` landing pads and `/GS` epilogues get split
-into separate functions at unaligned addresses -- not a genuine top-level routine.
-Treat an orphan as a fragment of its preceding function until proven otherwise.
+**body split**: Ghidra started a function on the 6-byte alignment NOP MSVC emits
+to 16-align a loop head, mid-body, and gave it the rest of the enclosing function.
+The code is real -- `0x4eaa7a` is the town builder, `0x50702a` the dungeon
+assembler -- so treat an orphan as a fragment of its owner, not as dead code.
+`tools/nop_split_audit.py` identifies them and names the owner.
 
 | addr | size | callers | callees | flag | sample strings |
 |---|---|---|---|---|---|

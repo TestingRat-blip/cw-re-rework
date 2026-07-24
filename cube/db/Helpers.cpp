@@ -1,20 +1,6 @@
-// Helpers (db) -- cube. 3 functions. Bodies = Ghidra pseudo-C.
+// Helpers (db) -- cube. 2 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Helpers.h"
-
-/* FUN_0040c380 @ 0040c380  kind=gamemisc  attributed-by=caller-vote  size=12 */
-
-undefined4 * FUN_0040c380(void)
-
-{
-  undefined4 *in_ECX;
-  
-  if (0xf < (uint)in_ECX[5]) {
-    return (undefined4 *)*in_ECX;
-  }
-  return in_ECX;
-}
-
 
 /* FUN_00527590 @ 00527590  kind=gamemisc  attributed-by=caller-vote  size=127 */
 

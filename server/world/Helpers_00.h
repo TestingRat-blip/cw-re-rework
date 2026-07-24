@@ -15,23 +15,26 @@ undefined4 * __thiscall FUN_00401060(void * this, undefined4 * param_1);
 /* 00401080  gamemisc  [caller-vote] */
 undefined4 * __thiscall FUN_00401080(void * this, undefined4 param_1, undefined4 param_2, undefined4 param_3);
 
-/* 004010b0  gamemisc  [caller-vote] */
-undefined4 * __thiscall FUN_004010b0(void * this, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4);
-
 /* 004010e0  gamemisc  [caller-vote] */
 undefined1 * __thiscall FUN_004010e0(void * this, int * param_1);
 
-/* 00401370  gamemisc  [caller-vote] */
-undefined1 * __thiscall FUN_00401370(void * this, undefined1 * param_1, undefined1 param_2);
-
 /* 004013a0  gamemisc  [caller-vote] */
 undefined __fastcall FUN_004013a0(undefined4 * param_1);
+
+/* 004014f0  gamemisc  [caller-vote] */
+undefined __thiscall FUN_004014f0(void * this, float * param_1, float * param_2);
+
+/* 00401610  gamemisc  [caller-vote] */
+float * __thiscall FUN_00401610(void * this, float param_1);
 
 /* 00401840  gamemisc  [caller-vote] */
 bool __thiscall FUN_00401840(void * this, uint param_1, char param_2);
 
 /* 00401a40  gamemisc  [caller-vote] */
 int * __thiscall FUN_00401a40(void * this, int * param_1, uint param_2);
+
+/* 00401ca0  gamemisc  [caller-vote] */
+float10 __cdecl FUN_00401ca0(float param_1);
 
 /* 00402150  gamemisc  [caller-vote] */
 undefined4 __fastcall FUN_00402150(int param_1);
@@ -48,20 +51,11 @@ int __thiscall FUN_00402bb0(void * this, int param_1);
 /* 00402bc0  gamemisc  [caller-vote] */
 int __fastcall FUN_00402bc0(int * param_1);
 
-/* 00405610  gamemisc  [caller-vote] */
-undefined1 * __thiscall FUN_00405610(void * this, undefined1 * param_1);
-
-/* 00405660  gamemisc  [caller-vote] */
-undefined __thiscall FUN_00405660(void * this, int * param_1, uint param_2);
-
-/* 00405690  gamemisc  [caller-vote] */
-undefined __thiscall FUN_00405690(void * this, int * param_1, uint param_2);
+/* 00402eb0  gamemisc  [caller-vote] */
+uint * __thiscall FUN_00402eb0(void * this, uint * param_1);
 
 /* 00406210  gamemisc  [caller-vote] */
 undefined4 __thiscall FUN_00406210(void * this, int param_1, int param_2);
-
-/* 00406380  gamemisc  [caller-vote] */
-undefined4 * __thiscall FUN_00406380(void * this, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6);
 
 /* 00406970  gamemisc  [caller-vote] */
 undefined4 * __fastcall FUN_00406970(undefined4 * param_1);
@@ -69,14 +63,29 @@ undefined4 * __fastcall FUN_00406970(undefined4 * param_1);
 /* 00406ad0  gamemisc  [caller-vote] */
 undefined2 * __fastcall FUN_00406ad0(undefined2 * param_1);
 
+/* 004078f0  gamemisc  [caller-vote] */
+uint __thiscall FUN_004078f0(void * this, char * param_1);
+
+/* 004079c0  gamemisc  [caller-vote] */
+undefined1 __thiscall FUN_004079c0(void * this, int param_1);
+
+/* 004079f0  gamemisc  [caller-vote] */
+undefined __thiscall FUN_004079f0(void * this, float * param_1, float param_2);
+
 /* 00407a30  gamemisc  [caller-vote] */
 int * __thiscall FUN_00407a30(void * this, int * param_1);
 
-/* 0040a1d0  gamemisc  [caller-vote] */
-undefined __thiscall FUN_0040a1d0(void * this, undefined4 * param_1, int * param_2);
+/* 00407d60  gamemisc  [caller-vote] */
+float10 __cdecl FUN_00407d60(float param_1);
 
-/* 004128da  gamemisc  [caller-vote] */
-undefined4 __fastcall FUN_004128da(undefined4 param_1, int * param_2);
+/* 0040a840  gamemisc  [caller-vote] */
+undefined __cdecl FUN_0040a840(uint * param_1, int param_2, undefined4 * param_3);
+
+/* 0040efc0  gamemisc  [caller-vote] */
+undefined __cdecl FUN_0040efc0(undefined4 param_1, undefined4 * param_2, undefined4 * param_3);
+
+/* 0040f0a0  gamemisc  [caller-vote] */
+undefined __cdecl FUN_0040f0a0(undefined4 param_1, undefined4 * param_2, undefined4 * param_3);
 
 /* 00412f80  gamemisc  [caller-vote] */
 undefined __fastcall FUN_00412f80(int * param_1);
@@ -89,6 +98,9 @@ undefined4 __thiscall FUN_00413240(void * this, undefined4 * param_1, void * par
 
 /* 00413640  gamemisc  [caller-vote] */
 undefined __cdecl FUN_00413640(undefined4 * param_1);
+
+/* 00414470  gamemisc  [caller-vote] */
+uint __thiscall FUN_00414470(void * this, float param_1, char param_2);
 
 /* 00416a20  gamemisc  [caller-vote] */
 undefined4 * __thiscall FUN_00416a20(void * this, undefined4 * param_1);
@@ -126,20 +138,38 @@ uint __thiscall FUN_00419ef0(void * this, uint param_1, uint param_2, ushort * p
 /* 0041ae40  gamemisc  [caller-vote] */
 bool __stdcall FUN_0041ae40(void * param_1, ushort * param_2);
 
-/* 0041d5d0  gamemisc  [caller-vote] */
-undefined __cdecl FUN_0041d5d0(undefined4 * param_1, int param_2);
+/* 0041c9e0  gamemisc  [caller-vote] */
+int __thiscall FUN_0041c9e0(void * this, uint param_1, uint param_2, int param_3);
+
+/* 0041d160  gamemisc  [caller-vote] */
+int __thiscall FUN_0041d160(void * this, int param_1);
+
+/* 0041d190  gamemisc  [caller-vote] */
+void * __cdecl FUN_0041d190(int param_1, int param_2, void * param_3);
+
+/* 0041d270  gamemisc  [caller-vote] */
+undefined4 __cdecl FUN_0041d270(void * param_1, void * param_2, char * param_3);
+
+/* 0041d680  gamemisc  [caller-vote] */
+void * __cdecl FUN_0041d680(undefined1 * param_1, undefined1 * param_2, void * param_3);
+
+/* 0041d6c0  gamemisc  [caller-vote] */
+undefined __cdecl FUN_0041d6c0(undefined4 * param_1, undefined4 * param_2, undefined4 * param_3);
 
 /* 0041d800  gamemisc  [caller-vote] */
 undefined4 * __thiscall FUN_0041d800(void * this, undefined4 param_1);
 
-/* 0041e960  gamemisc  [caller-vote] */
-undefined __thiscall FUN_0041e960(void * this, uint param_1);
+/* 0041dae0  gamemisc  [caller-vote] */
+int * __thiscall FUN_0041dae0(void * this, int * param_1);
 
-/* 0041ea10  gamemisc  [caller-vote] */
-undefined __thiscall FUN_0041ea10(void * this, uint param_1);
+/* 0041e300  gamemisc  [caller-vote] */
+undefined __thiscall FUN_0041e300(void * this, int * param_1);
 
-/* 0041eb20  gamemisc  [caller-vote] */
-undefined4 * __thiscall FUN_0041eb20(void * this, undefined4 * param_1, undefined4 * param_2, undefined4 * param_3);
+/* 0041e390  gamemisc  [caller-vote] */
+uint __thiscall FUN_0041e390(void * this, uint param_1);
+
+/* 0041e840  gamemisc  [caller-vote] */
+undefined __thiscall FUN_0041e840(void * this, uint param_1);
 
 /* 0041ebc0  gamemisc  [caller-vote] */
 undefined __thiscall FUN_0041ebc0(void * this, int param_1);
@@ -147,17 +177,20 @@ undefined __thiscall FUN_0041ebc0(void * this, int param_1);
 /* 0041ed50  gamemisc  [caller-vote] */
 undefined __thiscall FUN_0041ed50(void * this, undefined4 * param_1);
 
-/* 0041f5b0  gamemisc  [caller-vote] */
-undefined __thiscall FUN_0041f5b0(void * this, undefined1 * param_1);
+/* 0041ee20  gamemisc  [caller-vote] */
+undefined __thiscall FUN_0041ee20(void * this, void * param_1, int param_2);
 
-/* 0041f770  gamemisc  [caller-vote] */
-undefined4 * __thiscall FUN_0041f770(void * this, uint param_1);
+/* 0041f4d0  gamemisc  [caller-vote] */
+undefined __thiscall FUN_0041f4d0(void * this, undefined4 * param_1);
 
 /* 0041f880  gamemisc  [caller-vote] */
 undefined __thiscall FUN_0041f880(void * this, int param_1);
 
 /* 0041f9e0  gamemisc  [caller-vote] */
 undefined __thiscall FUN_0041f9e0(void * this, undefined4 * param_1);
+
+/* 0041faa0  gamemisc  [caller-vote] */
+undefined __thiscall FUN_0041faa0(void * this, int param_1);
 
 /* 004200d0  gamemisc  [caller-vote] */
 int __stdcall FUN_004200d0(undefined4 * param_1, undefined4 * param_2, undefined4 * param_3);
@@ -279,6 +312,9 @@ undefined __stdcall FUN_004269b0(undefined4 * param_1, undefined4 * param_2);
 /* 004269f0  gamemisc  [caller-vote] */
 undefined __stdcall FUN_004269f0(undefined4 * param_1, undefined4 * param_2);
 
+/* 00426b80  gamemisc  [caller-vote] */
+undefined __thiscall FUN_00426b80(void * this, int * param_1, uint * param_2);
+
 /* 00426d30  gamemisc  [caller-vote] */
 undefined __thiscall FUN_00426d30(void * this, uint param_1);
 
@@ -330,6 +366,12 @@ undefined4 * __fastcall FUN_0042cf00(undefined4 * param_1);
 /* 0042d3d0  gamemisc  [caller-vote] */
 undefined4 * __thiscall FUN_0042d3d0(void * this, ushort * param_1);
 
+/* 0042e220  gamemisc  [caller-vote] */
+undefined4 __thiscall FUN_0042e220(void * this, int param_1, int param_2);
+
+/* 0042e880  gamemisc  [caller-vote] */
+int __thiscall FUN_0042e880(void * this, uint param_1, uint param_2);
+
 /* 0042e920  gamemisc  [caller-vote] */
 undefined __cdecl FUN_0042e920(undefined1 * param_1, undefined1 * param_2, undefined1 * param_3);
 
@@ -347,9 +389,6 @@ undefined __thiscall FUN_0042ed40(void * this);
 
 /* 0042edb0  gamemisc  [caller-vote] */
 undefined1 __thiscall FUN_0042edb0(void * this, int param_1);
-
-/* 0042ede0  gamemisc  [caller-vote] */
-int * __thiscall FUN_0042ede0(void * this, int * param_1, int param_2);
 
 /* 0042f070  gamemisc  [caller-vote] */
 undefined __fastcall FUN_0042f070(int * param_1);
@@ -408,9 +447,6 @@ int * __thiscall FUN_004312e0(void * this, int * param_1, uint param_2);
 /* 0045f030  gamemisc  [caller-vote] */
 undefined __thiscall FUN_0045f030(void * this, undefined4 * param_1);
 
-/* 0045f080  gamemisc  [caller-vote] */
-undefined __thiscall FUN_0045f080(void * this, uint param_1);
-
 /* 00469150  gamemisc  [caller-vote] */
 undefined __cdecl FUN_00469150(int * param_1, int param_2, void * param_3, size_t param_4, undefined * param_5);
 
@@ -419,6 +455,9 @@ undefined __stdcall FUN_0046b250(void);
 
 /* 004709e0  gamemisc  [caller-vote] */
 uint __cdecl FUN_004709e0(int * param_1, int param_2, void * param_3, size_t param_4, undefined * param_5, char param_6);
+
+/* 004c6470  gamemisc  [caller-vote] */
+float * __thiscall FUN_004c6470(void * this, byte * param_1);
 
 /* 004c6540  gamemisc  [caller-vote] */
 undefined4 * __thiscall FUN_004c6540(void * this, undefined4 * param_1, undefined4 * param_2);
@@ -471,14 +510,23 @@ undefined __thiscall FUN_004c7c50(void * this, undefined4 * param_1, undefined4 
 /* 004c7de0  gamemisc  [caller-vote] */
 undefined __thiscall FUN_004c7de0(void * this, undefined4 * param_1, undefined4 * param_2, ushort * param_3, int * param_4);
 
+/* 004c7f70  gamemisc  [caller-vote] */
+void * __cdecl FUN_004c7f70(int * param_1, int * param_2, void * param_3);
+
+/* 004c8020  gamemisc  [caller-vote] */
+void * __cdecl FUN_004c8020(undefined4 * param_1, undefined4 * param_2, void * param_3);
+
 /* 004c8120  gamemisc  [caller-vote] */
 undefined4 __cdecl FUN_004c8120(undefined4 param_1);
 
 /* 004c8130  gamemisc  [caller-vote] */
 undefined __cdecl FUN_004c8130(undefined4 * param_1, undefined4 * param_2, undefined4 * param_3);
 
-/* 004c83b0  gamemisc  [caller-vote] */
-int __fastcall FUN_004c83b0(int param_1);
+/* 004c8150  gamemisc  [caller-vote] */
+undefined __cdecl FUN_004c8150(undefined4 * param_1, undefined4 * param_2);
+
+/* 004c8190  gamemisc  [caller-vote] */
+basic_iostream<char,std::char_traits<char>_> * __thiscall FUN_004c8190(void * this, uint param_1, int param_2);
 
 /* 004cde20  gamemisc  [caller-vote] */
 undefined4 * __thiscall FUN_004cde20(void * this, undefined4 * param_1);
@@ -495,11 +543,11 @@ undefined __thiscall FUN_004ce000(void * this, ushort * param_1);
 /* 004ce0e0  gamemisc  [caller-vote] */
 undefined __thiscall FUN_004ce0e0(void * this, ushort * param_1);
 
-/* 004ce220  gamemisc  [caller-vote] */
-undefined __thiscall FUN_004ce220(void * this, int * param_1, int * param_2);
-
 /* 004ce3b0  gamemisc  [caller-vote] */
 undefined4 __stdcall FUN_004ce3b0(int * param_1, int * param_2);
+
+/* 004ce580  gamemisc  [caller-vote] */
+undefined4 __thiscall FUN_004ce580(void * this, uint param_1);
 
 /* 004ce5f0  gamemisc  [caller-vote] */
 undefined __stdcall FUN_004ce5f0(void);
@@ -510,17 +558,38 @@ undefined __stdcall FUN_004ce620(undefined4 * param_1, undefined4 * param_2);
 /* 004ce6a0  gamemisc  [caller-vote] */
 undefined4 * __fastcall FUN_004ce6a0(undefined4 * param_1);
 
-/* 004ce8e0  gamemisc  [caller-vote] */
-undefined __thiscall FUN_004ce8e0(void * this, uint param_1);
+/* 004d1a70  gamemisc  [caller-vote] */
+undefined __thiscall FUN_004d1a70(void * this, uint param_1, uint param_2, int param_3, int param_4, int param_5, int param_6);
 
-/* 004d2340  gamemisc  [caller-vote] */
-uint __thiscall FUN_004d2340(void * this, uint param_1, uint param_2, undefined8 param_3);
+/* 004d24a0  gamemisc  [caller-vote] */
+byte __thiscall FUN_004d24a0(void * this, uint param_1, uint param_2, int param_3, int param_4, int param_5);
 
 /* 004d3df0  gamemisc  [caller-vote] */
 undefined __fastcall FUN_004d3df0(int param_1);
 
+/* 004d3e10  gamemisc  [caller-vote] */
+undefined4 * __thiscall FUN_004d3e10(void * this, undefined4 * param_1, int * param_2, int * param_3);
+
+/* 004d3ed0  gamemisc  [caller-vote] */
+undefined __thiscall FUN_004d3ed0(void * this, undefined4 * param_1, int * param_2);
+
+/* 004d4470  gamemisc  [caller-vote] */
+int * __thiscall FUN_004d4470(void * this, int * param_1, int param_2);
+
 /* 004d5c60  gamemisc  [caller-vote] */
 undefined __fastcall FUN_004d5c60(int param_1);
+
+/* 004d81b0  gamemisc  [caller-vote] */
+undefined __thiscall FUN_004d81b0(void * this, int param_1);
+
+/* 004d8dc0  gamemisc  [caller-vote] */
+undefined4 __fastcall FUN_004d8dc0(int param_1);
+
+/* 004d8de0  gamemisc  [caller-vote] */
+undefined4 __fastcall FUN_004d8de0(int param_1);
+
+/* 004d8e30  gamemisc  [caller-vote] */
+float10 __fastcall FUN_004d8e30(double * param_1);
 
 /* 004d8e60  gamemisc  [caller-vote] */
 undefined __thiscall FUN_004d8e60(void * this, void * param_1);
@@ -531,75 +600,6 @@ void * __thiscall FUN_004d8f70(void * this, void * param_1);
 /* 004d8f90  gamemisc  [caller-vote] */
 undefined __thiscall FUN_004d8f90(void * this, int * param_1, int * param_2);
 
-/* 004d99d0  gamemisc  [caller-vote] */
-int * __thiscall FUN_004d99d0(void * this, uint * param_1);
-
-/* 004da9c0  gamemisc  [caller-vote] */
-undefined __cdecl FUN_004da9c0(undefined4 * param_1, undefined4 * param_2, undefined4 * param_3);
-
-/* 004daa80  gamemisc  [caller-vote] */
-undefined4 * __thiscall FUN_004daa80(void * this, int * param_1);
-
-/* 004dae20  gamemisc  [caller-vote] */
-undefined4 __thiscall FUN_004dae20(void * this, uint param_1);
-
-/* 004e1370  gamemisc  [caller-vote] */
-undefined __thiscall FUN_004e1370(void * this, uint param_1);
-
-/* 004e1420  gamemisc  [caller-vote] */
-undefined __thiscall FUN_004e1420(void * this, undefined4 * param_1);
-
-/* 004f3850  gamemisc  [caller-vote] */
-undefined8 __cdecl FUN_004f3850(uint param_1, uint param_2, uint param_3);
-
-/* 004f39e0  gamemisc  [caller-vote] */
-undefined __cdecl FUN_004f39e0(int param_1, int param_2, int param_3, float * param_4);
-
-/* 004f3ba0  gamemisc  [caller-vote] */
-int __stdcall FUN_004f3ba0(undefined4 * param_1, undefined4 * param_2, undefined4 * param_3);
-
-/* 004f49d0  gamemisc  [caller-vote] */
-undefined __cdecl FUN_004f49d0(float * param_1, float * param_2);
-
-/* 004f4dd0  gamemisc  [caller-vote] */
-undefined __cdecl FUN_004f4dd0(int param_1, int param_2);
-
-/* 004f55b0  gamemisc  [caller-vote] */
-undefined __cdecl FUN_004f55b0(float * param_1, float * param_2, float * param_3);
-
-/* 004f5bc0  gamemisc  [caller-vote] */
-undefined __cdecl FUN_004f5bc0(int param_1, int param_2, int param_3, float * param_4);
-
-/* 004f5f40  gamemisc  [caller-vote] */
-undefined __cdecl FUN_004f5f40(float * param_1, float * param_2, int param_3, undefined4 param_4);
-
-/* 004f6330  gamemisc  [caller-vote] */
-undefined __cdecl FUN_004f6330(undefined4 * param_1, int param_2);
-
-/* 004f6a60  gamemisc  [caller-vote] */
-undefined __cdecl FUN_004f6a60(undefined4 * param_1, float * param_2, float * param_3);
-
-/* 004f7400  gamemisc  [caller-vote] */
-undefined4 * __thiscall FUN_004f7400(void * this, undefined4 * param_1);
-
-/* 004f7620  gamemisc  [caller-vote] */
-undefined4 * __thiscall FUN_004f7620(void * this, undefined4 * param_1, undefined4 * param_2);
-
-/* 004f7660  gamemisc  [caller-vote] */
-undefined4 * __fastcall FUN_004f7660(undefined4 * param_1);
-
-/* 004f77a0  gamemisc  [caller-vote] */
-undefined __fastcall FUN_004f77a0(undefined4 * param_1);
-
-/* 004f7ba0  gamemisc  [caller-vote] */
-undefined4 * __fastcall FUN_004f7ba0(undefined4 * param_1);
-
-/* 004f7c60  gamemisc  [caller-vote] */
-undefined4 * __thiscall FUN_004f7c60(void * this, int * param_1);
-
-/* 004f7df0  gamemisc  [caller-vote] */
-undefined __thiscall FUN_004f7df0(void * this, uint param_1);
-
-/* 004f80d0  gamemisc  [caller-vote] */
-undefined __thiscall FUN_004f80d0(void * this, uint param_1);
+/* 004e1230  gamemisc  [caller-vote] */
+undefined4 * __cdecl FUN_004e1230(undefined4 * param_1, undefined4 * param_2, undefined4 * param_3);
 

@@ -1,4 +1,4 @@
-// helpers_ctor_like (game_misc) -- server. 19 functions. Bodies = Ghidra pseudo-C.
+// helpers_ctor_like (game_misc) -- server. 13 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_ctor_like.h"
 
@@ -275,35 +275,6 @@ ushort * __cdecl FUN_004194e0(ushort *param_1,ushort param_2)
 }
 
 
-/* FUN_0041d720 @ 0041d720  kind=gamemisc  attributed-by=role:ctor-like  size=159 */
-
-undefined4 * __thiscall FUN_0041d720(void *this,int *param_1)
-
-{
-  uint uVar1;
-  undefined4 *puVar2;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  local_8 = 0xffffffff;
-  puStack_c = &LAB_0054bf10;
-  local_10 = ExceptionList;
-  ExceptionList = &local_10;
-  *(undefined4 *)this = 0;
-  *(undefined4 *)((int)this + 4) = 0;
-  *(undefined4 *)((int)this + 8) = 0;
-  uVar1 = FUN_0041e320(this,(param_1[1] - *param_1) / 0x11c);
-  if ((char)uVar1 != '\0') {
-    local_8 = 0;
-    puVar2 = FUN_0041d500((undefined4 *)*param_1,(undefined4 *)param_1[1],*(undefined4 **)this);
-    *(undefined4 **)((int)this + 4) = puVar2;
-  }
-  ExceptionList = local_10;
-  return this;
-}
-
-
 /* FUN_00422890 @ 00422890  kind=gamemisc  attributed-by=role:ctor-like  size=115 */
 
 undefined4 * __fastcall FUN_00422890(undefined4 *param_1)
@@ -349,19 +320,6 @@ int __fastcall FUN_00422a90(int param_1)
   *(undefined4 *)(param_1 + 0x40) = 0;
   *(undefined2 *)(param_1 + 0x44) = 0;
   *(undefined1 *)(param_1 + 0x46) = 0;
-  return param_1;
-}
-
-
-/* FUN_00422af0 @ 00422af0  kind=gamemisc  attributed-by=role:ctor-like  size=30 */
-
-undefined4 * __fastcall FUN_00422af0(undefined4 *param_1)
-
-{
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = 0;
-  param_1[3] = 0;
   return param_1;
 }
 
@@ -708,62 +666,9 @@ LAB_004c66d7:
 }
 
 
-/* FUN_004c82a0 @ 004c82a0  kind=gamemisc  attributed-by=role:ctor-like  size=156 */
+/* FUN_004daa80 @ 004daa80  kind=gamemisc  attributed-by=role:ctor-like  size=143 */
 
-undefined4 * __thiscall FUN_004c82a0(void *this,int *param_1)
-
-{
-  undefined4 uVar1;
-  void *pvVar2;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  local_8 = 0xffffffff;
-  puStack_c = &LAB_00554500;
-  local_10 = ExceptionList;
-  ExceptionList = &local_10;
-  *(undefined4 *)this = 0;
-  *(undefined4 *)((int)this + 4) = 0;
-  *(undefined4 *)((int)this + 8) = 0;
-  uVar1 = FUN_004ce580(this,(param_1[1] - *param_1) / 0xc);
-  if ((char)uVar1 != '\0') {
-    local_8 = 0;
-    pvVar2 = FUN_004c7f70((int *)*param_1,(int *)param_1[1],*(void **)this);
-    *(void **)((int)this + 4) = pvVar2;
-  }
-  ExceptionList = local_10;
-  return this;
-}
-
-
-/* FUN_004d9960 @ 004d9960  kind=gamemisc  attributed-by=role:ctor-like  size=104 */
-
-undefined4 * __thiscall FUN_004d9960(void *this,undefined4 *param_1)
-
-{
-  *(undefined4 *)this = 0;
-  *(undefined4 *)((int)this + 4) = 0;
-  *(undefined4 *)((int)this + 8) = 0;
-  *(undefined4 *)this = *param_1;
-  *(undefined4 *)((int)this + 4) = param_1[1];
-  *(undefined4 *)((int)this + 8) = param_1[2];
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = 0;
-  *(undefined4 *)((int)this + 0xc) = param_1[3];
-  *(undefined4 *)((int)this + 0x10) = param_1[4];
-  *(undefined4 *)((int)this + 0x14) = param_1[5];
-  *(undefined4 *)((int)this + 0x18) = param_1[6];
-  *(undefined4 *)((int)this + 0x1c) = param_1[7];
-  *(undefined4 *)((int)this + 0x20) = param_1[8];
-  return this;
-}
-
-
-/* FUN_004e1ed0 @ 004e1ed0  kind=gamemisc  attributed-by=role:ctor-like  size=156 */
-
-undefined4 * __thiscall FUN_004e1ed0(void *this,int *param_1)
+undefined4 * __thiscall FUN_004daa80(void *this,int *param_1)
 
 {
   undefined4 uVar1;
@@ -772,82 +677,20 @@ undefined4 * __thiscall FUN_004e1ed0(void *this,int *param_1)
   undefined4 local_8;
   
   local_8 = 0xffffffff;
-  puStack_c = &LAB_00554f00;
+  puStack_c = &LAB_00554d80;
   local_10 = ExceptionList;
   ExceptionList = &local_10;
   *(undefined4 *)this = 0;
   *(undefined4 *)((int)this + 4) = 0;
   *(undefined4 *)((int)this + 8) = 0;
-  uVar1 = FUN_004ce580(this,(param_1[1] - *param_1) / 0xc);
+  uVar1 = FUN_004dae20(this,param_1[1] - *param_1 >> 2);
   if ((char)uVar1 != '\0') {
     local_8 = 0;
-    uVar1 = FUN_004e1d70((undefined4 *)*param_1,(undefined4 *)param_1[1],*(undefined4 **)this);
+    uVar1 = FUN_004da9c0((undefined4 *)*param_1,(undefined4 *)param_1[1],*(undefined4 **)this);
     *(undefined4 *)((int)this + 4) = uVar1;
   }
   ExceptionList = local_10;
   return this;
-}
-
-
-/* FUN_004e2190 @ 004e2190  kind=gamemisc  attributed-by=role:ctor-like  size=185 */
-
-undefined4 * __fastcall FUN_004e2190(undefined4 *param_1)
-
-{
-  *param_1 = 0;
-  param_1[1] = 0;
-  *(undefined1 *)(param_1 + 2) = 0;
-  param_1[4] = 0;
-  param_1[5] = 0;
-  param_1[6] = 0;
-  param_1[7] = 0;
-  param_1[8] = 0;
-  param_1[9] = 0;
-  param_1[10] = 0;
-  param_1[0xb] = 0;
-  param_1[0xc] = 0;
-  param_1[0xd] = 0;
-  param_1[0xe] = 0;
-  param_1[0xf] = 0;
-  param_1[0x10] = 0;
-  param_1[0x11] = 0;
-  param_1[0x12] = 0;
-  param_1[0x13] = 0;
-  param_1[0x14] = 0;
-  param_1[0x16] = 0;
-  param_1[0x17] = 0;
-  param_1[0x18] = 0;
-  param_1[0x19] = 0;
-  param_1[0x1a] = 0;
-  param_1[0x1b] = 0;
-  *(undefined1 *)(param_1 + 0x1c) = 1;
-  return param_1;
-}
-
-
-/* FUN_004f7490 @ 004f7490  kind=gamemisc  attributed-by=role:ctor-like  size=161 */
-
-undefined4 * __fastcall FUN_004f7490(undefined4 *param_1)
-
-{
-  *param_1 = 0;
-  *(undefined2 *)(param_1 + 5) = 1;
-  *(undefined2 *)(param_1 + 1) = 0;
-  param_1[2] = 0;
-  param_1[3] = 0;
-  *(undefined2 *)(param_1 + 4) = 0;
-  *(undefined1 *)((int)param_1 + 0x12) = 0;
-  param_1[0x46] = 0;
-  memset(param_1 + 6,0,0x100);
-  param_1[0x47] = 0xffffffff;
-  param_1[0x48] = 0xffffffff;
-  param_1[0x4a] = 0;
-  param_1[0x4b] = 0;
-  param_1[0x4c] = 0;
-  param_1[0x4d] = 0;
-  param_1[0x4e] = 0;
-  param_1[0x4f] = 0;
-  return param_1;
 }
 
 

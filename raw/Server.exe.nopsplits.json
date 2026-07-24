@@ -1,0 +1,542 @@
+{
+"0041ff9a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0041ff00",
+"size": 80
+},
+"004240ea": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00423dd0",
+"size": 5015
+},
+"00428aca": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00428940",
+"size": 288
+},
+"0046178a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00461420",
+"size": 1018
+},
+"004667da": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00466700",
+"size": 676
+},
+"0046eada": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0046e7e0",
+"size": 278
+},
+"0046f5da": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0046e7e0",
+"size": 277
+},
+"004700da": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0046f990",
+"size": 537
+},
+"004721aa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00472090",
+"size": 1690
+},
+"0047693a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004768b0",
+"size": 304
+},
+"00476c8a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00476c60",
+"size": 149
+},
+"0047700a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00476ff0",
+"size": 111
+},
+"0047fa9a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0047f9a0",
+"size": 344
+},
+"004816ca": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00481630",
+"size": 7194
+},
+"00485faa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00485a80",
+"size": 868
+},
+"0048866a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00488640",
+"size": 128
+},
+"004886ea": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00488640",
+"size": 362
+},
+"0048935a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00489330",
+"size": 209
+},
+"0048951a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00489430",
+"size": 559
+},
+"00489a0a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00489940",
+"size": 33
+},
+"0048a3ba": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0048a240",
+"size": 263
+},
+"0048be0a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0048bd80",
+"size": 48
+},
+"0048be3a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0048bd80",
+"size": 303
+},
+"0048c85a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0048c830",
+"size": 213
+},
+"0048fb0a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0048f930",
+"size": 77
+},
+"00496e0a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00496df0",
+"size": 286
+},
+"00499b6a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00499af0",
+"size": 197
+},
+"00499c9a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00499c30",
+"size": 214
+},
+"0049a9aa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0049a610",
+"size": 337
+},
+"0049d5fa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0049d5c0",
+"size": 162
+},
+"0049fbea": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0049fad0",
+"size": 469
+},
+"004a2cfa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004a2c80",
+"size": 381
+},
+"004a2f1a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004a2e90",
+"size": 1249
+},
+"004a6caa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004a6c80",
+"size": 181
+},
+"004aac4a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004aac10",
+"size": 277
+},
+"004b2f2a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004af360",
+"size": 6713
+},
+"004b496a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004af360",
+"size": 3862
+},
+"004bb5da": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004bb240",
+"size": 2138
+},
+"004bec7a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004bec40",
+"size": 384
+},
+"004bedfa": {
+"jmp_over": false,
+"nop": "8d9b00000000",
+"owner": "004bec40",
+"size": 768
+},
+"004bf0fa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004bec40",
+"size": 254
+},
+"004c166a": {
+"jmp_over": false,
+"nop": "8d9b00000000",
+"owner": "004c1640",
+"size": 178
+},
+"004cd98a": {
+"jmp_over": false,
+"nop": "8d9b00000000",
+"owner": "004cd940",
+"size": 16
+},
+"004cd99a": {
+"jmp_over": false,
+"nop": "8d9b00000000",
+"owner": "004cd940",
+"size": 1140
+},
+"004d863a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004d83a0",
+"size": 870
+},
+"004dcdca": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004db200",
+"size": 226
+},
+"004dd9da": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004dd2e0",
+"size": 1061
+},
+"004e310a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004e28e0",
+"size": 28175
+},
+"004eaa7a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004e28e0",
+"size": 14586
+},
+"004ee3aa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004e28e0",
+"size": 17215
+},
+"004f4a5a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004f49d0",
+"size": 79
+},
+"004f4aea": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004f4ab0",
+"size": 102
+},
+"004f654a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004f64a0",
+"size": 669
+},
+"004f6b0a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004f6a60",
+"size": 669
+},
+"004f73ca": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004f7370",
+"size": 28
+},
+"004ff59a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "004ff3f0",
+"size": 1600
+},
+"00501e0a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00500300",
+"size": 2715
+},
+"00502a7a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00500300",
+"size": 840
+},
+"00502dca": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00500300",
+"size": 9401
+},
+"0050529a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00500300",
+"size": 304
+},
+"005053ca": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00500300",
+"size": 304
+},
+"005054fa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00500300",
+"size": 6960
+},
+"0050702a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00500300",
+"size": 8946
+},
+"0050998a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00500300",
+"size": 1013
+},
+"0050da73": {
+"jmp_over": false,
+"nop": "8da42400000000",
+"owner": "0050d8d0",
+"size": 1541
+},
+"0051210a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "005104e0",
+"size": 4767
+},
+"005154aa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00513760",
+"size": 2225
+},
+"00515d6a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00513760",
+"size": 9225
+},
+"0051819a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00513760",
+"size": 1161
+},
+"0051880a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00518630",
+"size": 8528
+},
+"0051ae9a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00518630",
+"size": 656
+},
+"0051b12a": {
+"jmp_over": false,
+"nop": "8d9b00000000",
+"owner": "00518630",
+"size": 320
+},
+"0051b26a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00518630",
+"size": 5776
+},
+"0051c90a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "00518630",
+"size": 9278
+},
+"0051ed6a": {
+"jmp_over": false,
+"nop": "8d9b00000000",
+"owner": "00518630",
+"size": 12564
+},
+"0052e73a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0052e710",
+"size": 128
+},
+"0052f6fa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0052ef00",
+"size": 1344
+},
+"0052fc3a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0052ef00",
+"size": 2080
+},
+"00530a7a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "005308b0",
+"size": 4589
+},
+"00531c6a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "005308b0",
+"size": 1561
+},
+"00532473": {
+"jmp_over": false,
+"nop": "8da42400000000",
+"owner": "005322d0",
+"size": 2175
+},
+"00532cfa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "005322d0",
+"size": 3472
+},
+"00533e0a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "005322d0",
+"size": 128
+},
+"00533e8a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "005322d0",
+"size": 1392
+},
+"005343fa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "005322d0",
+"size": 7810
+},
+"0054140a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0053cba1",
+"size": 1693
+},
+"00541aaa": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0053cba1",
+"size": 752
+},
+"00541d9a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0053cba1",
+"size": 19159
+},
+"0054687a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0053cba1",
+"size": 8010
+},
+"0054709a": {
+"jmp_over": true,
+"nop": "8d9b00000000",
+"owner": "0053cba1",
+"size": 395
+}
+}
