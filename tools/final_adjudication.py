@@ -215,6 +215,11 @@ the body was the only way to settle these.
         # too -- the Pass-3 candidate loop index [esp+0x28] (0x50ea0e/0x50f27c); level and rank
         # are reproduced 6/6 ab-initio by tools/gate_dungeon_counter.py.
         "00411090": {"name": "monster_level_formula", "kind": "game", "verdict": "DEEP-RE"},
+        # the OVERWORLD prop scatter (Docs/RE_zone_props.md). Was lib_fn_4e0740, but its only
+        # caller is the zone builder (0x51cd1e, in a 10-try retry loop) and it pushes a 0x188
+        # prop record into site+0xc: type 0x41, size (2.4, 2.4, 0.5), after returning early on
+        # river bands (FUN_0052cd50 <= 0.02). Gated over 56 live zones.
+        "004e0740": {"name": "zone_prop_emitter", "kind": "game", "verdict": "DEEP-RE"},
         # the creature-species containers the dungeon assembler builds in its prologue and
         # the three helpers that index them (Docs/RE_dungeon_species.md, gated 6/6).
         # 402bb0 / 41fff0 / 4e28d0 are vector<int> operator[] / size / empty: proven by the

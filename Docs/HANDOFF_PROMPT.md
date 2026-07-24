@@ -71,6 +71,7 @@ applied). They are copies — **never mutate `RatForge\tools\ghidra_proj\CubeAud
 | `frida_dungeon_spawn.py` | **live dungeon capture** (the important one, see below) |
 | `frida_dungeon_marker.py` | `site+0x48` markers + the stub's off-lattice terrain probe |
 | `frida_dungeon_patrol.py` | the two creature-species containers + every species they hand out |
+| `frida_zone_props.py` | the OVERWORLD prop scatter; sweeps many zones in one server run |
 | `reccmp/compare.py` | byte-match a recompile vs the shipped code |
 
 **⚠ Pipeline is a fixpoint — run in this order after any change:**
@@ -224,8 +225,15 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    box-aware probe was built and measured identical on 305 candidates, then reverted; the pure
    terrain rule `z <= surfH + 1` reproduces 476/480 live verdicts and is what the port already
    did. **The dungeon assembler now has no known port gap.**
-3. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,
-   still the largest genuinely-new slice.
+3. **Prop / vegetation placement** — Phase 2, the largest genuinely-new slice. ⚠ Its old
+   `FUN_004c8420` starting point is WRONG (that is `DungeonProp_copy_0x188`). Re-scoped by a
+   caller census in `Docs/RE_zone_props.md`: every prop in the game is a 0x188 record pushed by
+   `FUN_004d6670`, and its nine callers leave exactly two subsystems open — **the zone builder**
+   (4 emit sites in `FUN_00518630`) and **the town builder** (`004e310a`/`004eaa7a`/`004ee3aa`).
+   First cut captured + gated over 56 zones (`frida_zone_props.py`, `gate_zone_props.py`): one
+   prop per zone, emitter chosen by `(zx+zz)&1`, statue vs type-0x41. ▶ Next: the position
+   jitter, `FUN_004e0740`'s second stage (ids 0x10/0x0c/0x45/0x42 go to a container that is NOT
+   `site+0xc` -- find it), the two emitters no sampled zone reached, then the town builder.
 4. **Port the mob pass + boss spawn + light sources into `cw_rederive`** (the item-generation
    family is ported, and now fed with a real level/rank). Then the RatForge engine half of
    "light emission" — rendering the kind-7 / kind-4 records as actual lights — which is engine

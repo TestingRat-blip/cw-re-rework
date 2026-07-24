@@ -2386,7 +2386,7 @@ addr	name	kind	module	class	attributed_by	size
 004dde00	FUN_004dde00	gamemisc	game_misc	Unsorted_002	none	144
 004dde90	FUN_004dde90	gamemisc	ai	Unsorted	logic:caller-vote	10330
 004e0700	FUN_004e0700	gamemisc	world	_helpers_wrapper	role:wrapper	56
-004e0740	lib_fn_4e0740	lib	_library	cw_lib	ledger	2035
+004e0740	zone_prop_emitter	game	world	Proven	ledger	2035
 004e0f40	spawn_ctor	game	world	Proven	ledger	380
 004e10c0	cube::Spawn::~Spawn	game	world	Spawn	rtti	259
 004e11d0	cube::Spawn::scalar_deleting_destructor	game	world	Spawn	rtti	33

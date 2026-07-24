@@ -218,9 +218,9 @@
    "verdict": "A"
   },
   "004e0740": {
-   "kind": "lib",
-   "name": "lib_fn_4e0740",
-   "verdict": "B"
+   "kind": "game",
+   "name": "zone_prop_emitter",
+   "verdict": "DEEP-RE"
   },
   "004e1200": {
    "kind": "gamemisc",

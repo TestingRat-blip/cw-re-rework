@@ -81,17 +81,32 @@ is done, so the entity layers (this + props) are the whole remaining job.
 
 ## Phase 2 — prop / vegetation entity placement (Phase 12 of the port plan)
 
-The **placement/selection** logic is pure RE even though rendering needs an engine
-model-instance system:
+⚠ **This phase's original premise was wrong and is retired.** It said to start at
+`FUN_004c8420`, "the Phase-12 prop/decoration entity emitter". `004c8420` is
+`DungeonProp_copy_0x188` — the record's copy ctor, relabelled while doing the dungeon lights.
 
-- `FUN_004c8420` (the entity-record copy path) — currently `lib_fn_4c8420`; it is the Phase-12
-  prop/decoration entity emitter. Small (133 B), 4 callers — start here.
-- Trace its callers to the per-zone scatter that chooses which `.cub` prop, at what position,
-  from the shared zone-scatter `rand()` stream (already proven for trees/knolls/mounds).
+**Re-scoped 2026-07-24 by a caller census (`RE_zone_props.md`).** Every prop in the game is a
+0x188 record pushed by `FUN_004d6670` and built by `FUN_004c84b0`; their combined caller list is
+nine sites and covers the whole game. Six are already done (dungeon assembler ×2, mob pass), so
+the remaining prop work is exactly **two subsystems**:
 
-Deliverable: the prop/veg **placement** proven bit-exact (positions + model ids + rand draws)
-against a live capture, even while the *rendering* stays a documented engine gap. This is the
-biggest genuinely-remaining generation slice.
+- **the zone builder** — four emit sites in `FUN_00518630`'s body (`0x51cd1e` → `FUN_004e0740`,
+  plus inline emitters at `0x51dbf5` / `0x51e796` / `0x51fcdb`);
+- **the town builder** — `004e310a`, `004eaa7a`, `004ee3aa`.
+
+First cut on the zone builder is captured and gated over 56 live zones: **exactly one prop per
+zone**, into that zone's own `site+0xc`, and **which emitter runs is `(zx + zz) & 1`** (even →
+the statue emitter, odd → `FUN_004e0740`). Emitter B emits type 0 (`goddess2`/Statue) sized
+(2,2,8) with `dir = rand()%4`, seated one above the first solid block from a downward scan;
+`FUN_004e0740` emits type 0x41 sized (2.4,2.4,0.5) and bails on river bands (`FUN_0052cd50 <=
+0.02`), which is why 2 of 26 odd zones produced nothing.
+
+Still open here: the position jitter arithmetic, `FUN_004e0740`'s second stage (ids
+0x10/0x0c/0x45/0x42 — they go to a container that is not `site+0xc`), emitters A and C (no
+sampled zone reached them), the unnamed ids past 0x37, and the town builder's three emitters.
+
+Deliverable unchanged: the prop/veg **placement** proven bit-exact (positions + model ids + rand
+draws) against a live capture, while *rendering* stays a documented engine gap.
 
 ## Phase 3 — dungeon entity / mob layer (Milestone 3)
 

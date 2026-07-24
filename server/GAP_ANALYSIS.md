@@ -60,6 +60,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `004e28e0` | 2083 | 1 | 7 |  |  |
 | `0052fc3a` | 2080 | 0 | 5 | orphan |  |
 | `004757f0` | 2074 | 1 | 9 |  | BINARY, auto-index |
+| `004e0740` | 2035 | 1 | 13 |  |  |
 | `0052ef00` | 2032 | 2 | 5 |  |  |
 | `004d4f90` | 1952 | 2 | 5 |  |  |
 | `0053670a` | 1882 | 0 | 28 | orphan |  |
@@ -411,6 +412,5 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `0042e9a0` | 239 | 2 | 8 |  | bad cast |
 | `004672d0` | 238 | 0 | 4 | orphan | %.*s"%w"%s, string or blob too big |
 | `004311f0` | 237 | 2 | 4 |  | invalid string position, string too long |
-| `00423ce0` | 235 | 2 | 6 |  |  |
 
-**Total unnamed non-library functions: 1646** (117 of the listed 400 are orphans)
+**Total unnamed non-library functions: 1647** (117 of the listed 400 are orphans)
