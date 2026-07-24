@@ -197,3 +197,26 @@ The ~84 `world/logic` data-management functions (chunk/zone containers, serialis
 `Phase 0 → Phase 1 (524540) → Phase 2 (prop placement) → Phase 3 (dungeon mobs) → Phase 4`.
 Phase 1 is the cleanest win and exercises reccmp on a big function; Phase 2 is the largest
 genuinely-new slice. Each phase is independently shippable.
+
+
+## Ported into cw_rederive (2026-07-24)
+
+The item/loot layer is now in the engine port, not just the RE tree. RatForge commit
+`046af58`:
+
+- **`src/worldgen/cw/CwItemGen.h`** — `CwItem` and the five generators (`52bf40`, `528bf0`,
+  `52c4e0`, `52a760`, `52b470`) producing real values while consuming the identical stream.
+  The decoration walk previously modelled them as draw counts only.
+- **Gate `rederive_itemgen` — 492/492.** The golden carries the recorded rand values of the
+  18 live invocations and the gate drives the generator with a replay rand, so the port is
+  checked against live data rather than against a re-implementation of itself.
+- **The walk emits loot**: chest `contents`, the boss's `item`, and a new
+  `DunPropKind::GroundItem` per scattered floor item.
+- **`dungeonPropModelName(0x0f)`** added — the style-4 stool id this RE found missing.
+
+`rederive_dundecor` stayed **52/52** and the output hash stayed **AB6C2A00E6BF77A4** across
+the change: values added, no draw moved. `--dungeontest` passes and now reports the loot.
+
+Not ported: `dunLevel` / `dunRank` (the assembler's `[ebp-0x2bac]` / `[ebp-0x2bd4]`) default
+to 0 — per-dungeon inputs computed long before the walk, and a separate thread. The generators
+are correct given them and the parameters are wired for a one-line change.
