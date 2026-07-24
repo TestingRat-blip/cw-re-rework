@@ -3,9 +3,6 @@
 #pragma once
 #include "../include/cw_types.h"
 
-/* 00418410  gamemisc  [none] */
-undefined __thiscall FUN_00418410(void * this, ushort * param_1, uint * param_2, uint param_3, undefined4 param_4);
-
 /* 004189b0  gamemisc  [none] */
 undefined __cdecl FUN_004189b0(undefined8 * param_1, ushort * param_2, int param_3, uint * param_4, uint param_5);
 
@@ -147,9 +144,6 @@ undefined __thiscall FUN_0041e840(void * this, uint param_1);
 /* 0041e8f0  gamemisc  [none] */
 int __thiscall FUN_0041e8f0(void * this, uint param_1);
 
-/* 0041e960  gamemisc  [none] */
-undefined __thiscall FUN_0041e960(void * this, uint param_1);
-
 /* 0041ea10  gamemisc  [none] */
 undefined __thiscall FUN_0041ea10(void * this, uint param_1);
 
@@ -164,9 +158,6 @@ undefined __thiscall FUN_0041ee20(void * this, void * param_1, int param_2);
 
 /* 0041f4d0  gamemisc  [none] */
 undefined __thiscall FUN_0041f4d0(void * this, undefined4 * param_1);
-
-/* 0041f5b0  gamemisc  [none] */
-undefined __thiscall FUN_0041f5b0(void * this, undefined1 * param_1);
 
 /* 0041f640  gamemisc  [none] */
 undefined4 * __thiscall FUN_0041f640(void * this, uint param_1);
@@ -381,9 +372,6 @@ undefined4 __thiscall FUN_0042e220(void * this, int param_1, int param_2);
 /* 0042e880  gamemisc  [none] */
 int __thiscall FUN_0042e880(void * this, uint param_1, uint param_2);
 
-/* 0042ede0  gamemisc  [none] */
-int * __thiscall FUN_0042ede0(void * this, int * param_1, int param_2);
-
 /* 0042feb0  gamemisc  [none] */
 undefined __thiscall FUN_0042feb0(void * this, undefined4 * param_1);
 
@@ -452,4 +440,16 @@ uint __cdecl FUN_0046b0e0(int param_1, byte * param_2, int param_3, uint param_4
 
 /* 0046b260  gamemisc  [none] */
 int __cdecl FUN_0046b260(int * param_1);
+
+/* 0046b2b0  gamemisc  [none] */
+int __cdecl FUN_0046b2b0(int * param_1);
+
+/* 0046bab0  gamemisc  [none] */
+bool __cdecl FUN_0046bab0(int param_1, int param_2);
+
+/* 0046f880  gamemisc  [none] */
+undefined __cdecl FUN_0046f880(int * param_1);
+
+/* 0046f990  gamemisc  [none] */
+undefined __cdecl FUN_0046f990(int * param_1);
 

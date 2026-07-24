@@ -262,6 +262,11 @@
    "name": "dungeon_assembler",
    "verdict": "A"
   },
+  "0050702a": {
+   "kind": "game",
+   "name": "dungeon_mob_populator",
+   "verdict": "DEEP-RE"
+  },
   "00509e40": {
    "kind": "lib",
    "name": "stl_fn_509e40",

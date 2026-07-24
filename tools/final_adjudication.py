@@ -168,6 +168,9 @@ the body was the only way to settle these.
         # FUN_00524540 — creature spawn + behaviour-tree builder (Docs/RE_524540_creature_spawn.md).
         # Falsifies the old "castle-arc wall stamps" label: 0 voxel writes, 321 Spawn refs.
         "00524540": {"name": "creature_spawn_builder", "kind": "game", "verdict": "DEEP-RE"},
+        # FUN_0050702a — dungeon mob populator (Docs/RE_50702a_mob_populator.md). Grid-scans the
+        # dungeon and calls 524540 per cell; false "artifact" (jumptable target, 0 resolved refs).
+        "0050702a": {"name": "dungeon_mob_populator", "kind": "game", "verdict": "DEEP-RE"},
     }
     settled.update(DEEP_RE)
 

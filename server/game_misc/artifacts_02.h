@@ -9,9 +9,6 @@ undefined __stdcall FUN_005053ca(void);
 /* 005054fa  gamemisc  [role:artifact] */
 undefined __stdcall FUN_005054fa(void);
 
-/* 0050702a  gamemisc  [role:artifact] */
-undefined __stdcall FUN_0050702a(void);
-
 /* 0050998a  gamemisc  [role:artifact] */
 undefined __stdcall FUN_0050998a(void);
 
@@ -38,4 +35,7 @@ undefined __fastcall FUN_0051ae9a(int param_1, int * param_2, undefined4 param_3
 
 /* 0051b12a  gamemisc  [role:artifact] */
 undefined __stdcall FUN_0051b12a(undefined4 param_1, undefined4 param_2, int param_3);
+
+/* 0051b26a  gamemisc  [role:artifact] */
+undefined __thiscall FUN_0051b26a(void * this, undefined4 param_1, undefined4 param_2, int param_3);
 

@@ -53,8 +53,9 @@ Interceptor.attach(b.add(0x124540), {
     if (!cap || this.threadId !== genTid) return;
     let pos = [0,0,0];
     try { const p = args[1]; pos = [p.readU32(), p.add(4).readU32(), p.add(8).readU32()]; } catch(e){}
+    let ra = 0; try { ra = this.returnAddress.sub(b).toUInt32(); } catch(e){}
     cur = { type: args[4].toInt32() & 0xffff, orient: args[2].toInt32() & 0xffff,
-            pos: pos, inAsm: inAsm, rand_start: randN };
+            pos: pos, inAsm: inAsm, ra: ra, rand_start: randN };
   },
   onLeave(){
     if (!cap || cur === null) return;

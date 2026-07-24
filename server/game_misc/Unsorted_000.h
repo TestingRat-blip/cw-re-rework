@@ -3,9 +3,6 @@
 #pragma once
 #include "../include/cw_types.h"
 
-/* 004010b0  gamemisc  [none] */
-undefined4 * __thiscall FUN_004010b0(void * this, undefined4 param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4);
-
 /* 00401420  gamemisc  [none] */
 float10 __fastcall FUN_00401420(longlong * param_1);
 
@@ -452,4 +449,7 @@ undefined __thiscall FUN_004180a0(void * this, undefined8 * param_1, uint * para
 
 /* 00418280  gamemisc  [none] */
 ushort * __cdecl FUN_00418280(ushort * param_1);
+
+/* 00418410  gamemisc  [none] */
+undefined __thiscall FUN_00418410(void * this, ushort * param_1, uint * param_2, uint param_3, undefined4 param_4);
 

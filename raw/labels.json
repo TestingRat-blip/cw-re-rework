@@ -837,6 +837,11 @@
    "name": "dungeon_assembler",
    "src": "ADJUDICATION.md"
   },
+  "0050702a": {
+   "kind": "game",
+   "name": "dungeon_mob_populator",
+   "src": "ADJUDICATION.md"
+  },
   "00509e40": {
    "kind": "lib",
    "name": "stl_fn_509e40",

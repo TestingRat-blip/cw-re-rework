@@ -3,18 +3,6 @@
 #pragma once
 #include "../include/cw_types.h"
 
-/* 0046b2b0  gamemisc  [none] */
-int __cdecl FUN_0046b2b0(int * param_1);
-
-/* 0046bab0  gamemisc  [none] */
-bool __cdecl FUN_0046bab0(int param_1, int param_2);
-
-/* 0046f880  gamemisc  [none] */
-undefined __cdecl FUN_0046f880(int * param_1);
-
-/* 0046f990  gamemisc  [none] */
-undefined __cdecl FUN_0046f990(int * param_1);
-
 /* 00470300  gamemisc  [none] */
 undefined __cdecl FUN_00470300(int * param_1);
 
@@ -285,9 +273,6 @@ undefined4 * __thiscall FUN_004c8350(void * this, undefined4 * param_1);
 /* 004ce200  gamemisc  [none] */
 undefined __thiscall FUN_004ce200(void * this, int * param_1);
 
-/* 004ce220  gamemisc  [none] */
-undefined __thiscall FUN_004ce220(void * this, int * param_1, int * param_2);
-
 /* 004ce580  gamemisc  [none] */
 undefined4 __thiscall FUN_004ce580(void * this, uint param_1);
 
@@ -452,4 +437,19 @@ undefined4 * __thiscall FUN_004e1e90(void * this, undefined4 param_1, undefined4
 
 /* 004e2360  gamemisc  [none] */
 int * __thiscall FUN_004e2360(void * this, int * param_1, int param_2);
+
+/* 004e23b0  gamemisc  [none] */
+uint __thiscall FUN_004e23b0(void * this, uint param_1);
+
+/* 004e26c0  gamemisc  [none] */
+int __thiscall FUN_004e26c0(void * this, uint param_1);
+
+/* 004e2730  gamemisc  [none] */
+undefined __thiscall FUN_004e2730(void * this, uint param_1);
+
+/* 004e27b0  gamemisc  [none] */
+undefined __thiscall FUN_004e27b0(void * this, uint param_1);
+
+/* 004f3880  gamemisc  [none] */
+uint * __thiscall FUN_004f3880(void * this, byte * param_1);
 
