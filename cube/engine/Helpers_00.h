@@ -9,14 +9,35 @@ undefined FUN_00402e20(void);
 /* 004034c0  gamemisc  [caller-vote] */
 undefined FUN_004034c0(void);
 
-/* 00407d50  gamemisc  [caller-vote] */
-undefined FUN_00407d50(void);
+/* 004040d0  gamemisc  [caller-vote] */
+undefined FUN_004040d0(void);
+
+/* 00405420  gamemisc  [caller-vote] */
+undefined FUN_00405420(void);
+
+/* 00407e00  gamemisc  [caller-vote] */
+undefined FUN_00407e00(void);
+
+/* 0040b810  gamemisc  [caller-vote] */
+undefined __thiscall FUN_0040b810(void * this);
+
+/* 0040bb90  gamemisc  [caller-vote] */
+undefined FUN_0040bb90(void);
+
+/* 0040bef0  gamemisc  [caller-vote] */
+undefined FUN_0040bef0(void);
+
+/* 0040bff0  gamemisc  [caller-vote] */
+undefined FUN_0040bff0(void);
 
 /* 0040d800  gamemisc  [caller-vote] */
 undefined FUN_0040d800(void);
 
 /* 0040d910  gamemisc  [caller-vote] */
 undefined FUN_0040d910(void);
+
+/* 0040da70  gamemisc  [caller-vote] */
+undefined FUN_0040da70(void);
 
 /* 0040f110  gamemisc  [caller-vote] */
 undefined FUN_0040f110(void);
@@ -111,9 +132,6 @@ undefined FUN_0046ef20(void);
 /* 00486950  gamemisc  [caller-vote] */
 undefined FUN_00486950(void);
 
-/* 00583cd0  gamemisc  [caller-vote] */
-undefined FUN_00583cd0(void);
-
 /* 00583da0  gamemisc  [caller-vote] */
 undefined FUN_00583da0(void);
 
@@ -152,9 +170,6 @@ undefined FUN_005864c0(void);
 
 /* 005865b0  gamemisc  [caller-vote] */
 undefined FUN_005865b0(void);
-
-/* 00587070  gamemisc  [caller-vote] */
-undefined FUN_00587070(void);
 
 /* 00627810  gamemisc  [caller-vote] */
 undefined FUN_00627810(void);
@@ -587,19 +602,4 @@ undefined FUN_00668870(void);
 
 /* 00668a40  gamemisc  [caller-vote] */
 undefined FUN_00668a40(void);
-
-/* 00668ac0  gamemisc  [caller-vote] */
-undefined FUN_00668ac0(void);
-
-/* 006692c0  gamemisc  [caller-vote] */
-undefined FUN_006692c0(void);
-
-/* 0066ae40  gamemisc  [caller-vote] */
-undefined FUN_0066ae40(void);
-
-/* 0066aed0  gamemisc  [caller-vote] */
-undefined FUN_0066aed0(void);
-
-/* 0066b200  gamemisc  [caller-vote] */
-undefined FUN_0066b200(void);
 

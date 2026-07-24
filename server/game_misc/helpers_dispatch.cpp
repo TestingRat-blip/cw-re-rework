@@ -1,4 +1,4 @@
-// helpers_dispatch (game_misc) -- server. 15 functions. Bodies = Ghidra pseudo-C.
+// helpers_dispatch (game_misc) -- server. 14 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_dispatch.h"
 
@@ -156,22 +156,6 @@ void __fastcall FUN_0042c6d0(int *param_1)
     }
   }
   return;
-}
-
-
-/* vdispatch_4607a0 @ 004607a0  kind=gamemisc  attributed-by=role:dispatch  size=61 */
-
-int __cdecl FUN_004607a0(int param_1)
-
-{
-  int iVar1;
-  
-  iVar1 = FUN_00464e80((byte *)0x0);
-  if (iVar1 == 0) {
-    return 0;
-  }
-  iVar1 = (**(code **)(iVar1 + 0x3c))(iVar1,param_1 * 1000);
-  return iVar1 / 1000;
 }
 
 

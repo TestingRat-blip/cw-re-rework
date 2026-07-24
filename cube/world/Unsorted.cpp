@@ -1,6 +1,20 @@
-// Unsorted (world) -- cube. 24 functions. Bodies = Ghidra pseudo-C.
+// Unsorted (world) -- cube. 25 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Unsorted.h"
+
+/* FUN_0042c500 @ 0042c500  kind=gamemisc  attributed-by=logic:caller-vote  size=26 */
+
+void FUN_0042c500(undefined4 param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  undefined4 *in_ECX;
+  
+  *in_ECX = param_1;
+  in_ECX[1] = param_2;
+  in_ECX[2] = param_3;
+  return;
+}
+
 
 /* FUN_0042f7e0 @ 0042f7e0  kind=gamemisc  attributed-by=logic:caller-vote  size=119 */
 

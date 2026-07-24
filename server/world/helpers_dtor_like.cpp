@@ -1,4 +1,4 @@
-// helpers_dtor_like (world) -- server. 3 functions. Bodies = Ghidra pseudo-C.
+// helpers_dtor_like (world) -- server. 5 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_dtor_like.h"
 
@@ -72,6 +72,61 @@ void __cdecl FUN_00406310(undefined4 *param_1,undefined4 *param_2)
       param_1[2] = 0;
     }
   }
+  return;
+}
+
+
+/* FUN_004135d0 @ 004135d0  kind=gamemisc  attributed-by=role:dtor-like  size=98 */
+
+void FUN_004135d0(int *param_1)
+
+{
+  int *piVar1;
+  
+  if ((int *)param_1[4] == (int *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xbad_function_call();
+  }
+  (**(code **)(*(int *)param_1[4] + 8))();
+  piVar1 = (int *)param_1[4];
+  if (piVar1 != (int *)0x0) {
+    (**(code **)(*piVar1 + 0x10))(piVar1 != param_1);
+    param_1[4] = 0;
+  }
+  piVar1 = (int *)param_1[4];
+  if (piVar1 != (int *)0x0) {
+    (**(code **)(*piVar1 + 0x10))(piVar1 != param_1);
+    param_1[4] = 0;
+  }
+  operator_delete(param_1);
+                    /* WARNING: Could not recover jumptable at 0x0041362c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  _endthread();
+  return;
+}
+
+
+/* FUN_00423710 @ 00423710  kind=gamemisc  attributed-by=role:dtor-like  size=62 */
+
+void __fastcall FUN_00423710(int *param_1)
+
+{
+  int *piVar1;
+  int *piVar2;
+  
+  piVar1 = (int *)*param_1;
+  piVar2 = (int *)*piVar1;
+  *piVar1 = (int)piVar1;
+  *(int *)(*param_1 + 4) = *param_1;
+  param_1[1] = 0;
+  if (piVar2 != (int *)*param_1) {
+    do {
+      piVar1 = (int *)*piVar2;
+      operator_delete(piVar2);
+      piVar2 = piVar1;
+    } while (piVar1 != (int *)*param_1);
+  }
+  operator_delete((void *)*param_1);
   return;
 }
 

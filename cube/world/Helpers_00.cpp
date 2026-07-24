@@ -249,65 +249,6 @@ void __thiscall FUN_00404420(void *this)
 }
 
 
-/* FUN_004054b0 @ 004054b0  kind=gamemisc  attributed-by=caller-vote  size=63 */
-
-void FUN_004054b0(int param_1,undefined4 *param_2)
-
-{
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  char cVar3;
-  int *in_ECX;
-  int iVar4;
-  
-  cVar3 = FUN_0065ae10(param_1);
-  if (cVar3 != '\0') {
-    puVar2 = (undefined4 *)*in_ECX;
-    puVar1 = puVar2;
-    for (iVar4 = param_1; iVar4 != 0; iVar4 = iVar4 + -1) {
-      *puVar1 = *param_2;
-      puVar1 = puVar1 + 1;
-    }
-    in_ECX[1] = (int)(puVar2 + param_1);
-  }
-  return;
-}
-
-
-/* FUN_0040c590 @ 0040c590  kind=gamemisc  attributed-by=caller-vote  size=112 */
-
-uint FUN_0040c590(byte *param_1,byte *param_2,uint param_3)
-
-{
-  uint uVar1;
-  bool bVar2;
-  
-  if (param_3 == 0) {
-    return 0;
-  }
-  while (uVar1 = param_3 - 4, 3 < param_3) {
-    if (*(int *)param_1 != *(int *)param_2) goto LAB_0040c5c6;
-    param_1 = param_1 + 4;
-    param_2 = param_2 + 4;
-    param_3 = uVar1;
-  }
-  if (uVar1 != 0xfffffffc) {
-LAB_0040c5c6:
-    bVar2 = *param_1 < *param_2;
-    if ((*param_1 != *param_2) ||
-       ((uVar1 != 0xfffffffd &&
-        ((bVar2 = param_1[1] < param_2[1], param_1[1] != param_2[1] ||
-         ((uVar1 != 0xfffffffe &&
-          ((bVar2 = param_1[2] < param_2[2], param_1[2] != param_2[2] ||
-           ((uVar1 != 0xffffffff && (bVar2 = param_1[3] < param_2[3], param_1[3] != param_2[3]))))))
-         )))))) {
-      return -(uint)bVar2 | 1;
-    }
-  }
-  return 0;
-}
-
-
 /* FUN_0040ee40 @ 0040ee40  kind=gamemisc  attributed-by=caller-vote  size=37 */
 
 void FUN_0040ee40(undefined1 *param_1,undefined1 param_2)
@@ -1142,6 +1083,38 @@ LAB_0044a2de:
   }
                     /* WARNING: Subroutine does not return */
   operator_delete(*(void **)((int)param_4 + 0x14));
+}
+
+
+/* FUN_0044a700 @ 0044a700  kind=gamemisc  attributed-by=caller-vote  size=159 */
+
+void FUN_0044a700(int *param_1)
+
+{
+  int *piVar1;
+  char cVar2;
+  undefined4 uVar3;
+  undefined4 *in_ECX;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  piVar1 = param_1;
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006e2ca0;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  *in_ECX = 0;
+  in_ECX[1] = 0;
+  in_ECX[2] = 0;
+  cVar2 = FUN_0044b5f0((param_1[1] - *param_1) / 0x11c);
+  if (cVar2 != '\0') {
+    local_8 = 0;
+    uVar3 = FUN_0044a4b0(*piVar1,piVar1[1],*in_ECX,(int)&param_1 + 3,param_1);
+    in_ECX[1] = uVar3;
+  }
+  ExceptionList = local_10;
+  return;
 }
 
 
@@ -2466,28 +2439,6 @@ bool FUN_00451470(int param_1,char *param_2)
 }
 
 
-/* FUN_00451e80 @ 00451e80  kind=gamemisc  attributed-by=caller-vote  size=86 */
-
-int FUN_00451e80(undefined4 param_1,undefined4 param_2,undefined4 *param_3)
-
-{
-  int iVar1;
-  
-  iVar1 = FUN_0046d650(param_1,param_2);
-  if ((undefined4 *)(iVar1 + 8) != (undefined4 *)0x0) {
-    *(undefined4 *)(iVar1 + 8) = *param_3;
-    *(undefined4 *)(iVar1 + 0xc) = param_3[1];
-    *(undefined4 *)(iVar1 + 0x10) = param_3[2];
-    *(undefined1 *)(iVar1 + 0x14) = *(undefined1 *)(param_3 + 3);
-    *(undefined1 *)(iVar1 + 0x15) = *(undefined1 *)((int)param_3 + 0xd);
-    *(undefined1 *)(iVar1 + 0x16) = *(undefined1 *)((int)param_3 + 0xe);
-    *(undefined1 *)(iVar1 + 0x17) = *(undefined1 *)((int)param_3 + 0xf);
-    *(undefined4 *)(iVar1 + 0x18) = param_3[4];
-  }
-  return iVar1;
-}
-
-
 /* FUN_00454400 @ 00454400  kind=gamemisc  attributed-by=caller-vote  size=157 */
 
 void FUN_00454400(int param_1,undefined4 *param_2,undefined4 *param_3)
@@ -3290,66 +3241,6 @@ void FUN_004cb080(undefined1 *param_1,undefined1 *param_2,undefined1 *param_3)
     } while (puVar2 != param_2);
   }
   return;
-}
-
-
-/* FUN_004cb100 @ 004cb100  kind=gamemisc  attributed-by=caller-vote  size=273 */
-
-void * __thiscall
-FUN_004cb100(void *this,undefined4 *param_2,uint param_3,undefined4 param_4,int param_5)
-
-{
-  basic_streambuf<char,std::char_traits<char>_> *this_00;
-  int iVar1;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  local_8 = 0xffffffff;
-  puStack_c = &LAB_006f60fd;
-  local_10 = ExceptionList;
-  ExceptionList = &local_10;
-  if (param_5 != 0) {
-    *(basic_ifstream<char,std::char_traits<char>_>_vbtable **)this =
-         &std::basic_ifstream<char,std::char_traits<char>_>::vbtable;
-    *(code **)((int)this + 0x70) = _vftable__exref;
-    *(code **)((int)this + 0x70) = _vftable__exref;
-    local_8 = 0;
-  }
-  this_00 = (basic_streambuf<char,std::char_traits<char>_> *)((int)this + 0x10);
-  std::basic_istream<char,std::char_traits<char>_>::basic_istream<char,std::char_traits<char>_>
-            (this,(basic_streambuf<char,std::char_traits<char>_> *)this_00,false);
-  local_8 = 1;
-                    /* inlined constructor or destructor (approx location) for
-                       std::basic_ifstream<char,std::char_traits<char>_> */
-  *(basic_ifstream<char,std::char_traits<char>_>_vftable **)((int)this + *(int *)(*(int *)this + 4))
-       = &std::basic_ifstream<char,std::char_traits<char>_>::vftable;
-  *(int *)(*(int *)(*(int *)this + 4) + -4 + (int)this) = *(int *)(*(int *)this + 4) + -0x70;
-  std::basic_streambuf<char,std::char_traits<char>_>::basic_streambuf<char,std::char_traits<char>_>
-            (this_00);
-  local_8._0_1_ = 2;
-                    /* inlined constructor or destructor (approx location) for
-                       std::basic_filebuf<char,std::char_traits<char>_> */
-  *this_00 = (basic_streambuf<char,std::char_traits<char>_>)
-             &std::basic_filebuf<char,std::char_traits<char>_>::vftable;
-  *(undefined1 *)((int)this + 0x5c) = 0;
-  *(undefined1 *)((int)this + 0x55) = 0;
-  std::basic_streambuf<char,std::char_traits<char>_>::_Init(this_00);
-  *(undefined4 *)((int)this + 0x60) = 0;
-  *(undefined4 *)((int)this + 0x58) = DAT_0076af5c;
-  *(undefined4 *)((int)this + 0x50) = 0;
-  local_8 = CONCAT31(local_8._1_3_,3);
-  if (0xf < (uint)param_2[5]) {
-    param_2 = (undefined4 *)*param_2;
-  }
-  iVar1 = FUN_0040d240(param_2,param_3 | 1,param_4);
-  if (iVar1 == 0) {
-    std::basic_ios<char,std::char_traits<char>_>::setstate
-              ((basic_ios<char,std::char_traits<char>_> *)(*(int *)(*(int *)this + 4) + (int)this),2
-               ,false);
-  }
-  ExceptionList = local_10;
-  return this;
 }
 
 
@@ -10205,6 +10096,77 @@ void FUN_005c3a90(void)
   in_ECX[3] = 0;
   in_ECX[4] = 0;
   in_ECX[5] = 0;
+  return;
+}
+
+
+/* FUN_005c3b70 @ 005c3b70  kind=gamemisc  attributed-by=caller-vote  size=52 */
+
+void FUN_005c3b70(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 *in_ECX;
+  
+  *in_ECX = *param_1;
+  in_ECX[1] = param_1[1];
+  in_ECX[2] = param_1[2];
+  in_ECX[3] = *param_2;
+  in_ECX[4] = param_2[1];
+  in_ECX[5] = param_2[2];
+  return;
+}
+
+
+/* FUN_005c3bb0 @ 005c3bb0  kind=gamemisc  attributed-by=caller-vote  size=166 */
+
+void FUN_005c3bb0(void)
+
+{
+  undefined4 *in_ECX;
+  
+  *in_ECX = 0;
+  in_ECX[1] = 0;
+  in_ECX[2] = 0;
+  in_ECX[3] = 0;
+  in_ECX[4] = 0;
+  in_ECX[5] = 0;
+  in_ECX[6] = 0;
+  in_ECX[7] = 0;
+  in_ECX[8] = 0;
+  in_ECX[9] = 1;
+  in_ECX[10] = 0;
+  in_ECX[0xb] = 0;
+  in_ECX[0xc] = 0;
+  in_ECX[0xd] = 0;
+  in_ECX[0xe] = 0;
+  in_ECX[0xf] = 0;
+  *(undefined2 *)(in_ECX + 0x10) = 0;
+  in_ECX[0x11] = 0;
+  in_ECX[0x12] = 0;
+  in_ECX[0x13] = 0;
+  in_ECX[0x14] = 0;
+  in_ECX[0x15] = 0;
+  in_ECX[0x16] = 0;
+  *(undefined1 *)(in_ECX + 0x17) = 0;
+  return;
+}
+
+
+/* FUN_005c3c70 @ 005c3c70  kind=gamemisc  attributed-by=caller-vote  size=30 */
+
+void FUN_005c3c70(void)
+
+{
+  undefined4 *in_ECX;
+  
+  if ((void *)in_ECX[3] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete((void *)in_ECX[3]);
+  }
+  if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete((void *)*in_ECX);
+  }
   return;
 }
 

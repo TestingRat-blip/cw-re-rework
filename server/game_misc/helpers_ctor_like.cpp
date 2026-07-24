@@ -1,4 +1,4 @@
-// helpers_ctor_like (game_misc) -- server. 20 functions. Bodies = Ghidra pseudo-C.
+// helpers_ctor_like (game_misc) -- server. 19 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_ctor_like.h"
 
@@ -847,21 +847,6 @@ undefined4 * __fastcall FUN_004f7490(undefined4 *param_1)
   param_1[0x4d] = 0;
   param_1[0x4e] = 0;
   param_1[0x4f] = 0;
-  return param_1;
-}
-
-
-/* FUN_004f7540 @ 004f7540  kind=gamemisc  attributed-by=role:ctor-like  size=44 */
-
-undefined4 * __fastcall FUN_004f7540(undefined4 *param_1)
-
-{
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = 0;
-  param_1[3] = 0;
-  param_1[4] = 0;
-  param_1[5] = 0;
   return param_1;
 }
 

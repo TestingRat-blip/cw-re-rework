@@ -428,8 +428,8 @@
 "role": "logic"
 },
 "0040f8f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_00537fb4",
+"role": "dispatch-target"
 },
 "0040ffe0": {
 "evidence": null,
@@ -548,7 +548,9 @@
 "role": "dispatch"
 },
 "004135d0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00413640 (callback)",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004137c0": {
@@ -898,11 +900,11 @@
 "role": "mutator"
 },
 "00418180": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00418410 (callback)",
+"role": "callback"
 },
 "004181d0": {
-"evidence": "zero-inits 4 fields, returns this",
+"evidence": "zero-inits 4 fields, returns this | address taken by 00418410 (callback)",
 "role": "ctor-like"
 },
 "00418280": {
@@ -910,8 +912,8 @@
 "role": "logic"
 },
 "00418360": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00418410 (callback)",
+"role": "callback"
 },
 "00418410": {
 "evidence": null,
@@ -934,12 +936,12 @@
 "role": "logic"
 },
 "00418cf0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00418000 (callback)",
+"role": "callback"
 },
 "00418db0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00418000 (callback)",
+"role": "callback"
 },
 "00418ea0": {
 "evidence": null,
@@ -950,28 +952,28 @@
 "role": "logic"
 },
 "00419490": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00418000 (callback)",
+"role": "callback"
 },
 "004194e0": {
-"evidence": "zero-inits 4 fields, returns this",
+"evidence": "zero-inits 4 fields, returns this | address taken by 00418000 (callback)",
 "role": "ctor-like"
 },
 "004195a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00418000 (callback)",
+"role": "callback"
 },
 "00419670": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00418000 (callback)",
+"role": "callback"
 },
 "00419770": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00418000 (callback)",
+"role": "callback"
 },
 "004198e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00418000 (callback)",
+"role": "callback"
 },
 "00419a80": {
 "evidence": "thin wrapper around 1 call(s)",
@@ -1307,8 +1309,8 @@
 "role": "logic"
 },
 "0041ff9a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0041fff0": {
 "evidence": "single field-derived expression, no calls",
@@ -1510,6 +1512,8 @@
 },
 "00423710": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00423750": {
@@ -1537,8 +1541,8 @@
 "role": "logic"
 },
 "004240ea": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004254a0": {
 "evidence": null,
@@ -1667,8 +1671,8 @@
 "role": "computed"
 },
 "00428aca": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00428ee0": {
 "evidence": "single field-derived expression, no calls",
@@ -1913,8 +1917,8 @@
 "role": "dtor-like"
 },
 "0045f120": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045f160": {
 "evidence": null,
@@ -1925,83 +1929,76 @@
 "role": "logic"
 },
 "0045f310": {
-"evidence": "single-call forwarder -> 0x004ae680",
-"name": "fwd_004ae680",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045f330": {
-"evidence": "single-call forwarder -> 0x004ae680",
-"name": "fwd_004ae680",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045f350": {
-"evidence": "single-call forwarder -> 0x004ae680",
-"name": "fwd_004ae680",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045f370": {
-"evidence": "field getter: return *(this+0x1e)",
-"name": "get_0x1e",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045f380": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045f3e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004a6660 (callback)",
+"role": "callback"
 },
 "0045f5b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045f7d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_0056a290",
+"role": "dispatch-target"
 },
 "0045f850": {
-"evidence": "single field-derived expression, no calls",
-"name": "compute",
-"role": "computed"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045f860": {
-"evidence": "field getter: return *(this+8)",
-"name": "get_8",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045f870": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045f8a0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045f950": {
 "evidence": "thin wrapper around 2 call(s)",
 "role": "wrapper"
 },
 "0045f990": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045f9d0": {
-"evidence": "single-call forwarder -> 0x004b7790",
-"name": "fwd_004b7790",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045fa00": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045fa30": {
 "evidence": "thin wrapper around 1 call(s)",
 "role": "wrapper"
 },
 "0045fa70": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045faa0": {
 "evidence": "thin wrapper around 1 call(s)",
@@ -2020,163 +2017,160 @@
 "role": "wrapper"
 },
 "0045fce0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0045fd10": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045fd50": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045fd90": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0045fdc0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "0045fe90": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045fed0": {
-"evidence": "single-call forwarder -> 0x004b6f10",
-"name": "fwd_004b6f10",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0045fee0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0045ff40": {
 "evidence": null,
 "role": "logic"
 },
 "0045ffa0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00460010": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00460380": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004603f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00460480": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004604f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00460590": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004605e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00460630": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004607a0": {
-"evidence": "virtual dispatch through vtable",
-"name": "vdispatch",
-"role": "dispatch"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004607e0": {
-"evidence": "field getter: return *(this+0x36)",
-"name": "get_0x36",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004607f0": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00460810": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004608d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00460910": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00460960": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004609b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00460c30": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00460d00": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00461310": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00461320": {
 "evidence": null,
 "role": "logic"
 },
 "00461400": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00461420": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00461530": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00461610": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0046178a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00461bb0": {
 "evidence": null,
 "role": "logic"
 },
 "00461cd0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00461d80": {
 "evidence": null,
 "role": "logic"
 },
 "00461e80": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00462070": {
 "evidence": null,
@@ -2187,57 +2181,56 @@
 "role": "logic"
 },
 "00462250": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004622c0": {
-"evidence": "single-call forwarder -> 0x00462070",
-"name": "fwd_00462070",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004622e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00462330": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004628d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00462910": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00462930": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00462b60": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00462eb0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00463000": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00463630": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004637e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00463860": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00463b60": {
 "evidence": "single-call forwarder -> 0x00461d80",
@@ -2245,12 +2238,12 @@
 "role": "thunk"
 },
 "00463b80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00463be0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00463c60": {
 "evidence": "single-call forwarder -> 0x00462150",
@@ -2258,8 +2251,8 @@
 "role": "thunk"
 },
 "00463c80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00463ce0": {
 "evidence": "single-call forwarder -> 0x00461bb0",
@@ -2267,104 +2260,100 @@
 "role": "thunk"
 },
 "00463d00": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00463d50": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00463e00": {
-"evidence": "single-call forwarder -> 0x00476470",
-"name": "fwd_00476470",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00463e20": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00463e90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00463f70": {
-"evidence": "single-call forwarder -> 0x00476470",
-"name": "fwd_00476470",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00463f80": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00464130": {
 "evidence": null,
 "role": "logic"
 },
 "004641e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00464270": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00464310": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00464c00": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00464cd0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00464d30": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00464d50": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
 "role": "wrapper"
 },
 "00464d70": {
-"evidence": "single-call forwarder -> 0x00470aa0",
-"name": "fwd_00470aa0",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00464d90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00464e40": {
-"evidence": "single-call forwarder -> 0x00470aa0",
-"name": "fwd_00470aa0",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00464e60": {
-"evidence": "single-call forwarder -> 0x0054a5e4",
+"evidence": "single-call forwarder -> 0x0054a5e4 | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
 "name": "fwd_0054a5e4",
 "role": "thunk"
 },
 "00464f20": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00464fa0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465020": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465040": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465060": {
-"evidence": "single-call forwarder -> 0x0054a68c",
+"evidence": "single-call forwarder -> 0x0054a68c | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
 "name": "fwd_0054a68c",
 "role": "thunk"
 },
@@ -2373,106 +2362,101 @@
 "role": "logic"
 },
 "00465100": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465140": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00465200": {
-"evidence": "field getter: return *(this+0xc)",
-"name": "get_0xc",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465210": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004653d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004655a0": {
-"evidence": "virtual dispatch through vtable",
+"evidence": "virtual dispatch through vtable | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
 "name": "vdispatch",
 "role": "dispatch"
 },
 "004655d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465630": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
 "role": "wrapper"
 },
 "00465680": {
-"evidence": "frees memory \u2014 destructor-shaped",
-"role": "dtor-like"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465720": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465a30": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465a50": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465ba0": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table cube::SpriteManager::RTTI_Type_Descriptor",
 "role": "wrapper"
 },
 "00465c00": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465c40": {
-"evidence": "field getter: return *(this+0x20)",
-"name": "get_0x20",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465c50": {
-"evidence": "field getter: return *(this+0x48)",
-"name": "get_0x48",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465c60": {
-"evidence": "field getter: return *(this+0x4c)",
-"name": "get_0x4c",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465c70": {
-"evidence": "field setter: *(this+0xe0)=x",
-"name": "set_0xe0",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00465c90": {
 "evidence": null,
 "role": "logic"
 },
 "004660e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004661b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004662c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00466390": {
 "evidence": null,
 "role": "logic"
 },
 "00466440": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004665f0": {
 "evidence": null,
@@ -2484,28 +2468,28 @@
 "role": "dispatch"
 },
 "004667da": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00466ae0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00466b20": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00466b40": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00466b60": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00466e80": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00466ea0": {
 "evidence": "thin wrapper around 1 call(s)",
@@ -2516,42 +2500,40 @@
 "role": "logic"
 },
 "00467000": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00467060": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00467170": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004671c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004672d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00467d70": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00467ec0": {
-"evidence": "field getter: return *(this+0x20)",
-"name": "get_0x20",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00467ed0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00467f40": {
-"evidence": "field getter: return *(this+0x24)",
-"name": "get_0x24",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00467f50": {
 "evidence": "single-call forwarder -> 0x004834d0",
@@ -2559,45 +2541,44 @@
 "role": "thunk"
 },
 "00467f70": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004681c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004683e0": {
-"evidence": "single-call forwarder -> 0x004834d0",
-"name": "fwd_004834d0",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00468410": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00468460": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004686e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00468750": {
 "evidence": null,
 "role": "logic"
 },
 "004688d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004689a0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004689e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00468a70": {
 "evidence": "single field-derived expression, no calls",
@@ -2605,12 +2586,12 @@
 "role": "computed"
 },
 "00468a90": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00468dc0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00468e30": {
 "evidence": "single-call forwarder -> 0x004a0180",
@@ -2618,34 +2599,31 @@
 "role": "thunk"
 },
 "00468e50": {
-"evidence": "single-call forwarder -> 0x004a0180",
-"name": "fwd_004a0180",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00468e70": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00468f40": {
-"evidence": "single-call forwarder -> 0x004a5e90",
-"name": "fwd_004a5e90",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00468f60": {
-"evidence": "single-call forwarder -> 0x004a5e90",
-"name": "fwd_004a5e90",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00468f80": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00468fa0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469170": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table PTR_FUN_0056a9dc",
 "role": "wrapper"
 },
 "004691c0": {
@@ -2653,29 +2631,28 @@
 "role": "wrapper"
 },
 "00469220": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469280": {
-"evidence": "trivial expression, no calls",
-"name": "compute",
-"role": "computed"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469290": {
 "evidence": null,
 "role": "logic"
 },
 "004692f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004694b0": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004694f0": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469510": {
 "evidence": "single-call forwarder -> 0x004709e0",
@@ -2683,127 +2660,124 @@
 "role": "thunk"
 },
 "00469530": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469590": {
-"evidence": "single-call forwarder -> 0x004709e0",
-"name": "fwd_004709e0",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004695b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469710": {
 "evidence": null,
 "role": "logic"
 },
 "00469760": {
-"evidence": "single field-derived expression, no calls",
-"name": "compute",
-"role": "computed"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469770": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004697a0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004697d0": {
-"evidence": "single field-derived expression, no calls",
-"name": "compute",
-"role": "computed"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "004697f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469830": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469940": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469960": {
 "evidence": "frees memory \u2014 destructor-shaped",
 "role": "dtor-like"
 },
 "00469aa0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469b10": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00469bd0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469c40": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00469f20": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046a030": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0046a100": {
 "evidence": null,
 "role": "logic"
 },
 "0046a4c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046a520": {
 "evidence": null,
 "role": "logic"
 },
 "0046a710": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046a790": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046a7c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0046a860": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046a8f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046a920": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046a950": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046a980": {
 "evidence": "thin wrapper around 2 call(s)",
 "role": "wrapper"
 },
 "0046a9f0": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046ab70": {
 "evidence": "thin wrapper around 2 call(s)",
@@ -2814,25 +2788,24 @@
 "role": "wrapper"
 },
 "0046ace0": {
-"evidence": "single-call forwarder -> 0x0046b0e0",
-"name": "fwd_0046b0e0",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046ad10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_0056caa8",
+"role": "dispatch-target"
 },
 "0046ad70": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046ae30": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table PTR_FUN_0056caac",
 "role": "wrapper"
 },
 "0046ae50": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046aef0": {
 "evidence": "trivial expression, no calls",
@@ -2840,8 +2813,8 @@
 "role": "computed"
 },
 "0046af10": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046b0d0": {
 "evidence": "trivial expression, no calls",
@@ -2853,17 +2826,17 @@
 "role": "logic"
 },
 "0046b1c0": {
-"evidence": "single field-derived expression, no calls",
+"evidence": "single field-derived expression, no calls | held in dispatch table PTR_FUN_0056a294",
 "name": "compute",
 "role": "computed"
 },
 "0046b1d0": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046b1f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteManager::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0046b260": {
 "evidence": null,
@@ -2878,20 +2851,20 @@
 "role": "logic"
 },
 "0046c6c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 0048c85a (callback)",
+"role": "callback"
 },
 "0046c7b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00496610 (callback)",
+"role": "callback"
 },
 "0046eada": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0046f5da": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0046f880": {
 "evidence": null,
@@ -2902,8 +2875,8 @@
 "role": "logic"
 },
 "004700da": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00470300": {
 "evidence": null,
@@ -2918,20 +2891,20 @@
 "role": "logic"
 },
 "004708e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004834d0 (callback)",
+"role": "callback"
 },
 "00470aa0": {
 "evidence": null,
 "role": "logic"
 },
 "00471550": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00490e00 (callback)",
+"role": "callback"
 },
 "004721aa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00472ef0": {
 "evidence": null,
@@ -2982,28 +2955,28 @@
 "role": "logic"
 },
 "0047693a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00476c10": {
 "evidence": null,
 "role": "logic"
 },
 "00476c8a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0047700a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00477290": {
 "evidence": null,
 "role": "logic"
 },
 "004772e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004bb240 (callback)",
+"role": "callback"
 },
 "004776e0": {
 "evidence": null,
@@ -3014,12 +2987,12 @@
 "role": "logic"
 },
 "00478e60": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 0047e970 (callback)",
+"role": "callback"
 },
 "00479150": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 0049b170 (callback)",
+"role": "callback"
 },
 "0047afc0": {
 "evidence": null,
@@ -3046,7 +3019,7 @@
 "role": "logic"
 },
 "0047e280": {
-"evidence": "small field store(s), no calls",
+"evidence": "small field store(s), no calls | address taken by 0047e2a0 (callback)",
 "role": "mutator"
 },
 "0047e970": {
@@ -3082,11 +3055,11 @@
 "role": "logic"
 },
 "004816ca": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00483460": {
-"evidence": "single-call forwarder -> 0x00468380",
+"evidence": "single-call forwarder -> 0x00468380 | address taken by 004834d0 (callback)",
 "name": "fwd_00468380",
 "role": "thunk"
 },
@@ -3095,12 +3068,12 @@
 "role": "logic"
 },
 "00483ba0": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | address taken by 00490e00 (callback)",
 "role": "wrapper"
 },
 "00484180": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004a1ea0 (callback)",
+"role": "callback"
 },
 "00485890": {
 "evidence": null,
@@ -3115,8 +3088,8 @@
 "role": "logic"
 },
 "00485faa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00486380": {
 "evidence": null,
@@ -3163,47 +3136,47 @@
 "role": "logic"
 },
 "0048866a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004886ea": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004891f0": {
 "evidence": null,
 "role": "logic"
 },
 "0048935a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00489430": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 0048951a (callback)",
+"role": "callback"
 },
 "0048951a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00489a0a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0048a010": {
 "evidence": null,
 "role": "logic"
 },
 "0048a1c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004a99a0 (callback)",
+"role": "callback"
 },
 "0048a3ba": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0048b2c0": {
-"evidence": "field setter: *(this+0x10)=x",
+"evidence": "field setter: *(this+0x10)=x | address taken by 0047e970 (callback)",
 "name": "set_0x10",
 "role": "mutator"
 },
@@ -3216,12 +3189,12 @@
 "role": "logic"
 },
 "0048be0a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0048be3a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0048d6f0": {
 "evidence": null,
@@ -3232,16 +3205,16 @@
 "role": "logic"
 },
 "0048fb0a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004907e0": {
 "evidence": null,
 "role": "logic"
 },
 "00491620": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00464e40 (callback)",
+"role": "callback"
 },
 "00491f10": {
 "evidence": null,
@@ -3252,8 +3225,8 @@
 "role": "logic"
 },
 "00496e0a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004975c0": {
 "evidence": null,
@@ -3264,31 +3237,31 @@
 "role": "logic"
 },
 "00499b6a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00499c9a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0049a9aa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0049d5fa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0049f6a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00464130 (callback)",
+"role": "callback"
 },
 "0049fbea": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004a0570": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | address taken by 0046178a (callback)",
 "name": "compute",
 "role": "computed"
 },
@@ -3305,24 +3278,24 @@
 "role": "logic"
 },
 "004a2cfa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004a2f1a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004a5e90": {
 "evidence": null,
 "role": "logic"
 },
 "004a6caa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004aac4a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004ad150": {
 "evidence": null,
@@ -3341,12 +3314,12 @@
 "role": "logic"
 },
 "004ba730": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00468600 (callback)",
+"role": "callback"
 },
 "004bb5da": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004bcb50": {
 "evidence": null,
@@ -3361,8 +3334,8 @@
 "role": "logic"
 },
 "004bcdb0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00466210 (callback)",
+"role": "callback"
 },
 "004bdb20": {
 "evidence": "thin wrapper around 1 call(s)",
@@ -3385,20 +3358,20 @@
 "role": "logic"
 },
 "004bec7a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004bedfa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004bf0fa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004c166a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004c2230": {
 "evidence": null,
@@ -3523,8 +3496,8 @@
 "role": "dispatch"
 },
 "004cd99a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004ce1d0": {
 "evidence": "single field-derived expression, no calls",
@@ -3730,8 +3703,8 @@
 "role": "logic"
 },
 "004d863a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004d8c90": {
 "evidence": null,
@@ -3878,8 +3851,8 @@
 "role": "logic"
 },
 "004dcdca": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004dcff0": {
 "evidence": "frees memory \u2014 destructor-shaped",
@@ -3894,8 +3867,8 @@
 "role": "dtor-like"
 },
 "004dd9da": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004dde00": {
 "evidence": null,
@@ -3993,6 +3966,8 @@
 },
 "004e1eb0": {
 "evidence": null,
+"module": "entity",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004e1ed0": {
@@ -4061,16 +4036,16 @@
 "role": "computed"
 },
 "004e310a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004eaa7a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004ee3aa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004f3820": {
 "evidence": "single field-derived expression, no calls",
@@ -4145,16 +4120,16 @@
 "role": "logic"
 },
 "004f4a5a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004f4ab0": {
 "evidence": null,
 "role": "logic"
 },
 "004f4aea": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004f4b50": {
 "evidence": null,
@@ -4229,16 +4204,16 @@
 "role": "logic"
 },
 "004f654a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004f67f0": {
 "evidence": null,
 "role": "logic"
 },
 "004f6b0a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004f6db0": {
 "evidence": null,
@@ -4289,8 +4264,8 @@
 "role": "logic"
 },
 "004f73ca": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004f7400": {
 "evidence": null,
@@ -4302,6 +4277,8 @@
 },
 "004f7540": {
 "evidence": "zero-inits 6 fields, returns this",
+"module": "world",
+"module_conf": 1.0,
 "role": "ctor-like"
 },
 "004f7710": {
@@ -4384,40 +4361,40 @@
 "role": "logic"
 },
 "004ff59a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00501e0a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00502a7a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00502dca": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0050529a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "005053ca": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "005054fa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0050702a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0050998a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0050c550": {
 "evidence": null,
@@ -4432,48 +4409,48 @@
 "role": "logic"
 },
 "0050da73": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051210a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "005154aa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00515d6a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051819a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051880a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051ae9a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051b12a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051b26a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051c90a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051ed6a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00521ed0": {
 "evidence": null,
@@ -4598,8 +4575,8 @@
 "role": "logic"
 },
 "0052e73a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0052e7c0": {
 "evidence": null,
@@ -4670,12 +4647,12 @@
 "role": "logic"
 },
 "0052f6fa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0052fc3a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00530470": {
 "evidence": null,
@@ -4731,120 +4708,120 @@
 "role": "logic"
 },
 "00530a7a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00531c6a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00532473": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00532cfa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00533e0a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00533e8a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "005343fa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00536290": {
 "evidence": null,
 "role": "logic"
 },
 "0053630d": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0054709a",
+"role": "dispatch-target"
 },
 "00536459": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_005489fc",
+"role": "dispatch-target"
 },
 "00536506": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0054709a",
+"role": "dispatch-target"
 },
 "0053670a": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0054709a",
+"role": "dispatch-target"
 },
 "00536e64": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_005489e0",
+"role": "dispatch-target"
 },
 "005370b7": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0054709a",
+"role": "dispatch-target"
 },
 "0053778c": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0054709a",
+"role": "dispatch-target"
 },
 "00537cef": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_00537fb4",
+"role": "dispatch-target"
 },
 "00537f28": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_0053694e::switchdataD_00548a0c",
+"role": "dispatch-target"
 },
 "00537fb4": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_0053694e::switchdataD_00548a0c",
+"role": "dispatch-target"
 },
 "0053ad3c": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_0053694e::switchdataD_00548a0c",
+"role": "dispatch-target"
 },
 "0053ae68": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_0053694e::switchdataD_00548a0c",
+"role": "dispatch-target"
 },
 "0053afb9": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_0053694e::switchdataD_00548a0c",
+"role": "dispatch-target"
 },
 "0053b973": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_0053694e::switchdataD_00548a0c",
+"role": "dispatch-target"
 },
 "0053caf5": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_0053694e::switchdataD_00548a0c",
+"role": "dispatch-target"
 },
 "0053cba1": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_0053694e::switchdataD_00548a0c",
+"role": "dispatch-target"
 },
 "0054140a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00541aaa": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00541d9a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0054687a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0054709a": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00548b00": {
 "evidence": "thin wrapper around 1 call(s)",
@@ -4855,7 +4832,9 @@
 "role": "wrapper"
 },
 "00548b40": {
-"evidence": "single-call forwarder -> 0x004268f0",
+"evidence": "single-call forwarder -> 0x004268f0 | address taken by 00548b60 (callback)",
+"module": "world",
+"module_conf": 1.0,
 "name": "fwd_004268f0",
 "role": "thunk"
 },
@@ -4963,32 +4942,32 @@
 "role": "logic"
 },
 "0054b29b": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "0054b2e6": {
 "evidence": null,
 "role": "logic"
 },
 "0054b44b": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table ?",
 "role": "wrapper"
 },
 "0054b4c9": {
-"evidence": "single-call forwarder -> 0x0054b8fe",
+"evidence": "single-call forwarder -> 0x0054b8fe | held in dispatch table DAT_00574eb0",
 "name": "fwd_0054b8fe",
 "role": "thunk"
 },
 "0054b4ec": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "0054b644": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | held in dispatch table LAB_0054b685",
 "role": "wrapper"
 },
 "0054b6a0": {
-"evidence": "returns a constant \u2014 stub / trivial predicate",
+"evidence": "returns a constant \u2014 stub / trivial predicate | held in dispatch table MSVCR110.DLL::libm_sse2_exp_precise",
 "name": "ret_const",
 "role": "stub"
 },
@@ -5005,329 +4984,329 @@
 "role": "logic"
 },
 "0054b88b": {
-"evidence": "virtual dispatch through vtable",
+"evidence": "virtual dispatch through vtable | held in dispatch table MSVCR110.DLL::libm_sse2_exp_precise",
 "name": "vdispatch",
 "role": "dispatch"
 },
 "0054b8ab": {
-"evidence": "virtual dispatch through vtable",
+"evidence": "virtual dispatch through vtable | address taken by 0054b29b (callback)",
 "name": "vdispatch",
 "role": "dispatch"
 },
 "0054b8cb": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table LAB_0054b281",
 "role": "wrapper"
 },
 "00556840": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | held in dispatch table FUN_0055765b",
 "name": "compute",
 "role": "computed"
 },
 "00556850": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | held in dispatch table FUN_0055765b",
 "name": "compute",
 "role": "computed"
 },
 "00556860": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | held in dispatch table FUN_0055765b",
 "name": "compute",
 "role": "computed"
 },
 "00556890": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005568c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005568f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556920": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556950": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556980": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005569b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005569e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556a10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556a40": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556a70": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556aa0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556ad0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556b00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556b30": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556b60": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556b90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556bc0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556bf0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556c20": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556c50": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556c80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556cb0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556ce0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556d10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556d40": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556d70": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556da0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556dd0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556e00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556e30": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556e60": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556e90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556ec0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556ef0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556f20": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556f50": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556f80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556fb0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00556ff0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557020": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557050": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557080": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005570b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005570e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557110": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557140": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557170": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005571a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005571d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557200": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557230": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557260": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557290": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005572c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005572f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557320": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557350": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557380": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005573b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005573e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557410": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557440": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557470": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005574a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005574d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557500": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557530": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557560": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557590": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005575c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "005575f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0055765b",
+"role": "dispatch-target"
 },
 "00557618": {
-"evidence": "single-call forwarder -> 0x0054a8a3",
+"evidence": "single-call forwarder -> 0x0054a8a3 | held in dispatch table FUN_0055765b",
 "name": "fwd_0054a8a3",
 "role": "thunk"
 },
 "0055765b": {
-"evidence": "single-call forwarder -> 0x0054a6ec",
+"evidence": "single-call forwarder -> 0x0054a6ec | address taken by 00557618 (callback)",
 "name": "fwd_0054a6ec",
 "role": "thunk"
 }

@@ -1,4 +1,4 @@
-// helpers_thunk (game_misc) -- cube. 109 functions. Bodies = Ghidra pseudo-C.
+// helpers_thunk (game_misc) -- cube. 84 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_thunk.h"
 
@@ -308,68 +308,6 @@ void FUN_004d6d10(void)
 }
 
 
-/* fwd_0056bce0_51c950 @ 0051c950  kind=gamemisc  attributed-by=role:thunk  size=18 */
-
-void FUN_0051c950(undefined4 param_1)
-
-{
-  FUN_0056bce0(param_1,1);
-  return;
-}
-
-
-/* fwd_0056bce0_51c970 @ 0051c970  kind=gamemisc  attributed-by=role:thunk  size=18 */
-
-void FUN_0051c970(undefined4 param_1)
-
-{
-  FUN_0056bce0(param_1,2);
-  return;
-}
-
-
-/* fwd_0056bce0_51c990 @ 0051c990  kind=gamemisc  attributed-by=role:thunk  size=18 */
-
-void FUN_0051c990(undefined4 param_1)
-
-{
-  FUN_0056bce0(param_1,3);
-  return;
-}
-
-
-/* fwd_00574df0_51d010 @ 0051d010  kind=gamemisc  attributed-by=role:thunk  size=33 */
-
-void FUN_0051d010(int param_1,undefined8 param_2)
-
-{
-  FUN_00574df0(param_1 + 8,param_2);
-  return;
-}
-
-
-/* fwd_00575040_51d040 @ 0051d040  kind=gamemisc  attributed-by=role:thunk  size=37 */
-
-void FUN_0051d040(int param_1,undefined4 param_2,undefined4 param_3)
-
-{
-  *(undefined4 *)(param_1 + 0x38) = 1;
-  FUN_00575040(param_1 + 8,param_2,param_3,1,0xffffffff);
-  return;
-}
-
-
-/* fwd_00575040_51d0b0 @ 0051d0b0  kind=gamemisc  attributed-by=role:thunk  size=37 */
-
-void FUN_0051d0b0(int param_1,undefined4 param_2,undefined4 param_3)
-
-{
-  *(undefined4 *)(param_1 + 0x38) = 1;
-  FUN_00575040(param_1 + 8,param_2,param_3,2,0xffffffff);
-  return;
-}
-
-
 /* fwd_00575040_51d0e0 @ 0051d0e0  kind=gamemisc  attributed-by=role:thunk  size=38 */
 
 void FUN_0051d0e0(int param_1)
@@ -378,39 +316,6 @@ void FUN_0051d0e0(int param_1)
   *(undefined4 *)(param_1 + 0x38) = 0x12;
   FUN_00575040(param_1 + 8,"string or blob too big",0xffffffff,1,0);
   return;
-}
-
-
-/* fwd_00574570_51d510 @ 0051d510  kind=gamemisc  attributed-by=role:thunk  size=13 */
-
-void FUN_0051d510(void)
-
-{
-  FUN_00574570();
-  return;
-}
-
-
-/* fwd_0051e960_51ea40 @ 0051ea40  kind=gamemisc  attributed-by=role:thunk  size=26 */
-
-void FUN_0051ea40(int param_1)
-
-{
-  if (param_1 < 0) {
-    param_1 = 0;
-  }
-  FUN_0051e960(param_1,param_1 >> 0x1f);
-  return;
-}
-
-
-/* fwd_0051f6b0_51f900 @ 0051f900  kind=gamemisc  attributed-by=role:thunk  size=22 */
-
-undefined4 FUN_0051f900(undefined4 param_1)
-
-{
-  FUN_0051f6b0(param_1,0,0);
-  return 0;
 }
 
 
@@ -459,46 +364,6 @@ void FUN_00521320(void)
 }
 
 
-/* fwd_00533b00_521440 @ 00521440  kind=gamemisc  attributed-by=role:thunk  size=27 */
-
-void FUN_00521440(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
-
-{
-  FUN_00533b00(param_1,param_2,param_3,param_4,0);
-  return;
-}
-
-
-/* fwd_00533b00_5215b0 @ 005215b0  kind=gamemisc  attributed-by=role:thunk  size=9 */
-
-void FUN_005215b0(void)
-
-{
-  FUN_00533b00();
-  return;
-}
-
-
-/* fwd_0052e130_522390 @ 00522390  kind=gamemisc  attributed-by=role:thunk  size=30 */
-
-void FUN_00522390(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
-
-{
-  FUN_0052e130(param_1,param_2,param_3,param_4,FUN_0054cf10);
-  return;
-}
-
-
-/* fwd_0052e130_522460 @ 00522460  kind=gamemisc  attributed-by=role:thunk  size=30 */
-
-void FUN_00522460(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
-
-{
-  FUN_0052e130(param_1,param_2,param_3,param_4,FUN_0054ecc0);
-  return;
-}
-
-
 /* fwd_0068d494_522480 @ 00522480  kind=gamemisc  attributed-by=role:thunk  size=17 */
 
 void FUN_00522480(undefined4 param_1,undefined4 param_2,undefined4 param_3)
@@ -529,49 +394,6 @@ void FUN_00525590(undefined4 param_1,undefined4 param_2)
 }
 
 
-/* fwd_00540b70_525a20 @ 00525a20  kind=gamemisc  attributed-by=role:thunk  size=9 */
-
-void FUN_00525a20(void)
-
-{
-  FUN_00540b70();
-  return;
-}
-
-
-/* fwd_0055d830_5264a0 @ 005264a0  kind=gamemisc  attributed-by=role:thunk  size=32 */
-
-void FUN_005264a0(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                 undefined4 param_5)
-
-{
-  FUN_0055d830(param_1,param_2,param_3,1,0,param_4,param_5);
-  return;
-}
-
-
-/* fwd_00563550_526590 @ 00526590  kind=gamemisc  attributed-by=role:thunk  size=30 */
-
-void FUN_00526590(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                 undefined4 param_5)
-
-{
-  FUN_00563550(param_1,param_2,param_3,0,param_4,param_5);
-  return;
-}
-
-
-/* fwd_00563550_5265b0 @ 005265b0  kind=gamemisc  attributed-by=role:thunk  size=30 */
-
-void FUN_005265b0(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                 undefined4 param_5)
-
-{
-  FUN_00563550(param_1,param_2,param_3,1,param_4,param_5);
-  return;
-}
-
-
 /* fwd_0052e070_5267a0 @ 005267a0  kind=gamemisc  attributed-by=role:thunk  size=30 */
 
 void FUN_005267a0(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
@@ -579,28 +401,6 @@ void FUN_005267a0(undefined4 param_1,undefined4 param_2,undefined4 param_3,undef
 
 {
   FUN_0052e070(param_1,param_2,param_3,param_4,param_5,0);
-  return;
-}
-
-
-/* fwd_0052e070_526be0 @ 00526be0  kind=gamemisc  attributed-by=role:thunk  size=30 */
-
-void FUN_00526be0(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                 undefined4 param_5)
-
-{
-  FUN_0052e070(param_1,param_2,param_3,param_4,param_5,2);
-  return;
-}
-
-
-/* fwd_00528720_528320 @ 00528320  kind=gamemisc  attributed-by=role:thunk  size=39 */
-
-void FUN_00528320(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                 undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8)
-
-{
-  FUN_00528720(param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8,0);
   return;
 }
 
@@ -1084,39 +884,6 @@ void FUN_006a92c0(void)
 }
 
 
-/* fwd_006a9a00_6a9a90 @ 006a9a90  kind=gamemisc  attributed-by=role:thunk  size=61 */
-
-int FUN_006a9a90(undefined4 param_1,uint *param_2)
-
-{
-  uint uVar1;
-  int iVar2;
-  
-  uVar1 = *param_2;
-  do {
-    uVar1 = uVar1 + 1;
-    if (0xff < uVar1) {
-      *param_2 = 0;
-      return 0;
-    }
-    iVar2 = FUN_006a9a00(param_1,uVar1);
-  } while (iVar2 == 0);
-  *param_2 = uVar1;
-  return iVar2;
-}
-
-
-/* fwd_00691290_6a9eb0 @ 006a9eb0  kind=gamemisc  attributed-by=role:thunk  size=29 */
-
-void FUN_006a9eb0(undefined4 *param_1)
-
-{
-  FUN_00691290(*param_1,param_1[1]);
-  param_1[1] = 0;
-  return;
-}
-
-
 /* fwd_006abbc0_6abd10 @ 006abd10  kind=gamemisc  attributed-by=role:thunk  size=56 */
 
 undefined4 FUN_006abd10(undefined4 *param_1)
@@ -1153,16 +920,6 @@ void FUN_006b1650(void)
   in_EAX[7] = in_EDX;
   *(undefined1 *)(in_EAX + 8) = 0;
   FUN_0068f020();
-  return;
-}
-
-
-/* fwd_006b1680_6b1a80 @ 006b1a80  kind=gamemisc  attributed-by=role:thunk  size=18 */
-
-void FUN_006b1a80(void)
-
-{
-  FUN_006b1680();
   return;
 }
 
@@ -1229,18 +986,6 @@ void FUN_006b7b00(void)
 }
 
 
-/* fwd_00691290_6bad90 @ 006bad90  kind=gamemisc  attributed-by=role:thunk  size=33 */
-
-void FUN_006bad90(int *param_1)
-
-{
-  FUN_00691290(*(undefined4 *)(*param_1 + 100),param_1[5]);
-  param_1[5] = 0;
-  param_1[4] = 0;
-  return;
-}
-
-
 /* fwd_00693a60_6c0d00 @ 006c0d00  kind=gamemisc  attributed-by=role:thunk  size=55 */
 
 int FUN_006c0d00(undefined4 param_1)
@@ -1287,16 +1032,6 @@ void FUN_006c8850(undefined4 param_1)
   
   memset(unaff_ESI,0,0x7c);
   *unaff_ESI = param_1;
-  return;
-}
-
-
-/* fwd_006cb7e0_6cc020 @ 006cc020  kind=gamemisc  attributed-by=role:thunk  size=15 */
-
-void FUN_006cc020(void)
-
-{
-  FUN_006cb7e0();
   return;
 }
 
@@ -1372,24 +1107,6 @@ void FUN_006d8650(undefined4 param_1)
     FUN_006d8670(param_1);
   }
   return;
-}
-
-
-/* fwd_external:00000148_6dfd70 @ 006dfd70  kind=gamemisc  attributed-by=role:thunk  size=53 */
-
-undefined4 * FUN_006dfd70(undefined4 param_1,undefined4 *param_2)
-
-{
-  undefined4 *puVar1;
-  void *pvVar2;
-  
-  puVar1 = calloc(1,0x20);
-  puVar1[1] = *param_2;
-  *puVar1 = param_2[2];
-  puVar1[5] = param_2;
-  pvVar2 = calloc(2,4);
-  puVar1[2] = pvVar2;
-  return puVar1;
 }
 
 

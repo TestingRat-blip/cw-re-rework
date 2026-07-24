@@ -3,6 +3,21 @@
 #pragma once
 #include "../include/cw_types.h"
 
+/* 00453f20  gamemisc  [caller-vote] */
+undefined FUN_00453f20(void);
+
+/* 00453ff0  gamemisc  [caller-vote] */
+undefined FUN_00453ff0(void);
+
+/* 004540c0  gamemisc  [caller-vote] */
+undefined FUN_004540c0(void);
+
+/* 00454330  gamemisc  [caller-vote] */
+undefined FUN_00454330(void);
+
+/* 004544d0  gamemisc  [caller-vote] */
+undefined FUN_004544d0(void);
+
 /* 004545a0  gamemisc  [caller-vote] */
 undefined FUN_004545a0(void);
 
@@ -309,6 +324,9 @@ undefined FUN_00468d50(void);
 /* 00468db0  gamemisc  [caller-vote] */
 undefined FUN_00468db0(void);
 
+/* 00468dd0  gamemisc  [caller-vote] */
+undefined FUN_00468dd0(void);
+
 /* 00468e20  gamemisc  [caller-vote] */
 undefined FUN_00468e20(void);
 
@@ -398,6 +416,15 @@ undefined FUN_0046e800(void);
 
 /* 0046eb90  gamemisc  [caller-vote] */
 undefined FUN_0046eb90(void);
+
+/* 0046ef60  gamemisc  [caller-vote] */
+undefined FUN_0046ef60(void);
+
+/* 0046f050  gamemisc  [caller-vote] */
+undefined FUN_0046f050(void);
+
+/* 0046f390  gamemisc  [caller-vote] */
+undefined FUN_0046f390(void);
 
 /* 0046f430  gamemisc  [caller-vote] */
 undefined FUN_0046f430(void);
@@ -489,6 +516,9 @@ undefined FUN_0047f760(void);
 /* 0047fa10  gamemisc  [caller-vote] */
 undefined FUN_0047fa10(void);
 
+/* 0047fae0  gamemisc  [caller-vote] */
+undefined FUN_0047fae0(void);
+
 /* 004806c0  gamemisc  [caller-vote] */
 undefined __thiscall FUN_004806c0(void * this);
 
@@ -572,34 +602,4 @@ undefined FUN_00487e60(void);
 
 /* 00487e80  gamemisc  [caller-vote] */
 undefined FUN_00487e80(void);
-
-/* 00487e90  gamemisc  [caller-vote] */
-undefined FUN_00487e90(void);
-
-/* 00487f70  gamemisc  [caller-vote] */
-undefined FUN_00487f70(void);
-
-/* 00487f80  gamemisc  [caller-vote] */
-undefined FUN_00487f80(void);
-
-/* 00487fe0  gamemisc  [caller-vote] */
-undefined FUN_00487fe0(void);
-
-/* 00488030  gamemisc  [caller-vote] */
-undefined FUN_00488030(void);
-
-/* 004882e0  gamemisc  [caller-vote] */
-undefined FUN_004882e0(void);
-
-/* 00488b80  gamemisc  [caller-vote] */
-undefined FUN_00488b80(void);
-
-/* 00488b90  gamemisc  [caller-vote] */
-undefined FUN_00488b90(void);
-
-/* 00488d60  gamemisc  [caller-vote] */
-undefined FUN_00488d60(void);
-
-/* 00488e50  gamemisc  [caller-vote] */
-undefined FUN_00488e50(void);
 

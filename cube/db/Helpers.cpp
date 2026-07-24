@@ -1,4 +1,4 @@
-// Helpers (db) -- cube. 6 functions. Bodies = Ghidra pseudo-C.
+// Helpers (db) -- cube. 3 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Helpers.h"
 
@@ -13,28 +13,6 @@ undefined4 * FUN_0040c380(void)
     return (undefined4 *)*in_ECX;
   }
   return in_ECX;
-}
-
-
-/* FUN_00526480 @ 00526480  kind=gamemisc  attributed-by=caller-vote  size=32 */
-
-void FUN_00526480(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                 undefined4 param_5)
-
-{
-  FUN_0055d830(param_1,param_2,param_3,0,0,param_4,param_5);
-  return;
-}
-
-
-/* FUN_00526b60 @ 00526b60  kind=gamemisc  attributed-by=caller-vote  size=30 */
-
-void FUN_00526b60(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                 undefined4 param_5)
-
-{
-  FUN_0052e070(param_1,param_2,param_3,param_4,param_5,1);
-  return;
 }
 
 
@@ -86,39 +64,6 @@ int FUN_00527610(undefined4 param_1,undefined4 param_2)
   }
   FUN_00532670(param_1);
   return iVar2;
-}
-
-
-/* FUN_0052e070 @ 0052e070  kind=gamemisc  attributed-by=caller-vote  size=182 */
-
-int FUN_0052e070(int *param_1,int param_2,int param_3,undefined4 param_4,code *param_5,
-                undefined4 param_6)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  iVar1 = FUN_0057d290(param_1,param_2);
-  if (iVar1 == 0) {
-    if (param_3 != 0) {
-      iVar1 = param_1[0x11] + param_2 * 0x28 + -0x28;
-      iVar2 = FUN_00575040(iVar1,param_3,param_4,param_6,param_5);
-      if ((iVar2 == 0) && ((char)param_6 != '\0')) {
-        iVar2 = FUN_0056c290(iVar1,*(undefined1 *)(*(int *)(*(int *)(*param_1 + 0x10) + 0xc) + 0x4d)
-                            );
-      }
-      FUN_00553890(*param_1,iVar2,0);
-      iVar1 = FUN_0054a110(*param_1,iVar2);
-    }
-    if (*(int *)(*param_1 + 0xc) != 0) {
-      (*DAT_00766638)(*(int *)(*param_1 + 0xc));
-      return iVar1;
-    }
-  }
-  else if ((param_5 != (code *)0x0) && (param_5 != (code *)0xffffffff)) {
-    (*param_5)(param_3);
-  }
-  return iVar1;
 }
 
 

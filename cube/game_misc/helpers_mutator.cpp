@@ -1,4 +1,4 @@
-// helpers_mutator (game_misc) -- cube. 34 functions. Bodies = Ghidra pseudo-C.
+// helpers_mutator (game_misc) -- cube. 21 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_mutator.h"
 
@@ -115,66 +115,6 @@ undefined1 FUN_004c0ed0(void)
 }
 
 
-/* mutator_51de30 @ 0051de30  kind=gamemisc  attributed-by=role:mutator  size=18 */
-
-undefined4 FUN_0051de30(undefined4 *param_1)
-
-{
-  if (param_1 != (undefined4 *)0x0) {
-    return *param_1;
-  }
-  return 0;
-}
-
-
-/* mutator_51e950 @ 0051e950  kind=gamemisc  attributed-by=role:mutator  size=15 */
-
-undefined4 FUN_0051e950(undefined4 param_1)
-
-{
-  DAT_007666a4 = param_1;
-  return 0;
-}
-
-
-/* mutator_51ff50 @ 0051ff50  kind=gamemisc  attributed-by=role:mutator  size=24 */
-
-undefined4 FUN_0051ff50(int param_1,undefined4 *param_2)
-
-{
-  *param_2 = *(undefined4 *)(param_1 + 8);
-  param_2[1] = *(undefined4 *)(param_1 + 0xc);
-  return 0;
-}
-
-
-/* mutator_522370 @ 00522370  kind=gamemisc  attributed-by=role:mutator  size=25 */
-
-undefined4 FUN_00522370(int param_1)
-
-{
-  if ((param_1 != 0) && (*(int *)(param_1 + 0x14) != 0)) {
-    return *(undefined4 *)(param_1 + 4);
-  }
-  return 0;
-}
-
-
-/* mutator_522660 @ 00522660  kind=gamemisc  attributed-by=role:mutator  size=22 */
-
-void FUN_00522660(int param_1)
-
-{
-  if (param_1 != 0) {
-                    /* WARNING: Could not recover jumptable at 0x0052266e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
-    (*DAT_0076662c)();
-    return;
-  }
-  return;
-}
-
-
 /* mutator_522dc1 @ 00522dc1  kind=gamemisc  attributed-by=role:mutator  size=28 */
 
 undefined4 FUN_00522dc1(void)
@@ -186,100 +126,6 @@ undefined4 FUN_00522dc1(void)
     (*DAT_00766638)(*(int *)(unaff_ESI + 0xc));
   }
   return 0;
-}
-
-
-/* set_0xe0_5232b0 @ 005232b0  kind=gamemisc  attributed-by=role:mutator  size=18 */
-
-void FUN_005232b0(int param_1)
-
-{
-  *(undefined4 *)(param_1 + 0xe0) = 1;
-  return;
-}
-
-
-/* mutator_5244c0 @ 005244c0  kind=gamemisc  attributed-by=role:mutator  size=30 */
-
-void FUN_005244c0(int param_1)
-
-{
-  if (param_1 != 0) {
-    DAT_0076b388 = DAT_0076b360;
-  }
-  return;
-}
-
-
-/* mutator_5265d0 @ 005265d0  kind=gamemisc  attributed-by=role:mutator  size=31 */
-
-undefined4 FUN_005265d0(int param_1)
-
-{
-  if ((param_1 != 0) && ((*(uint *)(param_1 + 0x60) & 0x200) != 0)) {
-    return *(undefined4 *)(param_1 + 0x98);
-  }
-  return 0;
-}
-
-
-/* mutator_526b40 @ 00526b40  kind=gamemisc  attributed-by=role:mutator  size=17 */
-
-undefined4 FUN_00526b40(int param_1)
-
-{
-  if (param_1 == 0) {
-    return 0;
-  }
-  return *(undefined4 *)(param_1 + -8);
-}
-
-
-/* mutator_526dc0 @ 00526dc0  kind=gamemisc  attributed-by=role:mutator  size=20 */
-
-int FUN_00526dc0(int param_1)
-
-{
-  if (param_1 != 0) {
-    return (int)*(short *)(param_1 + 0x4c);
-  }
-  return 0;
-}
-
-
-/* mutator_526f90 @ 00526f90  kind=gamemisc  attributed-by=role:mutator  size=20 */
-
-undefined2 FUN_00526f90(int param_1)
-
-{
-  if (param_1 != 0) {
-    return *(undefined2 *)(param_1 + 0x2c);
-  }
-  return 0;
-}
-
-
-/* mutator_527570 @ 00527570  kind=gamemisc  attributed-by=role:mutator  size=26 */
-
-undefined2 FUN_00527570(int param_1)
-
-{
-  if ((param_1 != 0) && (*(int *)(param_1 + 0x14) != 0)) {
-    return *(undefined2 *)(param_1 + 0x2c);
-  }
-  return 0;
-}
-
-
-/* mutator_528810 @ 00528810  kind=gamemisc  attributed-by=role:mutator  size=27 */
-
-undefined4 FUN_00528810(int param_1)
-
-{
-  if ((param_1 != 0) && ((*(byte *)(param_1 + 0x60) & 0x20) == 0)) {
-    return 0;
-  }
-  return 1;
 }
 
 

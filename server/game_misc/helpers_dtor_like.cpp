@@ -1,4 +1,4 @@
-// helpers_dtor_like (game_misc) -- server. 49 functions. Bodies = Ghidra pseudo-C.
+// helpers_dtor_like (game_misc) -- server. 46 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_dtor_like.h"
 
@@ -120,36 +120,6 @@ void __fastcall FUN_00412d90(int *param_1)
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
-  return;
-}
-
-
-/* FUN_004135d0 @ 004135d0  kind=gamemisc  attributed-by=role:dtor-like  size=98 */
-
-void FUN_004135d0(int *param_1)
-
-{
-  int *piVar1;
-  
-  if ((int *)param_1[4] == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
-    std::_Xbad_function_call();
-  }
-  (**(code **)(*(int *)param_1[4] + 8))();
-  piVar1 = (int *)param_1[4];
-  if (piVar1 != (int *)0x0) {
-    (**(code **)(*piVar1 + 0x10))(piVar1 != param_1);
-    param_1[4] = 0;
-  }
-  piVar1 = (int *)param_1[4];
-  if (piVar1 != (int *)0x0) {
-    (**(code **)(*piVar1 + 0x10))(piVar1 != param_1);
-    param_1[4] = 0;
-  }
-  operator_delete(param_1);
-                    /* WARNING: Could not recover jumptable at 0x0041362c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
-  _endthread();
   return;
 }
 
@@ -444,31 +414,6 @@ LAB_0041e79f:
   *(undefined4 **)((int)this + 8) = puVar3 + param_1 * 3;
   *(undefined4 **)((int)this + 4) = puVar3 + ((iVar1 - iVar2) / 0xc) * 3;
   ExceptionList = local_10;
-  return;
-}
-
-
-/* FUN_00423710 @ 00423710  kind=gamemisc  attributed-by=role:dtor-like  size=62 */
-
-void __fastcall FUN_00423710(int *param_1)
-
-{
-  int *piVar1;
-  int *piVar2;
-  
-  piVar1 = (int *)*param_1;
-  piVar2 = (int *)*piVar1;
-  *piVar1 = (int)piVar1;
-  *(int *)(*param_1 + 4) = *param_1;
-  param_1[1] = 0;
-  if (piVar2 != (int *)*param_1) {
-    do {
-      piVar1 = (int *)*piVar2;
-      operator_delete(piVar2);
-      piVar2 = piVar1;
-    } while (piVar1 != (int *)*param_1);
-  }
-  operator_delete((void *)*param_1);
   return;
 }
 
@@ -879,51 +824,6 @@ void __fastcall FUN_00430ec0(int param_1)
   }
   operator_delete(*(void **)(param_1 + 4));
   return;
-}
-
-
-/* FUN_00465680 @ 00465680  kind=gamemisc  attributed-by=role:dtor-like  size=156 */
-
-undefined4 __cdecl
-FUN_00465680(int param_1,int param_2,undefined4 *param_3,uint *param_4,int param_5)
-
-{
-  uint uVar1;
-  int iVar2;
-  uint uVar3;
-  undefined4 uVar4;
-  uint uVar5;
-  
-  if (param_2 == 0x3e9) {
-    uVar4 = FUN_0048b660(param_1,param_3,(uint)param_4,param_5);
-    return uVar4;
-  }
-  uVar5 = 0;
-  while ((&DAT_0056cac4)[uVar5 * 2] != param_2) {
-    uVar5 = uVar5 + 1;
-    if (1 < uVar5) {
-      return 1;
-    }
-  }
-  uVar1 = *(uint *)(param_1 + 0x18);
-  if ((int)param_3 < 1) {
-    if (param_3 != (undefined4 *)0x0) goto LAB_004656cf;
-    uVar3 = ~*(uint *)(&UNK_0056cac8 + uVar5 * 8) & uVar1;
-  }
-  else {
-    uVar3 = *(uint *)(&UNK_0056cac8 + uVar5 * 8) | uVar1;
-  }
-  *(uint *)(param_1 + 0x18) = uVar3;
-LAB_004656cf:
-  if (uVar1 != *(uint *)(param_1 + 0x18)) {
-    for (iVar2 = *(int *)(param_1 + 4); iVar2 != 0; iVar2 = *(int *)(iVar2 + 0x3c)) {
-      *(uint *)(iVar2 + 0x60) = *(uint *)(iVar2 + 0x60) | 0x20;
-    }
-  }
-  if (param_4 != (uint *)0x0) {
-    *param_4 = (uint)((*(uint *)(&UNK_0056cac8 + uVar5 * 8) & *(uint *)(param_1 + 0x18)) != 0);
-  }
-  return 0;
 }
 
 

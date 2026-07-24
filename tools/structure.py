@@ -233,6 +233,14 @@ def classify(fn, labels, class_names, islands, roles):
             if name.startswith("FUN_"):
                 name = "%s_%s" % (nm, fn["addr"].lstrip("0") or "0")
             return "gamemisc", "game_misc", "_helpers_" + role, name, "role:" + role
+        # true artifact: no incoming reference of any kind — EH/GS fragment or dead code
+        if role == "artifact":
+            return "gamemisc", "game_misc", "_artifacts", name, "role:artifact"
+        # real functions reached INDIRECTLY (recovered by IndirectRefs) — review surface,
+        # now with a subsystem home from the vtable class / dispatcher / callback taker
+        if role in ("vfunc-indirect", "dispatch-target", "callback"):
+            mod = r.get("module") or "game_misc"
+            return "gamemisc", mod, "_indirect_" + role.replace("-indirect", ""), name, "role:" + role
         if role in ("ctor-like", "dtor-like", "wrapper"):
             mod = r.get("module") or "game_misc"
             return "gamemisc", mod, "_helpers_" + role, name, "role:" + role

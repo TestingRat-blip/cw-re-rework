@@ -1,4 +1,4 @@
-// Helpers (ai) -- cube. 22 functions. Bodies = Ghidra pseudo-C.
+// Helpers (ai) -- cube. 21 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Helpers.h"
 
@@ -180,50 +180,6 @@ undefined4 FUN_00444520(void)
     }
   }
   return 0;
-}
-
-
-/* FUN_00444ae0 @ 00444ae0  kind=gamemisc  attributed-by=caller-vote  size=155 */
-
-float10 FUN_00444ae0(undefined4 param_1,undefined4 param_2)
-
-{
-  int *piVar1;
-  int *piVar2;
-  int in_ECX;
-  float10 fVar3;
-  
-  switch(param_1) {
-  case 3:
-  case 4:
-    return (float10)0.1;
-  default:
-switchD_00444af9_caseD_5:
-    return (float10)0;
-  case 0x1f:
-  case 0x21:
-  case 0x25:
-  case 0x2b:
-  case 0x2d:
-  case 0x2e:
-  case 0x5f:
-    break;
-  case 0x22:
-    fVar3 = (float10)FUN_0043ed60(0x22,param_2);
-    return (float10)((1.0 - (float)fVar3 * 0.75) * 0.125);
-  }
-  piVar1 = *(int **)(in_ECX + 0x1178);
-  piVar2 = (int *)*piVar1;
-  if (piVar2 != piVar1) {
-    while ((char)piVar2[2] != '\t') {
-      piVar2 = (int *)*piVar2;
-      if (piVar2 == piVar1) {
-        return (float10)0.3;
-      }
-    }
-    if (piVar2 != (int *)0xfffffff8) goto switchD_00444af9_caseD_5;
-  }
-  return (float10)0.3;
 }
 
 

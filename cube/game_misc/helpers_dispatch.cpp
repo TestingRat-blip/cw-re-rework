@@ -1,4 +1,4 @@
-// helpers_dispatch (game_misc) -- cube. 53 functions. Bodies = Ghidra pseudo-C.
+// helpers_dispatch (game_misc) -- cube. 46 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_dispatch.h"
 
@@ -220,22 +220,6 @@ undefined4 FUN_004d7240(int *param_1,uint *param_2,int param_3,uint param_4,char
     } while (param_4 != 0);
   }
   return 1;
-}
-
-
-/* vdispatch_51dde0 @ 0051dde0  kind=gamemisc  attributed-by=role:dispatch  size=61 */
-
-int FUN_0051dde0(int param_1)
-
-{
-  int iVar1;
-  
-  iVar1 = FUN_005224a0(0);
-  if (iVar1 == 0) {
-    return 0;
-  }
-  iVar1 = (**(code **)(iVar1 + 0x3c))(iVar1,param_1 * 1000);
-  return iVar1 / 1000;
 }
 
 
@@ -616,56 +600,6 @@ void FUN_0069c400(void)
 }
 
 
-/* vdispatch_69c7c0 @ 0069c7c0  kind=gamemisc  attributed-by=role:dispatch  size=73 */
-
-void FUN_0069c7c0(int param_1,undefined4 param_2)
-
-{
-  undefined4 *puVar1;
-  int iVar2;
-  
-  puVar1 = (undefined4 *)(param_1 + 0x1f8);
-  iVar2 = (**(code **)(param_1 + 0x1fc))(param_1,0x636d6170,param_2,puVar1);
-  if (iVar2 == 0) {
-    iVar2 = FUN_00693a30(param_2,*puVar1,param_1 + 500);
-    if (iVar2 != 0) {
-      *puVar1 = 0;
-    }
-  }
-  return;
-}
-
-
-/* vdispatch_69cb00 @ 0069cb00  kind=gamemisc  attributed-by=role:dispatch  size=58 */
-
-void FUN_0069cb00(int param_1,undefined4 param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = (**(code **)(param_1 + 0x1fc))(param_1,0x706f7374,param_2,0);
-  if (iVar1 == 0) {
-    FUN_00692010(param_2,&DAT_007236ac,param_1 + 0x1d4);
-  }
-  return;
-}
-
-
-/* vdispatch_69cb40 @ 0069cb40  kind=gamemisc  attributed-by=role:dispatch  size=58 */
-
-void FUN_0069cb40(int param_1,undefined4 param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = (**(code **)(param_1 + 0x1fc))(param_1,0x50434c54,param_2,0);
-  if (iVar1 == 0) {
-    FUN_00692010(param_2,&DAT_007236d8,param_1 + 0x22c);
-  }
-  return;
-}
-
-
 /* vdispatch_6a98d0 @ 006a98d0  kind=gamemisc  attributed-by=role:dispatch  size=14 */
 
 void FUN_006a98d0(void)
@@ -745,51 +679,6 @@ void thunk_FUN_006b3c40(void)
   }
   (**(code **)(unaff_ESI + 0x18))();
   return;
-}
-
-
-/* vdispatch_6b4700 @ 006b4700  kind=gamemisc  attributed-by=role:dispatch  size=43 */
-
-void FUN_006b4700(int param_1)
-
-{
-  int iVar1;
-  
-  if (*(int *)(param_1 + 0x28) != 0) {
-    iVar1 = FUN_006b46c0();
-    if (iVar1 != 0) {
-      (**(code **)(iVar1 + 8))(*(undefined4 *)(param_1 + 0x28));
-    }
-    *(undefined4 *)(param_1 + 0x28) = 0;
-  }
-  return;
-}
-
-
-/* vdispatch_6b4730 @ 006b4730  kind=gamemisc  attributed-by=role:dispatch  size=72 */
-
-int FUN_006b4730(int *param_1)
-
-{
-  int *piVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  
-  piVar1 = param_1;
-  puVar2 = (undefined4 *)FUN_006b46c0();
-  if (puVar2 == (undefined4 *)0x0) {
-    iVar3 = 0;
-  }
-  else {
-    iVar3 = *piVar1;
-    iVar3 = (*(code *)*puVar2)(*(undefined4 *)(iVar3 + 100),
-                               *(int *)(iVar3 + 4) * 0xfc + *(int *)(iVar3 + 0x130),&param_1);
-    if (iVar3 == 0) {
-      piVar1[10] = (int)param_1;
-      return 0;
-    }
-  }
-  return iVar3;
 }
 
 
@@ -905,24 +794,6 @@ bool FUN_006bc830(int *param_1)
   }
   unaff_ESI[3] = 3;
   return false;
-}
-
-
-/* vdispatch_6bde20 @ 006bde20  kind=gamemisc  attributed-by=role:dispatch  size=43 */
-
-void FUN_006bde20(int param_1)
-
-{
-  int iVar1;
-  
-  if (*(int *)(param_1 + 0x28) != 0) {
-    iVar1 = FUN_006bdde0();
-    if (iVar1 != 0) {
-      (**(code **)(iVar1 + 8))(*(undefined4 *)(param_1 + 0x28));
-    }
-    *(undefined4 *)(param_1 + 0x28) = 0;
-  }
-  return;
 }
 
 

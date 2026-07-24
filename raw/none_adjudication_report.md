@@ -9,37 +9,46 @@ genuine unknown game logic that is the real remaining RE surface.
 
 | role | count | reviewer action |
 |---|---|---|
-| logic | 906 | **REVIEW — genuine logic** |
-| wrapper | 155 | glance — thin wrapper |
-| dtor-like | 53 | glance — destructor |
-| computed | 50 |  |
-| thunk | 43 | skip — forwarder |
-| mutator | 26 | skip — field setter |
+| logic | 591 | **REVIEW — genuine logic** |
+| wrapper | 141 | glance — thin wrapper |
+| vfunc-indirect | 133 | REVIEW — vtable method (indirect) |
+| dispatch-target | 109 | REVIEW — dispatch-table handler |
+| artifact | 107 | SKIP — no refs (EH/GS fragment or dead code) |
+| dtor-like | 52 | glance — destructor |
+| computed | 46 |  |
+| thunk | 27 | skip — forwarder |
+| callback | 24 | REVIEW — callback |
 | ctor-like | 21 | glance — constructor |
-| dispatch | 15 | skip — vtable dispatch |
-| accessor | 15 | skip — field getter |
+| dispatch | 14 | skip — vtable dispatch |
+| mutator | 13 | skip — field setter |
+| accessor | 6 | skip — field getter |
 | stub | 2 | skip — trivial/empty |
 | identity | 1 | skip — returns this |
 
-**381 of 1287 (30%) are trivial mechanical helpers; 906 remain genuine logic.**
+**216 skippable (trivial helpers + artifacts); 266 indirect real functions recovered (vtable/dispatch/callback); 591 remain genuine logic.**
 
 ## Cube.exe — 2548 unattributed
 
 | role | count | reviewer action |
 |---|---|---|
-| logic | 1733 | **REVIEW — genuine logic** |
-| wrapper | 299 | glance — thin wrapper |
-| dtor-like | 218 | glance — destructor |
-| thunk | 109 | skip — forwarder |
-| computed | 65 |  |
-| dispatch | 53 | skip — vtable dispatch |
-| mutator | 34 | skip — field setter |
+| logic | 1113 | **REVIEW — genuine logic** |
+| dispatch-target | 294 | REVIEW — dispatch-table handler |
+| wrapper | 270 | glance — thin wrapper |
+| vfunc-indirect | 234 | REVIEW — vtable method (indirect) |
+| dtor-like | 216 | glance — destructor |
+| artifact | 101 | SKIP — no refs (EH/GS fragment or dead code) |
+| thunk | 84 | skip — forwarder |
+| callback | 80 | REVIEW — callback |
+| computed | 61 |  |
+| dispatch | 46 | skip — vtable dispatch |
+| mutator | 21 | skip — field setter |
 | ctor-like | 20 | glance — constructor |
-| accessor | 11 | skip — field getter |
 | stub | 5 | skip — trivial/empty |
+| accessor | 2 | skip — field getter |
 | identity | 1 | skip — returns this |
 
-**815 of 2548 (32%) are trivial mechanical helpers; 1733 remain genuine logic.**
+**321 skippable (trivial helpers + artifacts); 608 indirect real functions recovered (vtable/dispatch/callback); 1113 remain genuine logic.**
 
-Consumed by `structure.py` as the `role` source: trivial roles get their descriptive
-name and drop into `game_misc/_helpers`, isolating the `logic` functions in the tree.
+Consumed by `structure.py` as the `role` source: skippables get a descriptive name
+in `game_misc/_helpers_*` / `_artifacts`, indirect-real go to `_indirect_*` under
+their subsystem, isolating true `logic` in the `Unsorted` files.

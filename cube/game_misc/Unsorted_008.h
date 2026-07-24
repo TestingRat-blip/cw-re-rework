@@ -3,453 +3,453 @@
 #pragma once
 #include "../include/cw_types.h"
 
-/* 006bfc40  gamemisc  [none] */
-undefined FUN_006bfc40(void);
+/* 00594760  gamemisc  [none] */
+undefined FUN_00594760(void);
 
-/* 006c0030  gamemisc  [none] */
-undefined FUN_006c0030(void);
+/* 005947a0  gamemisc  [none] */
+undefined FUN_005947a0(void);
 
-/* 006c0280  gamemisc  [none] */
-undefined FUN_006c0280(void);
+/* 005947e0  gamemisc  [none] */
+undefined FUN_005947e0(void);
 
-/* 006c02c0  gamemisc  [none] */
-undefined FUN_006c02c0(void);
+/* 00594c80  gamemisc  [none] */
+undefined FUN_00594c80(void);
 
-/* 006c0310  gamemisc  [none] */
-undefined FUN_006c0310(void);
+/* 00595010  gamemisc  [none] */
+undefined FUN_00595010(void);
 
-/* 006c04a0  gamemisc  [none] */
-undefined FUN_006c04a0(void);
+/* 005953a0  gamemisc  [none] */
+undefined FUN_005953a0(void);
 
-/* 006c06f0  gamemisc  [none] */
-undefined FUN_006c06f0(void);
+/* 00595850  gamemisc  [none] */
+undefined FUN_00595850(void);
 
-/* 006c0910  gamemisc  [none] */
-undefined FUN_006c0910(void);
+/* 00596ca0  gamemisc  [none] */
+undefined FUN_00596ca0(void);
 
-/* 006c0950  gamemisc  [none] */
-undefined FUN_006c0950(void);
+/* 00598840  gamemisc  [none] */
+undefined FUN_00598840(void);
 
-/* 006c0a40  gamemisc  [none] */
-undefined FUN_006c0a40(void);
+/* 0059a0e0  gamemisc  [none] */
+undefined FUN_0059a0e0(void);
 
-/* 006c0bb0  gamemisc  [none] */
-undefined FUN_006c0bb0(void);
+/* 0059a9b0  gamemisc  [none] */
+undefined FUN_0059a9b0(void);
 
-/* 006c0be0  gamemisc  [none] */
-undefined FUN_006c0be0(void);
+/* 0059c480  gamemisc  [none] */
+undefined FUN_0059c480(void);
 
-/* 006c0c00  gamemisc  [none] */
-undefined FUN_006c0c00(void);
+/* 0059c490  gamemisc  [none] */
+undefined FUN_0059c490(void);
 
-/* 006c0d40  gamemisc  [none] */
-undefined FUN_006c0d40(void);
+/* 0059c550  gamemisc  [none] */
+undefined FUN_0059c550(void);
 
-/* 006c0f30  gamemisc  [none] */
-undefined FUN_006c0f30(void);
+/* 0059ee90  gamemisc  [none] */
+undefined FUN_0059ee90(void);
 
-/* 006c0fb0  gamemisc  [none] */
-undefined FUN_006c0fb0(void);
+/* 0059fbf0  gamemisc  [none] */
+undefined FUN_0059fbf0(void);
 
-/* 006c1070  gamemisc  [none] */
-undefined FUN_006c1070(void);
+/* 0059ff60  gamemisc  [none] */
+undefined FUN_0059ff60(void);
 
-/* 006c10c0  gamemisc  [none] */
-undefined FUN_006c10c0(void);
+/* 005a02d0  gamemisc  [none] */
+undefined FUN_005a02d0(void);
 
-/* 006c1110  gamemisc  [none] */
-undefined FUN_006c1110(void);
+/* 005a0970  gamemisc  [none] */
+undefined FUN_005a0970(void);
 
-/* 006c11c0  gamemisc  [none] */
-undefined FUN_006c11c0(void);
+/* 005a0ed0  gamemisc  [none] */
+undefined FUN_005a0ed0(void);
 
-/* 006c1360  gamemisc  [none] */
-undefined FUN_006c1360(void);
+/* 005a4980  gamemisc  [none] */
+undefined FUN_005a4980(void);
 
-/* 006c1390  gamemisc  [none] */
-undefined FUN_006c1390(void);
+/* 005a5240  gamemisc  [none] */
+undefined FUN_005a5240(void);
 
-/* 006c13f0  gamemisc  [none] */
-undefined FUN_006c13f0(void);
+/* 005a52e0  gamemisc  [none] */
+undefined __thiscall FUN_005a52e0(void * this);
 
-/* 006c1480  gamemisc  [none] */
-undefined FUN_006c1480(void);
+/* 005a5af0  gamemisc  [none] */
+undefined FUN_005a5af0(void);
 
-/* 006c1590  gamemisc  [none] */
-undefined FUN_006c1590(void);
+/* 005a5f60  gamemisc  [none] */
+undefined FUN_005a5f60(void);
 
-/* 006c1780  gamemisc  [none] */
-undefined FUN_006c1780(void);
+/* 005a6a00  gamemisc  [none] */
+undefined FUN_005a6a00(void);
 
-/* 006c1810  gamemisc  [none] */
-undefined FUN_006c1810(void);
+/* 005a6a70  gamemisc  [none] */
+undefined FUN_005a6a70(void);
 
-/* 006c1aa0  gamemisc  [none] */
-undefined FUN_006c1aa0(void);
+/* 005a6e60  gamemisc  [none] */
+undefined FUN_005a6e60(void);
 
-/* 006c1c00  gamemisc  [none] */
-undefined FUN_006c1c00(void);
+/* 005a7a40  gamemisc  [none] */
+undefined FUN_005a7a40(void);
 
-/* 006c1d20  gamemisc  [none] */
-undefined FUN_006c1d20(void);
+/* 005a7bd0  gamemisc  [none] */
+undefined FUN_005a7bd0(void);
 
-/* 006c1dd0  gamemisc  [none] */
-undefined FUN_006c1dd0(void);
+/* 005a7c90  gamemisc  [none] */
+undefined FUN_005a7c90(void);
 
-/* 006c1df0  gamemisc  [none] */
-undefined FUN_006c1df0(void);
+/* 005a9ca0  gamemisc  [none] */
+undefined FUN_005a9ca0(void);
 
-/* 006c1e80  gamemisc  [none] */
-undefined FUN_006c1e80(void);
+/* 005a9d40  gamemisc  [none] */
+undefined FUN_005a9d40(void);
 
-/* 006c1ed0  gamemisc  [none] */
-undefined FUN_006c1ed0(void);
+/* 005a9e50  gamemisc  [none] */
+undefined FUN_005a9e50(void);
 
-/* 006c1f00  gamemisc  [none] */
-undefined FUN_006c1f00(void);
+/* 005a9f90  gamemisc  [none] */
+undefined FUN_005a9f90(void);
 
-/* 006c1fc0  gamemisc  [none] */
-undefined FUN_006c1fc0(void);
+/* 005aaab0  gamemisc  [none] */
+undefined FUN_005aaab0(void);
 
-/* 006c2010  gamemisc  [none] */
-undefined FUN_006c2010(void);
+/* 005ade10  gamemisc  [none] */
+undefined FUN_005ade10(void);
 
-/* 006c20d0  gamemisc  [none] */
-undefined FUN_006c20d0(void);
+/* 005ae950  gamemisc  [none] */
+undefined FUN_005ae950(void);
 
-/* 006c21a0  gamemisc  [none] */
-undefined FUN_006c21a0(void);
+/* 005ae9f0  gamemisc  [none] */
+undefined FUN_005ae9f0(void);
 
-/* 006c2260  gamemisc  [none] */
-undefined FUN_006c2260(void);
+/* 005aea70  gamemisc  [none] */
+undefined FUN_005aea70(void);
 
-/* 006c22d0  gamemisc  [none] */
-undefined FUN_006c22d0(void);
+/* 005c0100  gamemisc  [none] */
+undefined FUN_005c0100(void);
 
-/* 006c2340  gamemisc  [none] */
-undefined FUN_006c2340(void);
+/* 005c0350  gamemisc  [none] */
+undefined FUN_005c0350(void);
 
-/* 006c23a0  gamemisc  [none] */
-undefined FUN_006c23a0(void);
+/* 005c1060  gamemisc  [none] */
+undefined FUN_005c1060(void);
 
-/* 006c2400  gamemisc  [none] */
-undefined FUN_006c2400(void);
+/* 005c14e0  gamemisc  [none] */
+undefined FUN_005c14e0(void);
 
-/* 006c2470  gamemisc  [none] */
-undefined FUN_006c2470(void);
+/* 005c1690  gamemisc  [none] */
+undefined FUN_005c1690(void);
 
-/* 006c24f0  gamemisc  [none] */
-undefined FUN_006c24f0(void);
+/* 005c1ef0  gamemisc  [none] */
+undefined FUN_005c1ef0(void);
 
-/* 006c25f0  gamemisc  [none] */
-undefined FUN_006c25f0(void);
+/* 005c21f0  gamemisc  [none] */
+undefined FUN_005c21f0(void);
 
-/* 006c26a0  gamemisc  [none] */
-undefined FUN_006c26a0(void);
+/* 005c36a0  gamemisc  [none] */
+undefined FUN_005c36a0(void);
 
-/* 006c26f0  gamemisc  [none] */
-undefined FUN_006c26f0(void);
+/* 005c36e0  gamemisc  [none] */
+undefined FUN_005c36e0(void);
 
-/* 006c2740  gamemisc  [none] */
-undefined FUN_006c2740(void);
+/* 005c3790  gamemisc  [none] */
+undefined FUN_005c3790(void);
 
-/* 006c2790  gamemisc  [none] */
-undefined FUN_006c2790(void);
+/* 005c3d60  gamemisc  [none] */
+undefined FUN_005c3d60(void);
 
-/* 006c2850  gamemisc  [none] */
-undefined FUN_006c2850(void);
+/* 005c3ea0  gamemisc  [none] */
+undefined FUN_005c3ea0(void);
 
-/* 006c2910  gamemisc  [none] */
-undefined FUN_006c2910(void);
+/* 005c3ef0  gamemisc  [none] */
+undefined FUN_005c3ef0(void);
 
-/* 006c2920  gamemisc  [none] */
-undefined FUN_006c2920(void);
+/* 005c4800  gamemisc  [none] */
+undefined FUN_005c4800(void);
 
-/* 006c29a0  gamemisc  [none] */
-undefined FUN_006c29a0(void);
+/* 005c7730  gamemisc  [none] */
+undefined FUN_005c7730(void);
 
-/* 006c29f0  gamemisc  [none] */
-undefined FUN_006c29f0(void);
+/* 005cade0  gamemisc  [none] */
+undefined FUN_005cade0(void);
 
-/* 006c2a40  gamemisc  [none] */
-undefined FUN_006c2a40(void);
+/* 005dc644  gamemisc  [none] */
+undefined __stdcall FUN_005dc644(void);
 
-/* 006c2b20  gamemisc  [none] */
-undefined FUN_006c2b20(void);
+/* 005effa0  gamemisc  [none] */
+undefined FUN_005effa0(void);
 
-/* 006c2b80  gamemisc  [none] */
-undefined FUN_006c2b80(void);
+/* 005fa4c0  gamemisc  [none] */
+undefined FUN_005fa4c0(void);
 
-/* 006c2c30  gamemisc  [none] */
-undefined FUN_006c2c30(void);
+/* 005fae00  gamemisc  [none] */
+undefined FUN_005fae00(void);
 
-/* 006c2d30  gamemisc  [none] */
-undefined FUN_006c2d30(void);
+/* 005fb860  gamemisc  [none] */
+undefined FUN_005fb860(void);
 
-/* 006c2e00  gamemisc  [none] */
-undefined FUN_006c2e00(void);
+/* 005fb9f0  gamemisc  [none] */
+undefined FUN_005fb9f0(void);
 
-/* 006c2eb0  gamemisc  [none] */
-undefined FUN_006c2eb0(void);
+/* 005fbc10  gamemisc  [none] */
+undefined FUN_005fbc10(void);
 
-/* 006c2fb0  gamemisc  [none] */
-undefined FUN_006c2fb0(void);
+/* 005fbed0  gamemisc  [none] */
+undefined FUN_005fbed0(void);
 
-/* 006c3030  gamemisc  [none] */
-undefined FUN_006c3030(void);
+/* 005fc0d0  gamemisc  [none] */
+undefined FUN_005fc0d0(void);
 
-/* 006c3140  gamemisc  [none] */
-undefined FUN_006c3140(void);
+/* 00601cb0  gamemisc  [none] */
+undefined FUN_00601cb0(void);
 
-/* 006c3320  gamemisc  [none] */
-undefined FUN_006c3320(void);
+/* 00601e90  gamemisc  [none] */
+undefined FUN_00601e90(void);
 
-/* 006c3550  gamemisc  [none] */
-undefined FUN_006c3550(void);
+/* 00601ea0  gamemisc  [none] */
+undefined FUN_00601ea0(void);
 
-/* 006c3620  gamemisc  [none] */
-undefined FUN_006c3620(void);
+/* 00602160  gamemisc  [none] */
+undefined FUN_00602160(void);
 
-/* 006c3850  gamemisc  [none] */
-undefined FUN_006c3850(void);
+/* 006022d0  gamemisc  [none] */
+undefined FUN_006022d0(void);
 
-/* 006c38e0  gamemisc  [none] */
-undefined FUN_006c38e0(void);
+/* 00602440  gamemisc  [none] */
+undefined FUN_00602440(void);
 
-/* 006c3b00  gamemisc  [none] */
-undefined FUN_006c3b00(void);
+/* 006024d0  gamemisc  [none] */
+undefined __thiscall FUN_006024d0(void * this);
 
-/* 006c3b40  gamemisc  [none] */
-undefined FUN_006c3b40(void);
+/* 00603230  gamemisc  [none] */
+undefined __thiscall FUN_00603230(void * this);
 
-/* 006c3b80  gamemisc  [none] */
-undefined FUN_006c3b80(void);
+/* 00603a00  gamemisc  [none] */
+undefined __thiscall FUN_00603a00(void * this);
 
-/* 006c3cc0  gamemisc  [none] */
-undefined FUN_006c3cc0(void);
+/* 00605950  gamemisc  [none] */
+undefined FUN_00605950(void);
 
-/* 006c3e60  gamemisc  [none] */
-undefined FUN_006c3e60(void);
+/* 00605a20  gamemisc  [none] */
+undefined FUN_00605a20(void);
 
-/* 006c3f50  gamemisc  [none] */
-undefined FUN_006c3f50(void);
+/* 006089c0  gamemisc  [none] */
+undefined FUN_006089c0(void);
 
-/* 006c4040  gamemisc  [none] */
-undefined FUN_006c4040(void);
+/* 00608a20  gamemisc  [none] */
+undefined FUN_00608a20(void);
 
-/* 006c4090  gamemisc  [none] */
-undefined FUN_006c4090(void);
+/* 00609320  gamemisc  [none] */
+undefined FUN_00609320(void);
 
-/* 006c4ee0  gamemisc  [none] */
-undefined FUN_006c4ee0(void);
+/* 00609400  gamemisc  [none] */
+undefined FUN_00609400(void);
 
-/* 006c5010  gamemisc  [none] */
-undefined FUN_006c5010(void);
+/* 0060a9f0  gamemisc  [none] */
+undefined FUN_0060a9f0(void);
 
-/* 006c5120  gamemisc  [none] */
-undefined FUN_006c5120(void);
+/* 0060aac0  gamemisc  [none] */
+undefined FUN_0060aac0(void);
 
-/* 006c52d0  gamemisc  [none] */
-undefined FUN_006c52d0(void);
+/* 00623530  gamemisc  [none] */
+undefined FUN_00623530(void);
 
-/* 006c5520  gamemisc  [none] */
-undefined FUN_006c5520(void);
+/* 006240d0  gamemisc  [none] */
+undefined FUN_006240d0(void);
 
-/* 006c5630  gamemisc  [none] */
-undefined FUN_006c5630(void);
+/* 00624340  gamemisc  [none] */
+undefined FUN_00624340(void);
 
-/* 006c5a90  gamemisc  [none] */
-undefined FUN_006c5a90(void);
+/* 00624a70  gamemisc  [none] */
+undefined FUN_00624a70(void);
 
-/* 006c5e40  gamemisc  [none] */
-undefined FUN_006c5e40(void);
+/* 00624f80  gamemisc  [none] */
+undefined FUN_00624f80(void);
 
-/* 006c6340  gamemisc  [none] */
-undefined FUN_006c6340(void);
+/* 00625130  gamemisc  [none] */
+undefined FUN_00625130(void);
 
-/* 006c6480  gamemisc  [none] */
-undefined FUN_006c6480(void);
+/* 00625a30  gamemisc  [none] */
+undefined FUN_00625a30(void);
 
-/* 006c64d0  gamemisc  [none] */
-undefined FUN_006c64d0(void);
+/* 00627670  gamemisc  [none] */
+undefined FUN_00627670(void);
 
-/* 006c6540  gamemisc  [none] */
-undefined FUN_006c6540(void);
+/* 00627ce0  gamemisc  [none] */
+undefined FUN_00627ce0(void);
 
-/* 006c6620  gamemisc  [none] */
-undefined FUN_006c6620(void);
+/* 00627d50  gamemisc  [none] */
+undefined FUN_00627d50(void);
 
-/* 006c6a90  gamemisc  [none] */
-undefined FUN_006c6a90(void);
+/* 006290d0  gamemisc  [none] */
+undefined FUN_006290d0(void);
 
-/* 006c6ce0  gamemisc  [none] */
-undefined FUN_006c6ce0(void);
+/* 00629140  gamemisc  [none] */
+undefined FUN_00629140(void);
 
-/* 006c7400  gamemisc  [none] */
-undefined FUN_006c7400(void);
+/* 006291d0  gamemisc  [none] */
+undefined FUN_006291d0(void);
 
-/* 006c7530  gamemisc  [none] */
-undefined FUN_006c7530(void);
+/* 006294c0  gamemisc  [none] */
+undefined FUN_006294c0(void);
 
-/* 006c75e0  gamemisc  [none] */
-undefined FUN_006c75e0(void);
+/* 006294d0  gamemisc  [none] */
+undefined FUN_006294d0(void);
 
-/* 006c7700  gamemisc  [none] */
-undefined FUN_006c7700(void);
+/* 006295a0  gamemisc  [none] */
+undefined FUN_006295a0(void);
 
-/* 006c7970  gamemisc  [none] */
-undefined FUN_006c7970(void);
+/* 0062a650  gamemisc  [none] */
+undefined FUN_0062a650(void);
 
-/* 006c7ab0  gamemisc  [none] */
-undefined FUN_006c7ab0(void);
+/* 0062b400  gamemisc  [none] */
+undefined FUN_0062b400(void);
 
-/* 006c7c30  gamemisc  [none] */
-undefined FUN_006c7c30(void);
+/* 0062b510  gamemisc  [none] */
+undefined FUN_0062b510(void);
 
-/* 006c7e30  gamemisc  [none] */
-undefined FUN_006c7e30(void);
+/* 0062ba50  gamemisc  [none] */
+undefined FUN_0062ba50(void);
 
-/* 006c8020  gamemisc  [none] */
-undefined FUN_006c8020(void);
+/* 0062bb90  gamemisc  [none] */
+undefined FUN_0062bb90(void);
 
-/* 006c83c0  gamemisc  [none] */
-undefined FUN_006c83c0(void);
+/* 0062ddc0  gamemisc  [none] */
+undefined FUN_0062ddc0(void);
 
-/* 006c8670  gamemisc  [none] */
-undefined FUN_006c8670(void);
+/* 0062de60  gamemisc  [none] */
+undefined FUN_0062de60(void);
 
-/* 006c8710  gamemisc  [none] */
-undefined FUN_006c8710(void);
+/* 0062f600  gamemisc  [none] */
+undefined FUN_0062f600(void);
 
-/* 006c87f0  gamemisc  [none] */
-undefined FUN_006c87f0(void);
+/* 0062f630  gamemisc  [none] */
+undefined FUN_0062f630(void);
 
-/* 006c8870  gamemisc  [none] */
-undefined FUN_006c8870(void);
+/* 0062f660  gamemisc  [none] */
+undefined FUN_0062f660(void);
 
-/* 006c8910  gamemisc  [none] */
-undefined FUN_006c8910(void);
+/* 0062f690  gamemisc  [none] */
+undefined FUN_0062f690(void);
 
-/* 006c8f80  gamemisc  [none] */
-undefined FUN_006c8f80(void);
+/* 0062f8c0  gamemisc  [none] */
+undefined FUN_0062f8c0(void);
 
-/* 006c9b20  gamemisc  [none] */
-undefined FUN_006c9b20(void);
+/* 0062f9b0  gamemisc  [none] */
+undefined FUN_0062f9b0(void);
 
-/* 006c9ca0  gamemisc  [none] */
-undefined FUN_006c9ca0(void);
+/* 0062fbc0  gamemisc  [none] */
+undefined FUN_0062fbc0(void);
 
-/* 006ca150  gamemisc  [none] */
-undefined FUN_006ca150(void);
+/* 0062fdc0  gamemisc  [none] */
+undefined FUN_0062fdc0(void);
 
-/* 006ca2f0  gamemisc  [none] */
-undefined FUN_006ca2f0(void);
+/* 0062ffb0  gamemisc  [none] */
+undefined FUN_0062ffb0(void);
 
-/* 006ca960  gamemisc  [none] */
-undefined FUN_006ca960(void);
+/* 00630690  gamemisc  [none] */
+undefined FUN_00630690(void);
 
-/* 006cac40  gamemisc  [none] */
-undefined FUN_006cac40(void);
+/* 006306b0  gamemisc  [none] */
+undefined FUN_006306b0(void);
 
-/* 006cb000  gamemisc  [none] */
-undefined FUN_006cb000(void);
+/* 00630a10  gamemisc  [none] */
+undefined FUN_00630a10(void);
 
-/* 006cb050  gamemisc  [none] */
-undefined FUN_006cb050(void);
+/* 00630a80  gamemisc  [none] */
+undefined FUN_00630a80(void);
 
-/* 006cb1a0  gamemisc  [none] */
-undefined FUN_006cb1a0(void);
+/* 00630b60  gamemisc  [none] */
+undefined FUN_00630b60(void);
 
-/* 006cb1b0  gamemisc  [none] */
-undefined FUN_006cb1b0(void);
+/* 00633d70  gamemisc  [none] */
+undefined FUN_00633d70(void);
 
-/* 006cb340  gamemisc  [none] */
-short * __cdecl FUN_006cb340(int param_1);
+/* 00633e70  gamemisc  [none] */
+undefined FUN_00633e70(void);
 
-/* 006cb7b0  gamemisc  [none] */
-undefined FUN_006cb7b0(void);
+/* 00636040  gamemisc  [none] */
+undefined FUN_00636040(void);
 
-/* 006cb810  gamemisc  [none] */
-undefined FUN_006cb810(void);
+/* 00636810  gamemisc  [none] */
+undefined FUN_00636810(void);
 
-/* 006cc610  gamemisc  [none] */
-undefined FUN_006cc610(void);
+/* 00636870  gamemisc  [none] */
+undefined FUN_00636870(void);
 
-/* 006cc6c0  gamemisc  [none] */
-undefined FUN_006cc6c0(void);
+/* 00636ad0  gamemisc  [none] */
+undefined FUN_00636ad0(void);
 
-/* 006cc700  gamemisc  [none] */
-undefined FUN_006cc700(void);
+/* 00636b70  gamemisc  [none] */
+undefined FUN_00636b70(void);
 
-/* 006cc7e0  gamemisc  [none] */
-undefined FUN_006cc7e0(void);
+/* 00636c40  gamemisc  [none] */
+undefined FUN_00636c40(void);
 
-/* 006cc850  gamemisc  [none] */
-undefined FUN_006cc850(void);
+/* 00637260  gamemisc  [none] */
+undefined FUN_00637260(void);
 
-/* 006cc8e0  gamemisc  [none] */
-undefined FUN_006cc8e0(void);
+/* 006372a0  gamemisc  [none] */
+undefined FUN_006372a0(void);
 
-/* 006cc9b0  gamemisc  [none] */
-undefined FUN_006cc9b0(void);
+/* 006374d0  gamemisc  [none] */
+undefined FUN_006374d0(void);
 
-/* 006cca10  gamemisc  [none] */
-undefined FUN_006cca10(void);
+/* 00638db0  gamemisc  [none] */
+undefined FUN_00638db0(void);
 
-/* 006cca80  gamemisc  [none] */
-undefined FUN_006cca80(void);
+/* 00639060  gamemisc  [none] */
+undefined FUN_00639060(void);
 
-/* 006ccb10  gamemisc  [none] */
-undefined FUN_006ccb10(void);
+/* 006391e0  gamemisc  [none] */
+undefined FUN_006391e0(void);
 
-/* 006ccb70  gamemisc  [none] */
-undefined FUN_006ccb70(void);
+/* 00639300  gamemisc  [none] */
+undefined FUN_00639300(void);
 
-/* 006ccf00  gamemisc  [none] */
-undefined FUN_006ccf00(void);
+/* 00639390  gamemisc  [none] */
+undefined FUN_00639390(void);
 
-/* 006ccf70  gamemisc  [none] */
-undefined FUN_006ccf70(void);
+/* 00639470  gamemisc  [none] */
+undefined FUN_00639470(void);
 
-/* 006cd080  gamemisc  [none] */
-undefined FUN_006cd080(void);
+/* 00639530  gamemisc  [none] */
+undefined FUN_00639530(void);
 
-/* 006cd130  gamemisc  [none] */
-undefined FUN_006cd130(void);
+/* 00639800  gamemisc  [none] */
+undefined FUN_00639800(void);
 
-/* 006cd620  gamemisc  [none] */
-undefined FUN_006cd620(void);
+/* 00639b30  gamemisc  [none] */
+undefined FUN_00639b30(void);
 
-/* 006cd6c0  gamemisc  [none] */
-undefined FUN_006cd6c0(void);
+/* 00639cf0  gamemisc  [none] */
+undefined FUN_00639cf0(void);
 
-/* 006cd850  gamemisc  [none] */
-undefined FUN_006cd850(void);
+/* 0063a690  gamemisc  [none] */
+undefined FUN_0063a690(void);
 
-/* 006cd870  gamemisc  [none] */
-undefined FUN_006cd870(void);
+/* 0063a710  gamemisc  [none] */
+undefined FUN_0063a710(void);
 
-/* 006cd9a0  gamemisc  [none] */
-undefined FUN_006cd9a0(void);
+/* 0063a8e0  gamemisc  [none] */
+undefined FUN_0063a8e0(void);
 
-/* 006cdf40  gamemisc  [none] */
-undefined FUN_006cdf40(void);
+/* 0063c680  gamemisc  [none] */
+undefined FUN_0063c680(void);
 
-/* 006cdfb0  gamemisc  [none] */
-undefined FUN_006cdfb0(void);
+/* 0063c700  gamemisc  [none] */
+undefined FUN_0063c700(void);
 
-/* 006cef50  gamemisc  [none] */
-undefined FUN_006cef50(void);
+/* 0063d930  gamemisc  [none] */
+undefined FUN_0063d930(void);
 
-/* 006cf0c0  gamemisc  [none] */
-undefined thunk_FUN_006cf090(void);
+/* 0063d960  gamemisc  [none] */
+undefined FUN_0063d960(void);
 
-/* 006cf0e0  gamemisc  [none] */
-undefined FUN_006cf0e0(void);
+/* 0063d990  gamemisc  [none] */
+undefined FUN_0063d990(void);
 
-/* 006cf2b0  gamemisc  [none] */
-undefined FUN_006cf2b0(void);
+/* 0063d9c0  gamemisc  [none] */
+undefined FUN_0063d9c0(void);
 
-/* 006cf330  gamemisc  [none] */
-undefined FUN_006cf330(void);
+/* 0063da20  gamemisc  [none] */
+undefined FUN_0063da20(void);
 

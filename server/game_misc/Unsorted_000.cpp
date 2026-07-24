@@ -4191,74 +4191,6 @@ undefined1 __fastcall FUN_0040f8b0(char *param_1)
 }
 
 
-/* FUN_0040f8f0 @ 0040f8f0  kind=gamemisc  attributed-by=none  size=416 */
-
-float10 __thiscall FUN_0040f8f0(int param_1,undefined4 param_2)
-
-{
-  float10 fVar1;
-  
-  if ((*(char *)(param_1 + 0x60) != '\x05') && (*(char *)(param_1 + 0x60) != '\x03')) {
-    switch(param_2) {
-    case 1:
-    case 2:
-    case 9:
-      fVar1 = FUN_00412150(param_1);
-      return (float10)(6.0 / (float)fVar1);
-    case 3:
-    case 4:
-    case 0x3e:
-      fVar1 = FUN_00412150(param_1);
-      return (float10)(3.0 / (float)fVar1);
-    case 5:
-      return (float10)4.0;
-    case 6:
-    case 7:
-    case 0x12:
-    case 0x13:
-      fVar1 = FUN_00412150(param_1);
-      return (float10)(3.0 / (float)fVar1);
-    default:
-      fVar1 = FUN_00412150(param_1);
-      return (float10)(2.0 / (float)fVar1);
-    case 0xb:
-    case 0x57:
-      return (float10)10.0;
-    case 0xd:
-    case 0xe:
-    case 0xf:
-      fVar1 = FUN_00412150(param_1);
-      return (float10)(6.0 / (float)fVar1);
-    case 0x11:
-    case 0x14:
-      return (float10)6.0;
-    case 0x15:
-      fVar1 = FUN_00409de0(param_1,0x15,-1);
-      return (float10)((float)fVar1 * 30.0 + 5.0);
-    case 0x1e:
-    case 0x1f:
-    case 0x20:
-    case 0x21:
-      break;
-    case 0x36:
-      return (float10)5.0;
-    case 0x3c:
-    case 0x3d:
-      fVar1 = FUN_00412150(param_1);
-      return (float10)(6.0 / (float)fVar1);
-    case 0x41:
-    case 0x42:
-      fVar1 = FUN_00412150(param_1);
-      return (float10)(10.0 / (float)fVar1);
-    case 0x58:
-      fVar1 = FUN_00409de0(param_1,0x15,-1);
-      return (float10)((float)fVar1 * 30.0 + 5.0);
-    }
-  }
-  return (float10)0;
-}
-
-
 /* FUN_0040ffe0 @ 0040ffe0  kind=gamemisc  attributed-by=none  size=43 */
 
 int __fastcall FUN_0040ffe0(int param_1)
@@ -7817,6 +7749,74 @@ FUN_004180a0(void *this,undefined8 *param_1,uint *param_2,uint param_3,uint para
   *param_1 = uVar1;
   *(uint *)(param_1 + 1) = param_5;
   return;
+}
+
+
+/* FUN_00418280 @ 00418280  kind=gamemisc  attributed-by=none  size=217 */
+
+ushort * __cdecl FUN_00418280(ushort *param_1)
+
+{
+  ushort uVar1;
+  byte bVar2;
+  ushort *puVar3;
+  ushort *_Src;
+  ushort *puVar4;
+  int iVar5;
+  ushort *local_c;
+  int local_8;
+  
+  _Src = (ushort *)0x0;
+  iVar5 = 0;
+  local_c = _Src;
+  local_8 = iVar5;
+  while( true ) {
+    while( true ) {
+      puVar4 = param_1;
+      if (*puVar4 < 0x80) {
+        bVar2 = (&DAT_0055ac88)[*puVar4];
+      }
+      else {
+        bVar2 = 0;
+      }
+      if ((bVar2 & 1) != 0) break;
+      param_1 = puVar4 + 1;
+    }
+    uVar1 = *puVar4;
+    if (uVar1 == 0x3c) break;
+    if (uVar1 == 0xd) {
+      *puVar4 = 10;
+      param_1 = puVar4 + 1;
+      if (*param_1 == 10) {
+        if (_Src != (ushort *)0x0) {
+          memmove(_Src + -iVar5,_Src,(int)param_1 - (int)_Src);
+        }
+        _Src = puVar4 + 2;
+        iVar5 = iVar5 + 1;
+        param_1 = _Src;
+        local_c = _Src;
+        local_8 = iVar5;
+      }
+    }
+    else if (uVar1 == 0x26) {
+      param_1 = FUN_00419c90(puVar4,&local_c);
+      _Src = local_c;
+      iVar5 = local_8;
+    }
+    else {
+      if (uVar1 == 0) {
+        return puVar4;
+      }
+      param_1 = puVar4 + 1;
+    }
+  }
+  puVar3 = puVar4;
+  if (_Src != (ushort *)0x0) {
+    memmove(_Src + -iVar5,_Src,(int)puVar4 - (int)_Src);
+    puVar3 = puVar4 + -iVar5;
+  }
+  *puVar3 = 0;
+  return puVar4 + 1;
 }
 
 

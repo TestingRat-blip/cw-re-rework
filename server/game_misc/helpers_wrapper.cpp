@@ -1,4 +1,4 @@
-// helpers_wrapper (game_misc) -- server. 153 functions. Bodies = Ghidra pseudo-C.
+// helpers_wrapper (game_misc) -- server. 139 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_wrapper.h"
 
@@ -1397,33 +1397,6 @@ void __cdecl FUN_0045f950(int param_1,undefined4 param_2,undefined4 *param_3)
 }
 
 
-/* FUN_0045f990 @ 0045f990  kind=gamemisc  attributed-by=role:wrapper  size=63 */
-
-void __cdecl FUN_0045f990(int param_1,void *param_2,size_t param_3,undefined *param_4)
-
-{
-  int iVar1;
-  
-  iVar1 = FUN_004b79e0((int *)(param_1 + 8),param_2,param_3,'\0',param_4);
-  if (iVar1 == 0x12) {
-    *(undefined4 *)(param_1 + 0x38) = 0x12;
-    FUN_004b79e0((int *)(param_1 + 8),"string or blob too big",0xffffffff,'\x01',(undefined *)0x0);
-  }
-  return;
-}
-
-
-/* FUN_0045fa00 @ 0045fa00  kind=gamemisc  attributed-by=role:wrapper  size=37 */
-
-void __cdecl FUN_0045fa00(int param_1,void *param_2,size_t param_3)
-
-{
-  *(undefined4 *)(param_1 + 0x38) = 1;
-  FUN_004b79e0((int *)(param_1 + 8),param_2,param_3,'\x01',(undefined *)0xffffffff);
-  return;
-}
-
-
 /* FUN_0045fa30 @ 0045fa30  kind=gamemisc  attributed-by=role:wrapper  size=63 */
 
 void __cdecl FUN_0045fa30(int param_1)
@@ -1436,17 +1409,6 @@ void __cdecl FUN_0045fa30(int param_1)
     *(undefined4 *)(param_1 + 0x38) = 0x12;
     FUN_004b79e0((int *)(param_1 + 8),"string or blob too big",0xffffffff,'\x01',(undefined *)0x0);
   }
-  return;
-}
-
-
-/* FUN_0045fa70 @ 0045fa70  kind=gamemisc  attributed-by=role:wrapper  size=37 */
-
-void __cdecl FUN_0045fa70(int param_1,void *param_2,size_t param_3)
-
-{
-  *(undefined4 *)(param_1 + 0x38) = 1;
-  FUN_004b79e0((int *)(param_1 + 8),param_2,param_3,'\x02',(undefined *)0xffffffff);
   return;
 }
 
@@ -1498,69 +1460,6 @@ void __cdecl FUN_0045fbd0(int param_1,int param_2)
 }
 
 
-/* FUN_0045fd10 @ 0045fd10  kind=gamemisc  attributed-by=role:wrapper  size=63 */
-
-void __cdecl FUN_0045fd10(int param_1,void *param_2,size_t param_3,undefined *param_4)
-
-{
-  int iVar1;
-  
-  iVar1 = FUN_004b79e0((int *)(param_1 + 8),param_2,param_3,'\x01',param_4);
-  if (iVar1 == 0x12) {
-    *(undefined4 *)(param_1 + 0x38) = 0x12;
-    FUN_004b79e0((int *)(param_1 + 8),"string or blob too big",0xffffffff,'\x01',(undefined *)0x0);
-  }
-  return;
-}
-
-
-/* FUN_0045fd50 @ 0045fd50  kind=gamemisc  attributed-by=role:wrapper  size=63 */
-
-void __cdecl FUN_0045fd50(int param_1,void *param_2,size_t param_3,undefined *param_4)
-
-{
-  int iVar1;
-  
-  iVar1 = FUN_004b79e0((int *)(param_1 + 8),param_2,param_3,'\x02',param_4);
-  if (iVar1 == 0x12) {
-    *(undefined4 *)(param_1 + 0x38) = 0x12;
-    FUN_004b79e0((int *)(param_1 + 8),"string or blob too big",0xffffffff,'\x01',(undefined *)0x0);
-  }
-  return;
-}
-
-
-/* FUN_0045fe90 @ 0045fe90  kind=gamemisc  attributed-by=role:wrapper  size=63 */
-
-void __cdecl FUN_0045fe90(int param_1,void *param_2,size_t param_3,undefined *param_4)
-
-{
-  int iVar1;
-  
-  iVar1 = FUN_004b79e0((int *)(param_1 + 8),param_2,param_3,'\x03',param_4);
-  if (iVar1 == 0x12) {
-    *(undefined4 *)(param_1 + 0x38) = 0x12;
-    FUN_004b79e0((int *)(param_1 + 8),"string or blob too big",0xffffffff,'\x01',(undefined *)0x0);
-  }
-  return;
-}
-
-
-/* FUN_00461400 @ 00461400  kind=gamemisc  attributed-by=role:wrapper  size=26 */
-
-undefined8 __cdecl FUN_00461400(uint param_1)
-
-{
-  undefined8 uVar1;
-  
-  if ((int)param_1 < 0) {
-    param_1 = 0;
-  }
-  uVar1 = FUN_00461320(param_1,(int)param_1 >> 0x1f);
-  return uVar1;
-}
-
-
 /* FUN_00464d50 @ 00464d50  kind=gamemisc  attributed-by=role:wrapper  size=26 */
 
 void __cdecl FUN_00464d50(undefined4 param_1,int param_2,undefined4 param_3)
@@ -1571,25 +1470,6 @@ void __cdecl FUN_00464d50(undefined4 param_1,int param_2,undefined4 param_3)
   uVar1 = (*(code *)PTR_GetLastError_005836a4)();
   FUN_0047d250(uVar1,param_2,param_3);
   return;
-}
-
-
-/* FUN_00465020 @ 00465020  kind=gamemisc  attributed-by=role:wrapper  size=23 */
-
-undefined4 FUN_00465020(void)
-
-{
-  int iVar1;
-  undefined4 uVar2;
-  
-  iVar1 = FUN_004bc920();
-  if (iVar1 != 0) {
-    return 0;
-  }
-                    /* WARNING: Could not recover jumptable at 0x00465031. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
-  uVar2 = (*DAT_00582b10)();
-  return uVar2;
 }
 
 
@@ -1622,38 +1502,6 @@ undefined4 __cdecl FUN_00465ba0(undefined4 param_1,double *param_2)
   lVar1 = __alldiv(local_c,local_8,10000,0);
   *param_2 = (double)(lVar1 + 0xb5310d9cba00) / 86400000.0;
   return 0;
-}
-
-
-/* FUN_00466b20 @ 00466b20  kind=gamemisc  attributed-by=role:wrapper  size=22 */
-
-int __cdecl FUN_00466b20(int param_1)
-
-{
-  int iVar1;
-  
-  iVar1 = FUN_004bc920();
-  if (iVar1 != 0) {
-    return 0;
-  }
-  iVar1 = FUN_004a0350(param_1);
-  return iVar1;
-}
-
-
-/* FUN_00466b40 @ 00466b40  kind=gamemisc  attributed-by=role:wrapper  size=22 */
-
-int __cdecl FUN_00466b40(int param_1,int param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = FUN_004bc920();
-  if (iVar1 != 0) {
-    return 0;
-  }
-  iVar1 = FUN_004a6140(param_1,param_2);
-  return iVar1;
 }
 
 
@@ -1727,54 +1575,6 @@ int __cdecl FUN_004691c0(int *param_1,int param_2,undefined8 param_3)
 }
 
 
-/* FUN_004694b0 @ 004694b0  kind=gamemisc  attributed-by=role:wrapper  size=51 */
-
-int __cdecl FUN_004694b0(int *param_1,int param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = FUN_004bfc30(param_1,param_2);
-  if ((iVar1 == 0) && (*(int *)(*param_1 + 0xc) != 0)) {
-    (*DAT_00582b20)(*(int *)(*param_1 + 0xc));
-  }
-  return iVar1;
-}
-
-
-/* FUN_00469530 @ 00469530  kind=gamemisc  attributed-by=role:wrapper  size=86 */
-
-int * __cdecl FUN_00469530(int param_1,int param_2)
-
-{
-  int *piVar1;
-  
-  piVar1 = realloc((void *)(param_1 + -8),param_2 + 8);
-  if (piVar1 != (int *)0x0) {
-    *piVar1 = param_2;
-    piVar1[1] = param_2 >> 0x1f;
-    return piVar1 + 2;
-  }
-  FUN_004683f0(7,"failed memory resize %u to %u bytes");
-  return (int *)0x0;
-}
-
-
-/* FUN_0046a950 @ 0046a950  kind=gamemisc  attributed-by=role:wrapper  size=35 */
-
-undefined1 __cdecl FUN_0046a950(int *param_1,int param_2)
-
-{
-  undefined1 uVar1;
-  undefined *puVar2;
-  
-  puVar2 = FUN_00475040(param_1,param_2);
-  uVar1 = puVar2[0x1e];
-  FUN_00474fe0(param_1);
-  return uVar1;
-}
-
-
 /* FUN_0046a980 @ 0046a980  kind=gamemisc  attributed-by=role:wrapper  size=98 */
 
 void __cdecl FUN_0046a980(int param_1)
@@ -1799,22 +1599,6 @@ void __cdecl FUN_0046a980(int param_1)
   *(undefined2 *)(param_1 + 0x24) = 4;
   *(undefined1 *)(param_1 + 0x26) = 1;
   return;
-}
-
-
-/* FUN_0046a9f0 @ 0046a9f0  kind=gamemisc  attributed-by=role:wrapper  size=64 */
-
-undefined * __cdecl FUN_0046a9f0(int *param_1,int param_2)
-
-{
-  undefined *puVar1;
-  
-  puVar1 = FUN_00475040(param_1,param_2);
-  if ((*(ushort *)(puVar1 + 0x1c) & 0x800) != 0) {
-    *(ushort *)(puVar1 + 0x1c) = *(ushort *)(puVar1 + 0x1c) & 0xf7ff | 0x1000;
-  }
-  FUN_00474fe0(param_1);
-  return puVar1;
 }
 
 

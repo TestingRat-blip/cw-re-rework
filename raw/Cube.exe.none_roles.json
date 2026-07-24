@@ -69,11 +69,11 @@
 "role": "logic"
 },
 "00402f80": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | held in dispatch table FUN_00407a50",
 "role": "dtor-like"
 },
 "00402fd0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | held in dispatch table FUN_00407a50",
 "role": "dtor-like"
 },
 "00403030": {
@@ -120,92 +120,132 @@
 "role": "dtor-like"
 },
 "00404650": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00404760": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00404890": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004049a0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00404ab0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00404be0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00404cf0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00404e00": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00404f10": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00405100": {
-"evidence": "single-call forwarder -> 0x0040da70",
+"evidence": "single-call forwarder -> 0x0040da70 | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "name": "fwd_0040da70",
 "role": "thunk"
 },
 "00405120": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "004051b0": {
-"evidence": "single-call forwarder -> 0x0040da70",
+"evidence": "single-call forwarder -> 0x0040da70 | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "name": "fwd_0040da70",
 "role": "thunk"
 },
 "004051e0": {
-"evidence": "single-call forwarder -> 0x0040da70",
+"evidence": "single-call forwarder -> 0x0040da70 | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "name": "fwd_0040da70",
 "role": "thunk"
 },
 "00405210": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00405290": {
-"evidence": "single-call forwarder -> 0x0040c390",
+"evidence": "single-call forwarder -> 0x0040c390 | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "name": "fwd_0040c390",
 "role": "thunk"
 },
 "004052b0": {
-"evidence": "single-call forwarder -> 0x0040c390",
+"evidence": "single-call forwarder -> 0x0040c390 | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "name": "fwd_0040c390",
 "role": "thunk"
 },
 "004052e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "004053b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00405470": {
 "evidence": "thin wrapper around 2 call(s)",
 "role": "wrapper"
 },
 "00405640": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00405700": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00405810": {
@@ -213,152 +253,226 @@
 "role": "wrapper"
 },
 "00405850": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00405960": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00405a70": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00405ba0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00405e70": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00405f90": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004060b0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004061e0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00406300": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00406420": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00406540": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00406660": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004066f0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004067c0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004068b0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004069c0": {
-"evidence": "single-call forwarder -> 0x0040b9f0",
+"evidence": "single-call forwarder -> 0x0040b9f0 | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "name": "fwd_0040b9f0",
 "role": "thunk"
 },
 "004069e0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00406b00": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00406c30": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00406d50": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00406dc0": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00406e30": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00406ec0": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00406f30": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00407040": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00407170": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00407290": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004073d0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00407510": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00407570": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00407620": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00407680": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004076d0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004077f0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00407910": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00407a50": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00407c40": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00407e00": {
@@ -366,252 +480,374 @@
 "role": "logic"
 },
 "00407e30": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00407ed0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00407f80": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00408080": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00408150": {
-"evidence": "single field-derived expression, no calls",
+"evidence": "single field-derived expression, no calls | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "00408160": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004081b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "004081e0": {
-"evidence": "single field-derived expression, no calls",
+"evidence": "single field-derived expression, no calls | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "00408230": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00408280": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004082f0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00408350": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004083f0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00408460": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004085a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "004088a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00408a00": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00408b10": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00408c20": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00408d50": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00408eb0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004090b0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004091c0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004092e0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004093e0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00409500": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00409620": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00409730": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00409860": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00409970": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00409a80": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00409b50": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00409c20": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00409cf0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00409de0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00409eb0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00409fc0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040a0e0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040a200": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040a350": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040a3a0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040a430": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "0040a4c0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040a560": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040a600": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040a690": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040a740": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040a860": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040a9c0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040aa50": {
 "evidence": "frees memory \u2014 destructor-shaped",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040aaf0": {
-"evidence": "single-call forwarder -> 0x0040aa50",
+"evidence": "single-call forwarder -> 0x0040aa50 | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "name": "fwd_0040aa50",
 "role": "thunk"
 },
 "0040ab10": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040abf0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040ac80": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040ad70": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "0040af30": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "0040b0a0": {
-"evidence": "single-call forwarder -> 0x0040bbc0",
+"evidence": "single-call forwarder -> 0x0040bbc0 | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "name": "fwd_0040bbc0",
 "role": "thunk"
 },
 "0040b0c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "0040b270": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040b380": {
-"evidence": "single-call forwarder -> 0x0040bd50",
+"evidence": "single-call forwarder -> 0x0040bd50 | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "name": "fwd_0040bd50",
 "role": "thunk"
 },
 "0040b390": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040b4e0": {
@@ -621,19 +857,27 @@
 "role": "wrapper"
 },
 "0040b550": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040b5e0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040b680": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040b730": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00403560 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0040b810": {
@@ -703,10 +947,12 @@
 },
 "0040cba0": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0040d860": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | held in dispatch table FUN_0040a860",
 "role": "dtor-like"
 },
 "0040d9d0": {
@@ -715,6 +961,8 @@
 },
 "0040e420": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "entity",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0040e440": {
@@ -755,14 +1003,20 @@
 },
 "0040ea90": {
 "evidence": null,
+"module": "entity",
+"module_conf": 0.97,
 "role": "logic"
 },
 "0040eac0": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0040eb60": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0040ee70": {
@@ -844,7 +1098,7 @@
 "role": "computed"
 },
 "00411d00": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | held in dispatch table cube::BlueprintPreviewWidget::deleting_destructor_for_NamedObject",
 "name": "compute",
 "role": "computed"
 },
@@ -858,10 +1112,14 @@
 },
 "00411e30": {
 "evidence": null,
+"module": "entity",
+"module_conf": 0.96,
 "role": "logic"
 },
 "00412080": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004120a0": {
@@ -873,6 +1131,8 @@
 },
 "004120b0": {
 "evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
@@ -898,10 +1158,14 @@
 },
 "00412200": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00412220": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00412260": {
@@ -920,6 +1184,8 @@
 },
 "004122e0": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00412350": {
@@ -941,8 +1207,8 @@
 "role": "logic"
 },
 "00412810": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_004b21f3",
+"role": "dispatch-target"
 },
 "00412850": {
 "evidence": null,
@@ -1012,6 +1278,8 @@
 },
 "00424b50": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "entity",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00424ba0": {
@@ -1068,6 +1336,8 @@
 },
 "00428970": {
 "evidence": "trivial expression, no calls",
+"module": "entity",
+"module_conf": 0.97,
 "name": "compute",
 "role": "computed"
 },
@@ -1083,43 +1353,63 @@
 "role": "logic"
 },
 "0042b810": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00427ce0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0042b860": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00427ce0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0042b8b0": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00427ce0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0042b910": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00427ce0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0042b950": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00427ce0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0042b990": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00427ce0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0042b9e0": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00427ce0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0042ba20": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00427ce0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0042ba60": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00427ce0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0042bab0": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 00427ce0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "0042bd20": {
@@ -1134,14 +1424,20 @@
 },
 "0042c460": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0042c500": {
 "evidence": null,
+"module": "world",
+"module_conf": 0.94,
 "role": "logic"
 },
 "0042c520": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0042c580": {
@@ -1153,6 +1449,8 @@
 },
 "0042c5b0": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0042c5e0": {
@@ -1162,8 +1460,8 @@
 "role": "logic"
 },
 "0042c680": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0042c6c0": {
 "evidence": "trivial expression, no calls",
@@ -1194,6 +1492,8 @@
 },
 "0042c800": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0042c8d0": {
@@ -1265,6 +1565,8 @@
 },
 "0042f860": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004347a0": {
@@ -1347,6 +1649,8 @@
 },
 "0043abc0": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0043abf0": {
@@ -1373,6 +1677,8 @@
 },
 "0043b610": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0043c020": {
@@ -1411,6 +1717,8 @@
 },
 "0043d1a0": {
 "evidence": null,
+"module": "entity",
+"module_conf": 0.93,
 "role": "logic"
 },
 "0043e350": {
@@ -1437,8 +1745,10 @@
 "role": "thunk"
 },
 "0043ec90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0060c510",
+"module": "control",
+"module_conf": 1.0,
+"role": "dispatch-target"
 },
 "0043f720": {
 "evidence": null,
@@ -1446,6 +1756,8 @@
 },
 "0043f7c0": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "00444230": {
@@ -1456,6 +1768,8 @@
 },
 "00444270": {
 "evidence": null,
+"module": "entity",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004445d0": {
@@ -1477,7 +1791,9 @@
 "role": "logic"
 },
 "00444860": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | held in dispatch table FUN_0060c510",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00444a90": {
@@ -1489,15 +1805,21 @@
 "role": "logic"
 },
 "00446950": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_004128f0",
+"module": "entity",
+"module_conf": 1.0,
+"role": "dispatch-target"
 },
 "00446e80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_00595850",
+"module": "control",
+"module_conf": 1.0,
+"role": "dispatch-target"
 },
 "00447700": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004478b0": {
@@ -1592,6 +1914,8 @@
 },
 "0044a7c0": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0044a9f0": {
@@ -1666,7 +1990,9 @@
 "role": "dispatch"
 },
 "00450e00": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00450e70 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00450f00": {
@@ -1693,6 +2019,8 @@
 },
 "004515f0": {
 "evidence": "zero-inits 6 fields, returns this",
+"module": "control",
+"module_conf": 1.0,
 "role": "ctor-like"
 },
 "004516e0": {
@@ -1958,52 +2286,52 @@
 "role": "dtor-like"
 },
 "00457f70": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00458030": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00458100": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004581d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00458310": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004583f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00458500": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00458650": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00458780": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00458860": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00458940": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00458a20": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00458c10": {
 "evidence": "frees memory \u2014 destructor-shaped",
@@ -2044,8 +2372,10 @@
 "role": "wrapper"
 },
 "00459660": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0060c510",
+"module": "control",
+"module_conf": 1.0,
+"role": "dispatch-target"
 },
 "00459800": {
 "evidence": null,
@@ -2161,6 +2491,8 @@
 },
 "004688d0": {
 "evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
@@ -2181,11 +2513,13 @@
 "role": "logic"
 },
 "00468b70": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00468c60": {
 "evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
@@ -2272,8 +2606,8 @@
 "role": "logic"
 },
 "0046b8be": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0046b8be",
+"role": "dispatch-target"
 },
 "0046d1c0": {
 "evidence": null,
@@ -2408,6 +2742,8 @@
 },
 "0046f440": {
 "evidence": "small field store(s), no calls",
+"module": "control",
+"module_conf": 1.0,
 "role": "mutator"
 },
 "0046f450": {
@@ -2465,6 +2801,8 @@
 },
 "00477240": {
 "evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
@@ -2488,6 +2826,8 @@
 },
 "00477d90": {
 "evidence": null,
+"module": "control",
+"module_conf": 1.0,
 "role": "logic"
 },
 "0047b5f0": {
@@ -2506,43 +2846,61 @@
 "role": "ctor-like"
 },
 "004814f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00459c40 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "004815c0": {
 "evidence": "thin wrapper around 1 call(s)",
 "role": "wrapper"
 },
 "004815e0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00459c40 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "004816f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00460600 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00481d30": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00460600 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00481fe0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00459c40 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "004821a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00459c40 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00483e70": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00460600 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00484170": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00460600 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00484230": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00459c40 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00484350": {
@@ -2567,6 +2925,8 @@
 },
 "00486240": {
 "evidence": "thin wrapper around 2 call(s)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00486380": {
@@ -2588,16 +2948,16 @@
 "role": "logic"
 },
 "00486b60": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00486d00": {
 "evidence": null,
 "role": "logic"
 },
 "004870c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004871e0": {
 "evidence": null,
@@ -2629,6 +2989,8 @@
 },
 "00487f50": {
 "evidence": "trivial expression, no calls",
+"module": "control",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
@@ -2646,40 +3008,42 @@
 "role": "mutator"
 },
 "00488bd0": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | held in dispatch table cube::GameController::vfunction3",
 "role": "wrapper"
 },
 "00488c00": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table cube::GameController::vfunction3",
 "role": "wrapper"
 },
 "00488c70": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00488d00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::GameController::vfunction3",
+"role": "dispatch-target"
 },
 "00498d0b": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00488ee0 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "0049be00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0049bf44",
+"role": "dispatch-target"
 },
 "0049be3b": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table FUN_0049bf44",
 "role": "wrapper"
 },
 "0049be57": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table PTR_FUN_0049d608",
 "role": "wrapper"
 },
 "0049be73": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0049bf44",
+"role": "dispatch-target"
 },
 "0049bf44": {
 "evidence": null,
@@ -2823,8 +3187,8 @@
 "role": "logic"
 },
 "004b21f3": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004b21f3 (callback)",
+"role": "callback"
 },
 "004b39e0": {
 "evidence": null,
@@ -2847,8 +3211,8 @@
 "role": "logic"
 },
 "004c04c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004c0ec0": {
 "evidence": "trivial expression, no calls",
@@ -2868,20 +3232,28 @@
 "role": "logic"
 },
 "004c5a00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004c1bb0 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "004c5a60": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004c6140 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "004c5bb0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004c1bb0 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "004c60f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004c1bb0 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "004c6350": {
 "evidence": null,
@@ -2911,6 +3283,8 @@
 },
 "004c6b80": {
 "evidence": null,
+"module": "entity",
+"module_conf": 1.0,
 "role": "logic"
 },
 "004c7250": {
@@ -2934,12 +3308,12 @@
 "role": "logic"
 },
 "004c7ed0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004c7e80 (callback)",
+"role": "callback"
 },
 "004c83f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004c8ae0 (callback)",
+"role": "callback"
 },
 "004c8720": {
 "evidence": null,
@@ -3146,12 +3520,12 @@
 "role": "logic"
 },
 "004ccfa0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004cd3e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "004cdaa0": {
 "evidence": null,
@@ -3187,16 +3561,22 @@
 "role": "logic"
 },
 "004d4650": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 004cf3c0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "004d4cb0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004cf3c0 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "004d4d20": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004cf3c0 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "004d6c20": {
 "evidence": "trivial expression, no calls",
@@ -3344,11 +3724,11 @@
 "role": "logic"
 },
 "004d7be0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004d7e70 (callback)",
+"role": "callback"
 },
 "004d7c30": {
-"evidence": "zero-inits 4 fields, returns this",
+"evidence": "zero-inits 4 fields, returns this | address taken by 004d7e70 (callback)",
 "role": "ctor-like"
 },
 "004d7ce0": {
@@ -3356,8 +3736,8 @@
 "role": "logic"
 },
 "004d7dc0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004d7e70 (callback)",
+"role": "callback"
 },
 "004d7e70": {
 "evidence": null,
@@ -3380,12 +3760,12 @@
 "role": "logic"
 },
 "004d8750": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004d7a60 (callback)",
+"role": "callback"
 },
 "004d8810": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004d7a60 (callback)",
+"role": "callback"
 },
 "004d8900": {
 "evidence": null,
@@ -3396,28 +3776,28 @@
 "role": "logic"
 },
 "004d8ef0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004d7a60 (callback)",
+"role": "callback"
 },
 "004d8f40": {
-"evidence": "zero-inits 4 fields, returns this",
+"evidence": "zero-inits 4 fields, returns this | address taken by 004d7a60 (callback)",
 "role": "ctor-like"
 },
 "004d9000": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004d7a60 (callback)",
+"role": "callback"
 },
 "004d90d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004d7a60 (callback)",
+"role": "callback"
 },
 "004d91d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004d7a60 (callback)",
+"role": "callback"
 },
 "004d9340": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 004d7a60 (callback)",
+"role": "callback"
 },
 "004d94e0": {
 "evidence": "thin wrapper around 1 call(s)",
@@ -3685,8 +4065,8 @@
 "role": "logic"
 },
 "0051c760": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051c7a0": {
 "evidence": null,
@@ -3697,85 +4077,76 @@
 "role": "logic"
 },
 "0051c950": {
-"evidence": "single-call forwarder -> 0x0056bce0",
-"name": "fwd_0056bce0",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051c970": {
-"evidence": "single-call forwarder -> 0x0056bce0",
-"name": "fwd_0056bce0",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051c990": {
-"evidence": "single-call forwarder -> 0x0056bce0",
-"name": "fwd_0056bce0",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051c9b0": {
-"evidence": "field getter: return *(this+0x1e)",
-"name": "get_0x1e",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051c9c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051ca20": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00563d20 (callback)",
+"role": "callback"
 },
 "0051cbf0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051ce10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_00712d48",
+"role": "dispatch-target"
 },
 "0051ce90": {
-"evidence": "single field-derived expression, no calls",
-"name": "compute",
-"role": "computed"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051cea0": {
-"evidence": "field getter: return *(this+8)",
-"name": "get_8",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051ceb0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051cee0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051cf90": {
 "evidence": "thin wrapper around 2 call(s)",
 "role": "wrapper"
 },
 "0051cfd0": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051d010": {
-"evidence": "single-call forwarder -> 0x00574df0",
-"name": "fwd_00574df0",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051d040": {
-"evidence": "single-call forwarder -> 0x00575040",
-"name": "fwd_00575040",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051d070": {
 "evidence": "thin wrapper around 1 call(s)",
 "role": "wrapper"
 },
 "0051d0b0": {
-"evidence": "single-call forwarder -> 0x00575040",
-"name": "fwd_00575040",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051d0e0": {
 "evidence": "single-call forwarder -> 0x00575040",
@@ -3795,160 +4166,156 @@
 "role": "wrapper"
 },
 "0051d320": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051d350": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051d390": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051d3d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051d400": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "0051d4d0": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051d510": {
-"evidence": "single-call forwarder -> 0x00574570",
-"name": "fwd_00574570",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051d520": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051d580": {
 "evidence": null,
 "role": "logic"
 },
 "0051d5e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "0051d650": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051d9c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051da30": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "0051dac0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051db30": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051dbd0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051dc20": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051dc70": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051dde0": {
-"evidence": "virtual dispatch through vtable",
-"name": "vdispatch",
-"role": "dispatch"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051de20": {
-"evidence": "field getter: return *(this+0x36)",
-"name": "get_0x36",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051de30": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051de50": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051df10": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051df50": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051dfa0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051dff0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051e270": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051e340": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051e950": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051e960": {
 "evidence": null,
 "role": "logic"
 },
 "0051ea40": {
-"evidence": "single-call forwarder -> 0x0051e960",
-"name": "fwd_0051e960",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051ea60": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051eb70": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051ec50": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051f1f0": {
 "evidence": null,
 "role": "logic"
 },
 "0051f310": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051f3c0": {
 "evidence": null,
 "role": "logic"
 },
 "0051f4c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051f6b0": {
 "evidence": null,
@@ -3959,57 +4326,56 @@
 "role": "logic"
 },
 "0051f890": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051f900": {
-"evidence": "single-call forwarder -> 0x0051f6b0",
-"name": "fwd_0051f6b0",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051f920": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051f970": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0051ff10": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051ff50": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0051ff80": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005201b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "005204f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00520640": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00520c70": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00520e20": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00520ea0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "005211a0": {
 "evidence": "single-call forwarder -> 0x0051f3c0",
@@ -4017,12 +4383,12 @@
 "role": "thunk"
 },
 "005211c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00521220": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005212a0": {
 "evidence": "single-call forwarder -> 0x0051f790",
@@ -4030,8 +4396,8 @@
 "role": "thunk"
 },
 "005212c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00521320": {
 "evidence": "single-call forwarder -> 0x0051f1f0",
@@ -4039,100 +4405,96 @@
 "role": "thunk"
 },
 "00521340": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00521390": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00521440": {
-"evidence": "single-call forwarder -> 0x00533b00",
-"name": "fwd_00533b00",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00521460": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005214d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "005215b0": {
-"evidence": "single-call forwarder -> 0x00533b00",
-"name": "fwd_00533b00",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005215c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00521770": {
 "evidence": null,
 "role": "logic"
 },
 "00521820": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "005218b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00521950": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00522240": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522310": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522370": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522390": {
-"evidence": "single-call forwarder -> 0x0052e130",
-"name": "fwd_0052e130",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005223b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00522460": {
-"evidence": "single-call forwarder -> 0x0052e130",
-"name": "fwd_0052e130",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522480": {
-"evidence": "single-call forwarder -> 0x0068d494",
+"evidence": "single-call forwarder -> 0x0068d494 | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
 "name": "fwd_0068d494",
 "role": "thunk"
 },
 "00522540": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005225c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522640": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522660": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522680": {
-"evidence": "single-call forwarder -> 0x0068d53c",
+"evidence": "single-call forwarder -> 0x0068d53c | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
 "name": "fwd_0068d53c",
 "role": "thunk"
 },
@@ -4141,150 +4503,145 @@
 "role": "logic"
 },
 "00522720": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522760": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
+"role": "dispatch-target"
 },
 "00522820": {
-"evidence": "field getter: return *(this+0xc)",
-"name": "get_0xc",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522830": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005229f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522bc0": {
-"evidence": "virtual dispatch through vtable",
+"evidence": "virtual dispatch through vtable | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
 "name": "vdispatch",
 "role": "dispatch"
 },
 "00522bf0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522c50": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
 "role": "wrapper"
 },
 "00522ca0": {
-"evidence": "frees memory \u2014 destructor-shaped",
-"role": "dtor-like"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522d40": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00522dc1": {
 "evidence": "small field store(s), no calls",
 "role": "mutator"
 },
 "00522ddd": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_00522e32",
+"role": "dispatch-target"
 },
 "00522e32": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_00522e32",
+"role": "dispatch-target"
 },
 "00523050": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00523070": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005231c0": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
 "role": "wrapper"
 },
 "00523220": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00523260": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table cube::SpriteWidget::RTTI_Type_Descriptor",
 "role": "wrapper"
 },
 "00523280": {
-"evidence": "field getter: return *(this+0x20)",
-"name": "get_0x20",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00523290": {
-"evidence": "field getter: return *(this+0x48)",
-"name": "get_0x48",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005232a0": {
-"evidence": "field getter: return *(this+0x4c)",
-"name": "get_0x4c",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005232b0": {
-"evidence": "field setter: *(this+0xe0)=x",
-"name": "set_0xe0",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005232d0": {
 "evidence": null,
 "role": "logic"
 },
 "00523720": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005237f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00523900": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "005239d0": {
 "evidence": null,
 "role": "logic"
 },
 "00523a80": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00523c30": {
 "evidence": null,
 "role": "logic"
 },
 "00523dd0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00524120": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00524160": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00524180": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005241a0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "005244c0": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005244e0": {
 "evidence": "thin wrapper around 1 call(s)",
@@ -4295,42 +4652,40 @@
 "role": "logic"
 },
 "00524640": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005246a0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "005247b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00524800": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00524910": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "005253b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00525500": {
-"evidence": "field getter: return *(this+0x20)",
-"name": "get_0x20",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00525510": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00525580": {
-"evidence": "field getter: return *(this+0x24)",
-"name": "get_0x24",
-"role": "accessor"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00525590": {
 "evidence": "single-call forwarder -> 0x00540b70",
@@ -4338,45 +4693,44 @@
 "role": "thunk"
 },
 "005255b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00525800": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00525a20": {
-"evidence": "single-call forwarder -> 0x00540b70",
-"name": "fwd_00540b70",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00525a50": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00525aa0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00525d20": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00525d90": {
 "evidence": null,
 "role": "logic"
 },
 "00525f10": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00525ff0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526030": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005260c0": {
 "evidence": "single field-derived expression, no calls",
@@ -4384,39 +4738,36 @@
 "role": "computed"
 },
 "005260e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00526410": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005264a0": {
-"evidence": "single-call forwarder -> 0x0055d830",
-"name": "fwd_0055d830",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005264c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526590": {
-"evidence": "single-call forwarder -> 0x00563550",
-"name": "fwd_00563550",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005265b0": {
-"evidence": "single-call forwarder -> 0x00563550",
-"name": "fwd_00563550",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005265d0": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005265f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005267a0": {
 "evidence": "single-call forwarder -> 0x0052e070",
@@ -4424,160 +4775,156 @@
 "role": "thunk"
 },
 "005267c0": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table PTR_FUN_00713494",
 "role": "wrapper"
 },
 "00526810": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526870": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005268d0": {
-"evidence": "trivial expression, no calls",
-"name": "compute",
-"role": "computed"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005268e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526940": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00526b00": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526b40": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526b80": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526be0": {
-"evidence": "single-call forwarder -> 0x0052e070",
-"name": "fwd_0052e070",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526c00": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526d60": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526db0": {
-"evidence": "single field-derived expression, no calls",
-"name": "compute",
-"role": "computed"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526dc0": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526df0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526e20": {
-"evidence": "single field-derived expression, no calls",
-"name": "compute",
-"role": "computed"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526e40": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526e80": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526f90": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00526fb0": {
 "evidence": "frees memory \u2014 destructor-shaped",
 "role": "dtor-like"
 },
 "005270f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00527160": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00527220": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00527290": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00527570": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00527670": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00527740": {
 "evidence": null,
 "role": "logic"
 },
 "00527b00": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00527b60": {
 "evidence": null,
 "role": "logic"
 },
 "00527d50": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00527dd0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00527e00": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00527ea0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00527f30": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00527f60": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00527f90": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00527fc0": {
 "evidence": "thin wrapper around 2 call(s)",
 "role": "wrapper"
 },
 "00528030": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "005281b0": {
 "evidence": "thin wrapper around 2 call(s)",
@@ -4588,29 +4935,28 @@
 "role": "wrapper"
 },
 "00528320": {
-"evidence": "single-call forwarder -> 0x00528720",
-"name": "fwd_00528720",
-"role": "thunk"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00528350": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_00715560",
+"role": "dispatch-target"
 },
 "005283b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00528470": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table PTR_FUN_00715564",
 "role": "wrapper"
 },
 "00528490": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00528550": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00528710": {
 "evidence": "trivial expression, no calls",
@@ -4622,17 +4968,17 @@
 "role": "logic"
 },
 "00528800": {
-"evidence": "single field-derived expression, no calls",
+"evidence": "single field-derived expression, no calls | held in dispatch table PTR_FUN_00712d4c",
 "name": "compute",
 "role": "computed"
 },
 "00528810": {
-"evidence": "small field store(s), no calls",
-"role": "mutator"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00528830": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in cube::SpriteWidget::vftable_for_Deformer (called via vtable)",
+"role": "vfunc-indirect"
 },
 "00528890": {
 "evidence": null,
@@ -4647,24 +4993,24 @@
 "role": "logic"
 },
 "00529cf0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00549ed0 (callback)",
+"role": "callback"
 },
 "00529de0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00553cb0 (callback)",
+"role": "callback"
 },
 "0052df70": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00540b70 (callback)",
+"role": "callback"
 },
 "0052e130": {
 "evidence": null,
 "role": "logic"
 },
 "0052ebe0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 0054e4a0 (callback)",
+"role": "callback"
 },
 "00532980": {
 "evidence": null,
@@ -4695,16 +5041,16 @@
 "role": "logic"
 },
 "00534970": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 005788a0 (callback)",
+"role": "callback"
 },
 "00536500": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 0053c010 (callback)",
+"role": "callback"
 },
 "005367f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00558820 (callback)",
+"role": "callback"
 },
 "0053a850": {
 "evidence": null,
@@ -4723,7 +5069,7 @@
 "role": "logic"
 },
 "0053b920": {
-"evidence": "small field store(s), no calls",
+"evidence": "small field store(s), no calls | address taken by 0053b940 (callback)",
 "role": "mutator"
 },
 "0053c010": {
@@ -4747,7 +5093,7 @@
 "role": "logic"
 },
 "00540b00": {
-"evidence": "single-call forwarder -> 0x005259c0",
+"evidence": "single-call forwarder -> 0x005259c0 | address taken by 00540b70 (callback)",
 "name": "fwd_005259c0",
 "role": "thunk"
 },
@@ -4756,12 +5102,12 @@
 "role": "logic"
 },
 "00541240": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | address taken by 0054e4a0 (callback)",
 "role": "wrapper"
 },
 "00541820": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 0055f550 (callback)",
+"role": "callback"
 },
 "00542f30": {
 "evidence": null,
@@ -4820,27 +5166,27 @@
 "role": "logic"
 },
 "00546470": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00546ad0 (callback)",
+"role": "callback"
 },
 "00546890": {
 "evidence": null,
 "role": "logic"
 },
 "00546ad0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00546ad0 (callback)",
+"role": "callback"
 },
 "005476b0": {
 "evidence": null,
 "role": "logic"
 },
 "00547860": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00567060 (callback)",
+"role": "callback"
 },
 "00548960": {
-"evidence": "field setter: *(this+0x10)=x",
+"evidence": "field setter: *(this+0x10)=x | address taken by 0053c010 (callback)",
 "name": "set_0x10",
 "role": "mutator"
 },
@@ -4857,27 +5203,27 @@
 "role": "logic"
 },
 "0054bd10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_005229f0",
+"role": "dispatch-target"
 },
 "0054de80": {
 "evidence": null,
 "role": "logic"
 },
 "0054ecc0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00522460 (callback)",
+"role": "callback"
 },
 "00558820": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | held in dispatch table FUN_00546470",
 "role": "wrapper"
 },
 "0055cd50": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00521770 (callback)",
+"role": "callback"
 },
 "0055dc20": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | address taken by 0051ec50 (callback)",
 "name": "compute",
 "role": "computed"
 },
@@ -4910,8 +5256,8 @@
 "role": "logic"
 },
 "00577d90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00525c40 (callback)",
+"role": "callback"
 },
 "0057a1b0": {
 "evidence": null,
@@ -4926,8 +5272,8 @@
 "role": "logic"
 },
 "0057a410": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00523850 (callback)",
+"role": "callback"
 },
 "0057b1e0": {
 "evidence": null,
@@ -4958,7 +5304,7 @@
 "role": "logic"
 },
 "0057fb10": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | held in dispatch table FUN_005265f0",
 "role": "dtor-like"
 },
 "0057fb50": {
@@ -5002,111 +5348,157 @@
 "role": "logic"
 },
 "00585840": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "00585870": {
-"evidence": "single field-derived expression, no calls",
+"evidence": "single field-derived expression, no calls | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "00585880": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "005866a0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00586730": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00586780": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "005868a0": {
 "evidence": null,
 "role": "logic"
 },
 "00586980": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00586a80": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00586b90": {
-"evidence": "single field-derived expression, no calls",
+"evidence": "single field-derived expression, no calls | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "00586bb0": {
-"evidence": "field getter: return *(this+0x1a0)",
+"evidence": "field getter: return *(this+0x1a0) | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "get_0x1a0",
 "role": "accessor"
 },
 "00586bc0": {
-"evidence": "single-call forwarder -> 0x0068e8ca",
+"evidence": "single-call forwarder -> 0x0068e8ca | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "fwd_0068e8ca",
 "role": "thunk"
 },
 "00586be0": {
-"evidence": "single field-derived expression, no calls",
+"evidence": "single field-derived expression, no calls | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "compute",
 "role": "computed"
 },
 "00586c00": {
-"evidence": "single-call forwarder -> 0xexternal:0000005b",
+"evidence": "single-call forwarder -> 0xexternal:0000005b | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "fwd_external:0000005b",
 "role": "thunk"
 },
 "00586c20": {
-"evidence": "single-call forwarder -> 0xexternal:0000005b",
+"evidence": "single-call forwarder -> 0xexternal:0000005b | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "fwd_external:0000005b",
 "role": "thunk"
 },
 "00586c40": {
-"evidence": "single-call forwarder -> 0xexternal:0000005b",
+"evidence": "single-call forwarder -> 0xexternal:0000005b | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "fwd_external:0000005b",
 "role": "thunk"
 },
 "00586c60": {
-"evidence": "single-call forwarder -> 0xexternal:0000005b",
+"evidence": "single-call forwarder -> 0xexternal:0000005b | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "fwd_external:0000005b",
 "role": "thunk"
 },
 "00586c80": {
-"evidence": "single-call forwarder -> 0xexternal:0000005b",
+"evidence": "single-call forwarder -> 0xexternal:0000005b | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "fwd_external:0000005b",
 "role": "thunk"
 },
 "00586ca0": {
-"evidence": "single-call forwarder -> 0xexternal:0000005b",
+"evidence": "single-call forwarder -> 0xexternal:0000005b | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "fwd_external:0000005b",
 "role": "thunk"
 },
 "00586cd0": {
-"evidence": "return *this",
+"evidence": "return *this | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "deref_get",
 "role": "accessor"
 },
 "00586ce0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00586d70": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00586e00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "00587020": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "005870c0": {
@@ -5114,33 +5506,47 @@
 "role": "logic"
 },
 "00587140": {
-"evidence": "single-call forwarder -> 0x005870c0",
+"evidence": "single-call forwarder -> 0x005870c0 | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "name": "fwd_005870c0",
 "role": "thunk"
 },
 "00587160": {
-"evidence": "small field store(s), no calls",
+"evidence": "small field store(s), no calls | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "mutator"
 },
 "00587180": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "005871f0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00587290": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00587350": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "00587460": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00584300 (callback)",
+"module": "control",
+"module_conf": 1.0,
+"role": "callback"
 },
 "0058c440": {
 "evidence": null,
@@ -5217,8 +5623,8 @@
 "role": "logic"
 },
 "00595850": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00596ca0": {
 "evidence": null,
@@ -5282,8 +5688,8 @@
 "role": "logic"
 },
 "005a4980": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "005a5240": {
 "evidence": null,
@@ -5296,12 +5702,12 @@
 "role": "logic"
 },
 "005a5af0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "005a5f60": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "005a6a00": {
 "evidence": null,
@@ -5375,6 +5781,8 @@
 },
 "005aea70": {
 "evidence": null,
+"module": "entity",
+"module_conf": 1.0,
 "role": "logic"
 },
 "005c0100": {
@@ -5484,6 +5892,8 @@
 },
 "005fb860": {
 "evidence": "thin wrapper around 1 call(s)",
+"module": "entity",
+"module_conf": 1.0,
 "role": "wrapper"
 },
 "005fb9f0": {
@@ -5577,18 +5987,22 @@
 },
 "0060a9f0": {
 "evidence": "small field store(s), no calls",
+"module": "control",
+"module_conf": 1.0,
 "role": "mutator"
 },
 "0060aac0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "00623530": {
 "evidence": null,
 "role": "logic"
 },
 "006240d0": {
-"evidence": "single-call forwarder -> 0x0046d590",
+"evidence": "single-call forwarder -> 0x0046d590 | address taken by 006240f0 (callback)",
+"module": "world",
+"module_conf": 1.0,
 "name": "fwd_0046d590",
 "role": "thunk"
 },
@@ -5615,7 +6029,9 @@
 "role": "logic"
 },
 "00625a30": {
-"evidence": "single-call forwarder -> 0xexternal:0000013a",
+"evidence": "single-call forwarder -> 0xexternal:0000013a | address taken by 006271b0 (callback)",
+"module": "audio",
+"module_conf": 1.0,
 "name": "fwd_external:0000013a",
 "role": "thunk"
 },
@@ -5881,20 +6297,22 @@
 "role": "dtor-like"
 },
 "0063c700": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 0063c2b0 (callback)",
+"module": "engine",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "0063d930": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table Catch_All@0063c1ef",
+"role": "dispatch-target"
 },
 "0063d960": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table Catch_All@0063c1ef",
+"role": "dispatch-target"
 },
 "0063d990": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table Catch_All@0063c1ef",
+"role": "dispatch-target"
 },
 "0063d9c0": {
 "evidence": "frees memory \u2014 destructor-shaped",
@@ -6044,7 +6462,7 @@
 "role": "dtor-like"
 },
 "00650dfb": {
-"evidence": "single field-derived expression, no calls",
+"evidence": "single field-derived expression, no calls | held in dispatch table plasma::RenderSurface::RTTI_Complete_Object_Locator",
 "name": "compute",
 "role": "computed"
 },
@@ -6249,27 +6667,27 @@
 "role": "logic"
 },
 "0066cd10": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | address taken by 0066cd60 (callback)",
 "name": "compute",
 "role": "computed"
 },
 "0066cd20": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | address taken by 0066d070 (callback)",
 "name": "compute",
 "role": "computed"
 },
 "0066cd30": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | address taken by 0066d380 (callback)",
 "name": "compute",
 "role": "computed"
 },
 "0066cd40": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | address taken by 0066d690 (callback)",
 "name": "compute",
 "role": "computed"
 },
 "0066cd50": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | address taken by 0066d9a0 (callback)",
 "name": "compute",
 "role": "computed"
 },
@@ -6342,8 +6760,8 @@
 "role": "wrapper"
 },
 "0066eb80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 0066ec20 (callback)",
+"role": "callback"
 },
 "0066ec20": {
 "evidence": null,
@@ -6366,8 +6784,10 @@
 "role": "logic"
 },
 "00671290": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00671450 (callback)",
+"module": "engine",
+"module_conf": 1.0,
+"role": "callback"
 },
 "006712c0": {
 "evidence": "thin wrapper around 1 call(s)",
@@ -6402,11 +6822,11 @@
 "role": "logic"
 },
 "006751d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00675690 (callback)",
+"role": "callback"
 },
 "00675670": {
-"evidence": "single-call forwarder -> 0x0066add0",
+"evidence": "single-call forwarder -> 0x0066add0 | address taken by 00675690 (callback)",
 "name": "fwd_0066add0",
 "role": "thunk"
 },
@@ -6732,20 +7152,20 @@
 "role": "logic"
 },
 "0068e195": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "0068e1e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table ?",
+"role": "dispatch-target"
 },
 "0068e489": {
-"evidence": "single-call forwarder -> 0x0068e8b2",
+"evidence": "single-call forwarder -> 0x0068e8b2 | held in dispatch table DAT_00749bd0",
 "name": "fwd_0068e8b2",
 "role": "thunk"
 },
 "0068e604": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | held in dispatch table LAB_0068e645",
 "role": "wrapper"
 },
 "0068e660": {
@@ -6761,22 +7181,22 @@
 "role": "logic"
 },
 "0068e83b": {
-"evidence": "returns a constant \u2014 stub / trivial predicate",
+"evidence": "returns a constant \u2014 stub / trivial predicate | held in dispatch table MSVCR110.DLL::libm_sse2_exp_precise",
 "name": "ret_const",
 "role": "stub"
 },
 "0068e83e": {
-"evidence": "virtual dispatch through vtable",
+"evidence": "virtual dispatch through vtable | held in dispatch table MSVCR110.DLL::libm_sse2_exp_precise",
 "name": "vdispatch",
 "role": "dispatch"
 },
 "0068e85e": {
-"evidence": "virtual dispatch through vtable",
+"evidence": "virtual dispatch through vtable | address taken by 0068e195 (callback)",
 "name": "vdispatch",
 "role": "dispatch"
 },
 "0068e87e": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table LAB_0068e17b",
 "role": "wrapper"
 },
 "0068e970": {
@@ -6784,19 +7204,19 @@
 "role": "logic"
 },
 "0068eb30": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_62",
+"role": "dispatch-target"
 },
 "0068ecd0": {
 "evidence": null,
 "role": "logic"
 },
 "0068ed60": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006b7b10",
+"role": "dispatch-target"
 },
 "0068ee50": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | held in dispatch table FUN_006b7b10",
 "role": "wrapper"
 },
 "0068eec0": {
@@ -6878,20 +7298,20 @@
 "role": "dispatch"
 },
 "0068fe70": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0068ff10": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0068ff90": {
 "evidence": null,
 "role": "logic"
 },
 "006903a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_00694fa0",
+"role": "dispatch-target"
 },
 "00690430": {
 "evidence": null,
@@ -6974,7 +7394,7 @@
 "role": "dispatch"
 },
 "00691820": {
-"evidence": "single-call forwarder -> 0x00691290",
+"evidence": "single-call forwarder -> 0x00691290 | address taken by 00692c40 (callback)",
 "name": "fwd_00691290",
 "role": "thunk"
 },
@@ -7020,27 +7440,27 @@
 "role": "thunk"
 },
 "006937b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006948f0 (callback)",
+"role": "callback"
 },
 "00693840": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006948f0 (callback)",
+"role": "callback"
 },
 "006938e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_00694270",
+"role": "dispatch-target"
 },
 "00693940": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_00694270",
+"role": "dispatch-target"
 },
 "00693a30": {
 "evidence": "thin wrapper around 1 call(s)",
 "role": "wrapper"
 },
 "00693bf0": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table FUN_006c0a40",
 "role": "wrapper"
 },
 "00693c40": {
@@ -7155,16 +7575,16 @@
 "role": "logic"
 },
 "00698060": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_00699490",
+"role": "dispatch-target"
 },
 "00698130": {
 "evidence": null,
 "role": "logic"
 },
 "00698500": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_00699490",
+"role": "dispatch-target"
 },
 "00698e00": {
 "evidence": null,
@@ -7183,24 +7603,24 @@
 "role": "logic"
 },
 "00699490": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006998b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 00699f90 (callback)",
+"role": "callback"
 },
 "00699f90": {
 "evidence": null,
 "role": "logic"
 },
 "0069a1e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0069a730": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0069a7f0": {
 "evidence": null,
@@ -7215,8 +7635,8 @@
 "role": "logic"
 },
 "0069a900": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0069af60",
+"role": "dispatch-target"
 },
 "0069a950": {
 "evidence": null,
@@ -7227,20 +7647,20 @@
 "role": "logic"
 },
 "0069adb0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0069af60",
+"role": "dispatch-target"
 },
 "0069af60": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0069af60",
+"role": "dispatch-target"
 },
 "0069b520": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0069bc10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0069bc10",
+"role": "dispatch-target"
 },
 "0069c020": {
 "evidence": null,
@@ -7255,44 +7675,41 @@
 "role": "logic"
 },
 "0069c230": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0069c400": {
-"evidence": "virtual dispatch through vtable",
+"evidence": "virtual dispatch through vtable | held in dispatch table FUN_0069c400",
 "name": "vdispatch",
 "role": "dispatch"
 },
 "0069c470": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0069c5d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0069c740": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0069c7c0": {
-"evidence": "virtual dispatch through vtable",
-"name": "vdispatch",
-"role": "dispatch"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0069cb00": {
-"evidence": "virtual dispatch through vtable",
-"name": "vdispatch",
-"role": "dispatch"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0069cb40": {
-"evidence": "virtual dispatch through vtable",
-"name": "vdispatch",
-"role": "dispatch"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0069cec0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0069d190": {
 "evidence": null,
@@ -7303,8 +7720,8 @@
 "role": "logic"
 },
 "0069d450": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0069d600": {
 "evidence": null,
@@ -7315,36 +7732,36 @@
 "role": "logic"
 },
 "0069dd70": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0069e3b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0069e550": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0069f380": {
 "evidence": null,
 "role": "logic"
 },
 "0069f450": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0069f670": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0069f6a0": {
 "evidence": "thin wrapper around 1 call(s)",
 "role": "wrapper"
 },
 "0069f720": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "0069fa90": {
 "evidence": null,
@@ -7355,36 +7772,36 @@
 "role": "logic"
 },
 "0069fb90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0069fb90",
+"role": "dispatch-target"
 },
 "0069fdc0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "0069ff10": {
 "evidence": null,
 "role": "logic"
 },
 "0069ff50": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0069ffe0",
+"role": "dispatch-target"
 },
 "0069ffe0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_0069ffe0",
+"role": "dispatch-target"
 },
 "006a03d0": {
 "evidence": null,
 "role": "logic"
 },
 "006a0860": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | held in dispatch table switchD_006a355e::switchdataD_006a35f8",
 "role": "wrapper"
 },
 "006a0890": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a0a80": {
 "evidence": null,
@@ -7399,16 +7816,16 @@
 "role": "logic"
 },
 "006a0dd0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a0dd0",
+"role": "dispatch-target"
 },
 "006a1010": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a1820": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_007239bc",
+"role": "dispatch-target"
 },
 "006a1ab0": {
 "evidence": null,
@@ -7427,8 +7844,8 @@
 "role": "logic"
 },
 "006a1e90": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a2240": {
 "evidence": "single-call forwarder -> 0x0068f3b0",
@@ -7460,8 +7877,8 @@
 "role": "logic"
 },
 "006a2b20": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a2c30": {
 "evidence": null,
@@ -7480,8 +7897,8 @@
 "role": "logic"
 },
 "006a31d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006a355e::switchdataD_006a35f8",
+"role": "dispatch-target"
 },
 "006a3210": {
 "evidence": null,
@@ -7492,20 +7909,20 @@
 "role": "logic"
 },
 "006a3780": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table PTR_FUN_007239b4",
 "role": "wrapper"
 },
 "006a37c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a3840": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_007239c4",
+"role": "dispatch-target"
 },
 "006a38b0": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a3910": {
 "evidence": null,
@@ -7588,7 +8005,7 @@
 "role": "logic"
 },
 "006a4a40": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 006a52f0 (callback)",
 "role": "dtor-like"
 },
 "006a4eb0": {
@@ -7609,16 +8026,16 @@
 "role": "stub"
 },
 "006a5430": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a54e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a5680": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a58a0": {
 "evidence": "single-call forwarder -> 0x00691290",
@@ -7716,21 +8133,21 @@
 "role": "logic"
 },
 "006a6000": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table FUN_006a6250",
 "role": "wrapper"
 },
 "006a6020": {
-"evidence": "single-call forwarder -> 0x006a5de0",
+"evidence": "single-call forwarder -> 0x006a5de0 | held in dispatch table FUN_006a8090",
 "name": "fwd_006a5de0",
 "role": "thunk"
 },
 "006a6050": {
-"evidence": "single-call forwarder -> 0x0068d7b0",
+"evidence": "single-call forwarder -> 0x0068d7b0 | held in dispatch table FUN_006a84f0",
 "name": "fwd_0068d7b0",
 "role": "thunk"
 },
 "006a6070": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | held in dispatch table FUN_006a6250",
 "role": "wrapper"
 },
 "006a60a0": {
@@ -7738,19 +8155,19 @@
 "role": "logic"
 },
 "006a6100": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006a84c0 (callback)",
+"role": "callback"
 },
 "006a61f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006a84c0 (callback)",
+"role": "callback"
 },
 "006a6250": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006a84f0 (callback)",
+"role": "callback"
 },
 "006a6370": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 006a84c0 (callback)",
 "role": "wrapper"
 },
 "006a64e0": {
@@ -7762,8 +8179,8 @@
 "role": "logic"
 },
 "006a66a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a69c0",
+"role": "dispatch-target"
 },
 "006a67e0": {
 "evidence": null,
@@ -7774,12 +8191,12 @@
 "role": "logic"
 },
 "006a6c10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a8090",
+"role": "dispatch-target"
 },
 "006a6c90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a84f0",
+"role": "dispatch-target"
 },
 "006a6cb0": {
 "evidence": null,
@@ -7823,7 +8240,7 @@
 "role": "logic"
 },
 "006a7310": {
-"evidence": "single-call forwarder -> 0x006a7070",
+"evidence": "single-call forwarder -> 0x006a7070 | held in dispatch table FUN_006a8090",
 "name": "fwd_006a7070",
 "role": "thunk"
 },
@@ -7832,7 +8249,7 @@
 "role": "logic"
 },
 "006a74e0": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table FUN_006a8090",
 "role": "wrapper"
 },
 "006a7520": {
@@ -7844,48 +8261,48 @@
 "role": "logic"
 },
 "006a75c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a8090",
+"role": "dispatch-target"
 },
 "006a7610": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a8090",
+"role": "dispatch-target"
 },
 "006a7890": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a8090",
+"role": "dispatch-target"
 },
 "006a7990": {
 "evidence": null,
 "role": "logic"
 },
 "006a7b70": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a8090",
+"role": "dispatch-target"
 },
 "006a7cc0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a8090",
+"role": "dispatch-target"
 },
 "006a7dd0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a8090",
+"role": "dispatch-target"
 },
 "006a7e80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a8090",
+"role": "dispatch-target"
 },
 "006a8090": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a8090",
+"role": "dispatch-target"
 },
 "006a84c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a84f0",
+"role": "dispatch-target"
 },
 "006a84f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a84f0",
+"role": "dispatch-target"
 },
 "006a8560": {
 "evidence": null,
@@ -7904,27 +8321,27 @@
 "role": "logic"
 },
 "006a8800": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a8b20": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a8c20": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_00732e18",
+"role": "dispatch-target"
 },
 "006a8cd0": {
 "evidence": null,
 "role": "logic"
 },
 "006a8d00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a8d00",
+"role": "dispatch-target"
 },
 "006a8e80": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | held in dispatch table PTR_FUN_00732e24",
 "role": "wrapper"
 },
 "006a8ed0": {
@@ -7961,20 +8378,20 @@
 "role": "logic"
 },
 "006a93f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a94c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006aa4d0",
+"role": "dispatch-target"
 },
 "006a9560": {
 "evidence": null,
 "role": "logic"
 },
 "006a95f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_00732e60",
+"role": "dispatch-target"
 },
 "006a9620": {
 "evidence": null,
@@ -7993,12 +8410,12 @@
 "role": "logic"
 },
 "006a9770": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a97b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a9840": {
 "evidence": null,
@@ -8010,25 +8427,24 @@
 "role": "dispatch"
 },
 "006a98e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_00732e7c",
+"role": "dispatch-target"
 },
 "006a99a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006a9a90",
+"role": "dispatch-target"
 },
 "006a9a00": {
 "evidence": null,
 "role": "logic"
 },
 "006a9a90": {
-"evidence": "single-call forwarder -> 0x006a9a00",
-"name": "fwd_006a9a00",
-"role": "thunk"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a9b80": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a9c50": {
 "evidence": null,
@@ -8051,17 +8467,16 @@
 "role": "logic"
 },
 "006a9eb0": {
-"evidence": "single-call forwarder -> 0x00691290",
-"name": "fwd_00691290",
-"role": "thunk"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006a9ed0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006abf20 (callback)",
+"role": "callback"
 },
 "006a9f00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006ac1e0",
+"role": "dispatch-target"
 },
 "006a9f80": {
 "evidence": null,
@@ -8080,8 +8495,8 @@
 "role": "logic"
 },
 "006aa260": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006aa9a0",
+"role": "dispatch-target"
 },
 "006aa2e0": {
 "evidence": null,
@@ -8092,36 +8507,36 @@
 "role": "logic"
 },
 "006aa4d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006aa8b0": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006aa8d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006aa950": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006aa970": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006aa9a0": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006aa9f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006aadd5::caseD_21",
+"role": "dispatch-target"
 },
 "006aabd0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_00732e84",
+"role": "dispatch-target"
 },
 "006abbc0": {
 "evidence": null,
@@ -8141,24 +8556,24 @@
 "role": "logic"
 },
 "006ac110": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table LAB_006ac444",
+"role": "dispatch-target"
 },
 "006ac1e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006ac4e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006addc2::caseD_3",
+"role": "dispatch-target"
 },
 "006ac520": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006addc2::caseD_3",
+"role": "dispatch-target"
 },
 "006ac550": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006addc2::caseD_3",
+"role": "dispatch-target"
 },
 "006ac580": {
 "evidence": null,
@@ -8213,8 +8628,8 @@
 "role": "logic"
 },
 "006adad0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006adfd0": {
 "evidence": null,
@@ -8225,28 +8640,28 @@
 "role": "logic"
 },
 "006ae0f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006af030": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006af100": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006af140": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006af1a0": {
 "evidence": "thin wrapper around 1 call(s)",
 "role": "wrapper"
 },
 "006af220": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006af450": {
 "evidence": "virtual dispatch through vtable",
@@ -8258,20 +8673,20 @@
 "role": "logic"
 },
 "006af4b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006af5b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006af8e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006afcd0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006b00f0": {
 "evidence": null,
@@ -8291,16 +8706,16 @@
 "role": "dispatch"
 },
 "006b04d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006b0500": {
 "evidence": null,
 "role": "logic"
 },
 "006b0770": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006b0a80": {
 "evidence": null,
@@ -8319,12 +8734,12 @@
 "role": "wrapper"
 },
 "006b0bc0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006b0eb0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006b1050": {
 "evidence": null,
@@ -8335,7 +8750,7 @@
 "role": "logic"
 },
 "006b1650": {
-"evidence": "single-call forwarder -> 0x0068f020",
+"evidence": "single-call forwarder -> 0x0068f020 | held in dispatch table FUN_006b1960",
 "name": "fwd_0068f020",
 "role": "thunk"
 },
@@ -8368,17 +8783,16 @@
 "role": "wrapper"
 },
 "006b1960": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006b1a80": {
-"evidence": "single-call forwarder -> 0x006b1680",
-"name": "fwd_006b1680",
-"role": "thunk"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006b1aa0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006b1e00": {
 "evidence": null,
@@ -8438,19 +8852,19 @@
 "role": "wrapper"
 },
 "006b3400": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006b3740": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006b3970": {
 "evidence": null,
 "role": "logic"
 },
 "006b3c40": {
-"evidence": "virtual dispatch through vtable",
+"evidence": "virtual dispatch through vtable | address taken by 006b43e0 (callback)",
 "name": "vdispatch",
 "role": "dispatch"
 },
@@ -8463,8 +8877,8 @@
 "role": "logic"
 },
 "006b3d50": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006b3f40": {
 "evidence": null,
@@ -8497,30 +8911,28 @@
 "role": "wrapper"
 },
 "006b4700": {
-"evidence": "virtual dispatch through vtable",
-"name": "vdispatch",
-"role": "dispatch"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006b4730": {
-"evidence": "virtual dispatch through vtable",
-"name": "vdispatch",
-"role": "dispatch"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006b4930": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006b4ba0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_00734478",
+"role": "dispatch-target"
 },
 "006b4c60": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006b4c60",
+"role": "dispatch-target"
 },
 "006b5520": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006b5570": {
 "evidence": "single-call forwarder -> 0x0068d7b0",
@@ -8536,15 +8948,15 @@
 "role": "logic"
 },
 "006b5920": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table FUN_006b5bf0",
 "role": "wrapper"
 },
 "006b5950": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table FUN_006b5bf0",
 "role": "wrapper"
 },
 "006b5980": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table FUN_006b5bf0",
 "role": "wrapper"
 },
 "006b5bf0": {
@@ -8593,7 +9005,7 @@
 "role": "logic"
 },
 "006b64f0": {
-"evidence": "virtual dispatch through vtable",
+"evidence": "virtual dispatch through vtable | held in dispatch table FUN_006bae50",
 "name": "vdispatch",
 "role": "dispatch"
 },
@@ -8642,8 +9054,8 @@
 "role": "wrapper"
 },
 "006b7030": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006b7b10",
+"role": "dispatch-target"
 },
 "006b7420": {
 "evidence": null,
@@ -8654,29 +9066,29 @@
 "role": "wrapper"
 },
 "006b75d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006b75d0",
+"role": "dispatch-target"
 },
 "006b7880": {
 "evidence": null,
 "role": "logic"
 },
 "006b7970": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006b7b00": {
-"evidence": "single-call forwarder -> 0x00691310",
+"evidence": "single-call forwarder -> 0x00691310 | held in dispatch table FUN_006b7b10",
 "name": "fwd_00691310",
 "role": "thunk"
 },
 "006b7b10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006b7b10",
+"role": "dispatch-target"
 },
 "006b8400": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006b8660": {
 "evidence": null,
@@ -8729,21 +9141,20 @@
 "role": "logic"
 },
 "006bace0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006bad90": {
-"evidence": "single-call forwarder -> 0x00691290",
-"name": "fwd_00691290",
-"role": "thunk"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006bae00": {
 "evidence": null,
 "role": "logic"
 },
 "006bae50": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006bb130": {
 "evidence": "thin wrapper around 2 call(s)",
@@ -8783,8 +9194,8 @@
 "role": "logic"
 },
 "006bbb20": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006bbd60": {
 "evidence": null,
@@ -8795,16 +9206,16 @@
 "role": "logic"
 },
 "006bbf10": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006bbf90": {
 "evidence": null,
 "role": "logic"
 },
 "006bc0c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006bc720": {
 "evidence": null,
@@ -8816,16 +9227,16 @@
 "role": "dispatch"
 },
 "006bc890": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006bcd60": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006bcfa0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006bd5a0": {
 "evidence": null,
@@ -8848,17 +9259,16 @@
 "role": "wrapper"
 },
 "006bde20": {
-"evidence": "virtual dispatch through vtable",
-"name": "vdispatch",
-"role": "dispatch"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006bdea0": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006bdf90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_0073391c",
+"role": "dispatch-target"
 },
 "006bdff0": {
 "evidence": null,
@@ -8878,36 +9288,36 @@
 "role": "wrapper"
 },
 "006be910": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006beb80 (callback)",
+"role": "callback"
 },
 "006be990": {
 "evidence": null,
 "role": "logic"
 },
 "006beb80": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006bed90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006bf050",
+"role": "dispatch-target"
 },
 "006bee10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_00735bbc",
+"role": "dispatch-target"
 },
 "006beeb0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006bf050": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006bf430": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006bf480": {
 "evidence": null,
@@ -8966,12 +9376,12 @@
 "role": "logic"
 },
 "006bfc40": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006c0280 (callback)",
+"role": "callback"
 },
 "006c0030": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006c0280 (callback)",
+"role": "callback"
 },
 "006c0280": {
 "evidence": null,
@@ -9010,8 +9420,8 @@
 "role": "logic"
 },
 "006c0a20": {
-"evidence": "thin wrapper around 1 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006c0a40": {
 "evidence": null,
@@ -9055,16 +9465,16 @@
 "role": "logic"
 },
 "006c1070": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006c7970",
+"role": "dispatch-target"
 },
 "006c10c0": {
 "evidence": null,
 "role": "logic"
 },
 "006c1110": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c184f::switchdataD_006c1a14",
+"role": "dispatch-target"
 },
 "006c11a0": {
 "evidence": "single-call forwarder -> 0x00691170",
@@ -9080,11 +9490,11 @@
 "role": "wrapper"
 },
 "006c1290": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table FUN_006c4090",
 "role": "wrapper"
 },
 "006c12e0": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table FUN_006c4090",
 "role": "wrapper"
 },
 "006c1360": {
@@ -9096,24 +9506,24 @@
 "role": "logic"
 },
 "006c13f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006c1aa0 (callback)",
+"role": "callback"
 },
 "006c1480": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006c1aa0 (callback)",
+"role": "callback"
 },
 "006c1590": {
 "evidence": null,
 "role": "logic"
 },
 "006c1780": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006c4090",
+"role": "dispatch-target"
 },
 "006c1810": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_76",
+"role": "dispatch-target"
 },
 "006c1aa0": {
 "evidence": null,
@@ -9124,120 +9534,120 @@
 "role": "logic"
 },
 "006c1d20": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_7",
+"role": "dispatch-target"
 },
 "006c1d80": {
-"evidence": "thin wrapper around 1 call(s)",
+"evidence": "thin wrapper around 1 call(s) | held in dispatch table switchD_006c427d::caseD_26",
 "role": "wrapper"
 },
 "006c1dd0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_8a",
+"role": "dispatch-target"
 },
 "006c1df0": {
 "evidence": null,
 "role": "logic"
 },
 "006c1e80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_58",
+"role": "dispatch-target"
 },
 "006c1ed0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_1b",
+"role": "dispatch-target"
 },
 "006c1f00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_2c",
+"role": "dispatch-target"
 },
 "006c1fc0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_2d",
+"role": "dispatch-target"
 },
 "006c2010": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_2b",
+"role": "dispatch-target"
 },
 "006c20d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_2a",
+"role": "dispatch-target"
 },
 "006c21a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_89",
+"role": "dispatch-target"
 },
 "006c2260": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_40",
+"role": "dispatch-target"
 },
 "006c22d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_41",
+"role": "dispatch-target"
 },
 "006c2340": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::default",
+"role": "dispatch-target"
 },
 "006c23a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::default",
+"role": "dispatch-target"
 },
 "006c2400": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_47",
+"role": "dispatch-target"
 },
 "006c2470": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_48",
+"role": "dispatch-target"
 },
 "006c24f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_4a",
+"role": "dispatch-target"
 },
 "006c25f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_87",
+"role": "dispatch-target"
 },
 "006c26a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_13",
+"role": "dispatch-target"
 },
 "006c26f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_14",
+"role": "dispatch-target"
 },
 "006c2740": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_15",
+"role": "dispatch-target"
 },
 "006c2790": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_16",
+"role": "dispatch-target"
 },
 "006c2810": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | held in dispatch table switchD_006c427d::caseD_8e",
 "role": "dtor-like"
 },
 "006c2850": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_85",
+"role": "dispatch-target"
 },
 "006c2910": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_8d",
+"role": "dispatch-target"
 },
 "006c2920": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_80",
+"role": "dispatch-target"
 },
 "006c29a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_81",
+"role": "dispatch-target"
 },
 "006c29f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_82",
+"role": "dispatch-target"
 },
 "006c2a40": {
 "evidence": null,
@@ -9248,60 +9658,60 @@
 "role": "logic"
 },
 "006c2b80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_33",
+"role": "dispatch-target"
 },
 "006c2c30": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_35",
+"role": "dispatch-target"
 },
 "006c2d30": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_37",
+"role": "dispatch-target"
 },
 "006c2e00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_38",
+"role": "dispatch-target"
 },
 "006c2eb0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_3b",
+"role": "dispatch-target"
 },
 "006c2fb0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_2f",
+"role": "dispatch-target"
 },
 "006c3030": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_3f",
+"role": "dispatch-target"
 },
 "006c3140": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::default",
+"role": "dispatch-target"
 },
 "006c3320": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::default",
+"role": "dispatch-target"
 },
 "006c3550": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_3c",
+"role": "dispatch-target"
 },
 "006c3620": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_f",
+"role": "dispatch-target"
 },
 "006c3850": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_27",
+"role": "dispatch-target"
 },
 "006c38e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_39",
+"role": "dispatch-target"
 },
 "006c3b00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_29",
+"role": "dispatch-target"
 },
 "006c3b40": {
 "evidence": null,
@@ -9312,24 +9722,24 @@
 "role": "logic"
 },
 "006c3cc0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_31",
+"role": "dispatch-target"
 },
 "006c3e60": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_72",
+"role": "dispatch-target"
 },
 "006c3f50": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_75",
+"role": "dispatch-target"
 },
 "006c4040": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_88",
+"role": "dispatch-target"
 },
 "006c4090": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c427d::caseD_8f",
+"role": "dispatch-target"
 },
 "006c4ee0": {
 "evidence": null,
@@ -9368,16 +9778,16 @@
 "role": "logic"
 },
 "006c63d0": {
-"evidence": "frees memory \u2014 destructor-shaped",
-"role": "dtor-like"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006c6480": {
 "evidence": null,
 "role": "logic"
 },
 "006c64d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006c6540": {
 "evidence": null,
@@ -9400,12 +9810,12 @@
 "role": "logic"
 },
 "006c7400": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006c7530": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006c75e0": {
 "evidence": null,
@@ -9428,20 +9838,20 @@
 "role": "logic"
 },
 "006c7c30": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006c7e30": {
 "evidence": null,
 "role": "logic"
 },
 "006c8020": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006c8203::switchdataD_006c8264",
+"role": "dispatch-target"
 },
 "006c83c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006c8670": {
 "evidence": null,
@@ -9465,20 +9875,20 @@
 "role": "logic"
 },
 "006c8910": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006c8f80": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006c9b20": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006c9ca0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006ca150": {
 "evidence": null,
@@ -9489,16 +9899,16 @@
 "role": "wrapper"
 },
 "006ca2f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006ca960": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006cac40": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006cb000": {
 "evidence": null,
@@ -9521,12 +9931,12 @@
 "role": "logic"
 },
 "006cb340": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006cb7b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006cb810",
+"role": "dispatch-target"
 },
 "006cb7e0": {
 "evidence": "thin wrapper around 2 call(s)",
@@ -9537,12 +9947,11 @@
 "role": "logic"
 },
 "006cc020": {
-"evidence": "single-call forwarder -> 0x006cb7e0",
-"name": "fwd_006cb7e0",
-"role": "thunk"
+"evidence": "vtable slot in type_info::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006cc5a0": {
-"evidence": "single-call forwarder -> 0x0068d770",
+"evidence": "single-call forwarder -> 0x0068d770 | address taken by 006cc610 (callback)",
 "name": "fwd_0068d770",
 "role": "thunk"
 },
@@ -9559,8 +9968,8 @@
 "role": "logic"
 },
 "006cc7e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_00694fa0",
+"role": "dispatch-target"
 },
 "006cc850": {
 "evidence": null,
@@ -9620,11 +10029,11 @@
 "role": "logic"
 },
 "006ccf70": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006cd030",
+"role": "dispatch-target"
 },
 "006cd030": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | address taken by 006cd080 (callback)",
 "role": "wrapper"
 },
 "006cd080": {
@@ -9636,29 +10045,29 @@
 "role": "logic"
 },
 "006cd620": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006ce12d::caseD_2",
+"role": "dispatch-target"
 },
 "006cd6c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006ce12d::caseD_2",
+"role": "dispatch-target"
 },
 "006cd850": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006ce12d::caseD_1",
+"role": "dispatch-target"
 },
 "006cd870": {
 "evidence": null,
 "role": "logic"
 },
 "006cd960": {
-"evidence": "virtual dispatch through vtable",
+"evidence": "virtual dispatch through vtable | held in dispatch table switchD_006ce12d::caseD_1",
 "name": "vdispatch",
 "role": "dispatch"
 },
 "006cd9a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table switchD_006ce12d::caseD_2",
+"role": "dispatch-target"
 },
 "006cdf30": {
 "evidence": "virtual dispatch through vtable",
@@ -9692,11 +10101,11 @@
 "role": "dispatch"
 },
 "006cef50": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006cf530 (callback)",
+"role": "callback"
 },
 "006cf090": {
-"evidence": "single-call forwarder -> 0x00692230",
+"evidence": "single-call forwarder -> 0x00692230 | address taken by 006cf0c0 (callback)",
 "name": "fwd_00692230",
 "role": "thunk"
 },
@@ -9750,32 +10159,34 @@
 "role": "logic"
 },
 "006d0440": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d07c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d0800": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d1b80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006d21b0 (callback)",
+"module": "audio",
+"module_conf": 1.0,
+"role": "callback"
 },
 "006d2140": {
 "evidence": "thin wrapper around 1 call(s)",
 "role": "wrapper"
 },
 "006d2870": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d2a00": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d2a60": {
 "evidence": null,
@@ -9786,16 +10197,16 @@
 "role": "logic"
 },
 "006d30d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006dac00 (callback)",
+"role": "callback"
 },
 "006d3250": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006daf40 (callback)",
+"role": "callback"
 },
 "006d3600": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d3630": {
 "evidence": null,
@@ -9822,12 +10233,12 @@
 "role": "logic"
 },
 "006d4870": {
-"evidence": null,
-"role": "logic"
+"evidence": " | address taken by 006d4490 (callback)",
+"role": "callback"
 },
 "006d48a0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d49c0": {
 "evidence": null,
@@ -9854,8 +10265,8 @@
 "role": "logic"
 },
 "006d5910": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d59d0": {
 "evidence": null,
@@ -9867,8 +10278,8 @@
 "role": "stub"
 },
 "006d6550": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d6e60": {
 "evidence": "thin wrapper around 2 call(s)",
@@ -9904,8 +10315,8 @@
 "role": "wrapper"
 },
 "006d88c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d8990": {
 "evidence": null,
@@ -9920,8 +10331,8 @@
 "role": "logic"
 },
 "006d9130": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d9300": {
 "evidence": null,
@@ -9932,12 +10343,12 @@
 "role": "logic"
 },
 "006d9c20": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d9e90": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006d9f50": {
 "evidence": null,
@@ -9952,32 +10363,32 @@
 "role": "logic"
 },
 "006da730": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006da8d0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006da9f0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dac00": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dac60": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006daee0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006daf40": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006dafa0": {
 "evidence": null,
@@ -9988,12 +10399,12 @@
 "role": "logic"
 },
 "006db470": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006db650": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006db8a0": {
 "evidence": null,
@@ -10004,32 +10415,32 @@
 "role": "logic"
 },
 "006dbd20": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dbf30": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dc0f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_00745450",
+"role": "dispatch-target"
 },
 "006dc210": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dc280": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dc2b0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dc5c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dd4b0": {
 "evidence": "empty body",
@@ -10037,28 +10448,28 @@
 "role": "stub"
 },
 "006dd500": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dd730": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table PTR_FUN_00745490",
+"role": "dispatch-target"
 },
 "006dd8b0": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dd8e0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006ddaa0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dddb0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006ddde0": {
 "evidence": null,
@@ -10073,41 +10484,41 @@
 "role": "logic"
 },
 "006de430": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006de4d0": {
 "evidence": null,
 "role": "logic"
 },
 "006de5c0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006de610": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006de900": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dec50": {
-"evidence": "single field-derived expression, no calls",
+"evidence": "single field-derived expression, no calls | address taken by 006de610 (callback)",
 "name": "compute",
 "role": "computed"
 },
 "006dec70": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dee70": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006deea0": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006deed0": {
 "evidence": null,
@@ -10122,37 +10533,36 @@
 "role": "logic"
 },
 "006dfba0": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dfc30": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dfd70": {
-"evidence": "single-call forwarder -> 0xexternal:00000148",
-"name": "fwd_external:00000148",
-"role": "thunk"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006dfdb0": {
 "evidence": null,
 "role": "logic"
 },
 "006dff90": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006e0090": {
-"evidence": null,
-"role": "logic"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006e00f0": {
-"evidence": "thin wrapper around 2 call(s)",
-"role": "wrapper"
+"evidence": "vtable slot in plasma::RenderSurface::vftable (called via vtable)",
+"role": "vfunc-indirect"
 },
 "006e0120": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006e0150": {
 "evidence": null,
@@ -10179,663 +10589,673 @@
 "role": "logic"
 },
 "006e0ec0": {
-"evidence": null,
-"role": "logic"
+"evidence": "no incoming reference of any kind (EH/GS fragment or dead code)",
+"role": "artifact"
 },
 "006f93e0": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | held in dispatch table FUN_006fbab5",
 "name": "compute",
 "role": "computed"
 },
 "006f93f0": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | held in dispatch table FUN_006fbab5",
 "name": "compute",
 "role": "computed"
 },
 "006f9400": {
-"evidence": "trivial expression, no calls",
+"evidence": "trivial expression, no calls | held in dispatch table FUN_006fbab5",
 "name": "compute",
 "role": "computed"
 },
 "006f9430": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table FUN_006fbab5",
 "role": "wrapper"
 },
 "006f9450": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9480": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f94b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f94e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9510": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9540": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9570": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f95a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f95d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9600": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9630": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9660": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9690": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f96c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f96f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9720": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9750": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9780": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f97b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f97e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9810": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9840": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9870": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f98a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f98d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9900": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9930": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9960": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9990": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f99c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f99f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9a20": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9a50": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9a80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9ab0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9ae0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9b10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9b40": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9b70": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9ba0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9bd0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9c00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9c30": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9c60": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9c90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9cc0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9cf0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9d20": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9d50": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9d80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9db0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9de0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9e10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9e40": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9ee0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9f20": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9f50": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9f80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9fb0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006f9ff0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa020": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa050": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa080": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa0b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa0e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa110": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa140": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa170": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa1a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa1d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa200": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa230": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa260": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa290": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa2c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa2f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa320": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa350": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa380": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa3b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa3e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa410": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa440": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa470": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa4a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa4d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa500": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa530": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa560": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa590": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa5c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa5f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa620": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa650": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa680": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa6b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa6e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa710": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa740": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa770": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa7a0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa7d0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa800": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa830": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa860": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa890": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa8c0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa8f0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa920": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa950": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa980": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa9b0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fa9e0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006faa10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006faa40": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006faa70": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006faaa0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006faad0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fab00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fab30": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fab60": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fab90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fabc0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fabf0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fac20": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fac50": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fac80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006facb0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006face0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fad10": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fad40": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fad70": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fada0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fadd0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fae00": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fae30": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fae60": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fae90": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006faec0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006faef0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006faf20": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006faf50": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006faf80": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fafb0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006faff0": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fb020": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fb050": {
-"evidence": null,
-"role": "logic"
+"evidence": " | held in dispatch table FUN_006fbab5",
+"role": "dispatch-target"
 },
 "006fb0f0": {
-"evidence": "thin wrapper around 2 call(s)",
+"evidence": "thin wrapper around 2 call(s) | held in dispatch table FUN_006fbab5",
 "role": "wrapper"
 },
 "006fb10f": {
-"evidence": "single-call forwarder -> 0x0068d755",
+"evidence": "single-call forwarder -> 0x0068d755 | held in dispatch table FUN_006fbab5",
 "name": "fwd_0068d755",
 "role": "thunk"
 },
 "006fb150": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 006f9430 (callback)",
 "role": "dtor-like"
 },
 "006fb1b0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00480e00 (callback)",
 "role": "dtor-like"
 },
 "006fb270": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00488ee0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "006fb2d0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 00488ee0 (callback)",
+"module": "control",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "006fb330": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 0049d910 (callback)",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "006fb3b0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 0049d910 (callback)",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "006fb430": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 0049d910 (callback)",
+"module": "world",
+"module_conf": 1.0,
 "role": "dtor-like"
 },
 "006fb5f0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 005a02d0 (callback)",
 "role": "dtor-like"
 },
 "006fb9f0": {
-"evidence": "frees memory \u2014 destructor-shaped",
+"evidence": "frees memory \u2014 destructor-shaped | address taken by 006fb0f0 (callback)",
 "role": "dtor-like"
 },
 "006fbab5": {
-"evidence": "single-call forwarder -> 0x0068d593",
+"evidence": "single-call forwarder -> 0x0068d593 | address taken by 006fb10f (callback)",
 "name": "fwd_0068d593",
 "role": "thunk"
 }

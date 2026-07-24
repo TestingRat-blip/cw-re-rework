@@ -189,9 +189,6 @@ uint __cdecl FUN_0040f7f0(int param_1);
 /* 0040f8b0  gamemisc  [none] */
 undefined1 __fastcall FUN_0040f8b0(char * param_1);
 
-/* 0040f8f0  gamemisc  [none] */
-float10 __thiscall FUN_0040f8f0(int param_1, undefined4 param_2);
-
 /* 0040ffe0  gamemisc  [none] */
 int __fastcall FUN_0040ffe0(int param_1);
 
@@ -452,4 +449,7 @@ undefined * __cdecl FUN_00418000(uint param_1);
 
 /* 004180a0  gamemisc  [none] */
 undefined __thiscall FUN_004180a0(void * this, undefined8 * param_1, uint * param_2, uint param_3, uint param_4, uint param_5);
+
+/* 00418280  gamemisc  [none] */
+ushort * __cdecl FUN_00418280(ushort * param_1);
 

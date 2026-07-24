@@ -3,425 +3,17 @@
 #pragma once
 #include "../include/cw_types.h"
 
-/* 0045fad0  gamemisc  [none] */
-undefined __cdecl FUN_0045fad0(int param_1);
-
-/* 0045fce0  gamemisc  [none] */
-undefined __cdecl FUN_0045fce0(undefined4 param_1, undefined4 param_2, int * param_3);
-
-/* 0045fd90  gamemisc  [none] */
-undefined __cdecl FUN_0045fd90(int param_1, undefined4 param_2, undefined4 * param_3);
-
-/* 0045fdc0  gamemisc  [none] */
-undefined4 __cdecl FUN_0045fdc0(undefined4 param_1, byte * param_2, undefined * param_3);
-
-/* 0045fee0  gamemisc  [none] */
-undefined __cdecl FUN_0045fee0(int param_1, undefined4 param_2, int * param_3);
-
-/* 0045ff40  gamemisc  [none] */
-undefined __cdecl FUN_0045ff40(int param_1, int param_2);
-
-/* 0045ffa0  gamemisc  [none] */
-undefined * __cdecl FUN_0045ffa0(undefined4 param_1, byte * param_2);
-
-/* 00460010  gamemisc  [none] */
-undefined __cdecl FUN_00460010(int param_1, undefined4 param_2, undefined4 * param_3);
-
-/* 00460380  gamemisc  [none] */
-uint __cdecl FUN_00460380(int param_1, byte * param_2, byte param_3, int param_4, int param_5);
-
-/* 004603f0  gamemisc  [none] */
-undefined * __cdecl FUN_004603f0(undefined4 param_1, byte * param_2);
-
-/* 00460480  gamemisc  [none] */
-uint __cdecl FUN_00460480(int param_1, byte * param_2, byte param_3, int param_4, int param_5, int param_6);
-
-/* 004604f0  gamemisc  [none] */
-uint __cdecl FUN_004604f0(uint param_1, void * param_2, byte param_3, int param_4, int param_5);
-
-/* 00460590  gamemisc  [none] */
-undefined4 __cdecl FUN_00460590(int param_1, undefined4 param_2, undefined4 param_3);
-
-/* 004605e0  gamemisc  [none] */
-undefined4 __cdecl FUN_004605e0(int param_1, undefined4 param_2, undefined4 param_3);
-
-/* 00460630  gamemisc  [none] */
-undefined __cdecl FUN_00460630(int param_1, undefined4 param_2, undefined4 * param_3);
-
-/* 00460810  gamemisc  [none] */
-undefined __cdecl FUN_00460810(int param_1, undefined4 param_2, int * param_3);
-
-/* 004608d0  gamemisc  [none] */
-undefined4 __cdecl FUN_004608d0(int param_1, int param_2);
-
-/* 00460910  gamemisc  [none] */
-undefined4 __cdecl FUN_00460910(int param_1, undefined4 param_2, undefined4 param_3);
-
-/* 00460960  gamemisc  [none] */
-undefined4 __cdecl FUN_00460960(int param_1, undefined4 param_2, undefined4 param_3);
-
-/* 004609b0  gamemisc  [none] */
-undefined __cdecl FUN_004609b0(int param_1, undefined4 param_2, undefined4 * param_3);
-
-/* 00460c30  gamemisc  [none] */
-undefined4 __cdecl FUN_00460c30(int param_1, void * param_2, uint param_3, uint param_4, uint param_5);
-
-/* 00460d00  gamemisc  [none] */
-undefined4 __cdecl FUN_00460d00(int param_1, undefined4 param_2, undefined4 param_3);
-
-/* 00461320  gamemisc  [none] */
-undefined8 __cdecl FUN_00461320(uint param_1, int param_2);
-
-/* 00461420  gamemisc  [none] */
-undefined4 __cdecl FUN_00461420(int param_1, void * param_2, undefined4 * param_3);
-
-/* 00461530  gamemisc  [none] */
-undefined __cdecl FUN_00461530(int param_1, int param_2, undefined4 * param_3);
-
-/* 00461610  gamemisc  [none] */
-undefined __cdecl FUN_00461610(int * param_1, int param_2, undefined4 * param_3);
-
-/* 0046178a  gamemisc  [none] */
-undefined __fastcall FUN_0046178a(int * param_1, int param_2);
-
-/* 00461bb0  gamemisc  [none] */
-undefined __cdecl FUN_00461bb0(int param_1, int param_2, undefined4 * param_3);
-
-/* 00461cd0  gamemisc  [none] */
-undefined4 * __cdecl FUN_00461cd0(undefined4 param_1, undefined4 param_2, int param_3);
-
-/* 00461d80  gamemisc  [none] */
-undefined __cdecl FUN_00461d80(int param_1, int param_2, undefined4 * param_3);
-
-/* 00461e80  gamemisc  [none] */
-undefined __cdecl FUN_00461e80(int param_1, undefined4 param_2, undefined4 * param_3);
-
-/* 00462070  gamemisc  [none] */
-undefined4 __cdecl FUN_00462070(undefined8 * param_1);
-
-/* 00462150  gamemisc  [none] */
-undefined __cdecl FUN_00462150(int param_1, int param_2, undefined4 * param_3);
-
-/* 00462250  gamemisc  [none] */
-undefined __cdecl FUN_00462250(int * param_1, int param_2);
-
-/* 004622e0  gamemisc  [none] */
-undefined __cdecl FUN_004622e0(int * param_1);
-
-/* 00462330  gamemisc  [none] */
-undefined __cdecl FUN_00462330(int param_1, int param_2, undefined4 * param_3);
-
-/* 004628d0  gamemisc  [none] */
-undefined4 __cdecl FUN_004628d0(undefined4 * param_1);
-
-/* 00462930  gamemisc  [none] */
-undefined4 * __cdecl FUN_00462930(int * param_1, uint param_2, int param_3);
-
-/* 00462b60  gamemisc  [none] */
-undefined __cdecl FUN_00462b60(undefined4 param_1, undefined4 param_2, int param_3, uint * param_4);
-
-/* 00462eb0  gamemisc  [none] */
-undefined __cdecl FUN_00462eb0(void * param_1, int param_2, undefined4 * param_3);
-
-/* 00463000  gamemisc  [none] */
-undefined __cdecl FUN_00463000(int * param_1, undefined4 param_2, int * param_3);
-
-/* 00463630  gamemisc  [none] */
-undefined __cdecl FUN_00463630(int * param_1, undefined4 * param_2, int param_3);
-
-/* 004637e0  gamemisc  [none] */
-undefined __cdecl FUN_004637e0(int param_1);
-
-/* 00463860  gamemisc  [none] */
-undefined __cdecl FUN_00463860(int param_1, byte * param_2, int param_3, undefined4 param_4);
-
-/* 00463b80  gamemisc  [none] */
-undefined __cdecl FUN_00463b80(int param_1);
-
-/* 00463be0  gamemisc  [none] */
-undefined __cdecl FUN_00463be0(undefined4 * param_1, int param_2, uint param_3, uint param_4);
-
-/* 00463c80  gamemisc  [none] */
-undefined __cdecl FUN_00463c80(int * param_1, int param_2, int * param_3);
-
-/* 00463d00  gamemisc  [none] */
-undefined __cdecl FUN_00463d00(undefined4 * param_1, uint param_2);
-
-/* 00463d50  gamemisc  [none] */
-undefined __cdecl FUN_00463d50(int param_1);
-
-/* 00463e20  gamemisc  [none] */
-undefined __cdecl FUN_00463e20(int * param_1);
-
-/* 00463e90  gamemisc  [none] */
-undefined __cdecl FUN_00463e90(int * param_1, undefined4 param_2, int * param_3);
-
-/* 00463f80  gamemisc  [none] */
-uint __cdecl FUN_00463f80(int param_1, int param_2);
-
-/* 00464130  gamemisc  [none] */
-uint __cdecl FUN_00464130(int param_1, byte * param_2, int param_3);
-
-/* 004641e0  gamemisc  [none] */
-undefined __cdecl FUN_004641e0(int param_1);
-
-/* 00464270  gamemisc  [none] */
-undefined __cdecl FUN_00464270(undefined4 param_1, undefined4 param_2);
-
-/* 00464310  gamemisc  [none] */
-undefined __cdecl FUN_00464310(int * param_1, int param_2, int * param_3);
-
-/* 00464c00  gamemisc  [none] */
-uint __cdecl FUN_00464c00(undefined4 * param_1, undefined4 param_2, undefined4 param_3);
-
-/* 00464cd0  gamemisc  [none] */
-uint __cdecl FUN_00464cd0(undefined4 * param_1);
-
-/* 00464d90  gamemisc  [none] */
-undefined __cdecl FUN_00464d90(int param_1);
-
-/* 00464f20  gamemisc  [none] */
-int __cdecl FUN_00464f20(int param_1, int param_2);
-
-/* 00464fa0  gamemisc  [none] */
-undefined4 __cdecl FUN_00464fa0(int param_1);
-
-/* 00465070  gamemisc  [none] */
-undefined4 __cdecl FUN_00465070(int param_1);
-
-/* 00465100  gamemisc  [none] */
-undefined4 __cdecl FUN_00465100(int param_1);
-
-/* 00465140  gamemisc  [none] */
-undefined __cdecl FUN_00465140(undefined4 param_1, uint param_2, undefined8 * param_3);
-
-/* 00465210  gamemisc  [none] */
-undefined4 __cdecl FUN_00465210(uint param_1, int param_2, uint param_3, undefined4 param_4, undefined4 param_5);
-
-/* 004653d0  gamemisc  [none] */
-char * __cdecl FUN_004653d0(undefined4 param_1, char * param_2, uint * param_3, undefined4 * param_4);
-
-/* 004655d0  gamemisc  [none] */
-undefined4 __cdecl FUN_004655d0(uint param_1, undefined4 * param_2, undefined4 * param_3, int param_4);
-
-/* 00465720  gamemisc  [none] */
-undefined4 __cdecl FUN_00465720(int param_1, int param_2, int * param_3, undefined4 * param_4, int param_5);
-
-/* 00465a30  gamemisc  [none] */
-undefined4 __cdecl FUN_00465a30(int param_1, int param_2, int param_3);
-
-/* 00465a50  gamemisc  [none] */
-undefined4 __cdecl FUN_00465a50(int param_1, int param_2, uint param_3, uint param_4, uint param_5);
-
-/* 00465c00  gamemisc  [none] */
-undefined4 __cdecl FUN_00465c00(int param_1, int param_2);
-
-/* 00465c90  gamemisc  [none] */
-bool __cdecl FUN_00465c90(byte * param_1);
-
-/* 004660e0  gamemisc  [none] */
-uint __cdecl FUN_004660e0(void * param_1);
-
-/* 004661b0  gamemisc  [none] */
-undefined4 __cdecl FUN_004661b0(int param_1, undefined4 param_2, undefined4 param_3);
-
-/* 004662c0  gamemisc  [none] */
-undefined __cdecl FUN_004662c0(int param_1, undefined4 param_2, undefined4 * param_3);
-
-/* 00466390  gamemisc  [none] */
-undefined4 __cdecl FUN_00466390(int param_1, uint param_2, int param_3);
-
-/* 00466440  gamemisc  [none] */
-uint __cdecl FUN_00466440(int param_1, byte * param_2, undefined4 * param_3, undefined4 * param_4, undefined4 * param_5, int * param_6);
-
-/* 004665f0  gamemisc  [none] */
-undefined __cdecl FUN_004665f0(int param_1);
-
-/* 004667da  gamemisc  [none] */
-undefined __fastcall FUN_004667da(int param_1, int param_2);
-
-/* 00466ae0  gamemisc  [none] */
-undefined4 __cdecl FUN_00466ae0(int param_1);
-
-/* 00466b60  gamemisc  [none] */
-undefined __cdecl FUN_00466b60(int param_1, undefined4 param_2, undefined4 * param_3);
-
-/* 00466f30  gamemisc  [none] */
-undefined4 __cdecl FUN_00466f30(int param_1, int * param_2);
-
-/* 00467000  gamemisc  [none] */
-undefined4 __cdecl FUN_00467000(int param_1, undefined4 param_2, undefined4 param_3);
-
-/* 00467060  gamemisc  [none] */
-undefined __cdecl FUN_00467060(int param_1, undefined4 param_2, undefined4 * param_3);
-
-/* 00467170  gamemisc  [none] */
-undefined4 __cdecl FUN_00467170(int param_1, undefined4 param_2, undefined4 param_3);
-
-/* 004671c0  gamemisc  [none] */
-int * __cdecl FUN_004671c0(int param_1, byte * param_2, int param_3, byte * param_4);
-
-/* 004672d0  gamemisc  [none] */
-undefined __cdecl FUN_004672d0(int param_1, undefined4 param_2, undefined4 * param_3);
-
-/* 00467d70  gamemisc  [none] */
-undefined4 __cdecl FUN_00467d70(int param_1, undefined4 param_2, undefined4 param_3);
-
-/* 00467ed0  gamemisc  [none] */
-undefined __cdecl FUN_00467ed0(int param_1, int param_2, undefined4 param_3, undefined4 param_4);
-
-/* 00467f70  gamemisc  [none] */
-uint __cdecl FUN_00467f70(void * param_1, int * param_2);
-
-/* 004681c0  gamemisc  [none] */
-undefined4 __cdecl FUN_004681c0(int param_1, int param_2);
-
-/* 00468410  gamemisc  [none] */
-undefined4 __cdecl FUN_00468410(int param_1, undefined4 param_2, undefined4 param_3);
-
-/* 00468460  gamemisc  [none] */
-undefined __cdecl FUN_00468460(int param_1, undefined4 param_2, undefined4 * param_3);
-
-/* 004686e0  gamemisc  [none] */
-undefined4 __cdecl FUN_004686e0(int param_1);
-
-/* 00468750  gamemisc  [none] */
-uint __cdecl FUN_00468750(int param_1, byte * param_2);
-
-/* 004688d0  gamemisc  [none] */
-wchar_t * __cdecl FUN_004688d0(int param_1);
-
-/* 004689a0  gamemisc  [none] */
-undefined4 __cdecl FUN_004689a0(int param_1, uint param_2, int param_3);
-
-/* 004689e0  gamemisc  [none] */
-undefined4 __cdecl FUN_004689e0(int param_1, int param_2, undefined1 param_3);
-
-/* 00468a90  gamemisc  [none] */
-undefined __cdecl FUN_00468a90(int param_1, int param_2, int * param_3);
-
-/* 00468dc0  gamemisc  [none] */
-undefined4 __cdecl FUN_00468dc0(int param_1, uint * param_2);
-
-/* 00468e70  gamemisc  [none] */
-undefined4 __cdecl FUN_00468e70(int param_1, int param_2);
-
-/* 00468fa0  gamemisc  [none] */
-int __cdecl FUN_00468fa0(int param_1, undefined4 param_2, uint * param_3);
-
-/* 00469220  gamemisc  [none] */
-int __cdecl FUN_00469220(int * param_1, int param_2, int param_3);
-
-/* 00469290  gamemisc  [none] */
-int __cdecl FUN_00469290(int * param_1, int param_2, int param_3, int param_4);
-
-/* 004692f0  gamemisc  [none] */
-undefined __cdecl FUN_004692f0(int param_1, int param_2, int * param_3);
-
-/* 004695b0  gamemisc  [none] */
-uint __cdecl FUN_004695b0(int * param_1, int param_2, int param_3);
-
-/* 00469710  gamemisc  [none] */
-int __cdecl FUN_00469710(int * param_1, int param_2, int param_3);
-
-/* 004697a0  gamemisc  [none] */
-undefined4 __cdecl FUN_004697a0(int param_1, int param_2);
-
-/* 004697f0  gamemisc  [none] */
-undefined __cdecl FUN_004697f0(int param_1, int * param_2);
-
-/* 00469830  gamemisc  [none] */
-undefined4 __cdecl FUN_00469830(int * param_1);
-
-/* 00469aa0  gamemisc  [none] */
-int __cdecl FUN_00469aa0(int * param_1, int param_2);
-
-/* 00469b10  gamemisc  [none] */
-undefined __cdecl FUN_00469b10(int param_1, undefined4 param_2, undefined4 * param_3);
-
-/* 00469bd0  gamemisc  [none] */
-int __cdecl FUN_00469bd0(int * param_1, int param_2);
-
-/* 00469c40  gamemisc  [none] */
-int __cdecl FUN_00469c40(int * param_1, int param_2);
-
-/* 0046a030  gamemisc  [none] */
-undefined __cdecl FUN_0046a030(int param_1);
-
-/* 0046a100  gamemisc  [none] */
-undefined __cdecl FUN_0046a100(undefined4 param_1, char * param_2, undefined8 * param_3, uint param_4, int * param_5);
-
-/* 0046a4c0  gamemisc  [none] */
-int __cdecl FUN_0046a4c0(int * param_1, int param_2);
-
-/* 0046a520  gamemisc  [none] */
-undefined __cdecl FUN_0046a520(undefined4 param_1, undefined4 param_2);
-
-/* 0046a710  gamemisc  [none] */
-float10 __cdecl FUN_0046a710(int * param_1, int param_2);
-
-/* 0046a790  gamemisc  [none] */
-undefined4 __cdecl FUN_0046a790(int * param_1, int param_2);
-
-/* 0046a7c0  gamemisc  [none] */
-undefined __cdecl FUN_0046a7c0(int param_1, undefined4 param_2, int * param_3);
-
-/* 0046a860  gamemisc  [none] */
-ulonglong __cdecl FUN_0046a860(int * param_1, int param_2);
-
-/* 0046a8f0  gamemisc  [none] */
-int __cdecl FUN_0046a8f0(int * param_1, int param_2);
-
-/* 0046a920  gamemisc  [none] */
-int __cdecl FUN_0046a920(int * param_1, int param_2);
-
-/* 0046ad10  gamemisc  [none] */
-LPCRITICAL_SECTION __cdecl FUN_0046ad10(uint param_1);
-
-/* 0046ad70  gamemisc  [none] */
-undefined4 __cdecl FUN_0046ad70(int param_1, int param_2);
-
-/* 0046ae50  gamemisc  [none] */
-uint __cdecl FUN_0046ae50(uint param_1, void * param_2, int param_3, uint param_4, undefined4 param_5, int param_6, int param_7, int param_8);
-
-/* 0046af10  gamemisc  [none] */
-int __cdecl FUN_0046af10(int param_1, int param_2, undefined4 param_3, uint param_4);
-
-/* 0046b0e0  gamemisc  [none] */
-uint __cdecl FUN_0046b0e0(int param_1, byte * param_2, int param_3, uint param_4, int param_5, int param_6, int param_7, int param_8, undefined * param_9);
-
-/* 0046b1f0  gamemisc  [none] */
-undefined4 __cdecl FUN_0046b1f0(void * param_1, int * param_2);
-
-/* 0046b260  gamemisc  [none] */
-int __cdecl FUN_0046b260(int * param_1);
-
 /* 0046b2b0  gamemisc  [none] */
 int __cdecl FUN_0046b2b0(int * param_1);
 
 /* 0046bab0  gamemisc  [none] */
 bool __cdecl FUN_0046bab0(int param_1, int param_2);
 
-/* 0046c6c0  gamemisc  [none] */
-undefined4 __cdecl FUN_0046c6c0(int * param_1, undefined4 param_2, undefined4 * param_3);
-
-/* 0046c7b0  gamemisc  [none] */
-undefined4 __cdecl FUN_0046c7b0(int param_1, uint * param_2);
-
-/* 0046eada  gamemisc  [none] */
-undefined __stdcall FUN_0046eada(void);
-
-/* 0046f5da  gamemisc  [none] */
-undefined __stdcall FUN_0046f5da(void);
-
 /* 0046f880  gamemisc  [none] */
 undefined __cdecl FUN_0046f880(int * param_1);
 
 /* 0046f990  gamemisc  [none] */
 undefined __cdecl FUN_0046f990(int * param_1);
-
-/* 004700da  gamemisc  [none] */
-undefined __stdcall FUN_004700da(void);
 
 /* 00470300  gamemisc  [none] */
 undefined __cdecl FUN_00470300(int * param_1);
@@ -432,17 +24,8 @@ undefined __cdecl FUN_00470360(int * param_1);
 /* 004706c0  gamemisc  [none] */
 undefined __cdecl FUN_004706c0(int * param_1);
 
-/* 004708e0  gamemisc  [none] */
-uint __cdecl FUN_004708e0(int param_1, uint param_2, byte * param_3, uint param_4, byte * param_5);
-
 /* 00470aa0  gamemisc  [none] */
 uint __cdecl FUN_00470aa0(int param_1, undefined4 param_2, int param_3, int param_4, undefined * param_5);
-
-/* 00471550  gamemisc  [none] */
-int __cdecl FUN_00471550(int param_1);
-
-/* 004721aa  gamemisc  [none] */
-undefined __stdcall FUN_004721aa(void);
 
 /* 00472ef0  gamemisc  [none] */
 int __cdecl FUN_00472ef0(int * param_1, undefined4 * param_2, undefined4 * param_3, uint param_4, uint param_5, int param_6, undefined4 * param_7);
@@ -452,4 +35,421 @@ undefined __cdecl FUN_004731c0(int param_1, int param_2, size_t param_3, int * p
 
 /* 00473660  gamemisc  [none] */
 int __cdecl FUN_00473660(int * param_1, int * param_2, int param_3, int param_4);
+
+/* 004738d0  gamemisc  [none] */
+undefined8 __cdecl FUN_004738d0(undefined4 * param_1, int param_2, ushort param_3, uint param_4, uint param_5);
+
+/* 004752f0  gamemisc  [none] */
+undefined __cdecl FUN_004752f0(ulonglong * param_1);
+
+/* 004753b0  gamemisc  [none] */
+undefined __cdecl FUN_004753b0(ulonglong * param_1);
+
+/* 00475680  gamemisc  [none] */
+undefined __cdecl FUN_00475680(uint * param_1);
+
+/* 004757f0  gamemisc  [none] */
+undefined __cdecl FUN_004757f0(int * param_1, int param_2, uint param_3, uint param_4, uint param_5, uint * param_6);
+
+/* 00476020  gamemisc  [none] */
+int __cdecl FUN_00476020(int param_1, uint param_2, int param_3);
+
+/* 00476080  gamemisc  [none] */
+undefined __cdecl FUN_00476080(undefined4 param_1);
+
+/* 004762d0  gamemisc  [none] */
+undefined4 __cdecl FUN_004762d0(int param_1, byte * param_2, byte param_3, int param_4, int param_5, int param_6);
+
+/* 00476470  gamemisc  [none] */
+uint __cdecl FUN_00476470(int param_1, byte * param_2, undefined4 param_3, undefined4 param_4, undefined * param_5);
+
+/* 00476c10  gamemisc  [none] */
+undefined __cdecl FUN_00476c10(int param_1, int * param_2);
+
+/* 00477290  gamemisc  [none] */
+float10 __cdecl FUN_00477290(double param_1);
+
+/* 004776e0  gamemisc  [none] */
+int __cdecl FUN_004776e0(int param_1, char * param_2, int param_3);
+
+/* 004778d0  gamemisc  [none] */
+undefined __cdecl FUN_004778d0(int * param_1, int param_2, uint * param_3, undefined4 param_4, undefined4 param_5, ushort param_6);
+
+/* 0047afc0  gamemisc  [none] */
+undefined __cdecl FUN_0047afc0(int * param_1, short * param_2, int param_3, int param_4, int * param_5, int param_6, int param_7, int param_8);
+
+/* 0047c700  gamemisc  [none] */
+int __cdecl FUN_0047c700(int * param_1, int * param_2, int param_3, undefined1 * param_4, undefined4 param_5, int param_6, int * param_7, size_t param_8, undefined4 param_9);
+
+/* 0047d1b0  gamemisc  [none] */
+int __cdecl FUN_0047d1b0(byte * param_1);
+
+/* 0047d250  gamemisc  [none] */
+undefined __cdecl FUN_0047d250(undefined4 param_1, int param_2, undefined4 param_3);
+
+/* 0047d5d0  gamemisc  [none] */
+undefined __cdecl FUN_0047d5d0(int param_1);
+
+/* 0047db10  gamemisc  [none] */
+undefined __cdecl FUN_0047db10(int param_1, char * param_2);
+
+/* 0047e970  gamemisc  [none] */
+undefined4 __cdecl FUN_0047e970(char * param_1);
+
+/* 0047eaa0  gamemisc  [none] */
+undefined4 __cdecl FUN_0047eaa0(int param_1, int param_2, undefined4 * param_3, ulonglong * param_4);
+
+/* 0047ebd0  gamemisc  [none] */
+undefined4 __cdecl FUN_0047ebd0(int * param_1, undefined4 * param_2, int * param_3, int param_4, int * param_5, int param_6);
+
+/* 0047f090  gamemisc  [none] */
+int __cdecl FUN_0047f090(int param_1, uint param_2, int param_3);
+
+/* 0047f1a0  gamemisc  [none] */
+uint __cdecl FUN_0047f1a0(undefined4 * param_1, int * param_2, int param_3, uint * param_4);
+
+/* 0047f780  gamemisc  [none] */
+undefined __cdecl FUN_0047f780(ulonglong * param_1, int param_2, undefined4 * param_3);
+
+/* 00480740  gamemisc  [none] */
+void * __cdecl FUN_00480740(undefined4 param_1);
+
+/* 004834d0  gamemisc  [none] */
+uint __cdecl FUN_004834d0(int * param_1, undefined4 * param_2, uint param_3, byte * param_4);
+
+/* 00485890  gamemisc  [none] */
+undefined4 __cdecl FUN_00485890(int param_1, byte * param_2, ulonglong * param_3);
+
+/* 00485950  gamemisc  [none] */
+undefined4 __cdecl FUN_00485950(byte * param_1, int param_2);
+
+/* 00485a80  gamemisc  [none] */
+undefined __cdecl FUN_00485a80(int param_1, byte * param_2, ulonglong * param_3);
+
+/* 00486380  gamemisc  [none] */
+bool __cdecl FUN_00486380(byte * param_1, int param_2);
+
+/* 00486460  gamemisc  [none] */
+undefined4 __cdecl FUN_00486460(byte * param_1, ulonglong * param_2);
+
+/* 00486540  gamemisc  [none] */
+bool __cdecl FUN_00486540(char * param_1, byte * param_2, ushort * param_3, uint param_4);
+
+/* 004869b0  gamemisc  [none] */
+undefined4 * __cdecl FUN_004869b0(int * param_1);
+
+/* 00486a20  gamemisc  [none] */
+undefined __cdecl FUN_00486a20(int param_1);
+
+/* 00486bf0  gamemisc  [none] */
+undefined __cdecl FUN_00486bf0(undefined4 * param_1);
+
+/* 00486c20  gamemisc  [none] */
+undefined __cdecl FUN_00486c20(int param_1);
+
+/* 00486c80  gamemisc  [none] */
+undefined __cdecl FUN_00486c80(int param_1);
+
+/* 00486cc0  gamemisc  [none] */
+undefined4 __cdecl FUN_00486cc0(undefined4 * param_1);
+
+/* 00486dd0  gamemisc  [none] */
+undefined __cdecl FUN_00486dd0(int param_1, uint param_2);
+
+/* 00486ea0  gamemisc  [none] */
+undefined4 __cdecl FUN_00486ea0(int param_1);
+
+/* 004891f0  gamemisc  [none] */
+undefined4 __cdecl FUN_004891f0(int * param_1, undefined4 * param_2, int * param_3, char * param_4);
+
+/* 0048a010  gamemisc  [none] */
+undefined4 __cdecl FUN_0048a010(int param_1, undefined4 param_2, uint param_3);
+
+/* 0048b480  gamemisc  [none] */
+undefined4 __cdecl FUN_0048b480(int param_1, ulonglong * param_2);
+
+/* 0048b660  gamemisc  [none] */
+undefined4 __cdecl FUN_0048b660(int param_1, undefined4 * param_2, uint param_3, int param_4);
+
+/* 0048d6f0  gamemisc  [none] */
+undefined __cdecl FUN_0048d6f0(int param_1);
+
+/* 0048e670  gamemisc  [none] */
+uint __cdecl FUN_0048e670(uint param_1, uint * param_2);
+
+/* 004907e0  gamemisc  [none] */
+undefined __cdecl FUN_004907e0(int * param_1);
+
+/* 00491f10  gamemisc  [none] */
+undefined1 __cdecl FUN_00491f10(undefined4 * param_1);
+
+/* 00492650  gamemisc  [none] */
+undefined __cdecl FUN_00492650(int * param_1);
+
+/* 004975c0  gamemisc  [none] */
+undefined __cdecl FUN_004975c0(int * param_1, byte * param_2, undefined4 param_3, undefined4 param_4);
+
+/* 004993e0  gamemisc  [none] */
+bool __cdecl FUN_004993e0(char * param_1, char param_2);
+
+/* 004a0990  gamemisc  [none] */
+undefined4 __cdecl FUN_004a0990(undefined4 param_1, undefined4 param_2, uint param_3, int param_4);
+
+/* 004a12e0  gamemisc  [none] */
+int __cdecl FUN_004a12e0(int param_1, undefined4 param_2, undefined4 * param_3, uint param_4, undefined4 param_5);
+
+/* 004a1c90  gamemisc  [none] */
+int __cdecl FUN_004a1c90(int param_1);
+
+/* 004a5e90  gamemisc  [none] */
+uint __cdecl FUN_004a5e90(uint param_1, byte * param_2, size_t param_3, byte param_4, undefined4 * param_5, int * param_6);
+
+/* 004ad150  gamemisc  [none] */
+int __cdecl FUN_004ad150(byte * param_1, int param_2);
+
+/* 004ad190  gamemisc  [none] */
+undefined4 __cdecl FUN_004ad190(uint param_1, void * param_2, size_t param_3, char param_4);
+
+/* 004ad280  gamemisc  [none] */
+uint __cdecl FUN_004ad280(int * param_1);
+
+/* 004b7be0  gamemisc  [none] */
+undefined __cdecl FUN_004b7be0(int * param_1, int param_2);
+
+/* 004bcb50  gamemisc  [none] */
+uint __cdecl FUN_004bcb50(int * param_1, char * param_2, char * param_3, int * param_4);
+
+/* 004bccb0  gamemisc  [none] */
+byte * __cdecl FUN_004bccb0(char * param_1, byte * param_2);
+
+/* 004bcd60  gamemisc  [none] */
+void * __cdecl FUN_004bcd60(undefined4 param_1);
+
+/* 004bdb80  gamemisc  [none] */
+void * __cdecl FUN_004bdb80(undefined4 param_1);
+
+/* 004bdc10  gamemisc  [none] */
+void * __cdecl FUN_004bdc10(undefined4 param_1);
+
+/* 004bdc90  gamemisc  [none] */
+undefined __cdecl FUN_004bdc90(int param_1);
+
+/* 004bebc0  gamemisc  [none] */
+void * __cdecl FUN_004bebc0(undefined4 param_1);
+
+/* 004c2230  gamemisc  [none] */
+undefined __cdecl FUN_004c2230(undefined4 param_1);
+
+/* 004c2320  gamemisc  [none] */
+undefined __cdecl FUN_004c2320(undefined4 * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5, undefined4 param_6);
+
+/* 004c23f0  gamemisc  [none] */
+undefined __cdecl FUN_004c23f0(undefined4 param_1, undefined4 param_2);
+
+/* 004c24f0  gamemisc  [none] */
+int __cdecl FUN_004c24f0(int param_1);
+
+/* 004c2810  gamemisc  [none] */
+undefined __cdecl FUN_004c2810(undefined4 param_1, int param_2);
+
+/* 004c28e0  gamemisc  [none] */
+undefined __cdecl FUN_004c28e0(undefined4 * param_1, undefined4 param_2, undefined4 param_3, undefined4 param_4, undefined4 param_5);
+
+/* 004c6470  gamemisc  [none] */
+float * __thiscall FUN_004c6470(void * this, byte * param_1);
+
+/* 004c64b0  gamemisc  [none] */
+float * __thiscall FUN_004c64b0(void * this, int * param_1);
+
+/* 004c670e  gamemisc  [none] */
+undefined __stdcall FUN_004c670e(void);
+
+/* 004c7f70  gamemisc  [none] */
+void * __cdecl FUN_004c7f70(int * param_1, int * param_2, void * param_3);
+
+/* 004c8020  gamemisc  [none] */
+void * __cdecl FUN_004c8020(undefined4 * param_1, undefined4 * param_2, void * param_3);
+
+/* 004c8150  gamemisc  [none] */
+undefined __cdecl FUN_004c8150(undefined4 * param_1, undefined4 * param_2);
+
+/* 004c8170  gamemisc  [none] */
+undefined __cdecl FUN_004c8170(undefined4 * param_1, undefined4 * param_2);
+
+/* 004c8190  gamemisc  [none] */
+basic_iostream<char,std::char_traits<char>_> * __thiscall FUN_004c8190(void * this, uint param_1, int param_2);
+
+/* 004c8350  gamemisc  [none] */
+undefined4 * __thiscall FUN_004c8350(void * this, undefined4 * param_1);
+
+/* 004c83b0  gamemisc  [none] */
+int __fastcall FUN_004c83b0(int param_1);
+
+/* 004ce200  gamemisc  [none] */
+undefined __thiscall FUN_004ce200(void * this, int * param_1);
+
+/* 004ce220  gamemisc  [none] */
+undefined __thiscall FUN_004ce220(void * this, int * param_1, int * param_2);
+
+/* 004ce580  gamemisc  [none] */
+undefined4 __thiscall FUN_004ce580(void * this, uint param_1);
+
+/* 004ce780  gamemisc  [none] */
+undefined __thiscall FUN_004ce780(void * this, int param_1);
+
+/* 004ce8e0  gamemisc  [none] */
+undefined __thiscall FUN_004ce8e0(void * this, uint param_1);
+
+/* 004cea80  gamemisc  [none] */
+undefined __thiscall FUN_004cea80(void * this, uint * param_1, void * param_2, undefined4 * param_3);
+
+/* 004cfd50  gamemisc  [none] */
+undefined __thiscall FUN_004cfd50(void * this, float param_1, void * param_2, float param_3, char param_4, char param_5, float param_6, undefined4 param_7, float * param_8, undefined4 * param_9, undefined4 * param_10, char param_11, int param_12, undefined4 param_13, char param_14);
+
+/* 004d1860  gamemisc  [none] */
+undefined4 __thiscall FUN_004d1860(void * this, undefined4 * param_1);
+
+/* 004d18c0  gamemisc  [none] */
+undefined4 __stdcall FUN_004d18c0(int param_1, int param_2);
+
+/* 004d1a70  gamemisc  [none] */
+undefined __thiscall FUN_004d1a70(void * this, uint param_1, uint param_2, int param_3, int param_4, int param_5, int param_6);
+
+/* 004d2190  gamemisc  [none] */
+undefined __stdcall FUN_004d2190(undefined8 * param_1, undefined8 * param_2, float param_3, char param_4, int param_5, int param_6);
+
+/* 004d2340  gamemisc  [none] */
+uint __thiscall FUN_004d2340(void * this, uint param_1, uint param_2, undefined8 param_3);
+
+/* 004d24a0  gamemisc  [none] */
+byte __thiscall FUN_004d24a0(void * this, uint param_1, uint param_2, int param_3, int param_4, int param_5);
+
+/* 004d2810  gamemisc  [none] */
+undefined __stdcall FUN_004d2810(undefined1 * param_1, uint * param_2, float param_3, float param_4, void * param_5);
+
+/* 004d2ae0  gamemisc  [none] */
+undefined __thiscall FUN_004d2ae0(void * this, int param_1, void * param_2);
+
+/* 004d3e10  gamemisc  [none] */
+undefined4 * __thiscall FUN_004d3e10(void * this, undefined4 * param_1, int * param_2, int * param_3);
+
+/* 004d3ed0  gamemisc  [none] */
+undefined __thiscall FUN_004d3ed0(void * this, undefined4 * param_1, int * param_2);
+
+/* 004d4470  gamemisc  [none] */
+int * __thiscall FUN_004d4470(void * this, int * param_1, int param_2);
+
+/* 004d5740  gamemisc  [none] */
+undefined __thiscall FUN_004d5740(void * this, uint * param_1, float * param_2);
+
+/* 004d5c80  gamemisc  [none] */
+float10 __thiscall FUN_004d5c80(void * param_1, uint * param_2);
+
+/* 004d61c0  gamemisc  [none] */
+undefined __thiscall FUN_004d61c0(void * this, uint * param_1);
+
+/* 004d7960  gamemisc  [none] */
+undefined __thiscall FUN_004d7960(void * this, int param_1, int param_2);
+
+/* 004d79f0  gamemisc  [none] */
+undefined __thiscall FUN_004d79f0(void * this, uint param_1, uint param_2);
+
+/* 004d7ae0  gamemisc  [none] */
+undefined __stdcall FUN_004d7ae0(void);
+
+/* 004d81b0  gamemisc  [none] */
+undefined __thiscall FUN_004d81b0(void * this, int param_1);
+
+/* 004d8c90  gamemisc  [none] */
+undefined __stdcall FUN_004d8c90(int * param_1, int param_2, char param_3);
+
+/* 004d8dc0  gamemisc  [none] */
+undefined4 __fastcall FUN_004d8dc0(int param_1);
+
+/* 004d8de0  gamemisc  [none] */
+undefined4 __fastcall FUN_004d8de0(int param_1);
+
+/* 004d8e10  gamemisc  [none] */
+undefined __stdcall FUN_004d8e10(undefined4 * param_1, undefined4 * param_2);
+
+/* 004d8e30  gamemisc  [none] */
+float10 __fastcall FUN_004d8e30(double * param_1);
+
+/* 004d9160  gamemisc  [none] */
+undefined __thiscall FUN_004d9160(void * this, int param_1, int * param_2, uint param_3, uint param_4);
+
+/* 004d9410  gamemisc  [none] */
+undefined __thiscall FUN_004d9410(void * this, int * param_1, uint * param_2);
+
+/* 004d9720  gamemisc  [none] */
+float * __stdcall FUN_004d9720(float * param_1);
+
+/* 004d99d0  gamemisc  [none] */
+int * __thiscall FUN_004d99d0(void * this, uint * param_1);
+
+/* 004d9a10  gamemisc  [none] */
+undefined4 * __thiscall FUN_004d9a10(void * this, int * param_1);
+
+/* 004d9b70  gamemisc  [none] */
+int __stdcall FUN_004d9b70(undefined4 * param_1, undefined4 * param_2, undefined4 * param_3);
+
+/* 004d9be0  gamemisc  [none] */
+undefined __thiscall FUN_004d9be0(void * this, int * param_1, undefined4 param_2);
+
+/* 004d9c60  gamemisc  [none] */
+undefined4 * __thiscall FUN_004d9c60(void * this, undefined4 * param_1, undefined4 param_2, undefined4 param_3);
+
+/* 004d9d20  gamemisc  [none] */
+undefined4 * __thiscall FUN_004d9d20(void * this, undefined4 * param_1, undefined4 param_2, undefined4 param_3);
+
+/* 004da9f0  gamemisc  [none] */
+undefined __thiscall FUN_004da9f0(void * this, int * param_1, int * param_2);
+
+/* 004db1b0  gamemisc  [none] */
+undefined __thiscall FUN_004db1b0(void * this, int * param_1, uint * param_2);
+
+/* 004db200  gamemisc  [none] */
+undefined __stdcall FUN_004db200(void * param_1, int param_2);
+
+/* 004dde00  gamemisc  [none] */
+undefined __thiscall FUN_004dde00(void * this, float * param_1, float * param_2);
+
+/* 004e1230  gamemisc  [none] */
+undefined4 * __cdecl FUN_004e1230(undefined4 * param_1, undefined4 * param_2, undefined4 * param_3);
+
+/* 004e1370  gamemisc  [none] */
+undefined __thiscall FUN_004e1370(void * this, uint param_1);
+
+/* 004e1420  gamemisc  [none] */
+undefined __thiscall FUN_004e1420(void * this, undefined4 * param_1);
+
+/* 004e1520  gamemisc  [none] */
+undefined __cdecl FUN_004e1520(float * param_1, float param_2, float * param_3);
+
+/* 004e1560  gamemisc  [none] */
+undefined __cdecl FUN_004e1560(int param_1, int param_2, int param_3, int * param_4, int * param_5);
+
+/* 004e15f0  gamemisc  [none] */
+undefined __cdecl FUN_004e15f0(int * param_1, int * param_2, int * param_3);
+
+/* 004e16f0  gamemisc  [none] */
+undefined __cdecl FUN_004e16f0(int param_1, int param_2, int * param_3);
+
+/* 004e17c0  gamemisc  [none] */
+undefined __cdecl FUN_004e17c0(int * param_1, int * param_2, int * param_3, int * param_4);
+
+/* 004e1870  gamemisc  [none] */
+undefined __cdecl FUN_004e1870(int * param_1, int * param_2, int * param_3, int * param_4);
+
+/* 004e1910  gamemisc  [none] */
+undefined __cdecl FUN_004e1910(undefined8 * param_1, undefined8 * param_2, undefined8 * param_3);
+
+/* 004e1950  gamemisc  [none] */
+undefined __cdecl FUN_004e1950(int param_1, int param_2, int param_3, int * param_4, int * param_5);
+
+/* 004e1ae0  gamemisc  [none] */
+undefined __cdecl FUN_004e1ae0(undefined4 * param_1, int param_2, int * param_3);
+
+/* 004e1b40  gamemisc  [none] */
+undefined __cdecl FUN_004e1b40(uint * param_1, int * param_2, int * param_3, int * param_4);
 

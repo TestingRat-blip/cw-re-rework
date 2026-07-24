@@ -1,4 +1,4 @@
-// helpers_computed (game_misc) -- server. 50 functions. Bodies = Ghidra pseudo-C.
+// helpers_computed (game_misc) -- server. 46 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_computed.h"
 
@@ -179,51 +179,12 @@ int __fastcall FUN_00428ee0(int *param_1)
 }
 
 
-/* compute_45f850 @ 0045f850  kind=gamemisc  attributed-by=role:computed  size=13 */
-
-undefined4 __cdecl FUN_0045f850(int *param_1)
-
-{
-  return *(undefined4 *)(*param_1 + 4);
-}
-
-
 /* compute_468a70 @ 00468a70  kind=gamemisc  attributed-by=role:computed  size=19 */
 
 undefined1 __cdecl FUN_00468a70(int param_1)
 
 {
   return (&DAT_0056c79b)[*(byte *)(param_1 + 0x3c)];
-}
-
-
-/* compute_469280 @ 00469280  kind=gamemisc  attributed-by=role:computed  size=14 */
-
-void FUN_00469280(int param_1)
-
-{
-                    /* WARNING: Could not recover jumptable at 0x00469288. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
-  free((void *)(param_1 + -8));
-  return;
-}
-
-
-/* compute_469760 @ 00469760  kind=gamemisc  attributed-by=role:computed  size=14 */
-
-uint __cdecl FUN_00469760(int param_1)
-
-{
-  return param_1 + 7U & 0xfffffff8;
-}
-
-
-/* compute_4697d0 @ 004697d0  kind=gamemisc  attributed-by=role:computed  size=21 */
-
-int __cdecl FUN_004697d0(int param_1)
-
-{
-  return (*(byte *)(param_1 + 0x10) & 0x10 | 8) << 8;
 }
 
 

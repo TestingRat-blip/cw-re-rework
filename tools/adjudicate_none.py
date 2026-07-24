@@ -25,6 +25,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(HERE, "..", "raw")
 FOLDER = {"Server.exe": "server", "Cube.exe": "cube"}
 
+# roles a reviewer can skip entirely vs. real functions recovered via indirect refs
+SKIP_ROLES = {"accessor", "mutator", "thunk", "identity", "stub", "dispatch", "computed", "artifact"}
+INDIRECT_ROLES = {"vfunc-indirect", "dispatch-target", "callback"}
+
 # module a caller belongs to -> subsystem, for majority assignment
 def body_of(c):
     i = c.find("{")
@@ -117,10 +121,23 @@ def module_by_callers(addr, meta, modmap):
     return (top, n / len(mods)) if n / len(mods) >= 0.6 else (None, 0.0)
 
 
+def load_indirefs(exe):
+    """Indirect incoming references (IndirectRefs.java): recover the callers that Ghidra's
+    direct call graph misses — vtable slots, dispatch-table targets, callbacks."""
+    p = os.path.join(RAW, exe + ".indirefs.jsonl")
+    out = {}
+    if os.path.exists(p):
+        for line in open(p, encoding="utf-8"):
+            r = json.loads(line)
+            out[r["addr"].lower()] = r
+    return out
+
+
 def run(exe):
     folder = FOLDER[exe]
     meta = {r["addr"].lower(): r for r in (json.loads(l) for l in open(os.path.join(RAW, exe + ".meta.jsonl"), encoding="utf-8"))}
     dec = {r["addr"].lower(): r for r in (json.loads(l) for l in open(os.path.join(RAW, exe + ".decomp.jsonl"), encoding="utf-8"))}
+    indir = load_indirefs(exe)
 
     modmap, kindmap, none = {}, {}, []
     for line in open(os.path.join(HERE, "..", folder, "attribution.tsv"), encoding="utf-8"):
@@ -137,8 +154,45 @@ def run(exe):
     roles = Counter()
     for a in none:
         role, name, ev = classify(a, meta, dec, kindmap)
+
+        # indirect-reference resolution: recover callers Ghidra's direct graph missed
+        ir = indir.get(a, {})
+        has_direct = bool(meta.get(a, {}).get("callers"))
+        if not has_direct:
+            dp = ir.get("data_ptr", [])
+            cp = ir.get("code_ptr", [])
+            vtable = next((d.get("container", "") for d in dp
+                           if "vftable" in (d.get("container") or "").lower()
+                           or "vtable" in (d.get("container") or "").lower()), None)
+            if vtable:
+                role, name, ev = "vfunc-indirect", None, "vtable slot in %s (called via vtable)" % vtable
+            elif dp:
+                role = "dispatch-target" if role == "logic" else role
+                ev = (ev or "") + " | held in dispatch table %s" % (dp[0].get("container") or "?")
+            elif cp:
+                role = "callback" if role == "logic" else role
+                ev = (ev or "") + " | address taken by %s (callback)" % cp[0]
+            elif role == "logic":
+                role, name, ev = "artifact", None, "no incoming reference of any kind (EH/GS fragment or dead code)"
+
         roles[role] += 1
+
+        # module: try direct callers, then indirect (vtable class / dispatcher / code-ptr fn)
         mod, conf = module_by_callers(a, meta, modmap)
+        if not mod and ir:
+            eff = list(ir.get("code_ptr", []))
+            for d in ir.get("data_ptr", []):
+                c = (d.get("container") or "")
+                if "::" in c:                       # vtable class -> its own module chain
+                    pass
+                elif c.lower().startswith("fun_"):
+                    eff.append(c.lower().replace("fun_", ""))
+            mods = [modmap.get(x) for x in eff if modmap.get(x) not in (None, "game_misc", "_library")]
+            if mods:
+                top = Counter(mods).most_common(1)[0]
+                if top[1] / len(mods) >= 0.6:
+                    mod, conf = top[0], top[1] / len(mods)
+
         rec = {"role": role, "evidence": ev}
         if name:
             rec["name"] = name
@@ -168,17 +222,30 @@ def main():
                 "thunk": "skip — forwarder", "identity": "skip — returns this",
                 "stub": "skip — trivial/empty", "dispatch": "skip — vtable dispatch",
                 "wrapper": "glance — thin wrapper", "ctor-like": "glance — constructor",
-                "dtor-like": "glance — destructor", "logic": "**REVIEW — genuine logic**"}
+                "dtor-like": "glance — destructor",
+                "vfunc-indirect": "REVIEW — vtable method (indirect)",
+                "dispatch-target": "REVIEW — dispatch-table handler",
+                "callback": "REVIEW — callback",
+                "artifact": "SKIP — no refs (EH/GS fragment or dead code)",
+                "logic": "**REVIEW — genuine logic**"}
             for role, c in roles.most_common():
                 g.write("| %s | %d | %s |\n" % (role, c, action.get(role, "")))
-            g.write("\n**%d of %d (%.0f%%) are trivial mechanical helpers; %d remain genuine logic.**\n\n"
-                    % (trivial, n, 100.0 * trivial / max(1, n), roles.get("logic", 0)))
-        g.write("Consumed by `structure.py` as the `role` source: trivial roles get their descriptive\n")
-        g.write("name and drop into `game_misc/_helpers`, isolating the `logic` functions in the tree.\n")
+            skippable = sum(roles[k] for k in roles if k in SKIP_ROLES)
+            indirect = sum(roles[k] for k in roles if k in INDIRECT_ROLES)
+            g.write("\n**%d skippable (trivial helpers + artifacts); %d indirect real functions "
+                    "recovered (vtable/dispatch/callback); %d remain genuine logic.**\n\n"
+                    % (skippable, indirect, roles.get("logic", 0)))
+        g.write("Consumed by `structure.py` as the `role` source: skippables get a descriptive name\n")
+        g.write("in `game_misc/_helpers_*` / `_artifacts`, indirect-real go to `_indirect_*` under\n")
+        g.write("their subsystem, isolating true `logic` in the `Unsorted` files.\n")
 
     for exe, n, roles, trivial in results:
-        print("%-11s none=%d  trivial=%d (%.0f%%)  logic=%d"
-              % (exe, n, trivial, 100.0 * trivial / max(1, n), roles.get("logic", 0)))
+        skippable = sum(roles[k] for k in roles if k in SKIP_ROLES)
+        indirect = sum(roles[k] for k in roles if k in INDIRECT_ROLES)
+        print("%-11s none=%d  skip=%d  indirect-real=%d  glance=%d  LOGIC=%d"
+              % (exe, n, skippable, indirect,
+                 sum(roles[k] for k in roles if k in ("wrapper", "ctor-like", "dtor-like")),
+                 roles.get("logic", 0)))
         print("   " + "  ".join("%s:%d" % (k, v) for k, v in roles.most_common()))
 
 
