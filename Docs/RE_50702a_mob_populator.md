@@ -48,6 +48,17 @@ an owning function. Those 90 are body splits, not the "true artifacts" Phase 0 c
 as. Cube.exe has **0** — its 147 zero-reference functions all start on real prologues
 (105 are `55 8b ec`), so they are genuinely unreferenced code, a different thing entirely.
 
+Two other identities fall out of the same audit and are worth stating explicitly, because both
+have been repeated in our own docs:
+
+- **`0x4e310a`, `0x4eaa7a` and `0x4ee3aa` are not "the big dungeon dispatchers"** — they are
+  alignment-NOP splits of **`FUN_004e28e0`, the town builder**, carrying 28,175 / 14,586 /
+  17,215 bytes of its body. `RE_524540_creature_spawn.md` lists them among `524540`'s callers;
+  the caller is really the town builder, once.
+- The standing note that these huge zero-caller blobs are "`/EHsc` landing pads and `/GS`
+  epilogues — not real routines" is **wrong in a way that matters**: the bodies are real game
+  code, they just belong to a bigger function. Discarding them would discard the town builder.
+
 ---
 
 ## The cell grid
