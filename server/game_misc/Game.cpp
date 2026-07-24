@@ -1,4 +1,4 @@
-// Game (game_misc) -- server. 14 functions. Bodies = Ghidra pseudo-C.
+// Game (game_misc) -- server. 17 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Game.h"
 
@@ -8,6 +8,18 @@ int __thiscall FUN_004013d0(void *this,int param_1)
 
 {
   return (int)(void *)((int)this + param_1 * 4);
+}
+
+
+/* Block_isSolid @ 004061f0  kind=gamemisc  attributed-by=ledger  size=22 */
+
+undefined4 __fastcall FUN_004061f0(int param_1)
+
+{
+  if (((*(byte *)(param_1 + 3) & 0x1f) != 0) && ((*(byte *)(param_1 + 3) & 0x1f) != 2)) {
+    return 1;
+  }
+  return 0;
 }
 
 
@@ -525,6 +537,32 @@ LAB_004f5d98:
 }
 
 
+/* StructureMarker_ctor @ 004f7490  kind=game  attributed-by=ledger  size=161 */
+
+undefined4 * __fastcall FUN_004f7490(undefined4 *param_1)
+
+{
+  *param_1 = 0;
+  *(undefined2 *)(param_1 + 5) = 1;
+  *(undefined2 *)(param_1 + 1) = 0;
+  param_1[2] = 0;
+  param_1[3] = 0;
+  *(undefined2 *)(param_1 + 4) = 0;
+  *(undefined1 *)((int)param_1 + 0x12) = 0;
+  param_1[0x46] = 0;
+  memset(param_1 + 6,0,0x100);
+  param_1[0x47] = 0xffffffff;
+  param_1[0x48] = 0xffffffff;
+  param_1[0x4a] = 0;
+  param_1[0x4b] = 0;
+  param_1[0x4c] = 0;
+  param_1[0x4d] = 0;
+  param_1[0x4e] = 0;
+  param_1[0x4f] = 0;
+  return param_1;
+}
+
+
 /* grid_cell_accessor -- GAME @ 004f84a0  kind=game  attributed-by=ledger  size=127 */
 
 undefined1 * __thiscall FUN_004f84a0(void *this,int param_1,int param_2,int param_3)
@@ -589,6 +627,39 @@ float10 __cdecl FUN_00523380(double *param_1,double *param_2,double *param_3)
   dVar3 = dVar3 - dVar4 * dVar1;
   dVar2 = dVar2 - dVar5 * dVar1;
   return (float10)(float)(dVar2 * dVar2 + dVar3 * dVar3);
+}
+
+
+/* StructureMarker_push_back @ 005284a0  kind=gamemisc  attributed-by=ledger  size=130 */
+
+void __thiscall FUN_005284a0(void *this,undefined4 *param_1)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  
+  puVar1 = *(undefined4 **)((int)this + 4);
+  if ((param_1 < puVar1) && (puVar2 = *(undefined4 **)this, puVar2 <= param_1)) {
+    if (puVar1 == *(undefined4 **)((int)this + 8)) {
+      FUN_004f80d0(this,1);
+    }
+    if (*(void **)((int)this + 4) != (void *)0x0) {
+      FUN_004f7400(*(void **)((int)this + 4),
+                   (undefined4 *)((((int)param_1 - (int)puVar2) / 0x140) * 0x140 + *(int *)this));
+      *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0x140;
+      return;
+    }
+  }
+  else {
+    if (puVar1 == *(undefined4 **)((int)this + 8)) {
+      FUN_004f80d0(this,1);
+    }
+    if (*(void **)((int)this + 4) != (void *)0x0) {
+      FUN_004f7400(*(void **)((int)this + 4),param_1);
+    }
+  }
+  *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0x140;
+  return;
 }
 
 

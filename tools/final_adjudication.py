@@ -215,6 +215,17 @@ the body was the only way to settle these.
         # too -- the Pass-3 candidate loop index [esp+0x28] (0x50ea0e/0x50f27c); level and rank
         # are reproduced 6/6 ab-initio by tools/gate_dungeon_counter.py.
         "00411090": {"name": "monster_level_formula", "kind": "game", "verdict": "DEEP-RE"},
+        # site+0x48, the assembler's FOURTH container: the two structure markers (kind-4
+        # entrance = type 5 @0x5048c7, boss = type 6 @0x507aa0). Those are the only two
+        # pushes into it in the whole 36 KB body (Docs/RE_dungeon_markers.md, 12/12).
+        "005284a0": {"name": "StructureMarker_push_back", "kind": "gamemisc",
+                     "verdict": "DEEP-RE"},
+        "004f7490": {"name": "StructureMarker_ctor", "kind": "game", "verdict": "DEEP-RE"},
+        # was filed lib/_library as `check_type_low5_active`, which describes the body but
+        # misfiles it: it is the BLOCK-SOLID predicate the world applies to a
+        # World_getBlockAt result -- `(block[3] & 0x1f) not in (0, 2)`. Proven on both of the
+        # assembler's probes: the mob pass (757/757) and the wall stub (480/480).
+        "004061f0": {"name": "Block_isSolid", "kind": "gamemisc", "verdict": "DEEP-RE"},
         # the dungeon prop record (0x188) that lives in the assembler's site+0xc vector, and
         # the two emitters that fill it (Docs/RE_dungeon_lights.md, RE_52a830_scatter.md).
         # 004c8420 was filed lib_fn_*; it copies base fields, a vec at +0x48, an ItemData at

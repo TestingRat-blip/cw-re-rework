@@ -22,9 +22,30 @@ The block is the last statement of the same per-cell body as the mob pass. Model
     }
 
 Derived here: the flag cell (from the cell grid), the whole position, every deterministic
-field, and both rand-driven outcomes. Taken from the capture: the rand *stream* (142 or 134
-draws, most of them inside the item generator FUN_0052b470), and the three per-dungeon inputs
-the assembler computed earlier -- `level`, the `[ebp-0x2bd4]` byte, and the species vector.
+field, both rand-driven outcomes, and -- since 2026-07-24 -- the species vector. Taken from the
+capture: the rand *stream* (142 or 134 draws, most of them inside the item generator
+FUN_0052b470), and `level` / the `[ebp-0x2bd4]` byte, both now sourced by
+Docs/RE_dungeon_level_rank.md.
+
+## The species vector
+
+`[ebp-0x2be8]`, built in the assembler's PROLOGUE (0x500370-0x500693) by a five-entry jump
+table on `style - 1` at `0x5003d3` (`jmp [eax*4 + 0x509d80]`, `cmp eax,4 / ja` -> default).
+Style 0 lands on the default because `0 - 1` is unsigned-huge. Reading the table:
+
+    style 1 -> 0x500538      style 3 -> 0x5004ae      style 5 -> 0x5003da
+    style 2 -> 0x500538      style 4 -> 0x50065b (the default)
+
+so the vector is a four-way table, not a six-way one, and the style-5 pair is stored in
+descending order:
+
+    styles 1, 2       {15, 16}
+    style  3          {2, 3}
+    style  5          {78, 77}
+    styles 0, 4       {11, 12}      (the default arm)
+
+Each arm also fills two more creature lists (`[ebp-0x37c]`, `[ebp-0x370]`) that go to a second
+container `[ebp-0x2bf4]`; those feed the MOB pass's species, which is a separate thread.
 
 Reads raw/dungeon_boss_capture*.json plus the matching raw/dungeon_grid_capture*.json.
 """
@@ -38,6 +59,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gate_50702a_mobs import CellGrid                                  # noqa: E402
 
 RAW = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "raw")
+
+# the prologue's jump table on style-1 (0x5003d3 -> 0x509d80), read off the binary
+SPECIES = {1: [0x0F, 0x10], 2: [0x0F, 0x10], 3: [0x02, 0x03], 5: [0x4E, 0x4D]}
+
+
+def species_for(style):
+    """`[ebp-0x2be8]` -- styles 0 and 4 take the default arm at 0x50065b."""
+    return SPECIES.get(style, [0x0B, 0x0C])
 
 
 def f32(x):
@@ -118,8 +147,10 @@ def one(name):
                 "+0x109c non-null": b["behav"] != 0}
         ok &= check("deterministic fields", model, real)
 
-        # --- D: draw A -- the species pick --------------------------------------------
+        # --- D: draw A -- the species vector, then the pick ----------------------------
         sp, rv = b["species"], b["rand_vals"]
+        ok &= check("species vector from the prologue jump table (style %d)" % b["style"],
+                    species_for(b["style"]), sp)
         ok &= check("species (+0x2c) = species[rand() %% %d]" % len(sp),
                     sp[rv[0] % len(sp)], u32(0x2c))
 

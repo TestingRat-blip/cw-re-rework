@@ -117,7 +117,7 @@ addr	name	kind	module	class	attributed_by	size
 00406100	Chunk_getColumnAt	gamemisc	world	Proven	ledger	208
 004061d0	get_field_0x10	lib	_library	cw_lib	ledger	4
 004061e0	compute_4061e0	gamemisc	game_misc	_helpers_computed	role:computed	11
-004061f0	check_type_low5_active	lib	_library	cw_lib	ledger	22
+004061f0	Block_isSolid	gamemisc	game_misc	Game	ledger	22
 00406210	FUN_00406210	gamemisc	world	Helpers	caller-vote	54
 00406250	get_0x1c_406250	gamemisc	game_misc	_helpers_accessor	role:accessor	4
 00406260	fwd_004056c0_406260	gamemisc	game_misc	_helpers_thunk	role:thunk	19
@@ -2522,7 +2522,7 @@ addr	name	kind	module	class	attributed_by	size
 004f7370	dungeon_grid_init	game	world	Proven	ledger	105
 004f73ca	dungeon_grid_init__split_4f73ca	gamemisc	world	_body_splits	role:body-split	28
 004f7400	FUN_004f7400	gamemisc	world	Unsorted	logic:caller-vote	130
-004f7490	FUN_004f7490	gamemisc	world	_helpers_ctor-like	role:ctor-like	161
+004f7490	StructureMarker_ctor	game	game_misc	Game	ledger	161
 004f7540	FUN_004f7540	gamemisc	world	_helpers_ctor-like	role:ctor-like	44
 004f7570	cube::Region::Region	game	world	Region	rtti	174
 004f7620	FUN_004f7620	gamemisc	world	Helpers	caller-vote	52
@@ -2633,7 +2633,7 @@ addr	name	kind	module	class	attributed_by	size
 005283b0	FUN_005283b0	gamemisc	world	_helpers_wrapper	role:wrapper	67
 00528400	FUN_00528400	gamemisc	world	_helpers_wrapper	role:wrapper	67
 00528450	std_list_push_back	lib	_library	cw_lib	ledger	67
-005284a0	FUN_005284a0	gamemisc	world	Unsorted	logic:caller-vote	130
+005284a0	StructureMarker_push_back	gamemisc	game_misc	Game	ledger	130
 00528530	ItemData_vector_push_back	gamemisc	entity	Proven	ledger	132
 005285c0	FUN_005285c0	gamemisc	world	Helpers	caller-vote	213
 005286a0	UNRESOLVED_5286a0	gamemisc	game_misc	Game	ledger	143

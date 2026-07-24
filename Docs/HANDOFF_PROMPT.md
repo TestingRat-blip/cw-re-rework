@@ -69,6 +69,7 @@ applied). They are copies — **never mutate `RatForge\tools\ghidra_proj\CubeAud
 | `final_adjudication*.py` | settled identities (has a `DEEP_RE` dict — add new IDs there) |
 | `frida_spawn_capture.py` | live overworld spawn capture |
 | `frida_dungeon_spawn.py` | **live dungeon capture** (the important one, see below) |
+| `frida_dungeon_marker.py` | `site+0x48` markers + the stub's off-lattice terrain probe |
 | `reccmp/compare.py` | byte-match a recompile vs the shipped code |
 
 **⚠ Pipeline is a fixpoint — run in this order after any change:**
@@ -97,7 +98,10 @@ Running out of order silently empties the islands/roles (it oscillates).
   `creature_spawn_builder 0x124540`, `dungeon mob pass 0x107401-0x10775a`.
 - Captured data already on disk: `raw/dungeon_grid_capture*.json` (6 dungeons: full 22x22x22
   cell grid + every mob-pass cell + 1,122 spawns), `raw/dungeon_spawn_capture.json` (the
-  original 137), `raw/spawn_capture.json` (6,305 overworld spawns).
+  original 137), `raw/spawn_capture.json` (6,305 overworld spawns),
+  `raw/dungeon_props_capture*.json` / `_site_` / `_boss_` / `_itemgen_`, and
+  `raw/dungeon_marker_capture*.json` (the `site+0x48` markers + the stub probe, with the
+  finished world sampled at all four off-lattice probe points of every cell).
 - **Six known dungeon zones**, all reachable with the recipe above:
   `(32795,32796)` style 3, `(32796,32787)` style 0, `(32780,32788)` style 1,
   `(32804,32788)` style 3, `(32804,32811)` style 2, `(32787,32796)` style 2.
@@ -189,15 +193,18 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    computed it (`cw_featuregen._sub_count(idx)` / cwgen `cellLevel(k)`) and threw it away.
    `tools/gate_dungeon_counter.py` reproduces **level 6/6 and rank 6/6** ab-initio from the
    seed; `dunLevel`/`dunRank` are now wired through cwgen (hash unchanged).
-2. **The rest of the dungeon entity layer** — the `cell.flags & 4` block at `0x5078b3` (fires
-   on exactly one cell per dungeon, the apex/boss room), the chandelier at `0x507760`
-   (`style == 3 && rand() % 10 == 0`), the kind-4 entrance marker at `0x504832`, and the
-   loot pass (DONE -- `RE_dungeon_loot.md`). **Every emitter the assembler feeds is now
-   reproducible**: `site+0xc` (lights in `RE_dungeon_lights.md`, furniture
-   in `RE_52a830_scatter.md`) and all six `site+4` emitters (`RE_52c370_wall_decor.md`,
-   `RE_hanging_decor.md`). Also gated:
-   the `cell.flags & 4` boss block at `0x5078b3`, and the whole item-generation family
-   (`FUN_0052b470` + `FUN_0052a760` + both sub-generators) the loop shares with it.
+2. **~~The rest of the dungeon entity layer~~ — DONE 2026-07-24 (`RE_dungeon_markers.md`).**
+   **Every emitter and every gate of the assembler is now reproducible.** The four containers:
+   `site+4` (all six emitters — `RE_52c370_wall_decor.md`, `RE_hanging_decor.md`), `site+0xc`
+   (`RE_dungeon_lights.md`, `RE_52a830_scatter.md`), `site+0x30` (`RE_dungeon_loot.md`), and
+   `site+0x48` — a **fourth container** this session found, holding the two structure markers
+   (kind-4 entrance type 5, boss type 6), 12/12. Also closed: the **wall stub's third gate**
+   (the off-lattice terrain probe — order-free, and it reduces to the mob pass's material test;
+   480/480 derived, so the whole 280-stub set is now predicted in emit order) and the **boss
+   species vector** (a four-way jump table on `style-1` in the prologue, no capture needed,
+   6/6). New rig `tools/frida_dungeon_marker.py`.
+   ▶ **What is left of the mob layer is SPECIES, not placement** — the second prologue container
+   `[ebp-0x2bf4]`, which `0x50754d` feeds to `FUN_00524540`. Start there.
 3. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,
    still the largest genuinely-new slice.
 4. **Port the mob pass + boss spawn + light sources into `cw_rederive`** (the item-generation

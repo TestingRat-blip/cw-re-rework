@@ -24,16 +24,26 @@ own beyond one coin each:
     per direction, in order 0, 2, 3, 1:
         if rand() % 2 == 0:                 skip   (the coin is always drawn)
         if grid(I+dI, J+dJ, K).kind != 0:   skip   (the neighbour must be solid rock)
-        if solid(<a point outside that wall face>): skip   <- terrain probe, NOT modelled
+        if solid(cellOrigin + probe offset): skip  <- the terrain probe, now DERIVED
         emit at cellOrigin + offset, size (2.0, 0.2, 4.0)
 
-    dir  0 -> neighbour (0,-1), offset (5, -1, 2)      dir 2 -> (0,+1), (5, 11, 2)
-    dir  3 -> neighbour (-1,0), offset (-1, 5, 2)      dir 1 -> (+1,0), (11, 5, 2)
+    dir  0 -> neighbour (0,-1), offset (5, -1, 2), probe (5, -3, 2)
+    dir  2 -> neighbour (0,+1), offset (5, 11, 2), probe (5, 13, 2)
+    dir  3 -> neighbour (-1,0), offset (-1, 5, 2), probe (-3, 5, 2)
+    dir  1 -> neighbour (+1,0), offset (11, 5, 2), probe (13, 5, 2)
 
 Note the stub's direction encoding is NOT the mob pass's: there west=0/east=2/south=3/north=1,
 here south=0/north=2/west=3/east=1.
 
-Reads raw/dungeon_props_capture*.json (tools/frida_dungeon_props.py).
+The third gate was unmodelled until 2026-07-24: its probe points are off the 10-unit lattice, so
+the grid rig's lattice dump never reached them. `tools/frida_dungeon_marker.py` samples the
+finished world at all four probe points of every cell, and `gate_dungeon_marker.py` proves the
+verdict is `(block[3] & 0x1f) not in (0, 2)` -- the same material test the mob pass reduces to --
+and that it is order-free. With that dump present this gate derives the whole stub SET rather
+than only checking the records of the stubs that happened to be emitted.
+
+Reads raw/dungeon_props_capture*.json (tools/frida_dungeon_props.py) and, when present, the
+matching raw/dungeon_marker_capture*.json for the probe.
 """
 import base64
 import json
@@ -43,6 +53,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gate_50702a_mobs import CellGrid                                   # noqa: E402
+from gate_dungeon_marker import StubMat                                 # noqa: E402
 
 RAW = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "raw")
 
@@ -53,6 +64,20 @@ STUBS = {0: ((0, -1), (5, -1, 2), 0x104B5D), 2: ((0, 1), (5, 11, 2), 0x104D01),
          3: ((-1, 0), (-1, 5, 2), 0x104EAD), 1: ((1, 0), (11, 5, 2), 0x10504B)}
 STUB_ORDER = [0, 2, 3, 1]
 STUB_STYLES = {0, 1, 3}
+
+
+def load_stubmat(zone):
+    """The four-direction probe dump for this zone, if it has been captured."""
+    for n in ("dungeon_marker_capture_%d_%d.json" % tuple(zone), "dungeon_marker_capture.json"):
+        p = os.path.join(RAW, n)
+        if not os.path.exists(p):
+            continue
+        cap = json.load(open(p))
+        if list(cap["zone"]) != list(zone):
+            continue
+        sm = cap["grids"][0].get("stubmat")
+        return StubMat(sm) if sm and sm.get("bytes_b64") else None
+    return None
 
 
 def rec(b):
@@ -101,7 +126,8 @@ def one(name):
     live_t = [rec(b) for _, b in props if b[0] == 7]
     ok &= check("torch records (pos, dir, size, flicker)", model_t, live_t)
 
-    # ---- STUB: coin + neighbour are derivable; the terrain probe is not ------------------
+    # ---- STUB: coin + neighbour + the terrain probe, all derived -------------------------
+    stub_mat = load_stubmat(cap["zone"])
     coins = {}
     for d in draws:
         if d["ra"] in STUB_COINS:
@@ -121,6 +147,8 @@ def one(name):
                     continue
                 if grid.kind(i + di, j + dj, k) != 0:
                     continue
+                if stub_mat is not None and stub_mat.solid(i, j, k, d):
+                    continue                       # the terrain probe (0x504a4e and friends)
                 cand.append((i, j, k, d,
                              {"kind": 4,
                               "pos": [(bx + i * 10 + off[0]) << 16,
@@ -134,10 +162,19 @@ def one(name):
             if live != m:
                 bad.append(((a, b_, c, d), m, live))
     missing = [x[:4] for x in live_s if x[:4] not in {c[:4] for c in cand}]
-    ok &= check("every stub emitted was a coin+neighbour candidate", [], missing)
+    ok &= check("every stub emitted was a modelled candidate", [], missing)
     ok &= check("stub records (pos, dir, size) for the emitted candidates", [], bad)
-    print(f"   stubs: {len(live_s)} emitted of {len(cand)} coin+neighbour candidates "
-          f"({len(cand) - len(live_s)} rejected by the un-modelled terrain probe)")
+    if stub_mat is None:
+        print(f"   stubs: {len(live_s)} emitted of {len(cand)} coin+neighbour candidates "
+              f"({len(cand) - len(live_s)} rejected by the UNMODELLED terrain probe -- "
+              f"run tools/frida_dungeon_marker.py for this zone)")
+    else:
+        # with the probe derived the model predicts the whole stub SET, in emit order --
+        # not just the records of the stubs that happened to be emitted
+        ok &= check("the derived stub set (cell, direction), in emit order",
+                    [c[:4] for c in cand], [x[:4] for x in live_s])
+        print(f"   stubs: {len(live_s)} emitted, all three gates derived "
+              f"(coin, neighbour, terrain probe)")
 
     print("  " + ("GATE PASS" if ok else "GATE FAIL"))
     return 0 if ok else 1

@@ -151,18 +151,40 @@ cell, then a common 4-way / rare 6-way table including a `powf`-based coin). **4
 items and 4/4 chest fills**, with the chest counts cross-checked against the independent
 `itemgen_capture` run. **With this every emitter the dungeon assembler feeds is reproducible.**
 
+**Markers, the stub probe and the species vector — ✅ ALL DONE, gated
+(`RE_dungeon_markers.md`).** The three items this list used to hold open:
+
+- **`site+0x48`, a fourth container** nobody had looked at. Exactly two pushes per dungeon:
+  the kind-4 **entrance** marker (type 5, `0x5048c7`) and the **boss** marker (type 6,
+  `0x507aa0`). The entrance record is derived from the cell grid alone — position
+  `(baseX+I*10+5, baseY+J*10+5, baseZ+K*10)`, note **no `+5` on Z** — 6/6 on every field; the
+  boss marker adds nothing the boss gate does not already produce. **12/12.**
+- **The stub's third gate**, the probe at points off the 10-unit lattice. New rig
+  `tools/frida_dungeon_marker.py` samples the finished world at all four probe points of every
+  cell. It is **order-free** (480/480 unchanged at `asmLeave`) and reduces to the mob pass's
+  material test, `(block[3] & 0x1f) ∉ {0,2}` — **480/480 verdicts derived**, so
+  `gate_dungeon_lights.py` now predicts the whole **stub set (280) in emit order**, not just
+  the records of the stubs that were emitted.
+- **The boss species vector**, which needed no capture at all: it is a four-way jump table on
+  `style-1` in the assembler's prologue (`0x5003d3` → `0x509d80`). Styles 1 and 2 share an arm;
+  style 5's pair is stored descending. **6/6.**
+
+The chandelier at `0x507760` was already gated in `RE_hanging_decor.md` — that bullet was stale.
+
+The loot/item generation loop is ✅ DONE and gated (`RE_52b470_item_generator.md`: a fixed
+26-candidate table plus a uniform pick, 450/450 candidates and 6/6 picks, and the server↔client
+twin map closed), as is its 26th candidate — `FUN_0052a760`'s coin flip and both sub-generators
+(`FUN_00528bf0` kinds 4-9 / `FUN_0052c4e0` kind 3), 18/18 invocations, 298 candidates, verified
+through the kind-moves-to-+0x08 mutation.
+
 Still open in this phase:
-- the stub's third gate, a `World_getBlockAt` probe at points **off** the 10-unit lattice;
-- the chandelier at `0x507760` (`style == 3 && rand() % 10 == 0`) and the kind-4 entrance
-  marker at `0x504832`;
-- the loot/item generation *loop* earlier in the same cell body (the item **generator** it
-  calls, `FUN_0052b470`, is ✅ DONE and gated -- `RE_52b470_item_generator.md`: a fixed
-  26-candidate table plus a uniform pick, 450/450 candidates and 6/6 picks reproduced, and the
-  server↔client twin map closed);
-  ✅ its 26th candidate is gated too: `FUN_0052a760`'s coin flip and both sub-generators
-  (`FUN_00528bf0` kinds 4-9 / `FUN_0052c4e0` kind 3) -- 18/18 invocations, 298 candidates,
-  verified through the kind-moves-to-+0x08 mutation;
-- the 2-entry species vector the boss block reads but does not compute.
+- the **mob species**: the second container `[ebp-0x2bf4]`, filled by the same prologue arms
+  from `[ebp-0x37c]`/`[ebp-0x370]` (the style-1/2 arm adds a `rand()%3` pick over
+  `0x61`/`0x11`/`0x5e`). `0x50754d` hands `FUN_00524540` a per-spawn list built from it. Mob
+  *placement* is bit-exact; *species* starts in the prologue, not in the mob pass.
+- a **port gap, now quantified**: 79 of the reference dungeon's 84 stub rejects are the
+  dungeon's *own stone*, not terrain, so RatForge's terrain-height-only occlusion test
+  over-emits stubs.
 
 **Level + rarity byte — ✅ DONE, gated 6/6 ab-initio (`RE_dungeon_level_rank.md`).** The last
 open input, the `counter` feeding `monster_level_formula`, is the **Pass-3 candidate loop index**

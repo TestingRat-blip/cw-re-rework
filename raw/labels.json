@@ -458,9 +458,9 @@
    "src": "CW_CONFIDENCE_XREF.md"
   },
   "004061f0": {
-   "kind": "lib",
-   "name": "check_type_low5_active",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "kind": "gamemisc",
+   "name": "Block_isSolid",
+   "src": "ADJUDICATION.md"
   },
   "00406290": {
    "kind": "gamemisc",
@@ -742,6 +742,11 @@
    "name": "dungeon_grid_init",
    "src": "cw_callgraph.py"
   },
+  "004f7490": {
+   "kind": "game",
+   "name": "StructureMarker_ctor",
+   "src": "ADJUDICATION.md"
+  },
   "004f79f0": {
    "kind": "lib",
    "name": "int128_sub",
@@ -990,6 +995,11 @@
   "00528450": {
    "kind": "lib",
    "name": "std_list_push_back",
+   "src": "ADJUDICATION.md"
+  },
+  "005284a0": {
+   "kind": "gamemisc",
+   "name": "StructureMarker_push_back",
    "src": "ADJUDICATION.md"
   },
   "00528530": {

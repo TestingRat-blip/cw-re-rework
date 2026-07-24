@@ -102,6 +102,11 @@
    "name": "Chunk_getColumnAt",
    "verdict": "B"
   },
+  "004061f0": {
+   "kind": "gamemisc",
+   "name": "Block_isSolid",
+   "verdict": "DEEP-RE"
+  },
   "00406290": {
    "kind": "gamemisc",
    "name": "Region_getChunkCell",
@@ -221,6 +226,11 @@
    "kind": "game",
    "name": "unproven ctor -- GAME",
    "verdict": "A-KIND"
+  },
+  "004f7490": {
+   "kind": "game",
+   "name": "StructureMarker_ctor",
+   "verdict": "DEEP-RE"
   },
   "004f79f0": {
    "kind": "lib",
@@ -416,6 +426,11 @@
    "kind": "lib",
    "name": "std_list_push_back",
    "verdict": "NEITHER"
+  },
+  "005284a0": {
+   "kind": "gamemisc",
+   "name": "StructureMarker_push_back",
+   "verdict": "DEEP-RE"
   },
   "00528530": {
    "kind": "gamemisc",
