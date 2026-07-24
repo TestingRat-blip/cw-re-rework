@@ -1,13 +1,14 @@
-# The dungeon level and rarity byte — sourced, and the rank rule derived
+# The dungeon level and rarity byte — sourced, and both rules derived
 
 The two inputs the loot layer needed and the port did not have
-(`RE_dungeon_loot.md`, `RE_52b470_item_generator.md`). **The rank rule is fully derived and
-gated 6/6; the level formula is proven and settles a long-contested label; one input to that
-formula is still unidentified, inside an already-ported function.**
+(`RE_dungeon_loot.md`, `RE_52b470_item_generator.md`). **Both are now closed: level and rank are
+reproduced 6/6 ab-initio from the world seed alone**, and the level formula settles a
+long-contested label.
 
 ```
 python tools/frida_dungeon_site.py [zx zz]      # capture -> raw/dungeon_site_capture*.json
-python tools/gate_dungeon_level_rank.py         # gate
+python tools/gate_dungeon_level_rank.py         # the rule gate (formula reachability + band)
+python tools/gate_dungeon_counter.py            # the ab-initio gate (level 6/6, rank 6/6)
 ```
 
 ## Where they come from
@@ -53,22 +54,71 @@ the body alone does not establish", while `CW_CONFIDENCE_XREF.md` had it as `lib
 site establishes it**: its result is stored as the dungeon's level. Relabelled
 `monster_level_formula`, kind game.
 
-The curve is a hyperbola in `counter/64` — it climbs slowly at first and then steeply, which
-is what a distance-scaled difficulty ramp looks like.
+The curve is a hyperbola in `counter/64` — it climbs slowly at first and then steeply. The
+guess that it was *distance*-scaled is wrong: with `counter` identified below, the ramp is over
+the dungeon's **slot index within its region**, so difficulty varies inside a region rather than
+with distance from the world centre.
 
-### Inverting it against the captures
+## `counter` — the Pass-3 candidate loop index
 
-The formula is monotonic, so each level maps to a contiguous band of integer counters. Every
-observed level is reachable, and three are pinned to a single value:
+The disassembly settles it. `[esp+0x28]` is the induction variable of the
+**candidate-processing loop**, Pass 3 of the feature generator:
 
-| zone | level | counter |
-|---|---|---|
-| (32804, 32811) | 1 | 0–3 |
-| (32795, 32796) | 3 | 6–8 |
-| (32787, 32796) | 6 | 13–14 |
-| (32780, 32788) | 23 | **34** |
-| (32796, 32787) | 30 | **38** |
-| (32804, 32788) | 52 | **46** |
+```
+0050ea0c   xor ecx, ecx
+0050ea0e   mov [esp+0x28], ecx            ; counter = 0
+0050ea12   cmp eax, esi / je 0x50f28a     ; candidate list empty -> loop exits
+0050ea1a   test cl, 1 / jne 0x50f27c      ; ODD counter -> no work at all, just increment
+0050ea23   ...                            ; even -> pop the front candidate (SUB ESI,0xc)
+0050eab1   [cell+0x1403c] = ftol(FUN_00411090(counter/64))        ; the LEVEL
+0050eabc   and eax, 0x80000001            ; (counter >> 1) & 1 -> the DUNGEON branch (type 0xe)
+0050f27c   inc ecx / mov [esp+0x28], ecx
+0050f281   cmp ecx, 0x40 / jl 0x50ea12    ; 64 iterations
+```
+
+So the counter runs 0..63; even iterations consume one candidate from the sorted list, and
+`(counter >> 1) & 1` is what makes the popped cell a dungeon. Two consequences:
+
+- **a dungeon can only sit at a counter `≡ 2 (mod 4)`**, so each level pins to a *unique*
+  counter — the three bands below that could not be narrowed collapse to 2, 6 and 14;
+- **both ports already computed it.** `cw_featuregen.pass3` iterates exactly this `idx` and its
+  `_sub_count(idx)` *is* the level; cwgen's `CwFeatureGrid.cpp` has the same value as
+  `cellLevel(k)`, and `subtypeByLevel` is the rank. Both had only ever used them to decide
+  whether the branch draws — the values were computed and thrown away. Nothing new had to be
+  generated; the fix was to keep them.
+
+### Against the captures — ab-initio
+
+`tools/gate_dungeon_counter.py` generates the region's feature grid from the seed, locates the
+type-`0xe` cell that lands in each captured zone, reads its position `k` in the sorted candidate
+list (→ counter `2k`), and evaluates both rules. The rank roll is `_subswitch`, the draw the port
+already makes and discards.
+
+| zone | counter | cell | level | live | rank | live |
+|---|---|---|---|---|---|---|
+| (32804, 32811) | 2 | 37 | 1 | 1 | 0 | 0 |
+| (32795, 32796) | 6 | 27 | 3 | 3 | 0 | 0 |
+| (32787, 32796) | 14 | 19 | 6 | 6 | 0 | 0 |
+| (32780, 32788) | 34 | 10 | 23 | 23 | 3 | 3 |
+| (32796, 32787) | 38 | 26 | 30 | 30 | 2 | 2 |
+| (32804, 32788) | 46 | 34 | 52 | 52 | 2 | 2 |
+
+**Level 6/6, rank 6/6** — exact values, not bands. All six dungeons live in one region
+(512, 512), at six distinct slots.
+
+### The 16 dungeon slots of a region
+
+Because the dungeon branch only fires at `counter = 4m + 2`, a region has at most 16 dungeons and
+their levels are a fixed ladder — the slot, not the site, decides the difficulty:
+
+| m | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| counter | 2 | 6 | 10 | 14 | 18 | 22 | 26 | 30 | 34 | 38 | 42 | 46 | 50 | 54 | 58 | 62 |
+| level | 1 | 3 | 4 | 6 | 8 | 11 | 14 | 18 | 23 | 30 | 39 | 52 | 72 | 109 | 194 | 621 |
+
+The observed six are `m ∈ {0, 1, 3, 8, 9, 11}`. The ladder is the hyperbola sampled at
+`m/16`, so it is nearly flat for the first half of a region's dungeons and then runs away —
+the last two slots are unreachable difficulty in practice.
 
 ## The rank rule — derived
 
@@ -82,32 +132,31 @@ else if (level < 19)  rank = rand() % 3 + 1;
 else                  rank = rand() % 4 + 1;
 ```
 
-Checked against all six captures — every rank falls in the band its level implies, and the
-two level-1/3 dungeons both have rank 0 as the first branch requires:
-
-| zone | level | rank | rule | band |
-|---|---|---|---|---|
-| (32795, 32796) | 3 | 0 | fixed 0 | — |
-| (32780, 32788) | 23 | 3 | `rand()%4 + 1` | 1–4 |
-| (32787, 32796) | 6 | 0 | `rand()%2` | 0–1 |
-| (32796, 32787) | 30 | 2 | `rand()%4 + 1` | 1–4 |
-| (32804, 32788) | 52 | 2 | `rand()%4 + 1` | 1–4 |
-| (32804, 32811) | 1 | 0 | fixed 0 | — |
+The five branches are disassembly-exact (`0x50ed43`, `0x50ed57` `and 0x80000001`, `0x50ed7a`
+`idiv 3`, `0x50ed96` `idiv 3` + `inc`, `0x50edae` `and 0x80000003` + `inc`), and the result is
+stored to the *descriptor* base — `[esp+0x38] + ebx + 0x24` — not the cell base the level goes
+to. That is why level and rank read back as `site+0x80` / `site+0x84`.
 
 Note the branch matters for the stream as well as the value: below level 5 it consumes **no
-draw**, every other band consumes exactly one.
+draw**, every other band consumes exactly one. That draw is the one `cw_featuregen._subswitch`
+already makes — so feeding the rank costs the port nothing in the rand stream.
 
-## Ported
+Every rank is reproduced exactly (see the ab-initio table above), not merely placed in its band.
+
+## Ported — and now fed
 
 Both rules are in `src/worldgen/cw/CwItemGen.h` as `cwDungeonLevel(counter)` and
-`cwDungeonRank(rng, level)`. The gates stay green and the output hash is unchanged.
+`cwDungeonRank(rng, level)`. With `counter` identified they are no longer dead inputs: the
+values already produced inside the feature grid are kept and handed to the loot layer.
 
-## What is still open
+| file | change |
+|---|---|
+| `CwFeatureGrid.h` | `FeatureCell::level` (cell+0x1403c); `subtype` documented as the dungeon **rank** |
+| `CwFeatureGrid.cpp` | Loop C stores `c.level = cellLevel(k)` |
+| `Dungeons.h/.cpp` | `DungeonSite::level/rank` off the cell → `buildDungeon` → `dungeonDecorWalk` |
 
-**The identity of `counter`** — the value at `[esp+0x28]` that the level formula is fed. It is
-a running integer inside `FUN_0050e080`, incremented across the feature pass, and the one path
-this document traced statically (`0x50ea0e`) sets it to 0, so the live values (34, 38, 46) must
-arrive by another route into the same store. Since `FUN_0050e080` is **already ported
-bit-exact**, closing this is a matter of matching the counter to state the port already
-computes, not new reverse engineering. Until then `cwDungeonLevel` is correct but unfed, and
-the walk's `dunLevel`/`dunRank` still default to 0.
+Neither value can change a draw count anywhere in the item family (`rank` only appears as
+`rand() % (rank+1)`, `level` only as a value and inside the coin's `powf` exponent), so the
+stream is untouched: **all cwgen gates stay green and the output hash stays `AB6C2A00E6BF77A4`**.
+`--dungeontest` now reports the nearest dungeon as *level 52, rank 3* (its cell is slot
+`k=23`/`counter=46` of region (512,512) in world 444444) instead of 0/0.

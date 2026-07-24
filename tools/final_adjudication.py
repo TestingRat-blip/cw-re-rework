@@ -211,7 +211,9 @@ the body was the only way to settle these.
         # `(1/(1-x) - 1)*20 + 1`. ADJUDICATION left this "unproven -- kind is GAME" because
         # the body alone did not establish cw_callgraph's `monster_level_formula`. Its one
         # real call site does: FUN_0050e080 @0x50eab1 stores ftol(FUN_00411090(counter/64))
-        # as the dungeon's level (Docs/RE_dungeon_level_rank.md).
+        # as the dungeon's level (Docs/RE_dungeon_level_rank.md). `counter` is now identified
+        # too -- the Pass-3 candidate loop index [esp+0x28] (0x50ea0e/0x50f27c); level and rank
+        # are reproduced 6/6 ab-initio by tools/gate_dungeon_counter.py.
         "00411090": {"name": "monster_level_formula", "kind": "game", "verdict": "DEEP-RE"},
         # the dungeon prop record (0x188) that lives in the assembler's site+0xc vector, and
         # the two emitters that fill it (Docs/RE_dungeon_lights.md, RE_52a830_scatter.md).

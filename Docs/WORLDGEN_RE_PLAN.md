@@ -162,8 +162,16 @@ Still open in this phase:
   ✅ its 26th candidate is gated too: `FUN_0052a760`'s coin flip and both sub-generators
   (`FUN_00528bf0` kinds 4-9 / `FUN_0052c4e0` kind 3) -- 18/18 invocations, 298 candidates,
   verified through the kind-moves-to-+0x08 mutation;
-- the three per-dungeon inputs the boss block reads but does not compute: the dungeon `level`,
-  the `[ebp-0x2bd4]` rarity byte, and the 2-entry species vector.
+- the 2-entry species vector the boss block reads but does not compute.
+
+**Level + rarity byte — ✅ DONE, gated 6/6 ab-initio (`RE_dungeon_level_rank.md`).** The last
+open input, the `counter` feeding `monster_level_formula`, is the **Pass-3 candidate loop index**
+`[esp+0x28]` (`0x50ea0e` → `0x50f27c`). Even iterations pop a candidate; `(counter>>1)&1` is the
+dungeon branch, so a dungeon only ever sits at `counter ≡ 2 (mod 4)` and every level pins to a
+unique counter — a region has at most 16 dungeons on a fixed level ladder
+`1,3,4,6,8,11,14,18,23,30,39,52,72,109,194,621`. Both ports already computed the value
+(`_sub_count(idx)` / `cellLevel(k)`) and discarded it. `tools/gate_dungeon_counter.py`
+reproduces **level 6/6 and rank 6/6** exactly from the seed alone.
 
 AI *behaviour* stays a separate track (the Behavior classes are already RTTI-recovered).
 
@@ -217,6 +225,9 @@ The item/loot layer is now in the engine port, not just the RE tree. RatForge co
 `rederive_dundecor` stayed **52/52** and the output hash stayed **AB6C2A00E6BF77A4** across
 the change: values added, no draw moved. `--dungeontest` passes and now reports the loot.
 
-Not ported: `dunLevel` / `dunRank` (the assembler's `[ebp-0x2bac]` / `[ebp-0x2bd4]`) default
-to 0 — per-dungeon inputs computed long before the walk, and a separate thread. The generators
-are correct given them and the parameters are wired for a one-line change.
+**`dunLevel` / `dunRank` are now fed (2026-07-24).** They were the one gap left above. Both come
+straight off the feature cell that placed the dungeon: `FeatureCell::level` (the Loop-C slot
+level, newly kept) and `FeatureCell::subtype` (which for a dungeon cell *is* the rarity byte).
+Threaded through `DungeonSite` → `buildDungeon` → `dungeonDecorWalk`. Neither can change a draw
+count, so `rederive_dundecor` stays 52/52, `rederive_itemgen` 492/492 and the hash stays
+`AB6C2A00E6BF77A4`; `--dungeontest` reports level 52 / rank 3 for the dungeon near spawn.

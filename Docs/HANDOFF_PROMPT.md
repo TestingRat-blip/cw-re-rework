@@ -138,6 +138,13 @@ Running out of order silently empties the islands/roles (it oscillates).
 9. **When Ghidra warns it cannot track the stack, read the disassembly for loop induction
    variables.** In the mob pass the decompiled C aliased `K` and `K+1` onto one name and made
    the qualification test unreadable; twelve lines of disassembly settled it.
+10. **Check the existing port before doing new RE.** The `counter` feeding the level formula
+   was documented as "must arrive by another route" because the decompile showed only a
+   `= 0` store. It was the loop's induction variable — the decompiler had merged that stack
+   slot with two unrelated reuses of it, so its increment read as belonging to something else.
+   Twenty lines of disassembly at the *loop tail* settled it, and **both ports were already
+   computing the value** (`_sub_count(idx)` / `cellLevel(k)`) and discarding it. When a value
+   lives inside a function that is already bit-exact, the answer is in the port, not the binary.
 7. **Both label sources are unreliable in opposite directions**: `CW_CONFIDENCE_XREF.md` had an
    off-by-one that filed proven worldgen as `lib_fn_*` (16 rows fixed); `cw_callgraph.py` gives
    game names to STL primitives. Always verify against the body.
@@ -175,10 +182,13 @@ is the entity layer. Two functions are freshly RE'd:
 
 The dungeon mob pass is done. Pick up from there, in rough priority order:
 
-1. **Identify the `counter` feeding `monster_level_formula`** (`[esp+0x28]` in
-   `FUN_0050e080` @0x50ea8b). It is the last input the loot layer needs; the function is
-   already ported bit-exact, so this is matching a value to existing port state, not new RE.
-   Live values: 34, 38, 46 for levels 23, 30, 52 (`Docs/RE_dungeon_level_rank.md`).
+1. **~~Identify the `counter` feeding `monster_level_formula`~~ — DONE 2026-07-24.** It is the
+   **Pass-3 candidate loop index** `[esp+0x28]` (`0x50ea0e` → `0x50f27c`): 64 iterations, even
+   ones pop a candidate, and `(counter>>1)&1` is the dungeon branch — so a dungeon only ever
+   sits at `counter ≡ 2 (mod 4)` and each level pins to a unique counter. Both ports already
+   computed it (`cw_featuregen._sub_count(idx)` / cwgen `cellLevel(k)`) and threw it away.
+   `tools/gate_dungeon_counter.py` reproduces **level 6/6 and rank 6/6** ab-initio from the
+   seed; `dunLevel`/`dunRank` are now wired through cwgen (hash unchanged).
 2. **The rest of the dungeon entity layer** — the `cell.flags & 4` block at `0x5078b3` (fires
    on exactly one cell per dungeon, the apex/boss room), the chandelier at `0x507760`
    (`style == 3 && rand() % 10 == 0`), the kind-4 entrance marker at `0x504832`, and the
@@ -190,9 +200,10 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    (`FUN_0052b470` + `FUN_0052a760` + both sub-generators) the loop shares with it.
 3. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,
    still the largest genuinely-new slice.
-4. **Port the mob pass + boss spawn + light sources + the whole item-generation family into
-   `cw_rederive`.** Then the RatForge engine half of "light emission" — rendering the kind-7 /
-   kind-4 records as actual lights — which is engine work in that repo, not RE.
+4. **Port the mob pass + boss spawn + light sources into `cw_rederive`** (the item-generation
+   family is ported, and now fed with a real level/rank). Then the RatForge engine half of
+   "light emission" — rendering the kind-7 / kind-4 records as actual lights — which is engine
+   work in that repo, not RE.
    All four are gated; the family (`0052b470` -> `0052a760` -> `00528bf0`/`0052c4e0`) is a pure
    function of `(level, rank)` and the rand stream, with 10 discarded draws that must be burnt. It now depends only on the finished dungeon voxel
    stamp, which the port already produces bit-exact — no captured booleans, no order state.
