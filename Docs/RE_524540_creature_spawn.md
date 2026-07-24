@@ -105,12 +105,42 @@ feature-generation path; the existing dungeon captures hooked a *natural* dungeo
 ("frozen server", `f0_boxlist_probe.py`). So capturing types 1–15 needs that trigger, not
 `zb()`.
 
+## Dungeon capture — the conclusive finding (2026-07-24)
+
+Adapted the proven dungeon rig (`../tools/frida_dungeon_spawn.py`: sandbox_42069, zone
+(32795,32796), **stub the region-cache scheduler `0xd78e0` + `0x149550`** so `zb()` generates
+the dungeon deterministically). The dungeon assembled (assembler window consumed ~1.8M rand
+draws) and **137 creature spawns fired inside it**. Result:
+
+- **All 137 dungeon spawns are type 0, with `rand_draws == 0`.** Combined with the 6,305
+  overworld type-0 spawns (also 0 draws): **`524540` consumes ZERO `rand()` for type 0 — the
+  only type that occurs in normal overworld *and* dungeon builds.** It is a **deterministic
+  constructor** on the live path.
+- The 33 `rand()` sites in the body are all in the **types 1–15** branches, which never fired.
+  Those are rare/special creatures (bosses, quest NPCs) placed by *different* call sites with a
+  non-zero `param_5`; they don't occur in ordinary zone/dungeon generation.
+
+**So there is no "type-1 RNG gate" in normal generation.** `524540`'s live behaviour is
+deterministic: given (`src`, `pos`, `orient`, `type=0`) it builds the Spawn record + the
+`Sequential{Combat,LookAtPlayer,WalkPath}` tree with no randomness. Porting it needs no
+rand-matching — only the field mapping, which the 137+6,305 captured input→output pairs pin
+exactly.
+
+## Where the generative RNG actually is: the caller
+
+The randomness that *drives* spawning — how many creatures, at which positions — lives in the
+**caller** that invokes `524540` (the dungeon populated 137 of them from one caller). `524540`
+is just the constructor. The 7 callers are `FUN_004e310a / 4eaa7a / 4ee3aa` (the big
+dispatchers) + `50702a / 5154aa / 515d6a / 51c90a`; the dungeon populator is among them. **That
+caller is the real next target** for the "populated worldgen" gate — its rand stream decides
+the spawn layout, and 524540 just materialises each entity.
+
 ## Status & next steps
 
-- ✅ Identity, signature, `Spawn` record, behaviour tree decoded statically.
-- ✅ Live rig built + validated; **type-0 overworld spawn confirmed deterministic (0 RNG)**.
-- ▶ **Dungeon-mob gate (types 1–15)**: trigger a *natural* dungeon build (feature path, not
-  `zb()`), then match the type + position + the 33-draw `rand()` sequence ab-initio. This is
-  the meaningful RNG gate; it's blocked only on the dungeon trigger, which the existing
-  dungeon rig already solves — adapt it.
-- ✅ Relabelled: `creature_spawn_builder`, kind **game** (was `lib_fn_524540`).
+- ✅ `524540` fully characterised: deterministic type-0 spawn constructor; field mapping pinned
+  by 6,442 captured live spawns. Relabelled `creature_spawn_builder` / game.
+- ✅ Live rigs built + validated (overworld `frida_spawn_capture.py`, dungeon
+  `frida_dungeon_spawn.py`).
+- ▶ **Pivot**: RE the *caller* (dungeon mob populator among the 7) — the count/position RNG is
+  there. That is the actual generation logic; `524540` is now a solved downstream constructor.
+- (Optional) the rare type-1–15 special-creature path, if a boss/quest spawn can be triggered.
