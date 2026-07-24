@@ -140,12 +140,12 @@ reproduced on id, scale, flag, draw count and position — including the style-0
 that raises the record by exactly 2.0, decoded then confirmed 9/9. Extends RatForge's "id 0x30
 for style 3" note to all six styles.
 
-Still open in this phase:
+**Hanging decor — ✅ DONE, gated (`RE_hanging_decor.md`).** The liana (`0x37`), cobwebs
+(`0x39`/`0x3a`) and chandelier (`0x38`) — **160/160** records on id, thickness, angle, scale,
+flag and position. **`site+4` is now complete: all six of its emitters are modelled**, and with
+`site+0xc` both of the assembler's decoration containers are reproducible.
 
-- the other two `site+4` emitters, captured but not modelled: the **liana** (`0x37`, 37
-  records), the **cobwebs** (`0x39`/`0x3a`, 99) and the **chandelier** (`0x38`, 24, the
-  `rand() % 10` block at `0x507760`) — all in the *hanging-decor* id namespace, not the
-  static-entity one the wall decor uses;
+Still open in this phase:
 - the stub's third gate, a `World_getBlockAt` probe at points **off** the 10-unit lattice;
 - the chandelier at `0x507760` (`style == 3 && rand() % 10 == 0`) and the kind-4 entrance
   marker at `0x504832`;

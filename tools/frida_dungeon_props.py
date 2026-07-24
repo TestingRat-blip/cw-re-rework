@@ -59,7 +59,10 @@ const STUB_COINS = { 0x1049b7: 0, 0x104b6e: 2, 0x104d12: 3, 0x104ebe: 1 };
 const SCATTER = [0x12a830, 0x12a830 + 1448];
 // FUN_0052c370 = the wall-decor emitter; its record goes to site+4, a std::list, via
 // FUN_00528450 -- a different container from the site+0xc prop vector.
-const DECOR = [0x12c370, 0x12c370 + 341];   // BYTE size, not the decompiled-C length:
+const DECOR = [0x12c370, 0x12c370 + 341];
+// the three OTHER site+4 emitters, all inline in the assembler: the liana + the four cobweb
+// blocks (0x105a54..0x106118) and the chandelier gate (0x10775a..0x1078b0).
+const HANG1 = [0x105a54, 0x106118], HANG2 = [0x10775a, 0x1078b0];   // BYTE size, not the decompiled-C length:
 // 4820 is how long its C is, and that range runs past FUN_0052b470's entry at 0x12b470 and
 // swallows 72 of the item generator's draws.
 
@@ -75,7 +78,8 @@ Interceptor.attach(m.getExportByName('rand'), { onLeave(rv){
   randN++;
   let rva = 0; try { rva = this.returnAddress.sub(b).toUInt32(); } catch(e){ return; }
   if (rva >= SCATTER[0] && rva < SCATTER[1]) { scatterRands.push([rva, rv.toInt32()]); return; }
-  if (rva >= DECOR[0] && rva < DECOR[1]) { decorRands.push([rva, rv.toInt32()]); return; }
+  if ((rva >= DECOR[0] && rva < DECOR[1]) || (rva >= HANG1[0] && rva < HANG1[1])
+      || (rva >= HANG2[0] && rva < HANG2[1])) { decorRands.push([rva, rv.toInt32()]); return; }
   if (rva === T_GATE || rva === T_ROT || rva === T_FLICKER || (rva in STUB_COINS)) {
     const ebp = this.context.ebp;
     torchRands.push({ ra: rva, v: rv.toInt32(), n: randN - 1,

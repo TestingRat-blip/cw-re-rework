@@ -30,6 +30,7 @@ Docs/                  the detailed write-ups (one per stage)
   RE_dungeon_lights.md           the dungeon torch + wall-stub light sources -- gated
   RE_52a830_scatter.md           the dungeon furniture scatter (the rest of the props) -- gated
   RE_52c370_wall_decor.md        the dungeon wall decor (the site+4 list) -- gated
+  RE_hanging_decor.md            liana / cobwebs / chandelier -- gated; completes site+4
   HANDOFF_PROMPT.md      session handoff: environment, rigs, lessons, next task
 tools/                 the pipeline (Ghidra scripts + Python passes)
 raw/                   intermediate JSONL + every audit trail
@@ -144,6 +145,7 @@ python tools/frida_dungeon_props.py [zx zz]  # live: the site+0xc prop vector
 python tools/gate_dungeon_lights.py --all    # gate: the torch + wall-stub lights
 python tools/gate_52a830_scatter.py --all   # gate: the furniture scatter
 python tools/gate_52c370_decor.py --all    # gate: the wall decor
+python tools/gate_hanging_decor.py --all  # gate: liana, cobwebs, chandelier
 ```
 
 Ghidra stages (analysis, RTTI recovery, decompile, PDB apply, struct recovery) and their
