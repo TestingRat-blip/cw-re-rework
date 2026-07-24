@@ -27,6 +27,7 @@ Docs/                  the detailed write-ups (one per stage)
   RE_524540_creature_spawn.md    the creature/behaviour-tree spawn constructor
   RE_50702a_mob_populator.md     the dungeon mob pass + boss spawn -- gated, 6 dungeons
   RE_52b470_item_generator.md    the item-generation family -- gated; closes the twin map
+  RE_dungeon_lights.md           the dungeon torch + wall-stub light sources -- gated
   HANDOFF_PROMPT.md      session handoff: environment, rigs, lessons, next task
 tools/                 the pipeline (Ghidra scripts + Python passes)
 raw/                   intermediate JSONL + every audit trail
@@ -137,6 +138,8 @@ python tools/gate_5078b3_boss.py --all       # gate: the boss spawn
 python tools/frida_itemgen.py [zx zz]        # live: FUN_0052b470 candidates + rand stream
 python tools/gate_52b470_itemgen.py --all    # gate: the item generator
 python tools/gate_52a760_subgen.py --all    # gate: its two sub-generators
+python tools/frida_dungeon_props.py [zx zz]  # live: the site+0xc prop vector
+python tools/gate_dungeon_lights.py --all    # gate: the torch + wall-stub lights
 ```
 
 Ghidra stages (analysis, RTTI recovery, decompile, PDB apply, struct recovery) and their

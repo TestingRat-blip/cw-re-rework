@@ -120,8 +120,16 @@ every deterministic field, and both of its `rand()` draws (species pick, extra-i
 `FUN_00402a10` is a float→16.16 converter whose `mulss` the decompiler drops, and the `+4.5f`
 is lost to float32 at world scale — computing in double is half a block off, 6/6.
 
+**Light sources — ✅ DONE, gated (`RE_dungeon_lights.md`).** The torch (kind 7, 1-in-40) and
+the wall stub (kind 4, four directions) are records in the prop vector at `site+0xc`. Torch
+placement is fully derivable from the cell grid (663/663 gate cells) and its three draws
+reproduce every record field (18/18); all 280 stubs are confirmed coin+neighbour candidates
+with exact records. Correction worth carrying: the `+0x24` triple that looks like an RGB colour
+is a **size** — the server stores no light colour or radius at all.
+
 Still open in this phase:
 
+- the stub's third gate, a `World_getBlockAt` probe at points **off** the 10-unit lattice;
 - the chandelier at `0x507760` (`style == 3 && rand() % 10 == 0`) and the kind-4 entrance
   marker at `0x504832`;
 - the loot/item generation *loop* earlier in the same cell body (the item **generator** it

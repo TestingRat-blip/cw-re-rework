@@ -178,12 +178,16 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
 1. **The rest of the dungeon entity layer** — the `cell.flags & 4` block at `0x5078b3` (fires
    on exactly one cell per dungeon, the apex/boss room), the chandelier at `0x507760`
    (`style == 3 && rand() % 10 == 0`), the kind-4 entrance marker at `0x504832`, and the
-   loot/item generation loop that runs earlier in the same cell body. DONE and gated already:
+   loot/item generation loop that runs earlier in the same cell body, and the **other 11 prop
+   kinds** in the `site+0xc` vector (494 records captured; only kinds 4 and 7 are RE'd).
+   DONE and gated already: the light sources (`RE_dungeon_lights.md`),
    the `cell.flags & 4` boss block at `0x5078b3`, and the whole item-generation family
    (`FUN_0052b470` + `FUN_0052a760` + both sub-generators) the loop shares with it.
 3. **Prop / vegetation placement** (`FUN_004c8420`) — Phase 2 of `Docs/WORLDGEN_RE_PLAN.md`,
    still the largest genuinely-new slice.
-4. **Port the mob pass + boss spawn + the whole item-generation family into `cw_rederive`.**
+4. **Port the mob pass + boss spawn + light sources + the whole item-generation family into
+   `cw_rederive`.** Then the RatForge engine half of "light emission" — rendering the kind-7 /
+   kind-4 records as actual lights — which is engine work in that repo, not RE.
    All four are gated; the family (`0052b470` -> `0052a760` -> `00528bf0`/`0052c4e0`) is a pure
    function of `(level, rank)` and the rand stream, with 10 discarded draws that must be burnt. It now depends only on the finished dungeon voxel
    stamp, which the port already produces bit-exact — no captured booleans, no order state.
