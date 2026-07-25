@@ -98,3 +98,21 @@ loom, sawbench, workbench, customization-bench).
 
 `raw/static_prop_models.json` holds both namespaces with the model-DB index and the
 `.cub` name for every assigned slot, plus the null slots.
+
+## Applied to the engine (RatForge `1b4a02e`)
+
+`tools/cw_rederive/model_id_map.json`'s `static_entity_types` was rebuilt from this table
+(38 → 75 rows, `ambiguous` false throughout, each row carrying its model-DB index) and
+`cw_extract_props.py` re-run: the pack goes 40 → 85 models.
+
+`dungeonPropModelName` in `src/worldgen/Dungeons.cpp` carried the same two errors **plus**
+`chest-base`, which would have stopped resolving the moment the pack was rebuilt (the
+`.cub` is `chest-base02`). Fixed; the switch now agrees with the client on all 37 rows but
+one — `0x0e`, which the engine keeps drawing as `sandstone-table` even though the client
+binds nothing, because the server's scatter still emits it. That divergence is stated in
+the code and the packer keeps the model via `EXTRA_MODELS` for it.
+
+Verified after the change: `--dungeontest` OK (*decoration props placed + resolvable*),
+`--proptest` OK (85 models, 8/8 spot-checks), `--gentest` OK, and the whole `cwgen_test`
+battery green with the **output hash unchanged at `AB6C2A00E6BF77A4`** — prop naming is a
+rendering concern, not a generation one.

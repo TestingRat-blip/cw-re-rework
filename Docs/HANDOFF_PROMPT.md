@@ -340,10 +340,13 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    ⚠ **Three corrections to `assets/props/prop_ids.json`**: type 17 is sandstone-stool (not
    stone-stool), and **50/51 are SWAPPED** — 50 = street-light02, 51 = street-light01,
    corroborated by emitter C's own gated sizes. Its type 14 (sandstone-table) has no slot at
-   all. ▶ **Follow-up (engine side, not RE):** regenerate the engine asset from the proven
-   table in `raw/static_prop_models.json` — `cw_rederive/cw_extract_props.py` rebuilds
-   `assets/props/prop_ids.json` + `props.pack`, so it is a deliberate engine change, not
-   done here.
+   all. **APPLIED to the engine (RatForge `1b4a02e`):** `model_id_map.json`'s
+   `static_entity_types` rebuilt from this table (38 → 75 rows, pack 40 → 85 models), and
+   `dungeonPropModelName` fixed — it carried the same two errors **plus** `chest-base`,
+   which would have stopped resolving once the pack was rebuilt. The one deliberate
+   divergence is `0x0e`: the engine keeps drawing `sandstone-table` where the client draws
+   nothing, because the server still emits it. `--dungeontest` / `--proptest` / `--gentest`
+   OK and the full battery green with the **output hash unchanged (`AB6C2A00E6BF77A4`)**.
 4. **Port the mob pass + boss spawn + light sources into `cw_rederive`** (the item-generation
    family is ported, and now fed with a real level/rank). Then the RatForge engine half of
    "light emission" — rendering the kind-7 / kind-4 records as actual lights — which is engine
