@@ -108,9 +108,18 @@ Done since, each gated against live captures:
 | `FUN_005104e0` = `camp_populator`, the overworld encampment builder | `RE_5104e0_camp.md` | 2,742 checks / 99 zones |
 | the town builder's prop layer, then its plot lattice → promotion → role-2 house → 3×3 modules → the 13-block prop lattice | `RE_town_props.md` | 8,646+ checks / 67 towns |
 | the **candidate grid** the camp populator is handed (`0x51e839`-`0x51eab5`) | `RE_zone_grid.md` | 8,308 checks / 51 zones |
+| emitters **A** and **C** — the runestone circle and the village street light | `RE_zone_emitters_ac.md` | 148 zones |
 
-Still open here: emitters **A** (`0x51dbf5`) and **C** (`0x51fcdb`), which no sampled zone
-reached, and the unnamed prop ids past 0x37.
+Reading A and C's gates statically (rather than sweeping for them) is what found them: both
+key off the region's **per-zone site-kind grid** — `region + idx*16 + 0x18`,
+`idx = (zx%64)*64 + (zz%64)`, 4096 entries — where kind **1 = town** (a 2×2 block),
+**3 = dungeon** (16 per region; the six holdout dungeon zones are 6/6) and **4 = runestone
+circle** (4–5 per region). At 0.1% of zones, emitter A was never going to turn up in a
+512-zone sweep.
+
+**Phase 2 has no emitter left open.** What remains is not placement: the unnamed prop ids
+past 0x37, and re-deriving the site-kind grid itself from the seed (it is currently read
+live).
 
 Deliverable unchanged: the prop/veg **placement** proven bit-exact (positions + model ids + rand
 draws) against a live capture, while *rendering* stays a documented engine gap.

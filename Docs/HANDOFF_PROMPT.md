@@ -73,6 +73,7 @@ applied). They are copies — **never mutate `RatForge\tools\ghidra_proj\CubeAud
 | `frida_dungeon_patrol.py` | the two creature-species containers + every species they hand out |
 | `frida_zone_props.py` | the OVERWORLD prop scatter; sweeps many zones in one server run |
 | `frida_zone_grid.py` | the camp populator's CANDIDATE GRID inside the zone builder |
+| `frida_zone_ac.py` | zone emitters A/C; `--scan` dumps a region's per-zone SITE-KIND grid |
 | `reccmp/compare.py` | byte-match a recompile vs the shipped code |
 
 **⚠ Pipeline is a fixpoint — run in this order after any change:**
@@ -277,9 +278,37 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    uniformity across 39 different positions; the falsifying observation was one command —
    run the already-ported function on the same inputs. Hook where the values are **spilled to
    the frame** instead (here `rand()`'s own entry, where EBP is still the caller's).
-   ▶ Next: zone emitters **A** (`0x51dbf5`, type 0x2d) and **C** (`0x51fcdb`, type 0x32/0x33
-   with a string), whose record content is already read off statically but whose gates are not
-   — read those statically rather than sampling blindly.
+   **Emitters A and C are DONE too (`Docs/RE_zone_emitters_ac.md`, rig `frida_zone_ac.py`,
+   gate `gate_zone_ac.py`, 3,937 checks over 256 zones) — PHASE 2 HAS NO EMITTER LEFT OPEN.**
+   Reading their gates statically first is exactly what found them: both key off a table
+   nothing in this project had touched, the region's **per-zone SITE-KIND grid** at
+   `region + idx*16 + 0x18` with `idx = (zx%64)*64 + (zz%64)`, 4096 entries per region.
+   **kind 1 = town** (always a 2×2 block), **3 = dungeon** (16/region — and the six holdout
+   dungeon zones are **6/6**, matching the independently-derived ≤16 bound), **4 = runestone
+   circle**. At 4 kind-4 zones per 4096, emitter A was never going to appear in a 512-zone
+   sweep — reading the gate turned a hopeless search into four zones that all fire.
+   * **A = the runestone circle** (prop `0x2d` = `runestone`): a ring of `rand()%3 + 6` stone
+     blobs at radius 25 (angle `i·π/N` — HALF a circle) around the **zone** centre, then one
+     record at that centre **+3.5 blocks** (`ftol(229376.0)`), size `(4,4,5)`, `dir = rand()%4`,
+     Z settled by an **uncapped** inline descend-then-ascend over `World_getBlockFloat` — not
+     `Prop_settleOnTerrain`. Whole draw stream `1 + 2N + 1`. 112/112 zones.
+   * **C = the village street light** (`0x32`/`0x33` = `street-light01`/`02`): class-`0xb`
+     (sand) column with air above, `road > 0.75` (`FUN_004d19f0`, so inside ~0.37 of the
+     village radius), `(x + 90y) % 470 == 0`, `rand()%16 == 0`, seven clear blocks — i.e.
+     **desert towns only**. 381 lights over 144 towns.
+   ⚠ **RETRACTED: emitter C does not build a string.** `FUN_004cde40` is an eight-instruction
+   `int -> int64 16.16`, `FUN_00406380` copies six dwords (`ret 0x18`), `FUN_00402a40` copies
+   the same 24 bytes — they build the record's **position**. The decompile looked like string
+   work only because those calls return a struct by value, so Ghidra printed the hidden
+   return-slot addresses (`0x51fc72`/`0x51fc82`/`0x51fc92`) as arguments. One disassembly of an
+   eight-instruction function settled it.
+   ★ Two rig lessons: `FUN_004d6670` is **thiscall** — the record is `args[0]`, and reading
+   `args[1]` gives plausible-looking garbage (type `0x80035ff`, position −82e9). And when
+   mirroring a game loop in a checker, mirror the **branch**, not your idea of it: the run walk
+   `jge` at `0x51fa92` makes the LAST block always qualify, reading the class at index `count`
+   — one past the counted extent. Modelling it as `k < n-1` undercounted by 3–18 per town.
+   ▶ Next: the unnamed prop ids past `prop_ids.json`'s 0x37, and re-deriving the site-kind grid
+   from the seed (it is currently read live — the one captured input left in this layer).
 4. **Port the mob pass + boss spawn + light sources into `cw_rederive`** (the item-generation
    family is ported, and now fed with a real level/rank). Then the RatForge engine half of
    "light emission" — rendering the kind-7 / kind-4 records as actual lights — which is engine

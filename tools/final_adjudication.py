@@ -96,7 +96,16 @@ RULINGS = {
     # --- genuinely unresolved ----------------------------------------------------
     "004496a0": ("UNRESOLVED", "-", "no body: the address is not a function in our analysis"),
     "004e20d0": ("UNRESOLVED", "-", "generic 7-field copy; neither name is evidenced"),
-    "00406050": ("UNRESOLVED", "-", "64-bit coordinate normalisation; neither name clearly fits"),
+    # SETTLED 2026-07-25 (Docs/RE_zone_emitters_ac.md). "64-bit coordinate normalisation" is
+    # what the body does; the CALL SITE says what it is for. Emitter A's Z settle calls it in a
+    # pair of loops with three int64 16.16 coordinates plus the site and tests
+    # `(ret[3] & 0x1f) in {0,2}` -- the project's own Block_isSolid predicate -- on the returned
+    # pointer, descending to the first solid block and then ascending to the first clear one.
+    # It is the fixed-point-position variant of the block lookup FUN_00405fd0 does with integer
+    # block coordinates. B's name is right; A's `column_walkup` is the caller-side role.
+    "00406050": ("B", "World_getBlockFloat",
+                 "16.16 position -> block pointer; proven by emitter A's descend/ascend settle "
+                 "at 0x51dad1/0x51db56, whose verdict is Block_isSolid on the return value"),
 }
 
 

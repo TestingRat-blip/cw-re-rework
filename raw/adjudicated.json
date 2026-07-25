@@ -107,6 +107,11 @@
    "name": "World_getBlockAt",
    "verdict": "B"
   },
+  "00406050": {
+   "kind": "gamemisc",
+   "name": "World_getBlockFloat",
+   "verdict": "B"
+  },
   "00406100": {
    "kind": "gamemisc",
    "name": "Chunk_getColumnAt",

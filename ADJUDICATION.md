@@ -7,10 +7,10 @@ settled against the decompiled body -- or the raw bytes where the decompiler lie
 
 | verdict | count |
 |---|---|
-| B | 49 |
+| B | 50 |
 | NEITHER | 29 |
 | A | 15 |
-| UNRESOLVED | 10 |
+| UNRESOLVED | 9 |
 | COMPATIBLE | 6 |
 | A-KIND | 4 |
 
@@ -40,7 +40,7 @@ the body was the only way to settle these.
 | `0x00402990` | size3_write | vec3_store | **B** | vec3_store | stores 3 dwords, returns this; A's `size3_write` is the same thing, less precise |
 | `0x00405f20` | column_record_read | Column_getBlockChecked | **B** | Column_getBlockChecked | checked column read with sentinel fallbacks |
 | `0x00405fd0` | occupancy_probe | World_getBlockAt | **B** | World_getBlockAt | column lookup + Z bounds, returns block or sentinel |
-| `0x00406050` | column_walkup | World_getBlockFloat | **UNRESOLVED** | - | 64-bit coordinate normalisation; neither name clearly fits |
+| `0x00406050` | column_walkup | World_getBlockFloat | **B** | World_getBlockFloat | 16.16 position -> block pointer; proven by emitter A's descend/ascend settle at 0x51dad1/0x51db56, whose verdict is Block_isSolid on the return value |
 | `0x00406100` | column_record_lookup | Chunk_getColumnAt | **B** | Chunk_getColumnAt | coord -> chunk -> column lookup, 37 callers |
 | `0x00406290` | zone_built_check | Region_getChunkCell | **B** | Region_getChunkCell | coord bounds, >>6 to chunk, &63 to cell |
 | `0x00411090` | monster_level_formula | formula_inverse | **B** | formula_inverse | x87/CRT float conversion helper; B names it correctly |

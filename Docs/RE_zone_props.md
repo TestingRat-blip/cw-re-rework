@@ -187,14 +187,24 @@ and attributed.
    `rand()/32767 <= max(0, 1-w)² · 0.75` — with `w` (`FUN_0052c820`) reproduced bit-exactly
    ab initio. 8,308 checks over 51 zones; `gate_zone_camp.py` no longer rests on a captured
    input this repo cannot derive.
-4. **Emitters A and C** inside the zone builder, which no sampled zone reached. Their
-   record content is already read off statically:
-   * **A** (`0x51dbf5`): type `0x2d`, size `(4, 4, 5)`, `dir = rand()%4`, raised from its
-     start position until it is in a non-solid block (`0x51db56` loop).
-   * **C** (`0x51fcdb`): type `0x33` size `(1, 1, 8)` or type `0x32` size `(2, 2, 8)`
-     chosen by a float compare against `[0x5586d8]`, and it builds a **string** on the way
-     (`FUN_004cde40` × 3, `FUN_00406380`, `FUN_00402a40`) — a named prop, not a plain one.
-   Read their gates statically rather than sampling blindly for them.
+4. ~~**Emitters A and C** inside the zone builder~~ — **DONE,
+   `Docs/RE_zone_emitters_ac.md`.** Reading their gates first was the right call: both key
+   off the region's **per-zone site-kind grid** (`region + idx*16 + 0x18`,
+   `idx = (zx%64)*64 + (zz%64)`, 4096 entries), and only 4 of a region's 4096 zones carry
+   emitter A's kind — 0.1%, so a 512-zone sweep expects half a hit.
+   * **A** = the **runestone circle** (prop `0x2d` = `runestone`) on site kind 4: a ring of
+     `rand()%3 + 6` stone blobs at radius 25 around the ZONE centre, then one record at
+     that centre `+3.5` blocks, size `(4,4,5)`, `dir = rand()%4`, Z settled by an
+     **uncapped** inline descend-then-ascend over `World_getBlockFloat` (not
+     `Prop_settleOnTerrain`). Whole draw stream = `1 + 2N + 1`.
+   * **C** = the **village street light** (`0x32`/`0x33` = `street-light01`/`02`): on a
+     class-`0xb` (sand) column with air above, `road > 0.75`, `(x + 90y) % 470 == 0`,
+     `rand()%16 == 0` and seven clear blocks — i.e. desert towns only.
+   ⚠ **The "it builds a string" claim above is RETRACTED.** `FUN_004cde40` is an
+   eight-instruction `int -> int64 16.16`; `FUN_00406380` copies six dwords (`ret 0x18`);
+   `FUN_00402a40` copies the same 24 bytes. They build the record's **position**, not a
+   name. The decompile only looked like string work because the calls return a struct by
+   value and Ghidra printed the hidden return-slot addresses as arguments.
 5. **Ids beyond the table.** `assets/props/prop_ids.json` stops at 0x37; `0x41`, `0x42`
    and `0x45` are unnamed. The client's type→slot table is the source the existing rows
    came from.
