@@ -207,11 +207,20 @@ Running out of order silently empties the islands/roles (it oscillates).
    phantom trees in the first zone whose candidates reached into a feature deform. Note
    where the bug was: not in the pass under test, but in **what that pass reads**. When a
    replay is validated on one terrain class, its INPUTS are only validated there too.
-18. **A stale golden agrees with the port by accident.** `golden_rederive/*.bin` is
-   gitignored and has no manifest, so `rederive_forest` had been green against a golden an
-   older `cw_forest.py` produced — hiding a real 58-vs-54 Python↔C++ drift. Regenerate a
-   port-produced golden before trusting a gate that uses it, and remember what it can
-   prove: **port == port, never port == game.**
+18. **A stale golden agrees with the port by accident, and it hid a real bug.**
+   `golden_rederive/*.bin` is gitignored and has no manifest, so `rederive_forest` had been
+   green against a golden an older `cw_forest.py` produced. Regenerating it exposed a
+   58-vs-54 Python↔C++ drift whose cause was concrete: **`CwForest.cpp` keeps its own copy
+   of the pre-chain, and the 2026-07-25 "Y is drawn FIRST" site fix went into
+   `CwZoneScatter.cpp` and `cw_decoration.py` but not into it.** Regenerate a port-produced
+   golden before trusting a gate that uses it, and remember what it can prove: **port ==
+   port, never port == game.**
+19. **When a fix lands in a duplicated routine, grep for the duplicate.** `%0xa0 + 0x30`
+   had four copies; three got the fix. One grep would have found the fourth.
+20. **A parity-gated bug needs a gate that runs BOTH branches.** The site loop is
+   odd-parity only, and every gate added in this programme happened to be even-parity —
+   `rederive_zonepropsb` structurally cannot cover it, because emitter B *is* the even
+   branch. `forest_oracle.ZONES` now deliberately keeps an odd zone.
 
 7. **Both label sources are unreliable in opposite directions**: `CW_CONFIDENCE_XREF.md` had an
    off-by-one that filed proven worldgen as `lib_fn_*` (16 rows fixed); `cw_callgraph.py` gives
@@ -341,15 +350,15 @@ of it needs another capture session.
    at `0x51e5c7` and `RE_zone_tail.md`'s table enumerates every rand site between there
    and them, so each is a decode job like the tree loop was, not a mystery. Then town.
    Each has a `gate_*.py` here to check the port against.
-   ⚠ One thing this slice surfaced and did NOT fix: a **pre-existing Python↔C++ drift in
-   the forest replay** on zone `(32800, 32799)` (seed 444444, no live capture) — 58 trees
-   vs 54, first 54 byte-identical, parting after the type-1 tree at `gx=7, gz=1`. Not the
-   msvcr110-vs-ucrt sin/cos gap the code comments predicted, and not caused by either fix
-   above (both ports give the same count with and without them). It was hidden by a
-   **stale gitignored golden** (`rederive_forest.bin`), which agreed with the C++ by
-   accident; regenerating it truthfully leaves `rederive_forest` at **4/5**. This is
-   `CW_RE_MASTER_INDEX.md` §7's "`golden_rederive` has no manifest" biting for real.
-   `VX_FOREST_DUMP=1 cwgen_test <dir>` prints both tree lists side by side.
+   ✅ It also surfaced AND fixed a pre-existing Python↔C++ forest drift: zone
+   `(32800, 32799)` gave 58 trees in Python and 54 in C++ because **`CwForest.cpp` has its
+   own copy of the pre-chain and its odd-parity site draw was still X-first** — the
+   2026-07-25 Y-first fix reached `CwZoneScatter.cpp` and `cw_decoration.py` only. The
+   misplaced site rejected 5 candidates it should not have, and a reject spends 2 draws
+   instead of 6: exactly the 20-draw offset observed. Three filters hid it — the site loop
+   is odd-parity only, `rederive_zonepropsb` tests only even zones, and the golden was
+   stale. `rederive_forest` is now **5/5 with 111/111 trees and 388,538/388,538 colored
+   writes** (was 107/107 / 186,419 against the stale golden).
 2. **Port the dungeon mob pass + boss spawn + light sources** into `cw_rederive`/`cwgen`. All
    gated; all pure functions of the finished dungeon voxel stamp, which the port already
    produces bit-exact — no captured booleans, no order state. Then the engine half of **light
