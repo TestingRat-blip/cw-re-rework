@@ -255,8 +255,19 @@ of it needs another capture session.
 
 1. **Port the overworld/town PROP PLACEMENT into `cwgen`.** `CwPropEmit` (gate
    `rederive_props` 9273/9273) is only the emitter *library* — `--proptest` says so out loud:
-   *"placement = the town/dungeon driver"*. What is missing is **which emitter fires where**:
-   * the `(zx + zz) & 1` parity split at `0x51cb66`, `FUN_004e0740`'s two stages, and
+   *"placement = the town/dungeon driver"*.
+   ✅ **DONE (RatForge `1585e6a`): the odd-parity `FUN_004e0740` props.** `zoneScatterProps`
+   emits stage 1's campfire and stage 2's four candidates with their real ids; gate
+   `rederive_zoneprops` **5/5** replays the stream ab-initio and lands the anchor on the live
+   16.16 position. ★ It also found a genuine bug in **both** ports: the retry loop draws
+   **Y first** (`0x51cbbb`) then X (`0x51cbfc`), and C++ *and* `cw_decoration.py` had them
+   swapped — the Python's own comment named the two return addresses in the right order
+   beside variables assigned the other way round. Not cosmetic: the accepted site is what the
+   mat-38 pass rejects rocks against, so fixing C++ alone broke `rederive_zonescatter` 16/17
+   against a golden the old Python had generated. Both fixed, golden regenerated, 17/17.
+   Settled on live data (8/8 zones), not by reading harder.
+   ▶ Still missing — **which emitter fires where** for the rest:
+   * the `(zx + zz) & 1` **even** branch (emitter B, the type-0 statue), and
      `Prop_settleOnTerrain` (a pure function of finished terrain — no captured state);
    * `camp_populator` + its candidate grid (the grid is pure arithmetic plus one `rand()` per
      qualifying cell — 39 per firing zone, always);
