@@ -204,6 +204,11 @@ Interceptor.attach(b.add(0xe28e0), {
     cur.randN1 = randN;
     cur.plots = readPlots();
     cur.plotCount = plotCount;
+    // The byte the promotion pass branches on at 0x4e31e1 / 0x4e3211 / 0x4e33a1 is
+    // `[esi+0x79]`, and esi is the town builder's param_1 -- the SITE, not the world.
+    // (world+0x79 reads 0 in every headless town, which is what gave that away.)
+    try { cur.faction = ptr(cur.site).add(0x79).readU8(); } catch(e){}
+    try { cur.worldFaction = world.add(0x79).readU8(); } catch(e){}
     // stop here: genOne only clears `cur` after the whole zone build, so without this
     // the rig keeps recording pushes the town builder did not make
     collecting = false;

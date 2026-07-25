@@ -169,6 +169,22 @@ HOUSE_ROLE = 2
 HOUSE_MODULES = (3, 3, 4)
 ANCHOR_SITE = 0xECB14        # the 0x13 group's anchor, one per house that places
 
+# THE PROMOTION PASS (0x4e31c7-0x4e37aa).  Phase 3 writes a VERDICT into the plot record's
+# +0xc -- 2 for a plain buildable plot, 0 for a culled one, 6 and 7 for two special kinds.
+# `FUN_004e19f0` then sorts a candidate index array by score, and the pass POPS entries off
+# it, overwriting +0xc with a special role.  Every pop is either "take the last" or
+# `rand() % remaining` followed by a memmove that removes it, so a given special role can
+# only ever land on ONE plot per town.  What is left holding verdict 2 gets a house.
+SINGLE_POP_ROLES = {3, 5, 9, 10, 11, 12, 13, 14, 15, 16, 20}
+# Which special roles a town can hand out is decided by `[esi+0x79]` -- and esi is the
+# builder's param_1, the SITE, not the world.  (world+0x79 reads 0 in every headless town,
+# which is what gave that away.)  The sets are disjoint, and 1/2/3 always hand out theirs
+# in full; faction 0's three are conditional on further tests.
+FACTION_ROLES = {0: {5, 18, 20}, 1: {9}, 2: {14, 15, 16}, 3: {3, 10, 11, 12, 13}}
+FACTION_ALWAYS = {1, 2, 3}
+PLAIN_VERDICT = 2
+CULL_SPAN = 0x10             # Phase 3: a plot whose maxH - minH exceeds this is not a 2
+
 
 def rec(b):
     b = bytes(b)
@@ -399,6 +415,45 @@ def house_pass(h, g, tally):
     tally["anchors"] += len(anchors)
 
 
+def promotion(h, g, tally):
+    """Phase 3's verdict, and what the promotion pass does to it."""
+    if not h.get("plotsAtSort") or not h.get("plotsLate"):
+        return
+    w = "%d,%d" % tuple(h["zone"])
+    S = [bytes(p) for p in h["plotsAtSort"] if p]
+    L = [bytes(p) for p in h["plotsLate"] if p]
+    if len(S) != len(L) or not S:
+        return
+    late = collections.Counter()
+    for a, b in zip(S, L):
+        minh, maxh = (struct.unpack_from("<i", a, o)[0] for o in (0, 4))
+        verdict = struct.unpack_from("<i", a, 0xC)[0]
+        role = struct.unpack_from("<i", b, 0xC)[0]
+        late[role] += 1
+        g.true("a plot whose height span exceeds 16 is never a plain buildable plot",
+               not (maxh - minh > CULL_SPAN and verdict == PLAIN_VERDICT), w)
+        if verdict != PLAIN_VERDICT:
+            g.eq("only plain plots are promoted; the rest keep their verdict",
+                 role, verdict, w)
+        else:
+            tally["candidates"] += 1
+    fa = h.get("faction")
+    special = {r for r in late if r not in (0, PLAIN_VERDICT, 6, 7)}
+    if fa in FACTION_ROLES:
+        g.true("a town only hands out its own faction's special roles",
+               special <= FACTION_ROLES[fa], w)
+        if fa in FACTION_ALWAYS:
+            g.eq("and a faction 1/2/3 town hands out all of them",
+                 special, FACTION_ROLES[fa], w)
+    for r in SINGLE_POP_ROLES:
+        g.true("special role %d is a single pop, so at most one plot has it" % r,
+               late[r] <= 1, w)
+    tally["promoted"] += sum(v for r, v in late.items()
+                             if r not in (0, PLAIN_VERDICT))
+    tally["plain"] += late[PLAIN_VERDICT]
+    tally["culled_late"] += 0
+
+
 def main():
     names = sorted(glob.glob(os.path.join(RAW, "town_props_capture*.json")))
     if not names:
@@ -465,6 +520,19 @@ def main():
         print("   %d houses built, %d of them placed their interior anchor (the rest "
               "failed the emitter's own block test)"
               % (tally["houses"], tally["anchors"]))
+
+        g = Gate()
+        tally = collections.Counter()
+        for h in hits:
+            promotion(h, g, tally)
+        ok &= g.report("the promotion pass rewrites only plain plots")
+        print("   %d plain plots after Phase 3; %d kept plain (and got a house), "
+              "%d promoted to a special role"
+              % (tally["candidates"], tally["plain"], tally["promoted"]))
+        fac = collections.Counter(x.get("faction") for x in hits)
+        print("   site+0x79 over the sample: %s   (world+0x79: %s)"
+              % (dict(fac),
+                 dict(collections.Counter(x.get("worldFaction") for x in hits))))
 
         npush = sum(len(h["pushes"]) for h in hits)
         own = sum(1 for h in hits for p in h["pushes"] if in_town(p["ra"]))

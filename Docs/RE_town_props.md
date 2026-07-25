@@ -12,7 +12,9 @@ python tools/frida_town_props.py --towns 5    # 67 towns -> raw/town_props_captu
 python tools/gate_town_props.py               # 8,646 checks
 ```
 
-**Gated over 67 towns: 4,106 + 268 + 4,272 + 12,428 + 15,826 + 332 = 37,232 checks green.**
+**Gated over 67 towns: 4,106 + 268 + 4,272 + 12,428 + 15,826 + 332 + 2,447 = 37,679 checks
+green.** The chain from a plot's verdict to a prop's block is closed:
+verdict → promotion → role 2 → house → 3×3 modules → 13-block lattice → position.
 
 On positions: **Z is fully accounted for, and both lattices are derived here and
 verified** — the plot lattice and, inside it, the 13-block building lattice. Every one of
@@ -227,6 +229,37 @@ plotOrigin(r, c) + residue[site] + 13 * (i, j)      for every plot whose role is
 20 failed the emitter's own block test (`FUN_004061f0` at `0x4ecaf9`), which is the same
 reason a settle-gated site can push nothing.
 
+### The promotion pass — 2,447 checks
+
+Phase 3 writes a **verdict** into the plot record's `+0xc`: **2** for a plain buildable
+plot, **0** for a culled one, and 6 or 7 for two special kinds. One rule of it is exact
+here: **a plot whose `maxH - minH` exceeds 16 is never a 2** (`0x4e2e75`-`0x4e2e81`).
+
+`FUN_004e19f0` then sorts a candidate index array by score, and the promotion pass
+(`0x4e31c7`-`0x4e37aa`) **pops entries off it** — either "take the last" or
+`rand() % remaining` followed by a `memmove` that removes it — overwriting `+0xc` with a
+special role. Because every assignment is a pop, **a given special role lands on at most
+one plot per town**, and the gate checks that for all eleven of them.
+
+**Only plain plots are ever promoted.** Every plot whose verdict is not 2 carries that
+verdict through as its role, exactly — 526 for 526. What is left still holding 2 gets a
+house: 659 plain plots after Phase 3, 394 kept plain, 215 promoted.
+
+Which special roles a town can hand out is decided by **`site+0x79`** — and it is the
+*site*, not the world. `esi` is the builder's `param_1`; `world+0x79` reads 0 in every
+headless town, which is what gave the mistake away. The sets are **disjoint**:
+
+| `site+0x79` | towns | special roles |
+|---|---|---|
+| 1 | 5 | 9 |
+| 2 | 11 | 14, 15, 16 |
+| 3 | 3 | 3, 10, 11, 12, 13 |
+| 0 | 38 | 5, 18, 20 — conditional, not all towns get them |
+
+Factions 1, 2 and 3 hand out their whole set in **every** town of that faction. A fifth
+value, 4, appears on three towns in the sample but none of them reached the late snapshot,
+so its set is unobserved.
+
 ### The prop layer is village-only
 
 Feature type 1 builds a town **and props**; type 5 (ruins) builds a town and emits **no
@@ -257,15 +290,16 @@ creatures; only 25 emitted props. Nothing here decodes that split.
 
 ## Open
 
-1. **The role assignment itself.** Positions are now pinned to
-   `plotOrigin + residue + 13*(i,j)` for every role-2 plot, so the only input left is
-   *how a plot gets role 2* — the promotion pass that rewrites `+0xc` between the sort and
-   the build. The parent project already gates that from the rand stream
-   ("verdict/rotation/well/cull/faction 25/25"); this work has not re-derived it.
-2. ~~**The 25-of-67 split**~~ — **it is feature type 1 vs 5**, 67 for 67. Villages emit
+1. **Phase 3's verdict, in full.** The promotion pass is decoded and the height-span cull
+   is exact, but the rest of what makes a plot a 2 rather than a 0 is not — 155 plots with
+   a small height span are still culled for other reasons. And the plot heights themselves
+   are region-cache-blocked (`CW_REGIONCACHE_SCHEDULER.md`), so that rule can be *stated*
+   but not reproduced from the seed alone.
+2. **`site+0x79` = 4**, whose special-role set no town in the sample revealed.
+3. ~~**The 25-of-67 split**~~ — **it is feature type 1 vs 5**, 67 for 67. Villages emit
    props; ruins emit none.
-3. **The `eb145`-`ebaf4` interior pass**, 4,279 records over 18 prop ids, the largest
+4. **The `eb145`-`ebaf4` interior pass**, 4,279 records over 18 prop ids, the largest
    single block.
-4. **`FUN_00524540`'s own prop records** — types 1, 2 and 3, pushed both ways. The
+5. **`FUN_00524540`'s own prop records** — types 1, 2 and 3, pushed both ways. The
    creature spawn builder was reversed for its `Spawn` output (`RE_524540_creature_spawn.md`);
    its prop output was never looked at.
