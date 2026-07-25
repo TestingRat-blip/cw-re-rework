@@ -92,6 +92,36 @@ STENCILS = {
 }
 
 
+# THE PLOT LATTICE, read out of the builder's own scan loop (0x4e291d-0x4e2b60).
+#
+#   n     = 4 if featureType == 5 else 5          (cmove at 0x4e292a)
+#   span  = 256 / n                               (0x4e29f0)
+#   plot (r, c):  originX = zoneX*256 + (r*256)/n
+#                 originY = zoneY*256 + (c*256)/n
+#
+# The OUTER loop index drives X and the INNER drives Y, while the plot record pointer
+# advances by 28*n per inner step and 0x1c per outer step -- so the record index is
+# `r + n*c`.  That is the array transpose.
+def grid_n(ftype):
+    return 4 if ftype == 5 else 5
+
+
+# The twenty sites that place on a fixed plot-PERIMETER position: three per side for the
+# 0x15-0x17 family, two per side for 0x18-0x1b.  Each is constant on the axis running
+# along its side and jitters a couple of blocks in from the edge.
+#   site -> (axis that is constant, its value)
+PERIMETER = {
+    0xE3FAF: ("x", 18), 0xE410F: ("x", 25), 0xE427A: ("x", 32),
+    0xE439A: ("x", 18), 0xE445C: ("x", 25), 0xE4528: ("x", 32),
+    0xE45F6: ("y", 18), 0xE46B8: ("y", 25), 0xE4786: ("y", 32),
+    0xE484C: ("y", 18), 0xE4906: ("y", 25), 0xE49CC: ("y", 32),
+    0xE4A90: ("x", 22), 0xE4B54: ("x", 28),
+    0xE4C20: ("x", 22), 0xE4CEC: ("x", 28),
+    0xE4DBA: ("y", 22), 0xE4E88: ("y", 28),
+    0xE4F4E: ("y", 22), 0xE5014: ("y", 28),
+}
+
+
 def rec(b):
     b = bytes(b)
     return {"type": struct.unpack_from("<i", b, 0)[0],
@@ -249,6 +279,35 @@ def geometry(h, g, centred):
                        for ra, (dx, dy) in zip(ras[1:], stencil[1:])), w)
 
 
+def lattice(h, g, spread):
+    """Every town prop lands in a plot of the derived lattice."""
+    w = "%d,%d" % tuple(h["zone"])
+    ft = struct.unpack_from("<I", bytes(h["desc"]), 0x18)[0]
+    n = grid_n(ft)
+    g.eq("the plot array is n*n with n from the feature type",
+         h.get("plotCount"), n * n, w)
+    zx, zz = h["zone"]
+    for p in h["pushes"]:
+        if not in_town(p["ra"]):
+            continue
+        r = rec(p["rec"])
+        dx = r["pos"][0] // 0x10000 - zx * 256
+        dy = r["pos"][1] // 0x10000 - zz * 256
+        g.true("the record is inside its own zone", 0 <= dx < 256 and 0 <= dy < 256, w)
+        if not (0 <= dx < 256 and 0 <= dy < 256):
+            continue
+        pr, pc = dx * n // 256, dy * n // 256
+        ox, oy = dx - (pr * 256) // n, dy - (pc * 256) // n
+        spread[p["ra"]].append((ox, oy))
+        if p["ra"] in PERIMETER:
+            axis, val = PERIMETER[p["ra"]]
+            g.eq("perimeter site %#x is fixed on %s" % (p["ra"], axis),
+                 ox if axis == "x" else oy, val, w)
+            g.true("and sits within 8 blocks of a plot edge",
+                   min(oy, 256 // n - oy) <= 8 if axis == "x"
+                   else min(ox, 256 // n - ox) <= 8, w)
+
+
 def main():
     names = sorted(glob.glob(os.path.join(RAW, "town_props_capture*.json")))
     if not names:
@@ -292,6 +351,18 @@ def main():
         never = sum(1 for v in centred.values() if not v[True])
         print("   block-centred X/Y is a per-site choice: %d sites always, %d never, "
               "%d mixed" % (always, never, len(centred) - always - never))
+
+        g = Gate()
+        spread = collections.defaultdict(list)
+        for h in hits:
+            lattice(h, g, spread)
+        ok &= g.report("every record lands in a plot of the derived lattice")
+        tight = sum(1 for v in spread.values()
+                    if max(a for a, _ in v) - min(a for a, _ in v) <= 2
+                    and max(b for _, b in v) - min(b for _, b in v) <= 2)
+        print("   within-plot offsets: %d of %d sites are fixed to within 2 blocks on "
+              "both axes; the rest are interior emitters whose anchor moves in a "
+              "27-block window" % (tight, len(spread)))
 
         npush = sum(len(h["pushes"]) for h in hits)
         own = sum(1 for h in hits for p in h["pushes"] if in_town(p["ra"]))

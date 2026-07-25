@@ -12,13 +12,12 @@ python tools/frida_town_props.py --towns 5    # 67 towns -> raw/town_props_captu
 python tools/gate_town_props.py               # 8,646 checks
 ```
 
-**Gated over 67 towns: 4,106 + 268 + 4,272 + 12,428 checks green.**
+**Gated over 67 towns: 4,106 + 268 + 4,272 + 12,428 + 8,001 checks green.**
 
-⚠ **On positions: the relative geometry is settled, the absolute anchors are not.** See
-"Where the records land" below — the honest state is that Z is fully accounted for, three
-of the four-site groups sit on exact fixed stencils, and the anchors are plot-lattice
-coordinates that need the parent project's already-bit-exact plot geometry rather than a
-second derivation here.
+On positions: **Z is fully accounted for, and the plot lattice is now derived here and
+verified** — every one of the 7,788 town-builder records lands in a plot of it, and 20 of
+the 55 firing sites have a *fixed* position within their plot. What is still open is the
+per-building anchor the other 35 sites move around inside a plot.
 
 ---
 
@@ -140,7 +139,50 @@ some emitters then add 0.5 (`FUN_004e0700` / `FUN_004ce290` with the constant at
 `0x5586f0`). It is **not** a global convention: of the 56 sites, **4 always centre, 44
 never do, and 8 are mixed** — the mixed ones vary within a single site.
 
-### The anchors are open, and where they should come from
+### The plot lattice — derived here, 8,001 checks
+
+Read straight out of the builder's own scan loop (`0x4e291d`-`0x4e2b60`):
+
+```
+n     = 4 if featureType == 5 else 5            cmove at 0x4e292a
+span  = 256 / n                                 0x4e29f0
+plot(r, c):  originX = zoneX*256 + (r*256)/n    0x4e2b20-0x4e2b4c
+             originY = zoneY*256 + (c*256)/n
+             footprint = span x span blocks
+```
+
+The **outer** loop index drives X and the **inner** drives Y, while the plot record
+pointer advances by `28*n` per inner step and `0x1c` per outer step — so the record index
+is `r + n*c`. That is the array transpose.
+
+Both branches of `n` are exercised and both hold exactly: the 67 towns split 25 villages
+(type 1, `plotCount` 25) and 42 ruins (type 5, `plotCount` 16), **67 for 67**. And every
+town-builder record falls inside its own zone and inside a plot cell, **7,788 for 7,788**.
+
+### Twenty sites have a fixed position within their plot
+
+With the lattice in hand, 20 of the 55 firing sites resolve to a fixed plot-**perimeter**
+position — three per side for the `0x15`-`0x17` family, two per side for `0x18`-`0x1b`:
+
+| family | along-side positions | sites |
+|---|---|---|
+| `0x15`-`0x17` | 18, 25, 32 | 12 (3 × 4 sides) |
+| `0x18`-`0x1b` | 22, 28 | 8 (2 × 4 sides) |
+
+Each is **exactly** constant on the axis running along its side, and sits a few blocks in
+from the plot edge with a block or two of jitter on the perpendicular axis. The gate
+asserts the constant axis exactly.
+
+### What is still open: the per-building anchor
+
+The other 35 sites are interior emitters. Each *group* is rigid — the `0x13` group is
+100% rigid at (0,0) (6,0) (0,6) (6,6) around its own anchor, 256 for 256 — but the
+anchors themselves move within a **27-block window** inside the plot, independently per
+group and per plot. They are not a simple `rand() % 27` of any nearby draw: testing every
+draw within 40 of each push found no predictor above chance. They come from the building
+placement pass, which this work has not opened.
+
+For reference, the fence loop's own coordinate line is
 
 The fence loop computes its block coordinates as
 
@@ -149,15 +191,12 @@ X = zoneX*256 + plotOffsetX + (span - span % pitch)/2 + span/4      (0x4ef330-0x
 Y = zoneY*256 + (i - i % pitch)/2 + plotOffsetY + span/4            (0x4ef34f-0x4ef37d)
 ```
 
-— absolute block coordinates accumulated from the plot grid. The plot table itself
-(`FUN_004f36f0` allocates it, 0x1c bytes a record, `FUN_004e19f0` sorts it) holds heights,
-roles and a score, **not coordinates**: a plot's position is implied by its index in the
-n×n grid. That geometry — span-step tiling and the array transpose — is **already
-bit-exact in the parent project** (`RatForge/src/worldgen/Towns.cpp`, the
-`cubeworld-townbuilder` work, 25/25 from a live capture). Deriving it a second time inside
-`cw_decomp` would be duplicated effort; the anchors should be taken from that port and
-checked against this capture, which now carries the plot table (`plotsAtSort`, 60 of 67
-towns) alongside every record.
+— the same accumulation the scan loop does. The plot table itself (`FUN_004f36f0`
+allocates it, 0x1c bytes a record, `FUN_004e19f0` sorts it) holds heights, roles and a
+score, **not coordinates**: a plot's position is implied by its index in the n×n grid,
+which is what the lattice above reconstructs. The capture carries the table
+(`plotsAtSort`, 60 of 67 towns) next to every record, so the parent project's
+`Towns.cpp` can be diffed against it directly.
 
 ## The creature layer, in passing
 
@@ -167,10 +206,10 @@ creatures; only 25 emitted props. Nothing here decodes that split.
 
 ## Open
 
-1. **The anchors.** Z is done and the stencils are done; what remains is the plot-lattice
-   coordinate each group is anchored at. Wire in the parent project's bit-exact plot
-   geometry and check it against the `plotsAtSort` table this capture already carries —
-   do not re-derive it here.
+1. **The per-building anchor.** The lattice, the perimeter table and Z are done. What
+   remains is the anchor the 35 interior sites move around inside a plot — a 27-block
+   window, independent per group and per plot, with no predictor among the nearby rand
+   draws. That is the building placement pass.
 2. **The 25-of-67 split** — which towns emit props at all. Feature type 1 vs 5 is the
    obvious candidate and is not tested here.
 3. **The `eb145`-`ebaf4` interior pass**, 4,279 records over 18 prop ids, the largest
