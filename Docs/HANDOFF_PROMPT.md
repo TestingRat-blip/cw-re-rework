@@ -74,6 +74,7 @@ applied). They are copies — **never mutate `RatForge\tools\ghidra_proj\CubeAud
 | `frida_zone_props.py` | the OVERWORLD prop scatter; sweeps many zones in one server run |
 | `frida_zone_grid.py` | the camp populator's CANDIDATE GRID inside the zone builder |
 | `frida_zone_ac.py` | zone emitters A/C; `--scan` dumps a region's per-zone SITE-KIND grid |
+| `extract_prop_models.py` | the client's type→model tables for BOTH static-entity namespaces |
 | `reccmp/compare.py` | byte-match a recompile vs the shipped code |
 
 **⚠ Pipeline is a fixpoint — run in this order after any change:**
@@ -323,8 +324,26 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    the write-order precedence (3→4→1) is read from the store addresses but **0 collisions in
    118 regions**, so it is untested; and the loop shapes are not claimed (the decompile reads
    as a fixed 5 iterations for kind 4, but regions carry 4 *and* 5 type-10 cells).
-   ▶ Next: the unnamed prop ids past `prop_ids.json`'s 0x37. **The prop layer now has no
-   captured input left.**
+   **The PROP IDS are named too (`Docs/RE_prop_ids.md`, tool `extract_prop_models.py`) —
+   PHASE 2 IS CLOSED.** The client's type→model table is an init block at
+   `Cube.exe:0x461ca0`-`0x4634e0`. ★ **It fills TWO `vector<VoxelModel*>` arrays and both
+   are thiscall, so the DECOMPILE MERGES THEM** — every low type prints as assigned twice,
+   and taking either the first or last value is wrong for a different half of the range.
+   Only the `lea ecx, [ebx + …]` separates `world+0x800718` (vegetation / wall decor = the
+   "hanging" namespace, 64 slots) from `world+0x800724` (the static props, 78 slots,
+   `resize(0x4e)` at `0x462c02`; types 6, 14, 70 are null).
+   **`0x41` = campfire · `0x42` = tent · `0x45` = wood-mat** — with `0x10` stool and `0x0c`
+   table, `FUN_004e0740` is building a **campsite**, and every record size matches its model
+   (a 2×2×0.1 record is a mat, a 4×4×3 record is a tent). `0x43`/`0x44` = beach-umbrella /
+   beach-towel. `0x0f` = stone-stool (the style-4 dungeon id). 38 ids the file lacked.
+   The method validates on data it did not fit: it reproduces all 8 `hanging` rows exactly.
+   ⚠ **Three corrections to `assets/props/prop_ids.json`**: type 17 is sandstone-stool (not
+   stone-stool), and **50/51 are SWAPPED** — 50 = street-light02, 51 = street-light01,
+   corroborated by emitter C's own gated sizes. Its type 14 (sandstone-table) has no slot at
+   all. ▶ **Follow-up (engine side, not RE):** regenerate the engine asset from the proven
+   table in `raw/static_prop_models.json` — `cw_rederive/cw_extract_props.py` rebuilds
+   `assets/props/prop_ids.json` + `props.pack`, so it is a deliberate engine change, not
+   done here.
 4. **Port the mob pass + boss spawn + light sources into `cw_rederive`** (the item-generation
    family is ported, and now fed with a real level/rank). Then the RatForge engine half of
    "light emission" — rendering the kind-7 / kind-4 records as actual lights — which is engine

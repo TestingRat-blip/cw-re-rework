@@ -30,8 +30,8 @@ For a column whose top solid block has class `0xb` with class 0 above it:
     rec.pos  = (x<<16, y<<16, z0<<16)          # NO half-block bias
     rec.dir  = rand()%4;  push to site+0xc                                      0x51fcdb
 
-`0x32`/`0x33` are `street-light01` / `street-light02` (FireStreetLight) and `0x2d` is
-`runestone` -- `assets/props/prop_ids.json`.
+`0x32`/`0x33` are `street-light02` / `street-light01` and `0x2d` is `runestone` -- the
+client's own type->model table (Docs/RE_prop_ids.md; `prop_ids.json` has 50/51 swapped).
 
 Reads raw/zone_ac_capture*.json (tools/frida_zone_ac.py).
 """

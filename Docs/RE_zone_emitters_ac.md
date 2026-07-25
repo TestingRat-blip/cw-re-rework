@@ -126,12 +126,18 @@ if ((x + 90*y) % 470) skip                                                 0x51f
 if (rand() % 16) skip                                                      0x51fb7e
 for k in 0..6: if solid(x, y, z0+k) skip        # seven clear blocks       0x51fba0
 rec.type = FUN_004fc140(x, y) > 0.8 ? 0x33 (1,1,8) : 0x32 (2,2,8)          0x51fbfa
+         # 0x33 = street-light01, 0x32 = street-light02  (RE_prop_ids.md)
 rec.pos  = (x<<16, y<<16, z0<<16)               # NO half-block bias
 rec.dir  = rand()%4 ;  push -> site+0xc                                    0x51fcdb
 ```
 
-`0x32` / `0x33` are `street-light01` / `street-light02` (`FireStreetLight`) and `0x2d` is
-`runestone` — `assets/props/prop_ids.json`. Every clause of the gate reads as that:
+`0x32` / `0x33` are **`street-light02` / `street-light01`** and `0x2d` is `runestone` —
+the client's own type→model table (`RE_prop_ids.md`). ⚠ An earlier version of this line
+had the two lights the other way round, taking them from `assets/props/prop_ids.json`,
+whose rows for 50/51 are swapped. The gate's own data settles it: `0x33` carries record
+size **(1, 1, 8)** and `street-light01.cub` is `[5, 5, 25]`, while `0x32` carries
+**(2, 2, 8)** and `street-light02.cub` is `[6, 11, 25]` — the slimmer model takes the
+slimmer footprint. Every clause of the gate reads as that:
 `road > 0.75` means `(1-w)² > 0.75`, i.e. **inside ~0.37 of the village radius**; the
 `% 470` lattice spaces the lamps along a line; seven clear blocks is headroom for an
 8-tall post; and the `0xb` ground is why the lights only turn up in **desert** towns.

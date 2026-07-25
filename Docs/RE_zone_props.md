@@ -205,9 +205,15 @@ and attributed.
    `FUN_00402a40` copies the same 24 bytes. They build the record's **position**, not a
    name. The decompile only looked like string work because the calls return a struct by
    value and Ghidra printed the hidden return-slot addresses as arguments.
-5. **Ids beyond the table.** `assets/props/prop_ids.json` stops at 0x37; `0x41`, `0x42`
-   and `0x45` are unnamed. The client's type→slot table is the source the existing rows
-   came from.
+5. ~~**Ids beyond the table.**~~ — **DONE, `Docs/RE_prop_ids.md`.** The client's table is
+   an init block at `Cube.exe:0x461ca0`-`0x4634e0` filling **two** `vector<VoxelModel*>`
+   arrays — `world+0x800718` (vegetation / wall decor, the "hanging" namespace) and
+   `world+0x800724` (the static props, 78 slots). Both are thiscall, so the decompile
+   prints them as one merged table; only the `lea ecx` separates them.
+   **`0x41` = campfire, `0x42` = tent, `0x45` = wood-mat** — with `0x10` stool and `0x0c`
+   table, `FUN_004e0740` is building a **campsite**, and every record size matches its
+   model. Also `0x0f` = stone-stool (the style-4 dungeon id). 38 new ids; 3 corrections
+   to `prop_ids.json` (17, and 50/51 which are swapped).
 
 ## Identities settled here
 

@@ -1,0 +1,559 @@
+{
+ "static_prop": {
+  "array": "world+0x800724",
+  "slots": 78,
+  "types": {
+   "0": {
+    "db": 2481,
+    "model": "goddess2.cub"
+   },
+   "1": {
+    "db": 2482,
+    "model": "door.cub"
+   },
+   "2": {
+    "db": 2483,
+    "model": "big-door.cub"
+   },
+   "3": {
+    "db": 2484,
+    "model": "window.cub"
+   },
+   "4": {
+    "db": 2485,
+    "model": "castle-window.cub"
+   },
+   "5": {
+    "db": 2486,
+    "model": "gate.cub"
+   },
+   "7": {
+    "db": 2487,
+    "model": "spike-trap.cub"
+   },
+   "8": {
+    "db": 2488,
+    "model": "stomp-trap.cub"
+   },
+   "9": {
+    "db": 2489,
+    "model": "lever.cub"
+   },
+   "10": {
+    "db": 2490,
+    "model": "chest-base02.cub"
+   },
+   "11": {
+    "db": 2491,
+    "model": "chest-top02.cub"
+   },
+   "12": {
+    "db": 2492,
+    "model": "table.cub"
+   },
+   "13": {
+    "db": 2493,
+    "model": "stone-table.cub"
+   },
+   "15": {
+    "db": 2495,
+    "model": "stone-stool.cub"
+   },
+   "16": {
+    "db": 2497,
+    "model": "stool.cub"
+   },
+   "17": {
+    "db": 2496,
+    "model": "sandstone-stool.cub"
+   },
+   "18": {
+    "db": 2498,
+    "model": "bench.cub"
+   },
+   "19": {
+    "db": 2499,
+    "model": "bed.cub"
+   },
+   "20": {
+    "db": 2500,
+    "model": "bedtable.cub"
+   },
+   "21": {
+    "db": 2502,
+    "model": "market-stand1.cub"
+   },
+   "22": {
+    "db": 2503,
+    "model": "market-stand2.cub"
+   },
+   "23": {
+    "db": 2504,
+    "model": "market-stand3.cub"
+   },
+   "24": {
+    "db": 2505,
+    "model": "barrel.cub"
+   },
+   "25": {
+    "db": 2506,
+    "model": "crate.cub"
+   },
+   "26": {
+    "db": 2507,
+    "model": "open-crate.cub"
+   },
+   "27": {
+    "db": 2508,
+    "model": "sack.cub"
+   },
+   "28": {
+    "db": 2509,
+    "model": "shelter.cub"
+   },
+   "29": {
+    "db": 2501,
+    "model": "cupboard.cub"
+   },
+   "30": {
+    "db": 2510,
+    "model": "desktop.cub"
+   },
+   "31": {
+    "db": 2511,
+    "model": "counter.cub"
+   },
+   "32": {
+    "db": 2512,
+    "model": "shelf1.cub"
+   },
+   "33": {
+    "db": 2513,
+    "model": "shelf2.cub"
+   },
+   "34": {
+    "db": 2514,
+    "model": "shelf3.cub"
+   },
+   "35": {
+    "db": 2515,
+    "model": "castle-shelf1.cub"
+   },
+   "36": {
+    "db": 2516,
+    "model": "castle-shelf2.cub"
+   },
+   "37": {
+    "db": 2517,
+    "model": "castle-shelf3.cub"
+   },
+   "38": {
+    "db": 2518,
+    "model": "stone-shelf1.cub"
+   },
+   "39": {
+    "db": 2519,
+    "model": "stone-shelf2.cub"
+   },
+   "40": {
+    "db": 2520,
+    "model": "stone-shelf3.cub"
+   },
+   "41": {
+    "db": 2521,
+    "model": "sandstone-shelf1.cub"
+   },
+   "42": {
+    "db": 2522,
+    "model": "sandstone-shelf2.cub"
+   },
+   "43": {
+    "db": 2523,
+    "model": "sandstone-shelf3.cub"
+   },
+   "44": {
+    "db": 2524,
+    "model": "corpse.cub"
+   },
+   "45": {
+    "db": 2525,
+    "model": "runestone.cub"
+   },
+   "46": {
+    "db": 2079,
+    "model": "artifact.cub"
+   },
+   "47": {
+    "db": 2526,
+    "model": "flower-box01.cub"
+   },
+   "48": {
+    "db": 2527,
+    "model": "flower-box02.cub"
+   },
+   "49": {
+    "db": 2528,
+    "model": "flower-box03.cub"
+   },
+   "50": {
+    "db": 2529,
+    "model": "street-light02.cub"
+   },
+   "51": {
+    "db": 2530,
+    "model": "street-light01.cub"
+   },
+   "52": {
+    "db": 2531,
+    "model": "fence01.cub"
+   },
+   "53": {
+    "db": 2532,
+    "model": "fence02.cub"
+   },
+   "54": {
+    "db": 2533,
+    "model": "fence03.cub"
+   },
+   "55": {
+    "db": 2534,
+    "model": "fence04.cub"
+   },
+   "56": {
+    "db": 2322,
+    "model": "flower-vase1.cub"
+   },
+   "57": {
+    "db": 2323,
+    "model": "flower-vase2.cub"
+   },
+   "58": {
+    "db": 2324,
+    "model": "flower-vase3.cub"
+   },
+   "59": {
+    "db": 2325,
+    "model": "flower-vase4.cub"
+   },
+   "60": {
+    "db": 2326,
+    "model": "flower-vase5.cub"
+   },
+   "61": {
+    "db": 2327,
+    "model": "flower-vase6.cub"
+   },
+   "62": {
+    "db": 2328,
+    "model": "flower-vase7.cub"
+   },
+   "63": {
+    "db": 2329,
+    "model": "flower-vase8.cub"
+   },
+   "64": {
+    "db": 2330,
+    "model": "flower-vase9.cub"
+   },
+   "65": {
+    "db": 2554,
+    "model": "campfire.cub"
+   },
+   "66": {
+    "db": 2555,
+    "model": "tent.cub"
+   },
+   "67": {
+    "db": 2556,
+    "model": "beach-umbrella.cub"
+   },
+   "68": {
+    "db": 2557,
+    "model": "beach-towel.cub"
+   },
+   "69": {
+    "db": 2558,
+    "model": "wood-mat.cub"
+   },
+   "71": {
+    "db": 2535,
+    "model": "furnace.cub"
+   },
+   "72": {
+    "db": 2536,
+    "model": "anvil.cub"
+   },
+   "73": {
+    "db": 2540,
+    "model": "spinningwheel.cub"
+   },
+   "74": {
+    "db": 2541,
+    "model": "loom.cub"
+   },
+   "75": {
+    "db": 2537,
+    "model": "sawbench.cub"
+   },
+   "76": {
+    "db": 2538,
+    "model": "workbench.cub"
+   },
+   "77": {
+    "db": 2539,
+    "model": "customization-bench.cub"
+   }
+  },
+  "unassigned": [
+   6,
+   14,
+   70
+  ]
+ },
+ "veg_decor": {
+  "array": "world+0x800718",
+  "slots": 64,
+  "types": {
+   "0": {
+    "db": 2423,
+    "model": "flowers2.cub"
+   },
+   "1": {
+    "db": 2424,
+    "model": "flowers.cub"
+   },
+   "2": {
+    "db": 2425,
+    "model": "grass.cub"
+   },
+   "3": {
+    "db": 2426,
+    "model": "grass2.cub"
+   },
+   "4": {
+    "db": 2427,
+    "model": "grass3.cub"
+   },
+   "5": {
+    "db": 2463,
+    "model": "underwater-plant.cub"
+   },
+   "6": {
+    "db": 2465,
+    "model": "coral.cub"
+   },
+   "7": {
+    "db": 2464,
+    "model": "alga.cub"
+   },
+   "8": {
+    "db": 2428,
+    "model": "lava-flower.cub"
+   },
+   "9": {
+    "db": 2429,
+    "model": "lava-grass.cub"
+   },
+   "10": {
+    "db": 2430,
+    "model": "thorn-plant.cub"
+   },
+   "11": {
+    "db": 2431,
+    "model": "echinacea2.cub"
+   },
+   "12": {
+    "db": 2432,
+    "model": "leaf.cub"
+   },
+   "13": {
+    "db": 2433,
+    "model": "lantern02.cub"
+   },
+   "14": {
+    "db": 2434,
+    "model": "torch.cub"
+   },
+   "15": {
+    "db": 2435,
+    "model": "stone.cub"
+   },
+   "16": {
+    "db": 2436,
+    "model": "stone2.cub"
+   },
+   "17": {
+    "db": 2462,
+    "model": "christmas-tree.cub"
+   },
+   "19": {
+    "db": 2437,
+    "model": "tendril.cub"
+   },
+   "20": {
+    "db": 2438,
+    "model": "tulips-colorful.cub"
+   },
+   "21": {
+    "db": 2439,
+    "model": "cornflower.cub"
+   },
+   "22": {
+    "db": 2440,
+    "model": "reed.cub"
+   },
+   "23": {
+    "db": 2441,
+    "model": "pumpkin-leaves.cub"
+   },
+   "24": {
+    "db": 2442,
+    "model": "pineapple-leaves.cub"
+   },
+   "25": {
+    "db": 2443,
+    "model": "sunflower.cub"
+   },
+   "26": {
+    "db": 2444,
+    "model": "bean-tendril.cub"
+   },
+   "27": {
+    "db": 2445,
+    "model": "desert-flower01.cub"
+   },
+   "28": {
+    "db": 2446,
+    "model": "desert-flower02.cub"
+   },
+   "29": {
+    "db": 2447,
+    "model": "wheat.cub"
+   },
+   "30": {
+    "db": 2448,
+    "model": "corn.cub"
+   },
+   "31": {
+    "db": 2449,
+    "model": "water-lily01.cub"
+   },
+   "32": {
+    "db": 2450,
+    "model": "water-lily02.cub"
+   },
+   "33": {
+    "db": 2451,
+    "model": "inn-sign.cub"
+   },
+   "34": {
+    "db": 2452,
+    "model": "shop-sign.cub"
+   },
+   "35": {
+    "db": 2453,
+    "model": "weapon-shop-sign.cub"
+   },
+   "36": {
+    "db": 2454,
+    "model": "armor-shop-sign.cub"
+   },
+   "37": {
+    "db": 2455,
+    "model": "identifier-sign.cub"
+   },
+   "38": {
+    "db": 2456,
+    "model": "smithy-sign.cub"
+   },
+   "39": {
+    "db": 2457,
+    "model": "carpentersshop-sign.cub"
+   },
+   "40": {
+    "db": 2458,
+    "model": "weavingmill-sign.cub"
+   },
+   "41": {
+    "db": 2459,
+    "model": "ivy.cub"
+   },
+   "42": {
+    "db": 2460,
+    "model": "wall-roses-red.cub"
+   },
+   "43": {
+    "db": 2461,
+    "model": "wall-roses-white.cub"
+   },
+   "44": {
+    "db": 2466,
+    "model": "inca-art1.cub"
+   },
+   "45": {
+    "db": 2467,
+    "model": "inca-art2.cub"
+   },
+   "46": {
+    "db": 2468,
+    "model": "inca-art3.cub"
+   },
+   "47": {
+    "db": 2469,
+    "model": "inca-art4.cub"
+   },
+   "48": {
+    "db": 2470,
+    "model": "crest1.cub"
+   },
+   "49": {
+    "db": 2472,
+    "model": "wall-skull.cub"
+   },
+   "50": {
+    "db": 2471,
+    "model": "castle-chain.cub"
+   },
+   "51": {
+    "db": 2473,
+    "model": "torch-read.cub"
+   },
+   "52": {
+    "db": 2474,
+    "model": "torch-green.cub"
+   },
+   "53": {
+    "db": 2475,
+    "model": "torch-blue.cub"
+   },
+   "54": {
+    "db": 2476,
+    "model": "torch-yellow.cub"
+   },
+   "55": {
+    "db": 2477,
+    "model": "liana.cub"
+   },
+   "56": {
+    "db": 2478,
+    "model": "chandelier.cub"
+   },
+   "57": {
+    "db": 2479,
+    "model": "cobwebs.cub"
+   },
+   "58": {
+    "db": 2480,
+    "model": "cobwebs2.cub"
+   }
+  },
+  "unassigned": [
+   18,
+   59,
+   60,
+   61,
+   62,
+   63
+  ]
+ }
+}

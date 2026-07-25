@@ -119,9 +119,13 @@ circle** (4–5 per region). At 0.1% of zones, emitter A was never going to turn
 
 | the **site-kind grid** those two gate on, derived from the seed | `RE_site_kind_grid.md` | 590 checks / 118 regions |
 
-**Phase 2 has no emitter left open, and no captured input left.** The site-kind grid turned
-out to be a product of `FUN_0050e080`, which `cw_featuregen` already ports bit-exact. What
-remains is not placement: the unnamed prop ids past 0x37.
+| the prop **ids** themselves, from the client's own type→model table | `RE_prop_ids.md` | 75 of 78 slots |
+
+**PHASE 2 IS CLOSED.** No emitter open, no captured input, no unnamed id. The site-kind grid
+turned out to be a product of `FUN_0050e080` (which `cw_featuregen` already ports bit-exact),
+and the prop ids come from a client init block that names 75 of the 78 static-prop slots.
+The only follow-up is engine-side: regenerating `assets/props/prop_ids.json` from the proven
+table (3 of its rows are wrong, 38 ids missing).
 
 Deliverable unchanged: the prop/veg **placement** proven bit-exact (positions + model ids + rand
 draws) against a live capture, while *rendering* stays a documented engine gap.
