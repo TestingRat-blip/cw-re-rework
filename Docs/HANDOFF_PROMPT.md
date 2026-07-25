@@ -278,7 +278,23 @@ of it needs another capture session.
    groove depth and covered **60%** of a village (a dirt field); normalising by strength —
    `-cos(..)` of the nearer axis, i.e. distance to a trough CENTRE — gives ~20% and a path
    grid. `--towntest` now fails above 60% so it cannot regress silently.
-   ▶ Still missing — **which emitter fires where** for the rest:
+   ⛔ **BLOCKED, and this is the finding to carry:** emitter B, the camp populator and
+   emitter C are ALL behind a stage nobody has RE'd. Walking the raw zone stream and
+   searching for the two draws that reproduce each live emitter-B anchor puts it at index
+   **3,556 / 4,844 / 5,274 / 5,352** in the four Exact even zones of
+   `zone_props2_capture.json` — thousands of draws past the mat-38 loop (`0x51d396`) the
+   replay ends at, and a **different count every zone**, so the stage is data-dependent.
+   Disassembling `0x51d396`-`0x51e5c7` finds twelve unmodelled rand sites (`0x51dd86`,
+   `0x51ddd5`, `0x51e05d`, `0x51e08d`, `0x51e0ab`, `0x51e0cf`, `0x51e159`, `0x51e17a`,
+   `0x51e217`, `0x51e299`, `0x51e307`, `0x51e3e1`) plus something spending thousands —
+   almost certainly the **ground-plant scatter**, which `CW_RE_MASTER_INDEX.md` has listed
+   as never RE'd. The odd-parity `FUN_004e0740` props were reachable only because they sit
+   at `0x51cd1e`, BEFORE mat-38.
+   ★ So the next task here is **RE, not porting: the ground-plant scatter between
+   `0x51d396` and `0x51e5c7`.** Everything downstream unlocks with it. An even zone
+   currently returns nothing rather than a plausible guess, with the measurement recorded
+   at the branch in `CwZoneScatter.cpp`.
+   ▶ Still missing once that lands — **which emitter fires where** for the rest:
    * the `(zx + zz) & 1` **even** branch (emitter B, the type-0 statue), and
      `Prop_settleOnTerrain` (a pure function of finished terrain — no captured state);
    * `camp_populator` + its candidate grid (the grid is pure arithmetic plus one `rand()` per
