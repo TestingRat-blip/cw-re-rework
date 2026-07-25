@@ -307,8 +307,24 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    mirroring a game loop in a checker, mirror the **branch**, not your idea of it: the run walk
    `jge` at `0x51fa92` makes the LAST block always qualify, reading the class at index `count`
    — one past the counted extent. Modelling it as `k < n-1` undercounted by 3–18 per town.
-   ▶ Next: the unnamed prop ids past `prop_ids.json`'s 0x37, and re-deriving the site-kind grid
-   from the seed (it is currently read live — the one captured input left in this layer).
+   **The SITE-KIND GRID IS NOW DERIVED FROM THE SEED TOO (`Docs/RE_site_kind_grid.md`, gate
+   `gate_site_kind.py`, 590 checks over 118 regions — every one of 483,328 grid slots
+   accounted, nothing replayed).** ★ It is written by **`FUN_0050e080`, the feature generator
+   `cw_featuregen` already reproduces bit-exact** — the dungeon-`counter` lesson again: check
+   the existing port before opening the decompiler. A byte scan of the whole image for
+   `mov byte [reg+reg*s+0x18], imm8` finds **exactly six** site-kind stores, all in that one
+   function (`0x50ec3f` = 3, `0x50f3a2` = 4, `0x50fd5d/7d/9d/bd` = 1, each paired with a
+   `+0x19` corner tag 1..4). Rules: **kind 3** at every **type-14** cell's zone · **kind 4** at
+   every **type-10** cell's zone · **kind 1** at the **top four of the 64 zones of the type-1
+   cell's own tile**, scored `max(0, 1-w)²` against the same `FUN_0052c820` and sorted
+   DESCENDING. ⚠ It FALSIFIES this session's own earlier "kind 1 is always a 2×2 block" — the
+   four town zones are the top-4 by **warped** falloff and scatter; the town's centre zone is
+   often not among them. Only the count 4 is invariant. Two things deliberately NOT claimed:
+   the write-order precedence (3→4→1) is read from the store addresses but **0 collisions in
+   118 regions**, so it is untested; and the loop shapes are not claimed (the decompile reads
+   as a fixed 5 iterations for kind 4, but regions carry 4 *and* 5 type-10 cells).
+   ▶ Next: the unnamed prop ids past `prop_ids.json`'s 0x37. **The prop layer now has no
+   captured input left.**
 4. **Port the mob pass + boss spawn + light sources into `cw_rederive`** (the item-generation
    family is ported, and now fed with a real level/rank). Then the RatForge engine half of
    "light emission" — rendering the kind-7 / kind-4 records as actual lights — which is engine

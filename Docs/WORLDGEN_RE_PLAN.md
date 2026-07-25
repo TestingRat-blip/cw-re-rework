@@ -117,9 +117,11 @@ key off the region's **per-zone site-kind grid** — `region + idx*16 + 0x18`,
 circle** (4–5 per region). At 0.1% of zones, emitter A was never going to turn up in a
 512-zone sweep.
 
-**Phase 2 has no emitter left open.** What remains is not placement: the unnamed prop ids
-past 0x37, and re-deriving the site-kind grid itself from the seed (it is currently read
-live).
+| the **site-kind grid** those two gate on, derived from the seed | `RE_site_kind_grid.md` | 590 checks / 118 regions |
+
+**Phase 2 has no emitter left open, and no captured input left.** The site-kind grid turned
+out to be a product of `FUN_0050e080`, which `cw_featuregen` already ports bit-exact. What
+remains is not placement: the unnamed prop ids past 0x37.
 
 Deliverable unchanged: the prop/veg **placement** proven bit-exact (positions + model ids + rand
 draws) against a live capture, while *rendering* stays a documented engine gap.

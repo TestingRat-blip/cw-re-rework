@@ -39,25 +39,34 @@ so it is a **64×64 per-zone table, one 16-byte entry per zone, 4096 entries per
 not the 8×8 feature-cell grid `cw_featuregrid` models (that one is at `region + 0x14018`,
 stride `0x68`, and is what the camp populator and the candidate grid read).
 
-Scanning all 4096 entries of 36 regions gives a very stable census:
+Scanning all 4096 entries of 118 regions gives a very stable census:
 
 | kind | count per region | what it is |
 |---|---|---|
-| 0 | ~4071 | nothing |
-| 1 | 4 | a **town** — always a 2×2 block of zones |
-| 3 | 16 | a **dungeon** |
-| 4 | 4–5 | a **runestone circle** (emitter A) |
+| 0 | ~4076 | nothing |
+| 1 | **exactly 4, always** | a **town** |
+| 3 | 7–16 (16 near the world centre) | a **dungeon** |
+| 4 | 0–5 | a **runestone circle** (emitter A) |
 
 The kind-3 reading is not a guess: the six dungeon zones this project has used as its
 holdout set since the dungeon work — `(32795,32796)`, `(32796,32787)`, `(32780,32788)`,
-`(32804,32788)`, `(32804,32811)`, `(32787,32796)` — are **6/6** kind 3 in this table. The
-count matches the independently-derived bound too: `RE_dungeon_level_rank.md` proved a
-region holds **at most 16 dungeons**, and every region scanned has exactly 16 kind-3
-zones. Kind 1 lands as a 2×2 block, which is the town footprint.
+`(32804,32788)`, `(32804,32811)`, `(32787,32796)` — are **6/6** kind 3 in this table, and
+the count respects the independently-derived bound: `RE_dungeon_level_rank.md` proved a
+region holds **at most 16 dungeons**, and no region exceeds 16.
 
-⚠ **The grid itself is read live, not re-derived.** Everything downstream of the gate is
-derived below; the kind byte is the one captured input, and re-deriving the grid from the
-seed is left open.
+⚠ **Correction.** The first version of this table said kind 1 is "always a 2×2 block of
+zones". It is not — that was a stencil read off one region that does not survive the next.
+The four town zones are the **top four of 64 by warped falloff** and scatter around the
+town centre, which often is not one of them (`RE_site_kind_grid.md`). Only the *count* of
+4 is invariant.
+
+~~⚠ **The grid itself is read live, not re-derived.**~~ — **CLOSED, `RE_site_kind_grid.md`.**
+The grid is written by `FUN_0050e080`, the feature generator `cw_featuregen` already
+reproduces bit-exact: **kind 3** at every type-14 cell's zone, **kind 4** at every type-10
+cell's zone, and **kind 1** at the top four of the 64 zones of the type-1 cell's own tile,
+scored by `max(0, 1-w)²` against the same `FUN_0052c820` and sorted descending. Gated over
+118 regions, 590 checks, every one of 483,328 grid slots accounted. Nothing in this layer
+is captured any more.
 
 ---
 
