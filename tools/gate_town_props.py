@@ -122,6 +122,43 @@ PERIMETER = {
 }
 
 
+# THE BUILDING SUB-LATTICE (0x4e6fe3-0x4e7217).  Inside each plot the builder walks a
+# list of buildings, stepping a block offset by **13** per entry (`add [ebp-0x5c60], 0xd`
+# at 0x4e7205; the interior emitters multiply their own index by 13 at 0x4ec9a8 and
+# 0x4ec9ed).  So an interior prop's offset inside its plot is
+#
+#     offset = residue + 13 * cell,   cell in 0..3
+#
+# with `residue` fixed per site and axis -- the prop's place inside a 13x13 building
+# footprint.  This is what the earlier "27-block window" reading got wrong: reporting
+# min..max hid that the offsets take only three or four values, not twenty-seven.
+LATTICE_STEP = 13
+LATTICE = {
+    0xE3FAF: ((5,), (6, 8)), 0xE410F: ((12,), (6, 8)), 0xE427A: ((6,), (6, 7)),
+    0xE445C: ((12,), (4, 6)), 0xE4786: ((6,), (6,)), 0xE484C: ((7, 8), (5,)),
+    0xE4906: ((7, 8), (12,)), 0xE49CC: ((6, 7), (6,)), 0xE4A90: ((9,), (6, 8)),
+    0xE4B54: ((2,), (6, 7)), 0xE4C20: ((9,), (4, 6)), 0xE4CEC: ((2,), (4, 6)),
+    0xE4DBA: ((5, 6), (9,)),
+    0xEB145: ((8, 9), (11,)), 0xEB2D5: ((8, 9), (3,)), 0xEB488: ((5, 6), (11,)),
+    0xEB618: ((5, 6), (3,)), 0xEB7B4: ((11,), (8, 9)), 0xEB966: ((11,), (5, 6)),
+    0xEBAF4: ((3,), (5, 6)), 0xEBCEE: ((1,), (1,)),
+    0xEBEC2: ((10,), (1,)), 0xEBFEF: ((4,), (1,)), 0xEC11C: ((1,), (10,)),
+    0xEC249: ((1,), (4,)), 0xEC40A: ((1,), (1,)),
+    0xEC5AE: ((11,), (1,)), 0xEC6DB: ((3,), (1,)), 0xEC808: ((1,), (11,)),
+    0xEC935: ((1,), (3,)),
+    0xECB14: ((11,), (11,)), 0xECC41: ((4,), (11,)), 0xECD6E: ((11,), (4,)),
+    0xECE9B: ((4,), (4,)),
+    0xED149: ((5,), (11,)), 0xED26B: ((5,), (4,)), 0xED3AD: ((9,), (11,)),
+    0xED4CF: ((9,), (4,)), 0xED617: ((11,), (5,)), 0xED737: ((4,), (5,)),
+    0xED878: ((11,), (9,)), 0xED99E: ((4,), (9,)),
+    0xEFAC4: ((11, 12), (3, 4)), 0xEFC22: ((11, 12), (7, 8)),
+    0xEFD70: ((3, 4), (11, 12)), 0xEFECE: ((7, 8), (11, 12)),
+}
+# the two sites that run a fence ALONG a plot edge instead: one axis picks an edge, the
+# other steps two blocks at a time down the side
+FENCE_LINE = {0xE5967: "y", 0xE5B70: "x"}
+
+
 def rec(b):
     b = bytes(b)
     return {"type": struct.unpack_from("<i", b, 0)[0],
@@ -286,6 +323,9 @@ def lattice(h, g, spread):
     n = grid_n(ft)
     g.eq("the plot array is n*n with n from the feature type",
          h.get("plotCount"), n * n, w)
+    # the prop layer is village-only: type 5 (ruins) builds a town and emits no props
+    g.eq("only villages emit props",
+         any(in_town(p["ra"]) for p in h["pushes"]), ft == 1, w)
     zx, zz = h["zone"]
     for p in h["pushes"]:
         if not in_town(p["ra"]):
@@ -299,6 +339,16 @@ def lattice(h, g, spread):
         pr, pc = dx * n // 256, dy * n // 256
         ox, oy = dx - (pr * 256) // n, dy - (pc * 256) // n
         spread[p["ra"]].append((ox, oy))
+        if p["ra"] in LATTICE:
+            rx, ry = LATTICE[p["ra"]]
+            g.true("interior site %#x sits on the 13-block building lattice" % p["ra"],
+                   ox % LATTICE_STEP in rx and oy % LATTICE_STEP in ry
+                   and 0 <= ox // LATTICE_STEP <= 3 and 0 <= oy // LATTICE_STEP <= 3, w)
+        if p["ra"] in FENCE_LINE:
+            span = 256 // n
+            edge, along = (oy, ox) if FENCE_LINE[p["ra"]] == "y" else (ox, oy)
+            g.true("fence-line site %#x runs along a plot edge" % p["ra"],
+                   edge in (0, span) and along % 2 == 1 and 1 <= along <= span - 2, w)
         if p["ra"] in PERIMETER:
             axis, val = PERIMETER[p["ra"]]
             g.eq("perimeter site %#x is fixed on %s" % (p["ra"], axis),
@@ -360,9 +410,11 @@ def main():
         tight = sum(1 for v in spread.values()
                     if max(a for a, _ in v) - min(a for a, _ in v) <= 2
                     and max(b for _, b in v) - min(b for _, b in v) <= 2)
-        print("   within-plot offsets: %d of %d sites are fixed to within 2 blocks on "
-              "both axes; the rest are interior emitters whose anchor moves in a "
-              "27-block window" % (tight, len(spread)))
+        print("   within-plot offsets: %d of %d sites fixed to within 2 blocks on both "
+              "axes; %d sit on the 13-block building lattice; %d run along a plot edge"
+              % (tight, len(spread),
+                 len([r for r in spread if r in LATTICE]),
+                 len([r for r in spread if r in FENCE_LINE])))
 
         npush = sum(len(h["pushes"]) for h in hits)
         own = sum(1 for h in hits for p in h["pushes"] if in_town(p["ra"]))

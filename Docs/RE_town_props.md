@@ -12,12 +12,11 @@ python tools/frida_town_props.py --towns 5    # 67 towns -> raw/town_props_captu
 python tools/gate_town_props.py               # 8,646 checks
 ```
 
-**Gated over 67 towns: 4,106 + 268 + 4,272 + 12,428 + 8,001 checks green.**
+**Gated over 67 towns: 4,106 + 268 + 4,272 + 12,428 + 15,826 = 36,900 checks green.**
 
-On positions: **Z is fully accounted for, and the plot lattice is now derived here and
-verified** — every one of the 7,788 town-builder records lands in a plot of it, and 20 of
-the 55 firing sites have a *fixed* position within their plot. What is still open is the
-per-building anchor the other 35 sites move around inside a plot.
+On positions: **Z is fully accounted for, and both lattices are derived here and
+verified** — the plot lattice and, inside it, the 13-block building lattice. Every one of
+the 7,788 town-builder records is placed on one of them.
 
 ---
 
@@ -173,14 +172,36 @@ Each is **exactly** constant on the axis running along its side, and sits a few 
 from the plot edge with a block or two of jitter on the perpendicular axis. The gate
 asserts the constant axis exactly.
 
-### What is still open: the per-building anchor
+### The building sub-lattice — and a retraction
 
-The other 35 sites are interior emitters. Each *group* is rigid — the `0x13` group is
-100% rigid at (0,0) (6,0) (0,6) (6,6) around its own anchor, 256 for 256 — but the
-anchors themselves move within a **27-block window** inside the plot, independently per
-group and per plot. They are not a simple `rand() % 27` of any nearby draw: testing every
-draw within 40 of each push found no predictor above chance. They come from the building
-placement pass, which this work has not opened.
+⚠ **The "27-block window" in the previous revision was wrong**, and wrong the same way the
+fence stencil was: I reported `min..max` and never looked at the actual set. The offsets
+take **three or four values, not twenty-seven**. `ecb14`'s anchor is
+`X ∈ {11, 24, 37}` — that is `11 + 13k`, not a window. Print the set, not the range.
+
+Inside each plot the builder walks a **list of buildings**, stepping a block offset by
+**13** per entry (`add [ebp-0x5c60], 0xd` at `0x4e7205`, loop bounded by a `size()` call
+at `0x4d8dc0`; the interior emitters multiply their own index by 13 at `0x4ec9a8` and
+`0x4ec9ed`). So an interior prop's offset inside its plot is
+
+```
+offset = residue + 13 * cell,     cell in 0..3
+```
+
+with `residue` fixed per site and per axis — the prop's place inside a 13×13 building
+footprint. **46 of the 55 firing sites obey this**, and the gate checks every record
+against the site's residue set.
+
+The remaining nine: seven are plot-perimeter sites whose one jittering axis takes three
+values, and two — `e5967` and `e5b70` — run a fence **along** a plot edge instead: one
+axis picks an edge (`0` or `span`), the other steps two blocks at a time down the side
+(odd values `1..span-2`).
+
+### The prop layer is village-only
+
+Feature type 1 builds a town **and props**; type 5 (ruins) builds a town and emits **no
+props at all**. All 25 villages in the sample emit, all 42 ruins do not — 67 for 67. That
+also explains the "25 of 67" split the previous revision left open.
 
 For reference, the fence loop's own coordinate line is
 
@@ -206,12 +227,13 @@ creatures; only 25 emitted props. Nothing here decodes that split.
 
 ## Open
 
-1. **The per-building anchor.** The lattice, the perimeter table and Z are done. What
-   remains is the anchor the 35 interior sites move around inside a plot — a 27-block
-   window, independent per group and per plot, with no predictor among the nearby rand
-   draws. That is the building placement pass.
-2. **The 25-of-67 split** — which towns emit props at all. Feature type 1 vs 5 is the
-   obvious candidate and is not tested here.
+1. **Which building cells are occupied.** Both lattices and the residue table are done,
+   so a prop's position is pinned to `plotOrigin + residue + 13*cell`. What is not decoded
+   is *which* cells a plot fills — the building list the loop at `0x4e6fe3` walks, whose
+   length comes from a `size()` call. That is the house pass, and it is the last piece
+   between here and predicted positions.
+2. ~~**The 25-of-67 split**~~ — **it is feature type 1 vs 5**, 67 for 67. Villages emit
+   props; ruins emit none.
 3. **The `eb145`-`ebaf4` interior pass**, 4,279 records over 18 prop ids, the largest
    single block.
 4. **`FUN_00524540`'s own prop records** — types 1, 2 and 3, pushed both ways. The
