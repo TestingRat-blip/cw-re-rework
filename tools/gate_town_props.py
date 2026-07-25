@@ -78,6 +78,19 @@ EMITTERS = {
 FENCE_SITES = (0xEFAC4, 0xEFC22, 0xEFD70, 0xEFECE)
 FENCE_SIZE = (3.0, 0.4, 0.4)
 
+# Three of the four-site groups place their records on a fixed stencil around a common
+# anchor -- one record per site, at exactly these block offsets, every time.  (The fence
+# group is NOT one of them: it walks the four sides of a plot boundary and its per-side
+# counts differ, 14/13/14/14 in one town.)
+STENCILS = {
+    "type 0x1f": ((0xEBEC2, 0xEBFEF, 0xEC11C, 0xEC249),
+                  ((0, 0), (7, 0), (4, -4), (4, 3))),
+    "type 0x10": ((0xEC5AE, 0xEC6DB, 0xEC808, 0xEC935),
+                  ((0, 0), (5, 0), (3, -3), (3, 2))),
+    "type 0x13": ((0xECB14, 0xECC41, 0xECD6E, 0xECE9B),
+                  ((0, 0), (6, 0), (0, 6), (6, 6))),
+}
+
 
 def rec(b):
     b = bytes(b)
@@ -211,6 +224,31 @@ def emitters(h, g, seen):
             g.eq("the FUN_004f3630 family's size", r["size"], (3.5, 2.0, 3.0), w)
 
 
+def geometry(h, g, centred):
+    """What is settled about where a town prop lands.
+
+    Z is never the emitter's choice -- `Prop_settleOnTerrain` writes it and the caller
+    pushes the mutated record -- so it is always a whole number of blocks.  The X/Y
+    +0x8000 block-centre bias is a per-site decision, not a global one.  And three of the
+    four-site groups lay their records on a fixed stencil around a shared anchor.
+    """
+    w = "%d,%d" % tuple(h["zone"])
+    for p in h["pushes"]:
+        r = rec(p["rec"])
+        g.true("Z is a whole number of blocks", r["pos"][2] % 0x10000 == 0, w)
+        k = p["ra"] if in_town(p["ra"]) else "creature_spawn_builder"
+        centred[k][r["pos"][0] % 0x10000 == 0x8000
+                   and r["pos"][1] % 0x10000 == 0x8000] += 1
+    for name, (ras, stencil) in STENCILS.items():
+        by = {ra: collections.Counter(
+            (rec(p["rec"])["pos"][0] // 0x10000, rec(p["rec"])["pos"][1] // 0x10000)
+            for p in h["pushes"] if p["ra"] == ra) for ra in ras}
+        for anchor in by[ras[0]]:
+            g.true("%s sits on its stencil" % name,
+                   all(by[ra].get((anchor[0] + dx, anchor[1] + dy), 0) > 0
+                       for ra, (dx, dy) in zip(ras[1:], stencil[1:])), w)
+
+
 def main():
     names = sorted(glob.glob(os.path.join(RAW, "town_props_capture*.json")))
     if not names:
@@ -244,6 +282,16 @@ def main():
         for h in hits:
             emitters(h, g, seen)
         ok &= g.report("each push site's prop type is the one the table says")
+
+        g = Gate()
+        centred = collections.defaultdict(collections.Counter)
+        for h in hits:
+            geometry(h, g, centred)
+        ok &= g.report("Z comes from the placement test, and the fixed stencils hold")
+        always = sum(1 for v in centred.values() if not v[False])
+        never = sum(1 for v in centred.values() if not v[True])
+        print("   block-centred X/Y is a per-site choice: %d sites always, %d never, "
+              "%d mixed" % (always, never, len(centred) - always - never))
 
         npush = sum(len(h["pushes"]) for h in hits)
         own = sum(1 for h in hits for p in h["pushes"] if in_town(p["ra"]))

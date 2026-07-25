@@ -127,6 +127,31 @@ Interceptor.attach(b.add(0x1287b0), {
   }
 });
 
+// The PLOT TABLE.  FUN_004f36f0(&vectorHeader, n*n) allocates the n*n plot array,
+// 0x1c bytes a record; FUN_004e19f0 is the plot sort, which runs once per town after the
+// table is filled.  Recipe from the parent project's tools/cubeworld_re/capture_town.py,
+// where the table's coordinate math is already bit-exact.
+let plotHdr = 0, plotCount = 0;
+function readPlots(){
+  if (!plotHdr) return null;
+  try {
+    const base = ptr(plotHdr).readU32();
+    const out = [];
+    for (let i = 0; i < plotCount && i < 256; i++)
+      out.push(rd(ptr(base).add(i * 0x1c), 0x1c));
+    return out;
+  } catch(e){ return null; }
+}
+Interceptor.attach(b.add(0xf36f0), { onEnter(){
+  if (!cur || !collecting || this.threadId !== genTid) return;
+  plotHdr = this.context.ecx.toUInt32();
+  plotCount = this.context.esp.add(4).readInt();
+}});
+Interceptor.attach(b.add(0xe19f0), { onEnter(){
+  if (!cur || !collecting || this.threadId !== genTid) return;
+  if (!cur.plotsAtSort) cur.plotsAtSort = readPlots();
+}});
+
 // FUN_00524540 -- creature_spawn_builder; the town's inhabitants
 Interceptor.attach(b.add(0x124540), { onEnter(args){
   if (!cur || !collecting || this.threadId !== genTid) return;
@@ -152,6 +177,7 @@ Interceptor.attach(b.add(0xe28e0), {
     if (!cap || this.threadId !== genTid) return;
     this.site = args[0];
     collecting = true;
+    plotHdr = 0; plotCount = 0;
     cur = { site: args[0].toString(), desc: rd(args[1], 0x60),
             draws: [], pushes: [], settles: [], spawncalls: [], randN0: randN };
     try { cur.props0 = vecOf(args[0], 0xc, 0x188, 0).length; } catch(e){ cur.props0 = 0; }
@@ -162,6 +188,8 @@ Interceptor.attach(b.add(0xe28e0), {
     try { cur.props = vecOf(this.site, 0xc, 0x188, 0x30); } catch(e){ cur.propsErr = '' + e; }
     try { cur.ents = vecOf(this.site, 0x18, 4, 0).length; } catch(e){}
     cur.randN1 = randN;
+    cur.plots = readPlots();
+    cur.plotCount = plotCount;
     // stop here: genOne only clears `cur` after the whole zone build, so without this
     // the rig keeps recording pushes the town builder did not make
     collecting = false;

@@ -12,8 +12,13 @@ python tools/frida_town_props.py --towns 5    # 67 towns -> raw/town_props_captu
 python tools/gate_town_props.py               # 8,646 checks
 ```
 
-**Gated over 67 towns: 4,106 + 268 + 4,272 checks green.** This document maps the layer
-and puts its contract under test; it does **not** derive record positions.
+**Gated over 67 towns: 4,106 + 268 + 4,272 + 12,428 checks green.**
+
+⚠ **On positions: the relative geometry is settled, the absolute anchors are not.** See
+"Where the records land" below — the honest state is that Z is fully accounted for, three
+of the four-site groups sit on exact fixed stencils, and the anchors are plot-lattice
+coordinates that need the parent project's already-bit-exact plot geometry rather than a
+second derivation here.
 
 ---
 
@@ -102,6 +107,58 @@ argument is pushed by every caller and never read.
 The four-site rows (`0x1f`, `0x10`, `0x13`, `0x12`) fire in exact multiples of four —
 one per side or corner of a plot.
 
+## Where the records land — 12,428 checks
+
+### Z is never the emitter's choice
+
+Every pushed record's Z is what `Prop_settleOnTerrain` settled to — the settle/push
+contract above already proves the pushed record is byte-identical to what the test left
+behind — and it is **always a whole number of blocks**, 12,113 for 12,113. A port that
+reproduces the settle needs no Z arithmetic at all.
+
+### Three four-site groups are exact fixed stencils
+
+| group | anchor | offsets (blocks) | records |
+|---|---|---|---|
+| type `0x1f` | `ebec2` | (0,0) (7,0) (4,-4) (4,3) | **26 / 26** |
+| type `0x10` | `ec5ae` | (0,0) (5,0) (3,-3) (3,2) | **21 / 21** |
+| type `0x13` | `ecb14` | (0,0) (6,0) (0,6) (6,6) | **268 / 268** |
+
+Exact, not nearest-neighbour: the gate looks the partners up at the predicted block and
+fails if they are not there.
+
+⚠ The **fence group** (type `0x12`, `efac4` / `efc22` / `efd70` / `efece`) is *not* one of
+these, and an earlier read that said it was came from nearest-neighbour matching, which
+happily pairs posts across neighbouring plots. Its per-side counts differ (14/13/14/14 in
+one town), so there is no per-anchor 4-tuple; it walks the four sides of a plot boundary.
+A span-parametric stencil fits only 150 of its 308 anchors, all at span 17.
+
+### The `+0.5` block-centre bias is per-site
+
+`FUN_004cde40` turns a block coordinate into 16.16 (`shld edx,eax,0x10; shl eax,0x10`) and
+some emitters then add 0.5 (`FUN_004e0700` / `FUN_004ce290` with the constant at
+`0x5586f0`). It is **not** a global convention: of the 56 sites, **4 always centre, 44
+never do, and 8 are mixed** — the mixed ones vary within a single site.
+
+### The anchors are open, and where they should come from
+
+The fence loop computes its block coordinates as
+
+```
+X = zoneX*256 + plotOffsetX + (span - span % pitch)/2 + span/4      (0x4ef330-0x4ef349)
+Y = zoneY*256 + (i - i % pitch)/2 + plotOffsetY + span/4            (0x4ef34f-0x4ef37d)
+```
+
+— absolute block coordinates accumulated from the plot grid. The plot table itself
+(`FUN_004f36f0` allocates it, 0x1c bytes a record, `FUN_004e19f0` sorts it) holds heights,
+roles and a score, **not coordinates**: a plot's position is implied by its index in the
+n×n grid. That geometry — span-step tiling and the array transpose — is **already
+bit-exact in the parent project** (`RatForge/src/worldgen/Towns.cpp`, the
+`cubeworld-townbuilder` work, 25/25 from a live capture). Deriving it a second time inside
+`cw_decomp` would be duplicated effort; the anchors should be taken from that port and
+checked against this capture, which now carries the plot table (`plotsAtSort`, 60 of 67
+towns) alongside every record.
+
 ## The creature layer, in passing
 
 The 67 towns made **17,488** `creature_spawn_builder` calls from 21 sites, which pushed
@@ -110,9 +167,10 @@ creatures; only 25 emitted props. Nothing here decodes that split.
 
 ## Open
 
-1. **Record positions.** Every row above is a *what*, not a *where*. The plot table that
-   drives them is already bit-exact in the parent project's town work
-   (`cubeworld-townbuilder`), which is where the coordinates should come from.
+1. **The anchors.** Z is done and the stencils are done; what remains is the plot-lattice
+   coordinate each group is anchored at. Wire in the parent project's bit-exact plot
+   geometry and check it against the `plotsAtSort` table this capture already carries —
+   do not re-derive it here.
 2. **The 25-of-67 split** — which towns emit props at all. Feature type 1 vs 5 is the
    obvious candidate and is not tested here.
 3. **The `eb145`-`ebaf4` interior pass**, 4,279 records over 18 prop ids, the largest
