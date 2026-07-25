@@ -266,6 +266,18 @@ of it needs another capture session.
    mat-38 pass rejects rocks against, so fixing C++ alone broke `rederive_zonescatter` 16/17
    against a golden the old Python had generated. Both fixed, golden regenerated, 17/17.
    Settled on live data (8/8 zones), not by reading harder.
+   ✅ **RENDERED (RatForge `b44fdcc`)**: `src/worldgen/ZoneProps.cpp` turns the records into
+   instances and `VegScatter` gathers them, so campfires/tents/tables/stools/mats appear.
+   `--proptest` now covers PLACEMENT, not just assets — 4,608 columns of 72 odd zones,
+   43 props, deterministic.
+   ✅ **VILLAGE PATHS are CW's own (RatForge `7ef7ae6`)**: the engine had an invented
+   ground DISC, which the tile-wide town rebuild blew up into a brown landscape. CW has no
+   town road segments — its paths are the cosine groove `FUN_0052d990` carves wherever the
+   road field is non-zero, which cwgen already applies to the HEIGHT. `villagePath()` shares
+   that derivation so colour cannot drift from geometry. ★ First cut thresholded the raw
+   groove depth and covered **60%** of a village (a dirt field); normalising by strength —
+   `-cos(..)` of the nearer axis, i.e. distance to a trough CENTRE — gives ~20% and a path
+   grid. `--towntest` now fails above 60% so it cannot regress silently.
    ▶ Still missing — **which emitter fires where** for the rest:
    * the `(zx + zz) & 1` **even** branch (emitter B, the type-0 statue), and
      `Prop_settleOnTerrain` (a pure function of finished terrain — no captured state);
