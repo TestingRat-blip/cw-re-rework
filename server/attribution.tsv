@@ -2600,8 +2600,8 @@ addr	name	kind	module	class	attributed_by	size
 0050d8d0	FUN_0050d8d0	gamemisc	game_misc	Unsorted_002	none	419
 0050da73	FUN_0050D8D0__split_50da73	gamemisc	game_misc	_body_splits	role:body-split	1541
 0050e080	featureGrid	game	world	Proven	ledger	9264
-005104e0	zone_prop_emitter_5104e0	game	world	Proven	ledger	7192
-0051210a	zone_prop_emitter_5104e0__split_51210a	game	world	Proven	ledger	4767
+005104e0	camp_populator	game	game_misc	Game	ledger	7192
+0051210a	camp_populator__split_51210a	game	game_misc	Game	ledger	4767
 00513400	lib_fn_513400	lib	_library	cw_lib	ledger	864
 00513760	lib_fn_513760	lib	_library	cw_lib	ledger	7494
 005154aa	lib_fn_513760__split_5154aa	gamemisc	game_misc	_body_splits	role:body-split	2225

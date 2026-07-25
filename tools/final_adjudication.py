@@ -234,15 +234,18 @@ the body was the only way to settle these.
         # scopes the prop layer: an INLINED push_back skips FUN_004d6670 but still has to
         # call this to grow, which is how FUN_005104e0 was found.
         "004ce8e0": {"name": "PropVector_reserve", "kind": "gamemisc", "verdict": "DEEP-RE"},
-        # a FIFTH prop emitter, invisible to the old census because its push_back is inlined.
-        # Called only from the zone builder (0x51c90a); observed live pushing a prop record
-        # and running 26 Prop_settleOnTerrain tests in zone (32811, 32742). Was `lib_fn_5104e0`
-        # under `_library` -- it is game code. ONLY the prop-emitter role is proven here; the
-        # Spawn / CombatBehavior / CompanionBehavior construction in its body is a lead.
-        "005104e0": {"name": "zone_prop_emitter_5104e0", "kind": "game", "verdict": "DEEP-RE"},
+        # the overworld ENCAMPMENT populator (Docs/RE_5104e0_camp.md) -- a FIFTH prop emitter,
+        # invisible to the old census because its push_back is inlined. Called only from the
+        # zone builder (0x51eac7) with a grid of candidate positions, it picks a camp KIND
+        # from the feature descriptor with no rand at all (`kinds[desc[+0x20] % len]`, a
+        # 10-way jump table at 0x510728), builds that kind's species groups, and turns each
+        # candidate into either a camp structure (FUN_004e0740's two prop shapes verbatim,
+        # plus a ring of rand()%3+1 creatures) or a creature group. Gated over 99 firing
+        # zones, 2,742 checks. Was `lib_fn_5104e0` under `_library` -- it is game code.
+        "005104e0": {"name": "camp_populator", "kind": "game", "verdict": "DEEP-RE"},
         # its MSVC alignment-NOP body split, pinned here because adjudicate_none.py stamped
         # the fragment with the parent's OLD name and must not be re-run on a structured tree
-        "0051210a": {"name": "zone_prop_emitter_5104e0__split_51210a", "kind": "game",
+        "0051210a": {"name": "camp_populator__split_51210a", "kind": "game",
                      "verdict": "DEEP-RE"},
         # the creature-species containers the dungeon assembler builds in its prologue and
         # the three helpers that index them (Docs/RE_dungeon_species.md, gated 6/6).

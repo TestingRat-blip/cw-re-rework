@@ -240,11 +240,20 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    `push_back` never calls `FUN_004d6670`. The census that holds is over **`FUN_004ce8e0`**
    (`PropVector_reserve`), and it turns up a **fifth emitter, `FUN_005104e0`**, that the old
    one could not see.
-   ▶ Next, in order: **`FUN_005104e0`** (7 KB, zone-builder-only, pushes props and constructs
-   `Spawn`/`CombatBehavior`/`CompanionBehavior` — capture it before naming it); the **town
-   builder's three emitters**; then zone emitters **A** (`0x51dbf5`, type 0x2d) and **C**
-   (`0x51fcdb`, type 0x32/0x33 with a string), whose record content is already read off
-   statically but whose gates are not — read those statically rather than sampling blindly.
+   **`FUN_005104e0` is now DONE too — it is `camp_populator`, the overworld ENCAMPMENT
+   builder (`Docs/RE_5104e0_camp.md`, rig `frida_zone_camp.py`, gate `gate_zone_camp.py`,
+   2,742 checks over 99 firing zones).** It picks a camp KIND from the feature descriptor
+   with **zero rand** (`kinds[desc[+0x20] % len]`, a 10-way jump table), builds that kind's
+   species groups, and turns each candidate position into either a camp structure
+   (**`FUN_004e0740`'s two prop shapes verbatim** plus a ring of `rand()%3+1` creatures) or
+   a creature group with a behaviour tree. Camp kinds `{0,1,2,3,4,5,6,8,9,10}` are covered;
+   **kind 7 never fired** and is read statically only.
+   ▶ Next, in order: the **town builder's three emitters** (`004e310a`/`004eaa7a`/`004ee3aa`);
+   the zone builder's **candidate grid** (`0x51e839`-`0x51eab5`, the falloff roll that
+   decides which of the 196 cells survive — the camp gate takes it as captured); then zone
+   emitters **A** (`0x51dbf5`, type 0x2d) and **C** (`0x51fcdb`, type 0x32/0x33 with a
+   string), whose record content is already read off statically but whose gates are not —
+   read those statically rather than sampling blindly.
 4. **Port the mob pass + boss spawn + light sources into `cw_rederive`** (the item-generation
    family is ported, and now fed with a real level/rank). Then the RatForge engine half of
    "light emission" — rendering the kind-7 / kind-4 records as actual lights — which is engine

@@ -163,13 +163,12 @@ and attributed.
 
 ## Open, in order
 
-1. **`FUN_005104e0`** — the fifth emitter, 7,192 bytes, called only from the zone builder
-   (`0x51c90a`), with a NOP-split fragment at `0x51210a`. It calls `FUN_005287b0`, pushes
-   prop records through the inlined `push_back`, and its decompile is full of `Spawn`,
-   `CombatBehavior`, `WalkPathBehavior`, `CompanionBehavior` and `RandomWalkBehavior`
-   construction. That is *suggestive* of an overworld camp/encampment populator and
-   nothing here proves it — 26 placement tests and 1 record in one sampled zone is all
-   the live evidence there is. Capture it deliberately before naming it.
+1. ~~**`FUN_005104e0`**~~ — **DONE, `Docs/RE_5104e0_camp.md`.** It is `camp_populator`,
+   the overworld encampment builder: it picks a camp kind from the feature descriptor with
+   no rand at all, builds that kind's species groups, and turns each candidate position
+   into either a camp structure (**`FUN_004e0740`'s two prop shapes verbatim**, plus a ring
+   of `rand()%3+1` creatures) or a creature group. Gated over 99 firing zones, 2,742
+   checks. The lead in the earlier version of this list was right, and is now proven.
 2. **The town builder's three emitters** (`004e310a` / `004eaa7a` / `004ee3aa`), the other
    half of the census. A town zone contributes ~44 records to the same vector.
 3. **Emitters A and C** inside the zone builder, which no sampled zone reached. Their
@@ -190,4 +189,4 @@ and attributed.
 |---|---|---|
 | `005287b0` | `Prop_settleOnTerrain` | full disassembly + 2,556 live invariants; **was `lib_fn_5287b0` in `_library` — it is game code** |
 | `004ce8e0` | `PropVector_reserve` | body is `vector::_Reserve` with stride 0x188; its five callers are exactly the prop pushers |
-| `005104e0` | `zone_prop_emitter_5104e0` | **was `lib_fn_5104e0` in `_library`**. Only its *prop-emitter* role is proven (live pushes + `FUN_005287b0` calls); the Spawn/behaviour reading is a lead, not a label |
+| `005104e0` | `camp_populator` | **was `lib_fn_5104e0` in `_library`**. Renamed once the encampment role was gated — see `RE_5104e0_camp.md` |

@@ -399,12 +399,12 @@
   },
   "005104e0": {
    "kind": "game",
-   "name": "zone_prop_emitter_5104e0",
+   "name": "camp_populator",
    "verdict": "DEEP-RE"
   },
   "0051210a": {
    "kind": "game",
-   "name": "zone_prop_emitter_5104e0__split_51210a",
+   "name": "camp_populator__split_51210a",
    "verdict": "DEEP-RE"
   },
   "00513400": {
