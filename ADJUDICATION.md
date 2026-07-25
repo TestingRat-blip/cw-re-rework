@@ -8,10 +8,10 @@ settled against the decompiled body -- or the raw bytes where the decompiler lie
 | verdict | count |
 |---|---|
 | B | 49 |
-| NEITHER | 31 |
+| NEITHER | 29 |
 | A | 15 |
 | UNRESOLVED | 10 |
-| COMPATIBLE | 4 |
+| COMPATIBLE | 6 |
 | A-KIND | 4 |
 
 ## The systematic finding
@@ -135,8 +135,8 @@ the body was the only way to settle these.
 | `0x0052b470` | equipment_roller | lib_fn_52b470 | **B** | lib_fn_52b470 | STL allocator plumbing; B has the right kind but a placeholder name |
 | `0x0052bf40` | rarityRoll | lib_fn_52bf40 | **A** | rarityRoll | `rand()%(n+1)`, +1 at 1/100, 1/1000, 1/10000, clamped to 4 -- rarity tiers |
 | `0x0052c4e0` | loot_weapon | lib_fn_52c4e0 | **B** | lib_fn_52c4e0 | STL allocator plumbing; B has the right kind but a placeholder name |
-| `0x0052c820` | featureFalloff | World_objectFalloffWeight | **NEITHER** | - | x87/CRT float conversion helper; neither name reflects it |
-| `0x0052c820` | feature_falloff | featureFalloff | **NEITHER** | - | x87/CRT float conversion helper; neither name reflects it |
+| `0x0052c820` | featureFalloff | World_objectFalloffWeight | **COMPATIBLE** | World_objectFalloffWeight | thiscall on the feature descriptor, two 16.16 positions by pointer -> d^2/r^2 to the feature centre, noise-warped for every type outside {0xb,0xc,0xe}; gated ab initio 3,861/3,861  |
+| `0x0052c820` | feature_falloff | featureFalloff | **COMPATIBLE** | World_objectFalloffWeight | thiscall on the feature descriptor, two 16.16 positions by pointer -> d^2/r^2 to the feature centre, noise-warped for every type outside {0xb,0xc,0xe}; gated ab initio 3,861/3,861  |
 | `0x0052cd50` | climateGate | World_sampleTerrainHeight | **NEITHER** | - | x87/CRT float conversion helper; neither name reflects it |
 | `0x0052cd50` | climate_river_gate | climateGate | **NEITHER** | - | x87/CRT float conversion helper; neither name reflects it |
 | `0x0052d030` | ground_color | lib_fn_52d030 | **B** | lib_fn_52d030 | x87/CRT float conversion helper; B has the right kind but a placeholder name |

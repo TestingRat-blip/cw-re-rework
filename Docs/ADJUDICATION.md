@@ -7,11 +7,11 @@ settled against the decompiled body -- or the raw bytes where the decompiler lie
 
 | verdict | count |
 |---|---|
-| B | 48 |
-| NEITHER | 32 |
+| B | 49 |
+| NEITHER | 29 |
 | A | 15 |
 | UNRESOLVED | 10 |
-| COMPATIBLE | 4 |
+| COMPATIBLE | 6 |
 | A-KIND | 4 |
 
 ## The systematic finding
@@ -43,7 +43,7 @@ the body was the only way to settle these.
 | `0x00406050` | column_walkup | World_getBlockFloat | **UNRESOLVED** | - | 64-bit coordinate normalisation; neither name clearly fits |
 | `0x00406100` | column_record_lookup | Chunk_getColumnAt | **B** | Chunk_getColumnAt | coord -> chunk -> column lookup, 37 callers |
 | `0x00406290` | zone_built_check | Region_getChunkCell | **B** | Region_getChunkCell | coord bounds, >>6 to chunk, &63 to cell |
-| `0x00411090` | monster_level_formula | formula_inverse | **NEITHER** | unproven -- kind is GAME | `(1/(1-x) - 1)*20 + 1`. No CRT routine has this shape, so B's `lib` kind is wrong; A's `monster_level_formula` asserts semantics the body alone does not establish |
+| `0x00411090` | monster_level_formula | formula_inverse | **B** | formula_inverse | x87/CRT float conversion helper; B names it correctly |
 | `0x00413420` | column_allocator | resize_dword_array | **B** | resize_dword_array | STL allocator plumbing; B names it correctly |
 | `0x00413710` | loot_copy | struct_copy0x118 | **COMPATIBLE** | ItemData_copy (0x118) | field-wise copy of the 0x118 ItemData struct -- A gives the role, B the structure; both correct |
 | `0x0041fe60` | voxel_low_store | VoxelColumn_setBlock | **B** | VoxelColumn_setBlock | writes a 4-byte voxel, grows the column; but kind is GAME, not lib |
@@ -135,8 +135,8 @@ the body was the only way to settle these.
 | `0x0052b470` | equipment_roller | lib_fn_52b470 | **B** | lib_fn_52b470 | STL allocator plumbing; B has the right kind but a placeholder name |
 | `0x0052bf40` | rarityRoll | lib_fn_52bf40 | **A** | rarityRoll | `rand()%(n+1)`, +1 at 1/100, 1/1000, 1/10000, clamped to 4 -- rarity tiers |
 | `0x0052c4e0` | loot_weapon | lib_fn_52c4e0 | **B** | lib_fn_52c4e0 | STL allocator plumbing; B has the right kind but a placeholder name |
-| `0x0052c820` | featureFalloff | World_objectFalloffWeight | **NEITHER** | - | x87/CRT float conversion helper; neither name reflects it |
-| `0x0052c820` | feature_falloff | featureFalloff | **NEITHER** | - | x87/CRT float conversion helper; neither name reflects it |
+| `0x0052c820` | featureFalloff | World_objectFalloffWeight | **COMPATIBLE** | World_objectFalloffWeight | thiscall on the feature descriptor, two 16.16 positions by pointer -> d^2/r^2 to the feature centre, noise-warped for every type outside {0xb,0xc,0xe}; gated ab initio 3,861/3,861  |
+| `0x0052c820` | feature_falloff | featureFalloff | **COMPATIBLE** | World_objectFalloffWeight | thiscall on the feature descriptor, two 16.16 positions by pointer -> d^2/r^2 to the feature centre, noise-warped for every type outside {0xb,0xc,0xe}; gated ab initio 3,861/3,861  |
 | `0x0052cd50` | climateGate | World_sampleTerrainHeight | **NEITHER** | - | x87/CRT float conversion helper; neither name reflects it |
 | `0x0052cd50` | climate_river_gate | climateGate | **NEITHER** | - | x87/CRT float conversion helper; neither name reflects it |
 | `0x0052d030` | ground_color | lib_fn_52d030 | **B** | lib_fn_52d030 | x87/CRT float conversion helper; B has the right kind but a placeholder name |

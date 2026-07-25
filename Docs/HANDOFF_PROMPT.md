@@ -72,6 +72,7 @@ applied). They are copies — **never mutate `RatForge\tools\ghidra_proj\CubeAud
 | `frida_dungeon_marker.py` | `site+0x48` markers + the stub's off-lattice terrain probe |
 | `frida_dungeon_patrol.py` | the two creature-species containers + every species they hand out |
 | `frida_zone_props.py` | the OVERWORLD prop scatter; sweeps many zones in one server run |
+| `frida_zone_grid.py` | the camp populator's CANDIDATE GRID inside the zone builder |
 | `reccmp/compare.py` | byte-match a recompile vs the shipped code |
 
 **⚠ Pipeline is a fixpoint — run in this order after any change:**
@@ -258,11 +259,27 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    ★ To find towns, do NOT sweep: ask `cw_featuregen` for the type-1/5 feature cells and go
    to their own zones (67 for 67 fire; a 256-zone sparse grid found one, and it emitted
    nothing).
-   ▶ Next, in order: the zone builder's **candidate grid** (`0x51e839`-`0x51eab5`, the falloff roll that
-   decides which of the 196 cells survive — the camp gate takes it as captured); then zone
-   emitters **A** (`0x51dbf5`, type 0x2d) and **C** (`0x51fcdb`, type 0x32/0x33 with a
-   string), whose record content is already read off statically but whose gates are not —
-   read those statically rather than sampling blindly.
+   **The candidate grid the camp populator is handed is now DERIVED too
+   (`Docs/RE_zone_grid.md`, rig `frida_zone_grid.py`, gate `gate_zone_grid.py`, 8,308 checks
+   over 51 firing zones).** The 14×14 lattice at `0x51e839`-`0x51eab5` is filtered by a literal
+   `(i + 3j) % 5` (`M = [ebp-0x1368]`, read live), so a fixed **39 of the 196** cells are
+   rolled and the loop draws exactly 39 `rand()`s per firing zone; a rolled cell is kept when
+   `rand()/32767 <= max(0, 1-w)² · 0.75`, and `w` = `FUN_0052c820` is reproduced **bit-exactly
+   ab initio** by `cw_feature.falloff_weight` at all 1,989 rolled cells. Positions carry a
+   `+0.5` block bias (`[0x5737c0] = -32768.0`, *subtracted*). ⇒ `gate_zone_camp.py` no longer
+   rests on a captured input this repo cannot derive. It also **overturns `ADJUDICATION.md`,
+   which ruled `0x52c820` "NEITHER — x87/CRT float conversion helper"** for both candidate
+   names; it is the feature falloff, now settled in `DEEP_RE`.
+   ★ **DURABLE (rig): a Frida hook that reads a float mid-expression can change the value it
+   reads.** Frida's ia32 interceptor preserves neither x87 nor SSE state, so hooks at
+   `0x51e913`/`0x51e926` (live `xmm0`, and mid-way through `0x52c820`'s x87 result) returned a
+   *constant* 2.74e21 weight and zero candidates for a zone that really keeps 22. The tell was
+   uniformity across 39 different positions; the falsifying observation was one command —
+   run the already-ported function on the same inputs. Hook where the values are **spilled to
+   the frame** instead (here `rand()`'s own entry, where EBP is still the caller's).
+   ▶ Next: zone emitters **A** (`0x51dbf5`, type 0x2d) and **C** (`0x51fcdb`, type 0x32/0x33
+   with a string), whose record content is already read off statically but whose gates are not
+   — read those statically rather than sampling blindly.
 4. **Port the mob pass + boss spawn + light sources into `cw_rederive`** (the item-generation
    family is ported, and now fed with a real level/rank). Then the RatForge engine half of
    "light emission" — rendering the kind-7 / kind-4 records as actual lights — which is engine

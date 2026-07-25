@@ -31,10 +31,13 @@ instruction touches `[ebp+0x14]`.
 
 The zone builder calls it only when the zone's feature type (`descriptor+0x18`) is not in
 `{0, 1, 5, 0xa, 0xe}` (`0x51e804`-`0x51e833`), and first builds the candidate list at
-`0x51e839`-`0x51eab5`: a 14×14 grid stepping 18 blocks over `0..234`, where each cell is
-kept only if `rand()/32767.0 <= World_objectFalloffWeight(...)² · k`. So a zone far from
-its feature reaches the populator with an **empty** candidate list and does nothing —
-48 of 256 zones fired in a solid block, 51 of 256 in a sparse grid.
+`0x51e839`-`0x51eab5`: a 14×14 grid stepping 18 blocks over `0..234`, of which the
+`(i + 3j) % 5 == 0` cells — a fixed 39 of the 196 — are rolled, and a rolled cell is kept
+when `rand()/32767.0 <= max(0, 1 - World_objectFalloffWeight(...))² · 0.75`.  (The first
+version of this line said the roll was against `w² · k`; it is against `(1-w)²`, and only
+39 cells are rolled at all — see `RE_zone_grid.md`.)  So a zone far from its feature
+reaches the populator with an **empty** candidate list and does nothing — 48 of 256 zones
+fired in a solid block, 51 of 256 in a sparse grid.
 
 ## The prologue — a camp kind, with no rand at all
 
@@ -154,8 +157,14 @@ branch, waypoints three at a time or not at all, and `rand()%3+1` companions. Ev
 
 ## Open
 
-1. **The candidate grid itself** (`0x51e839`-`0x51eab5`) — the falloff roll that decides
-   which of the 196 grid cells survive. The gate takes the candidate list as captured.
+1. ~~**The candidate grid itself** (`0x51e839`-`0x51eab5`)~~ — **DONE,
+   `Docs/RE_zone_grid.md`.** The 14×14 lattice is filtered by a literal `(i + 3j) % 5`
+   (`M = [ebp-0x1368]`, read live in every zone), which keeps a fixed **39 of the 196**
+   cells and so draws exactly 39 `rand()`s per firing zone; the survivors are those with
+   `rand()/32767 <= max(0, 1-w)² · 0.75`, where `w` is `FUN_0052c820` — reproduced
+   **bit-exactly, ab initio** by `cw_feature.falloff_weight` at all 1,989 rolled cells.
+   Positions carry a `+0.5` block bias (`[0x5737c0] = -32768.0`, *subtracted*).
+   `tools/frida_zone_grid.py`, `tools/gate_zone_grid.py`, 8,308 checks over 51 zones.
 2. **The leader index** — only one zone in the sample was its feature's own zone, so the
    "largest falloff weight" rule is read statically and barely exercised.
 3. **Kind 7**, which never came up.

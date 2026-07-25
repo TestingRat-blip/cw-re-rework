@@ -517,6 +517,11 @@
    "name": "item_gen_kind_3",
    "verdict": "DEEP-RE"
   },
+  "0052c820": {
+   "kind": "game",
+   "name": "World_objectFalloffWeight",
+   "verdict": "DEEP-RE"
+  },
   "0052d030": {
    "kind": "lib",
    "name": "lib_fn_52d030",

@@ -181,7 +181,13 @@ and attributed.
    `FUN_004e28e0`'s ~64 KB body. Its real surface is **56 push sites, 32 placement tests,
    16 spawn-builder calls, 170 rand sites**, and the layer's contract is now gated over
    67 towns (8,646 checks). Positions are still open.
-3. **Emitters A and C** inside the zone builder, which no sampled zone reached. Their
+3. ~~**The candidate grid** the camp populator is handed~~ — **DONE,
+   `Docs/RE_zone_grid.md`.** The 14×14 lattice at `0x51e839`-`0x51eab5` is filtered by a
+   literal `(i + 3j) % 5`, rolls exactly 39 cells per firing zone, and keeps those with
+   `rand()/32767 <= max(0, 1-w)² · 0.75` — with `w` (`FUN_0052c820`) reproduced bit-exactly
+   ab initio. 8,308 checks over 51 zones; `gate_zone_camp.py` no longer rests on a captured
+   input this repo cannot derive.
+4. **Emitters A and C** inside the zone builder, which no sampled zone reached. Their
    record content is already read off statically:
    * **A** (`0x51dbf5`): type `0x2d`, size `(4, 4, 5)`, `dir = rand()%4`, raised from its
      start position until it is in a non-solid block (`0x51db56` loop).
@@ -189,7 +195,7 @@ and attributed.
      chosen by a float compare against `[0x5586d8]`, and it builds a **string** on the way
      (`FUN_004cde40` × 3, `FUN_00406380`, `FUN_00402a40`) — a named prop, not a plain one.
    Read their gates statically rather than sampling blindly for them.
-4. **Ids beyond the table.** `assets/props/prop_ids.json` stops at 0x37; `0x41`, `0x42`
+5. **Ids beyond the table.** `assets/props/prop_ids.json` stops at 0x37; `0x41`, `0x42`
    and `0x45` are unnamed. The client's type→slot table is the source the existing rows
    came from.
 
@@ -200,3 +206,4 @@ and attributed.
 | `005287b0` | `Prop_settleOnTerrain` | full disassembly + 2,556 live invariants; **was `lib_fn_5287b0` in `_library` — it is game code** |
 | `004ce8e0` | `PropVector_reserve` | body is `vector::_Reserve` with stride 0x188; its five callers are exactly the prop pushers |
 | `005104e0` | `camp_populator` | **was `lib_fn_5104e0` in `_library`**. Renamed once the encampment role was gated — see `RE_5104e0_camp.md` |
+| `0052c820` | `World_objectFalloffWeight` | **overturns this repo's own `ADJUDICATION.md`, which ruled both candidate names "NEITHER — x87/CRT float conversion helper"**. It is the feature falloff `d²/r²`; the candidate grid's roll is `(1-w)²·0.75` against it, and the port matches the live return bit-exactly at 1,989 rolled cells — see `RE_zone_grid.md` |

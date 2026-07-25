@@ -71,6 +71,16 @@ RULINGS = {
                  "A's `monster_level_formula` asserts semantics the body alone does not establish"),
 
     # --- compatible: both describe the same function -----------------------------
+    # SETTLED 2026-07-25 (Docs/RE_zone_grid.md). Both of this address's rows used to read
+    # "NEITHER -- x87/CRT float conversion helper", a ruling made off the body's float shape
+    # alone. The caller settles it: the zone builder's candidate grid rolls
+    # `rand()/32767 <= (1-w)^2 * 0.75` against it, and cw_rederive's port reproduces the live
+    # return BIT-EXACTLY at 3,861 rolled cells over 99 zones. All three candidate names
+    # (featureFalloff / feature_falloff / World_objectFalloffWeight) describe the same thing.
+    "0052c820": ("COMPATIBLE", "World_objectFalloffWeight",
+                 "thiscall on the feature descriptor, two 16.16 positions by pointer -> d^2/r^2 "
+                 "to the feature centre, noise-warped for every type outside {0xb,0xc,0xe}; "
+                 "gated ab initio 3,861/3,861 (gate_zone_grid.py) on top of 91,880/91,880 direct-call"),
     "00413710": ("COMPATIBLE", "ItemData_copy (0x118)", "field-wise copy of the 0x118 ItemData struct -- A gives the "
                                                         "role, B the structure; both correct"),
     "0041ff00": ("COMPATIBLE", "writeVoxel", "three-way conflict; single-voxel write via column lookup. "
@@ -289,6 +299,16 @@ the body was the only way to settle these.
         # was lib_fn_52c370: the wall-decor emitter, called from the same four wall-direction
         # blocks as the scatter but pushing its record to site+4 (a std::list) instead.
         "0052c370": {"name": "dungeon_decor_emitter", "kind": "game", "verdict": "DEEP-RE"},
+        # OVERTURNS this repo's own ADJUDICATION.md rows, which ruled BOTH candidate names
+        # "NEITHER -- x87/CRT float conversion helper". It is neither a helper nor CRT: a
+        # thiscall on the feature descriptor taking two 16.16 positions by pointer and
+        # returning the normalised squared distance to the feature centre (d^2/r^2), with a
+        # noise warp for every type outside {0xb, 0xc, 0xe}. The adjudication was made off
+        # the body's float shape alone; the caller settles it -- the zone builder's candidate
+        # grid rolls `rand()/32767 <= (1-w)^2 * 0.75` against it (Docs/RE_zone_grid.md), and
+        # cw_rederive's port reproduces the live return BIT-EXACTLY at 1,989 rolled cells
+        # over 51 zones (gate_zone_grid.py), on top of its own 91,880/91,880 direct-call gate.
+        "0052c820": {"name": "World_objectFalloffWeight", "kind": "game", "verdict": "DEEP-RE"},
     }
     settled.update(DEEP_RE)
 
