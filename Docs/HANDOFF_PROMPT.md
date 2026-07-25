@@ -237,6 +237,22 @@ Two structural facts worth carrying:
 **The next slice is a PORT, not new RE.** Everything below is already gated in this repo; none
 of it needs another capture session.
 
+0. **Already landed (2026-07-25, RatForge `3c2f7a2`, `14ab5f5`, `8aacb8d`)** — read these
+   before re-doing them:
+   * **the site-kind grid is in cwgen** (`CwFeatureGrid.cpp`), gate `rederive_sitekind`
+     **116/116**. cwgen already had kinds 3 and 4 derived independently (type-0xE → 3,
+     type-0xA → 4, which cross-checks `RE_site_kind_grid.md` from the other end); the TOWN
+     kind was missing and its old note called it a "2×2 quad", which is wrong.
+   * **the town generator is rebuilt on the derived lattice** (`CwTown.h` + `Towns.cpp`),
+     gate `rederive_townlattice` **16228/16228** — every live town-builder record lands in
+     the plot the shipping header predicts. Three corrections: the lattice is anchored to
+     the ZONE not the cell, a town spans its cell's whole 8×8 TILE (measured live: 25/25
+     zones ran the builder, 9 emitted), and the falloff is the WARPED one. Houses now sit
+     on their 3×3 × 13-block module grid (origin + 39/2), not the plot centre.
+   * Still **faithful, not exact**, and marked so in the code: which plots come out
+     buildable. Plot minH/maxH are region-cache-blocked, so the binary's exact `>16`
+     flatness reject is kept and the rest is scored against cwgen terrain.
+
 1. **Port the overworld/town PROP PLACEMENT into `cwgen`.** `CwPropEmit` (gate
    `rederive_props` 9273/9273) is only the emitter *library* — `--proptest` says so out loud:
    *"placement = the town/dungeon driver"*. What is missing is **which emitter fires where**:
