@@ -14,6 +14,14 @@ python tools/gate_zone_props2.py     # 7,256 checks
 `rand()` stream — **336 + 4,364 + 2,556 checks green over 56 live zones**. Two emitters
 remain: the town builder, and a fifth zone emitter this session found.
 
+▶ **2026-07-25b: emitter B is now reachable FROM THE SEED, and the "un-RE'd stage" that
+blocked it never existed.** The span between the mat-38 loop and `0x51e5c7` is the
+dense-forest tree pass (`cw_forest.py` / `CwForest.cpp`), already bit-exact; the twelve
+"unmodelled" rand sites are its own and the thousands of draws are `lib_fn_513760`'s,
+which `frida_zone_props2.py` counts but does not record. See **`RE_zone_tail.md`**
+(`tools/gate_zone_tail.py`, 6,558 checks) and cwgen's `rederive_zonepropsb` (5/5, 115
+live trees, every stream index exact).
+
 ---
 
 ## ⚠ Two corrections to the first cut

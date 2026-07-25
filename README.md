@@ -151,6 +151,8 @@ python tools/gate_hanging_decor.py --all  # gate: liana, cobwebs, chandelier
 python tools/gate_dungeon_loot.py --all   # gate: chest fills + ground loot
 python tools/frida_dungeon_site.py [zx zz]   # live: the site record the assembler is given
 python tools/gate_dungeon_level_rank.py      # gate: the level formula + the rank bands
+python tools/gate_zone_tail.py               # gate: the zone-builder TAIL, mat-38 -> emitter B
+python tools/disasm_range.py 0x51dc5d 0x51e5c7   # annotated x86 for any VA range (--cube for the client)
 ```
 
 Ghidra stages (analysis, RTTI recovery, decompile, PDB apply, struct recovery) and their

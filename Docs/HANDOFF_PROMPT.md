@@ -192,6 +192,27 @@ Running out of order silently empties the islands/roles (it oscillates).
    only because the old map propagated the same wrong name into the pack. Diff every hardcoded
    consumer against the new source *before* rebuilding.
 
+16. **A filtered capture's own filter is part of the measurement.** `frida_zone_props2.py`
+   records only draws whose return address is inside the zone builder, but stamps each with
+   a GLOBAL draw index — so a callee's draws are counted and not listed, and the gap reads
+   exactly like an unknown stage. A whole slice was blocked on "twelve unmodelled rand
+   sites plus something spending thousands, almost certainly the un-RE'd ground-plant
+   scatter"; the span was the **dense-forest tree pass this repo already had bit-exact**,
+   and the thousands were its builder's. **Before believing a gap, ask whether the rig
+   would have recorded a stage you already know.** A histogram of the per-draw RETURN
+   ADDRESSES answers in one command what a search over draw values had mis-attributed.
+17. **A gate that only ever ran on flat ground does not cover what happens on a slope.**
+   The forest replay was proven on "flat/dry" zones for months. Its terrain store read the
+   plain cover material, missing that a slope-blended column gets rock 6 — worth 18
+   phantom trees in the first zone whose candidates reached into a feature deform. Note
+   where the bug was: not in the pass under test, but in **what that pass reads**. When a
+   replay is validated on one terrain class, its INPUTS are only validated there too.
+18. **A stale golden agrees with the port by accident.** `golden_rederive/*.bin` is
+   gitignored and has no manifest, so `rederive_forest` had been green against a golden an
+   older `cw_forest.py` produced — hiding a real 58-vs-54 Python↔C++ drift. Regenerate a
+   port-produced golden before trusting a gate that uses it, and remember what it can
+   prove: **port == port, never port == game.**
+
 7. **Both label sources are unreliable in opposite directions**: `CW_CONFIDENCE_XREF.md` had an
    off-by-one that filed proven worldgen as `lib_fn_*` (16 rows fixed); `cw_callgraph.py` gives
    game names to STL primitives. Always verify against the body.
@@ -222,6 +243,7 @@ closed — every emitter RE'd, every gate green, nothing captured that cannot be
 | zone emitters **A** (runestone circle) + **C** (village street light) | `RE_zone_emitters_ac.md` | 3,937 / 256 zones |
 | the per-zone **site-kind grid**, from the seed | `RE_site_kind_grid.md` | 590 / 118 regions |
 | the **prop-id table**, from the client's own init block | `RE_prop_ids.md` | 75 of 78 slots |
+| the zone builder's **TAIL** (mat-38 -> emitter B = the dense-forest tree pass; emitter B derived and reachable from the seed) | `RE_zone_tail.md` | 6,558 / 28 even zones |
 
 Two structural facts worth carrying:
 
@@ -278,32 +300,56 @@ of it needs another capture session.
    groove depth and covered **60%** of a village (a dirt field); normalising by strength —
    `-cos(..)` of the nearer axis, i.e. distance to a trough CENTRE — gives ~20% and a path
    grid. `--towntest` now fails above 60% so it cannot regress silently.
-   ⛔ **BLOCKED, and this is the finding to carry:** emitter B, the camp populator and
-   emitter C are ALL behind a stage nobody has RE'd. Walking the raw zone stream and
-   searching for the two draws that reproduce each live emitter-B anchor puts it at index
-   **3,556 / 4,844 / 5,274 / 5,352** in the four Exact even zones of
-   `zone_props2_capture.json` — thousands of draws past the mat-38 loop (`0x51d396`) the
-   replay ends at, and a **different count every zone**, so the stage is data-dependent.
-   Disassembling `0x51d396`-`0x51e5c7` finds twelve unmodelled rand sites (`0x51dd86`,
-   `0x51ddd5`, `0x51e05d`, `0x51e08d`, `0x51e0ab`, `0x51e0cf`, `0x51e159`, `0x51e17a`,
-   `0x51e217`, `0x51e299`, `0x51e307`, `0x51e3e1`) plus something spending thousands —
-   almost certainly the **ground-plant scatter**, which `CW_RE_MASTER_INDEX.md` has listed
-   as never RE'd. The odd-parity `FUN_004e0740` props were reachable only because they sit
-   at `0x51cd1e`, BEFORE mat-38.
-   ★ So the next task here is **RE, not porting: the ground-plant scatter between
-   `0x51d396` and `0x51e5c7`.** Everything downstream unlocks with it. An even zone
-   currently returns nothing rather than a plausible guess, with the measurement recorded
-   at the branch in `CwZoneScatter.cpp`.
+   ✅ **EMITTER B DONE (2026-07-25b), and the block it was behind was a MISREADING.**
+   The previous note here said emitter B, the camp populator and emitter C sat behind an
+   un-RE'd stage — "twelve unmodelled rand sites plus something spending thousands,
+   almost certainly the ground-plant scatter". Every number in that note is right; the
+   identification was wrong. The span `0x51d396`-`0x51e5c7` is the **dense-forest tree
+   pass**, which this repo has had bit-exact for months (`cw_forest.py` / `CwForest.cpp`
+   / `FOREST_TREE_BUILDER_513760.md`): the twelve sites are the 14x14 candidate loop's
+   own, and the thousands of draws are `lib_fn_513760`'s — **counted but not recorded**,
+   because `frida_zone_props2.py`'s `inRange` filter only keeps return addresses inside
+   the zone-builder body. The capture already held the proof.
+   ★ **DURABLE: a filtered capture's own filter is part of the measurement.** A gap
+   between recorded draws is not evidence of an unknown stage until you check whether the
+   rig would have recorded a known one. Reading the per-draw RETURN ADDRESSES out of the
+   capture settled in minutes what a search over draw values had mis-attributed.
+   Landed: `Docs/RE_zone_tail.md` + `tools/gate_zone_tail.py` (**6,558 checks**, 28 even
+   zones — including a state-machine replay of all 5,488 candidates' branch structure),
+   and in the engine `CwForest::zoneReplayTail` + the even branch of `zoneScatterProps`,
+   gate **`rederive_zonepropsb` 5/5** over **115 live trees with every stream index
+   exact** on seed 42069 (a world the forest port had never been run against). The gate
+   checks four numbers per zone — pre-chain draw count, emitter B's absolute stream
+   index, tree count, record — so a failure says where the drift is.
+   ★ Two corrections it forced: (1) the forest replay's terrain store read
+   `surface_placer`'s cover material, but a **slope-blended column gets rock 6** wherever
+   the slope weight > 0.5 (`surface_assembly`, L880) — identical on flat ground, which is
+   why every "flat/dry" test zone missed it, and worth **18 phantom trees** (59 vs 41) in
+   the one zone that reaches into a type-0xA feature cell. **A gate that only runs on
+   flat terrain does not cover cover selection — and the bug was in what the tree pass
+   READS, not in the tree pass.** (2) the temperature probe is at the cell origin **+8**,
+   not +2, in both axes; the climate field is flat over 6 blocks so the live capture
+   cannot tell the two apart — only the disassembly can.
    ▶ Still missing once that lands — **which emitter fires where** for the rest:
-   * the `(zx + zz) & 1` **even** branch (emitter B, the type-0 statue), and
-     `Prop_settleOnTerrain` (a pure function of finished terrain — no captured state);
+   * `Prop_settleOnTerrain` (a pure function of finished terrain — no captured state);
    * `camp_populator` + its candidate grid (the grid is pure arithmetic plus one `rand()` per
      qualifying cell — 39 per firing zone, always);
    * the town chain (its **plot heights are region-cache-blocked**, so the verdict rule is
      statable but not seed-reproducible — port what is derivable and stop there);
    * emitters A and C, and the site-kind grid they gate on.
-   Suggested order: site-kind grid → A (simplest, 1 record/zone) → the parity emitters →
-   camp → C → town. Each has a `gate_*.py` here to check the port against.
+   Suggested order: **camp → C**, both now reachable — `zoneReplayTail` leaves the stream
+   at `0x51e5c7` and `RE_zone_tail.md`'s table enumerates every rand site between there
+   and them, so each is a decode job like the tree loop was, not a mystery. Then town.
+   Each has a `gate_*.py` here to check the port against.
+   ⚠ One thing this slice surfaced and did NOT fix: a **pre-existing Python↔C++ drift in
+   the forest replay** on zone `(32800, 32799)` (seed 444444, no live capture) — 58 trees
+   vs 54, first 54 byte-identical, parting after the type-1 tree at `gx=7, gz=1`. Not the
+   msvcr110-vs-ucrt sin/cos gap the code comments predicted, and not caused by either fix
+   above (both ports give the same count with and without them). It was hidden by a
+   **stale gitignored golden** (`rederive_forest.bin`), which agreed with the C++ by
+   accident; regenerating it truthfully leaves `rederive_forest` at **4/5**. This is
+   `CW_RE_MASTER_INDEX.md` §7's "`golden_rederive` has no manifest" biting for real.
+   `VX_FOREST_DUMP=1 cwgen_test <dir>` prints both tree lists side by side.
 2. **Port the dungeon mob pass + boss spawn + light sources** into `cw_rederive`/`cwgen`. All
    gated; all pure functions of the finished dungeon voxel stamp, which the port already
    produces bit-exact — no captured booleans, no order state. Then the engine half of **light
