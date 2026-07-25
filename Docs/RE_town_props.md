@@ -12,7 +12,7 @@ python tools/frida_town_props.py --towns 5    # 67 towns -> raw/town_props_captu
 python tools/gate_town_props.py               # 8,646 checks
 ```
 
-**Gated over 67 towns: 4,106 + 268 + 4,272 + 12,428 + 15,826 = 36,900 checks green.**
+**Gated over 67 towns: 4,106 + 268 + 4,272 + 12,428 + 15,826 + 332 = 37,232 checks green.**
 
 On positions: **Z is fully accounted for, and both lattices are derived here and
 verified** — the plot lattice and, inside it, the 13-block building lattice. Every one of
@@ -197,6 +197,36 @@ values, and two — `e5967` and `e5b70` — run a fence **along** a plot edge in
 axis picks an edge (`0` or `span`), the other steps two blocks at a time down the side
 (odd values `1..span-2`).
 
+### The house pass — 332 checks
+
+⚠ **Correction to the previous revision:** I described `[ebp-0x5c44]` as "a list of
+buildings" whose length came from a `size()` call. It is a **single house object**, and
+`FUN_004d8dc0` / `FUN_004d8de0` are its **module counts** — they return `+0x64` or `+0x68`
+depending on the house's rotation bit, the same footprint swap `Prop_settleOnTerrain`
+does. The loop walks one house's modules, not a list of buildings.
+
+Two things settle the pass:
+
+* **A plot gets a house iff its post-promotion role is 2.** The plot record's `+0xc`
+  holds the raw verdict at sort time and the role afterwards; snapshotting it late (at the
+  first module-count call) and counting `FUN_004e1f80` invocations gives **houses ==
+  role-2 plots in every village, 25 for 25**.
+* **Every house is the same fixed 3×3 module grid.** `FUN_004e1f80(house, 3, 3, 4)` is
+  hard-coded at its one call site (`0x4e6520`-`0x4e6526`) — **394 calls, 394 identical
+  argument triples**. Both module counts are 3, which is why the rotation swap is
+  invisible, and 3 modules × 13 blocks = 39 blocks inside a 51-block plot.
+
+That is where the 13-block lattice comes from: the interior emitters walk `i, j` over the
+house's 3×3 modules. So a town prop's position is fully pinned by
+
+```
+plotOrigin(r, c) + residue[site] + 13 * (i, j)      for every plot whose role is 2
+```
+
+282 houses were built across the sample and 262 placed their interior anchor; the other
+20 failed the emitter's own block test (`FUN_004061f0` at `0x4ecaf9`), which is the same
+reason a settle-gated site can push nothing.
+
 ### The prop layer is village-only
 
 Feature type 1 builds a town **and props**; type 5 (ruins) builds a town and emits **no
@@ -227,11 +257,11 @@ creatures; only 25 emitted props. Nothing here decodes that split.
 
 ## Open
 
-1. **Which building cells are occupied.** Both lattices and the residue table are done,
-   so a prop's position is pinned to `plotOrigin + residue + 13*cell`. What is not decoded
-   is *which* cells a plot fills — the building list the loop at `0x4e6fe3` walks, whose
-   length comes from a `size()` call. That is the house pass, and it is the last piece
-   between here and predicted positions.
+1. **The role assignment itself.** Positions are now pinned to
+   `plotOrigin + residue + 13*(i,j)` for every role-2 plot, so the only input left is
+   *how a plot gets role 2* — the promotion pass that rewrites `+0xc` between the sort and
+   the build. The parent project already gates that from the rand stream
+   ("verdict/rotation/well/cull/faction 25/25"); this work has not re-derived it.
 2. ~~**The 25-of-67 split**~~ — **it is feature type 1 vs 5**, 67 for 67. Villages emit
    props; ruins emit none.
 3. **The `eb145`-`ebaf4` interior pass**, 4,279 records over 18 prop ids, the largest

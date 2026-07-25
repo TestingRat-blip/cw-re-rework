@@ -151,6 +151,19 @@ Interceptor.attach(b.add(0xe19f0), { onEnter(){
   if (!cur || !collecting || this.threadId !== genTid) return;
   if (!cur.plotsAtSort) cur.plotsAtSort = readPlots();
 }});
+// A second snapshot taken LATE -- FUN_004d8dc0 is the house's module-count accessor, so
+// the first call is well after role promotion has rewritten the plot record's +0xc.  The
+// sort-time snapshot holds the raw verdict; this one holds the role.
+Interceptor.attach(b.add(0xd8dc0), { onEnter(){
+  if (!cur || !collecting || this.threadId !== genTid) return;
+  if (!cur.plotsLate) cur.plotsLate = readPlots();
+}});
+// FUN_004e1f80(house, 3, 3, 4) -- the house ctor, hard-coded to a 3x3 module grid.
+// Counting it says how many plots actually got a house.
+Interceptor.attach(b.add(0xe1f80), { onEnter(args){
+  if (!cur || !collecting || this.threadId !== genTid) return;
+  cur.houses.push([args[0].toInt32(), args[1].toInt32(), args[2].toInt32(), randN]);
+}});
 
 // FUN_00524540 -- creature_spawn_builder; the town's inhabitants
 Interceptor.attach(b.add(0x124540), { onEnter(args){
@@ -179,7 +192,8 @@ Interceptor.attach(b.add(0xe28e0), {
     collecting = true;
     plotHdr = 0; plotCount = 0;
     cur = { site: args[0].toString(), desc: rd(args[1], 0x60),
-            draws: [], pushes: [], settles: [], spawncalls: [], randN0: randN };
+            draws: [], pushes: [], settles: [], spawncalls: [], houses: [],
+            randN0: randN };
     try { cur.props0 = vecOf(args[0], 0xc, 0x188, 0).length; } catch(e){ cur.props0 = 0; }
     try { cur.ents0 = vecOf(args[0], 0x18, 4, 0).length; } catch(e){ cur.ents0 = 0; }
   },

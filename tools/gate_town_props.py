@@ -158,6 +158,17 @@ LATTICE = {
 # other steps two blocks at a time down the side
 FENCE_LINE = {0xE5967: "y", 0xE5B70: "x"}
 
+# THE HOUSE PASS.  A plot gets a house iff its post-promotion role (plot record +0xc) is
+# 2, and every house is the SAME fixed 3x3 module grid: FUN_004e1f80(house, 3, 3, 4),
+# hard-coded at the one call site (0x4e6520-0x4e6526).  The module accessors FUN_004d8dc0
+# / FUN_004d8de0 return +0x64 or +0x68 depending on the house's rotation bit -- the same
+# footprint swap Prop_settleOnTerrain does -- and both are 3, so the swap is invisible.
+# That is where the interior emitters' 13-block lattice comes from: they walk i, j over
+# the house's 3x3 modules.
+HOUSE_ROLE = 2
+HOUSE_MODULES = (3, 3, 4)
+ANCHOR_SITE = 0xECB14        # the 0x13 group's anchor, one per house that places
+
 
 def rec(b):
     b = bytes(b)
@@ -358,6 +369,36 @@ def lattice(h, g, spread):
                    else min(ox, 256 // n - ox) <= 8, w)
 
 
+def house_pass(h, g, tally):
+    """Which plots get a house, and how big it is."""
+    ft = struct.unpack_from("<I", bytes(h["desc"]), 0x18)[0]
+    if ft != 1 or not h.get("plotsLate"):
+        return
+    w = "%d,%d" % tuple(h["zone"])
+    n, (zx, zz) = grid_n(ft), h["zone"]
+    plots = [bytes(p) for p in h["plotsLate"] if p]
+    if len(plots) != n * n:
+        return
+    for c in h.get("houses") or []:
+        g.eq("every house is the same fixed module grid", tuple(c[:3]), HOUSE_MODULES, w)
+    role2 = [k for k, pl in enumerate(plots)
+             if struct.unpack_from("<i", pl, 0xc)[0] == HOUSE_ROLE]
+    g.eq("a house is built for exactly the plots whose role is 2",
+         len(h.get("houses") or []), len(role2), w)
+    anchors = set()
+    for p in h["pushes"]:
+        if p["ra"] != ANCHOR_SITE:
+            continue
+        r = rec(p["rec"])
+        dx = r["pos"][0] // 0x10000 - zx * 256
+        dy = r["pos"][1] // 0x10000 - zz * 256
+        anchors.add((dx * n // 256) + n * (dy * n // 256))
+    g.true("every interior anchor sits on a plot that has a house",
+           anchors <= set(role2), w)
+    tally["houses"] += len(h.get("houses") or [])
+    tally["anchors"] += len(anchors)
+
+
 def main():
     names = sorted(glob.glob(os.path.join(RAW, "town_props_capture*.json")))
     if not names:
@@ -415,6 +456,15 @@ def main():
               % (tight, len(spread),
                  len([r for r in spread if r in LATTICE]),
                  len([r for r in spread if r in FENCE_LINE])))
+
+        g = Gate()
+        tally = collections.Counter()
+        for h in hits:
+            house_pass(h, g, tally)
+        ok &= g.report("the house pass: role 2 gets a fixed 3x3 house")
+        print("   %d houses built, %d of them placed their interior anchor (the rest "
+              "failed the emitter's own block test)"
+              % (tally["houses"], tally["anchors"]))
 
         npush = sum(len(h["pushes"]) for h in hits)
         own = sum(1 for h in hits for p in h["pushes"] if in_town(p["ra"]))
