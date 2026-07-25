@@ -1,4 +1,4 @@
-// Proven_00 (world) -- server. 32 functions. Bodies = Ghidra pseudo-C.
+// Proven_00 (world) -- server. 33 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Proven_00.h"
 
@@ -30782,6 +30782,39 @@ switchD_004f3006_default:
   ExceptionList = local_10;
   __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
   return;
+}
+
+
+/* TownProp_make_0x15 @ 004f3630  kind=game  attributed-by=ledger  size=186 */
+
+int * __cdecl FUN_004f3630(int *param_1,int *param_2,int param_3)
+
+{
+  int iVar1;
+  
+  *(undefined1 *)(param_1 + 0xc) = 1;
+  param_1[0xd] = 0;
+  param_1[0xe] = 0;
+  param_1[0x10] = 0;
+  param_1[0x11] = 0;
+  FUN_00406ef0(param_1 + 0x12);
+  param_1[0x5e] = -1;
+  param_1[0x5f] = -1;
+  param_1[0x60] = -1;
+  param_1[0x61] = 0;
+  param_1[2] = *param_2;
+  param_1[3] = param_2[1];
+  param_1[4] = param_2[2];
+  param_1[5] = param_2[3];
+  param_1[6] = param_2[4];
+  param_1[7] = param_2[5];
+  param_1[8] = param_3;
+  iVar1 = rand();
+  *param_1 = iVar1 % 3 + 0x15;
+  param_1[9] = 0x40600000;
+  param_1[10] = 0x40000000;
+  param_1[0xb] = 0x40400000;
+  return param_1;
 }
 
 

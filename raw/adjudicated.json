@@ -254,8 +254,8 @@
   },
   "004f3630": {
    "kind": "game",
-   "name": "unproven ctor -- GAME",
-   "verdict": "A-KIND"
+   "name": "TownProp_make_0x15",
+   "verdict": "DEEP-RE"
   },
   "004f7490": {
    "kind": "game",

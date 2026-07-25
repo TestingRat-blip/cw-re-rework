@@ -56,6 +56,7 @@ is not water.  It rewrites the record's Z in place; the gate checks that.
 
 Reads raw/zone_props2_capture*.json.
 """
+import collections
 import glob
 import json
 import os
@@ -84,12 +85,24 @@ STAGE2_OFF = [(0, 0), (0, 7), (7, 0), (7, 7)]   # X outer, Y inner
 STAGE2_BIAS = 229376                            # ftol(229376.0) = 3.5 blocks
 
 
+# body ranges of the other subsystems that write to a site's prop vector
+OWNERS = [(0x100300, 0x10931c, "the dungeon assembler (FUN_00500300)"),
+          (0xE28E0, 0xF26F0, "the town builder (FUN_004e28e0)"),
+          (0x1104E0, 0x1133A9, "camp_populator (FUN_005104e0)")]
+
+
+def owner(rva):
+    for lo, hi, name in OWNERS:
+        if lo <= rva < hi:
+            return name
+    return "an unidentified emitter (RVA %#x)" % rva
+
+
 def foreign(z, ndrv):
     """True when a subsystem this gate does not derive also wrote to this vector.
 
-    Two of them exist: the town builder (0x4e310a / 0x4eaa7a / 0x4ee3aa) and
-    `FUN_005104e0`, the fifth zone-builder emitter.  Neither is decoded yet, so the
-    gate names them and counts their records instead of widening its claim.
+    The gate attributes them by the RECORDED return address rather than by assumption
+    -- see `owner()` -- and counts their records instead of widening its claim.
     """
     return (any(x["ra"] not in (S_STAGE1, S_STAGE2) for x in z["settles"])
             or any(p["ra"] not in (P_E0, P_B) for p in z["pushes"])
@@ -323,14 +336,18 @@ def main():
         fz = [z for z in zones
               if any(x["ra"] not in (S_STAGE1, S_STAGE2) for x in z["settles"])
               or any(p["ra"] not in (P_E0, P_B) for p in z["pushes"])]
-        nfor = sum(len([p for p in z["pushes"] if p["ra"] not in (P_E0, P_B)])
-                   for z in fz)
         print("   %d records in the vectors, %d of them through the out-of-line "
               "push_back" % (nprops, npush))
         print("   zones sharing the vector with an emitter this gate does not derive: "
               "%s" % [tuple(z["zone"]) for z in fz])
-        print("   %d of their records come from the town builder (0x4e310a / 0x4eaa7a "
-              "/ 0x4ee3aa); the rest are FUN_005104e0's inlined push" % nfor)
+        # attribute the residual by the RECORDED return address, not by assumption
+        foreign_ra = collections.Counter()
+        for z in fz:
+            for p in z["pushes"]:
+                if p["ra"] not in (P_E0, P_B):
+                    foreign_ra[owner(p["ra"])] += 1
+        for k, v in sorted(foreign_ra.items()):
+            print("   %4d of their records were pushed by %s" % (v, k))
         print("   props per odd zone: %s"
               % sorted(z["vec"]["n"] for z in odd if "vec" in z))
         print("  " + ("GATE PASS" if ok else "GATE FAIL"))

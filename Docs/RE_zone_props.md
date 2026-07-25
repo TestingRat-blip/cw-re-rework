@@ -45,10 +45,17 @@ _Reserve`, stride 0x188 — because an inlined `push_back` still has to call it 
 | `00524540` | `creature_spawn_builder` |
 
 So the open set is not "the zone builder and the town builder". It is the town builder
-(`004e310a` / `004eaa7a` / `004ee3aa`) **and `FUN_005104e0`**, which the old census could
-not see. Both showed up in the 56-zone sample and both are reported by the new gate
-rather than skipped — 44 town-builder records in `(33020, 32660)`, one `FUN_005104e0`
-record in `(32811, 32742)`.
+**and `FUN_005104e0`**, which the old census could not see. Two zones in the sample share
+their vector with an emitter this gate does not derive, and both are reported rather than
+skipped.
+
+⚠ **Corrected 2026-07-24:** those residual records were first reported as the town
+builder's. They are not — the gate now attributes them by the **recorded return address**,
+and all 44 in `(33020, 32660)` land inside `FUN_00500300`, the dungeon assembler. That
+zone holds a dungeon, not a town. The town builder's own three census rows
+(`004e310a` / `004eaa7a` / `004ee3aa`) are not emit sites either: each is an
+`8d 9b 00 00 00 00` alignment NOP an `eb 06` hops over — the points where Ghidra split
+the builder's ~64 KB body. Its real surface is 56 push sites (`RE_town_props.md`).
 
 This is the same blind spot in a different guise as the one the dungeon work hit: a
 census over an out-of-line helper undercounts wherever MSVC inlined it. Census over the
@@ -169,8 +176,11 @@ and attributed.
    into either a camp structure (**`FUN_004e0740`'s two prop shapes verbatim**, plus a ring
    of `rand()%3+1` creatures) or a creature group. Gated over 99 firing zones, 2,742
    checks. The lead in the earlier version of this list was right, and is now proven.
-2. **The town builder's three emitters** (`004e310a` / `004eaa7a` / `004ee3aa`), the other
-   half of the census. A town zone contributes ~44 records to the same vector.
+2. ~~**The town builder's three emitters**~~ — **MAPPED, `Docs/RE_town_props.md`.** Those
+   three are not emitters and not functions: each is an alignment NOP where Ghidra split
+   `FUN_004e28e0`'s ~64 KB body. Its real surface is **56 push sites, 32 placement tests,
+   16 spawn-builder calls, 170 rand sites**, and the layer's contract is now gated over
+   67 towns (8,646 checks). Positions are still open.
 3. **Emitters A and C** inside the zone builder, which no sampled zone reached. Their
    record content is already read off statically:
    * **A** (`0x51dbf5`): type `0x2d`, size `(4, 4, 5)`, `dir = rand()%4`, raised from its

@@ -248,8 +248,17 @@ The dungeon mob pass is done. Pick up from there, in rough priority order:
    (**`FUN_004e0740`'s two prop shapes verbatim** plus a ring of `rand()%3+1` creatures) or
    a creature group with a behaviour tree. Camp kinds `{0,1,2,3,4,5,6,8,9,10}` are covered;
    **kind 7 never fired** and is read statically only.
-   ▶ Next, in order: the **town builder's three emitters** (`004e310a`/`004eaa7a`/`004ee3aa`);
-   the zone builder's **candidate grid** (`0x51e839`-`0x51eab5`, the falloff roll that
+   **The TOWN builder is mapped too (`Docs/RE_town_props.md`, rig `frida_town_props.py`,
+   gate `gate_town_props.py`, 8,646 checks over 67 towns).** ⚠ Its "three emitters"
+   `004e310a`/`004eaa7a`/`004ee3aa` are **alignment NOPs, not emitters and not functions** —
+   the real surface is 56 push sites / 32 placement tests / 170 rand sites. Gated: the
+   settle-then-push contract (32 test sites, each paired with exactly one push site), the
+   container, and a per-site prop-type table. **Positions are still open** — take them from
+   the parent project's already-bit-exact plot table.
+   ★ To find towns, do NOT sweep: ask `cw_featuregen` for the type-1/5 feature cells and go
+   to their own zones (67 for 67 fire; a 256-zone sparse grid found one, and it emitted
+   nothing).
+   ▶ Next, in order: the zone builder's **candidate grid** (`0x51e839`-`0x51eab5`, the falloff roll that
    decides which of the 196 cells survive — the camp gate takes it as captured); then zone
    emitters **A** (`0x51dbf5`, type 0x2d) and **C** (`0x51fcdb`, type 0x32/0x33 with a
    string), whose record content is already read off statically but whose gates are not —

@@ -243,6 +243,11 @@ the body was the only way to settle these.
         # plus a ring of rand()%3+1 creatures) or a creature group. Gated over 99 firing
         # zones, 2,742 checks. Was `lib_fn_5104e0` under `_library` -- it is game code.
         "005104e0": {"name": "camp_populator", "kind": "game", "verdict": "DEEP-RE"},
+        # the town builder's prop record builder (Docs/RE_town_props.md). Was
+        # "unproven ctor -- GAME": it fills the record from a position and a direction and
+        # then ends `type = rand() % 3 + 0x15` with the size hard-coded to (3.5, 2, 3).
+        # Its fourth argument is pushed by every caller and never read.
+        "004f3630": {"name": "TownProp_make_0x15", "kind": "game", "verdict": "DEEP-RE"},
         # its MSVC alignment-NOP body split, pinned here because adjudicate_none.py stamped
         # the fragment with the parent's OLD name and must not be re-run on a structured tree
         "0051210a": {"name": "camp_populator__split_51210a", "kind": "game",
