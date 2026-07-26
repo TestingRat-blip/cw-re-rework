@@ -131,9 +131,16 @@ never run was not. Here it is a branch of a *callee* the replay models as a cons
 The retry moves the accepted site, and the tree loop rejects ~15 of its 196 candidates
 against it — so a wrong site is worth roughly ±60 draws before any tree-builder cost,
 in **either** direction, which is the signature of the residual descriptor-type
-7 / 0xb / 0xc / 0xf drift in `RE_camp_descriptor.md`. It is not evidence that the drift
-*is* this; it is a candidate with the right shape and the right parity that no gate has
-ever covered. (What the drift is **not**: `gate_zone_prechain` censuses the pre-chain's
+7 / 0xb / 0xc / 0xf drift in `RE_camp_descriptor.md`.
+
+The parity correlation is total: **all five still-drifting zones are ODD** —
+(32726,32791) type 0xf, (32726,32869) type 7, (32752,32765) type 0xb, (32856,32739)
+type 0xc, (32869,32726) type 0xb — while 5 of the 7 zones `rederive_campgrid` replays
+ab initio are EVEN, where the site loop does not run at all, and the 2 odd ones that do
+replay are exactly what a first-iteration accept looks like.
+
+That is a correlation, not a proof: descriptor type and parity are independent, so it
+is real evidence, but only porting `0x5287b0` and re-measuring settles it. (What the drift is **not**: `gate_zone_prechain` censuses the pre-chain's
 rand sites exhaustively, and the live terrain probe below rules out a wrong surfH.)
 
 **`Prop_settleOnTerrain` (`FUN_005287b0`, 1077 bytes) is the whole remaining

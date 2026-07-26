@@ -544,8 +544,13 @@ of it needs another capture session.
      is the `6`/`0xd` pair already ported; `World_objectFalloffWeight`'s 0xb/0xc/0xe/0xd
      special cases and `base_height`'s type-0xb ocean-repulsion exclusion are both
      already in the port), and a wrong `surfH` — see the free live terrain probe below.
-     **The live candidate is the site-loop retry**: 5 of the 6 drifting zones are odd
-     parity, and a misplaced site moves ~15 of the tree loop's 196 candidates between
+     **The live candidate is the site-loop retry**, and the parity correlation is
+     total: **all five still-drifting zones are ODD** ((32726,32791) 0xf,
+     (32726,32869) 7, (32752,32765) 0xb, (32856,32739) 0xc, (32869,32726) 0xb), while
+     5 of the 7 zones `rederive_campgrid` replays ab initio are EVEN — where the site
+     loop does not run at all — and the 2 odd ones that do replay are exactly what a
+     first-iteration accept looks like. A misplaced site moves ~15 of the tree loop's
+     196 candidates between
      the 2-draw and the 6+-draw path, i.e. ±60 draws in either direction before any
      tree-builder cost — which is the observed magnitude AND the observed
      bidirectionality. Not proven; it is the thing to test first, and porting

@@ -209,8 +209,10 @@ pre-chain stage, because the rand-site census of the whole pre-chain is exhausti
    up to ten times and both ports assume one iteration, which is wrong in 10 of the 28
    odd zones measured. A misplaced site moves ~15 of the tree loop's 196 candidates
    between the 2-draw and the 6+-draw path, i.e. ±60 draws in **either** direction
-   before any tree-builder cost — and 5 of the 6 drifting zones are odd parity. Closing
-   it needs `Prop_settleOnTerrain` (`FUN_005287b0`), which is pure terrain.
+   before any tree-builder cost — and the parity correlation is total: **all five
+   still-drifting zones are ODD**, while 5 of the 7 zones `rederive_campgrid` replays
+   ab initio are EVEN, where the site loop does not run at all. Closing it needs
+   `Prop_settleOnTerrain` (`FUN_005287b0`), which is pure terrain.
 2. **The populator itself** (`FUN_005104e0`) is now fully derivable in principle: the kind,
    the arm tables and the per-candidate coin branch are all statable. Two pieces are
    missing before it can be ported: `Prop_settleOnTerrain` (which decides where the 3x3
