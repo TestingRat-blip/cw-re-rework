@@ -177,8 +177,22 @@ Every measured type-6 zone now either replays the live lattice exactly (32792,32
 32792,32749 / 32793,32751 / 32794,32744 / 32795,32751 / 32713,32856) or is declined as a
 genuine Landform zone (32795,32748 / 32811,32742 / 32660,33021 — 16 / 575 / 1,368 draws).
 
-⚠ The table above says zone (32800,32799) has a type-6 descriptor. It is **type 7** — which
-is why cwgen still declines it and `rederive_forest` still reports it.
+⚠ ~~The table above says zone (32800,32799) has a type-6 descriptor. It is **type 7**.~~
+**Retracted 2026-07-26c: it IS type 6.** `cw_featuregrid.cell_for_column(32800*256+128,
+32799*256+128)` and `CwForest`'s own `cells[((z0>>11)&7) + ((x0>>11)&7)*8]` both land on
+cell index 35 of region (513,512) and both read type 6. cwgen declines the zone because
+`classifyZone` does not call it Exact, not because of its descriptor — and
+`rederive_forest` now replays it under `force` and gets the Python's 58 trees exactly.
+
+⚠ **And the stages that were expected to explain the 0xb/0xc drift do not.** `0x51ad52`
+(types 0xd/4), `0x51ae29` (0xb) and `0x51af34` (0xc) are decoded in `RE_zone_tail.md`.
+All three fire **only in the zone holding the feature cell's centre**, and not one of the
+14 zones in the table above does: (32752,32765)'s cell centres in (32756,32763),
+(32856,32739)'s in (32859,32740), (32869,32726)'s in (32867,32723). The game takes the
+`jne` in every one of them and runs the same gen-scatter the port runs.
+`gate_zone_prechain.py` asserts this so the question cannot be silently re-opened. **The
+7 / 0xb / 0xc / 0xf drift is still unexplained** — and it is now known not to be a missing
+pre-chain stage, because the rand-site census of the whole pre-chain is exhaustive.
 
 ## Open
 

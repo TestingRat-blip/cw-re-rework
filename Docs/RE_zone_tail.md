@@ -52,6 +52,10 @@ port's own site comments; **positional** = ordering + per-zone counts only, i.e.
 |---|---|---|---|---|
 | `0x51a21a`-`0x51a50e` | 6 sites | LANDFORM 742-loop (0 draws on an Exact zone) | **proven** — replayed ab initio, 16/16 values, `RE_zone_landform.md` | 16,888 |
 | `0x51aa86`-`0x51ac7b` | 4 sites | **the TYPE-6 KNOLL GRID** — see below | proven (ported; zone (32792,32748) pre-chain 22/22 ab initio) | 18 + 6 |
+| `0x51ad52`-`0x51ae20` | **0 sites** | type 0xd / type 4: a discarded column scan | **byte-proven** — the rand census is exhaustive (`gate_zone_prechain`) | 0 |
+| `0x51aed2` | 1 site | type 0xb: one radius-100 knoll, then SKIP the gen-scatter | byte-proven; never seen live (no captured zone is type 0xb) | 0 |
+| `0x51afdc` | 1 site | type 0xc: one GIANT tree, then SKIP the gen-scatter | byte-proven; never seen live | 0 |
+| `0x51b05a` | — | the gen-scatter's SITE-KIND guard: kinds 1/3/4 skip the pass | proven — 56/56 against the capture (`gate_zone_prechain`) | — |
 | `0x51b08a`-`0x51b3dc` | 7 sites | GEN-SCATTER: count + 5/candidate + keep | proven (`rederive_zonescatter`) | 767 |
 | `0x51c09a` | 1 site | river/lake BED pass, 1 draw per bed column | positional — fires in only 8 of 56 zones, the water ones, at ~4,700 draws each | 37,476 |
 | `0x51c313`-`0x51c341` | 3 sites | a 3-draw-per-entry consumer, same 8 zones (mat6) | positional | 603 |
@@ -122,9 +126,122 @@ start wherever the process happened to be. Locating one recorded run in the zone
 stream (`base + zz*0x10000 + zx`) recovers the offset — after which every stage's *absolute*
 position is readable, which is what made a 22-draw pre-chain legible at a glance.
 
-⚠ `0x51ad52` immediately after this tests `desc->type == 0xd` and branches to another
-stage. **Not examined.** Type 0xd also fires the camp, so it is the obvious next candidate
-for a drift of the same kind.
+## The other three type-gated stages, `0x51ad52`-`0x51b058` (read 2026-07-26c)
+
+```
+python tools/gate_zone_prechain.py     # 50 checks against Server.exe's own bytes
+```
+
+The knoll grid is not the only type-gated stage: three more sit between it and the
+gen-scatter, and no port had any of them. **None has ever been observed live** — no
+capture in this repo has a zone whose descriptor is type 4, 0xb, 0xc or 0xd — so there
+is no rand stream to replay them against. What is checkable is the decode against the
+shipped instruction bytes, which is what `gate_zone_prechain.py` does: every branch test,
+every branch target, every immediate, and an **exhaustive** rand-site census.
+
+The census is the part the ports rest on. Resolving rand reached BOTH ways — `call
+dword [0x5582f4]` and `call <reg>` after the pointer is hoisted — there are exactly
+**18** sites in `0x51a000`-`0x51b200`, and the stage map above accounts for all of them.
+(A search for only the direct form finds ten and misses the landform loop's `call edi`
+pair and three of the gen-scatter's `call esi`.)
+
+| stage | gate | draws | effect |
+|---|---|---|---|
+| `0x51aa57` | `type == 6` | 9 + 3 per surviving cell | 3x3 grid of ground knolls |
+| `0x51ad52` | `type == 0xd` **or** `type == 4` | **0** | a column scan, discarded |
+| `0x51ae29` | `type == 0xb` | 1 | ONE radius-100 knoll, and no gen-scatter |
+| `0x51af34` | `type == 0xc` | 1 (discarded) | ONE GIANT tree, and no gen-scatter |
+
+The last three additionally require **the zone to hold the feature cell's CENTRE**
+(`0x51adbd` / `0x51ae93` / `0x51af98`: the 16.16 centre is divided by `0x10000` and then
+by 256, both truncating toward zero, and compared against `[edi+0x60]`/`[edi+0x64]`). A
+cell spans 8x8 zones, so they fire in one zone in 64.
+
+### `0x51ad52` — types 0xd and 4, and why it is a dead end in both senses
+
+```
+X = desc->pos.x / 0x10000 ;  Z = desc->pos.z / 0x10000        __alldiv, 0x51ad6f/0x51ad8a
+if (X/256, Z/256) != (zone.zx, zone.zz): skip                 0x51adc2
+y = Chunk_getColumnAt(X, Z)->[0x10] + ->[0x1c]                0x51addf
+while (World_getBlockAt(X, Z, y)->[3] & 0x1f) in {0, 2}: --y  0x51adfc-0x51ae18
+                                                              ...and that is the whole stage
+```
+
+The scanned Y is written only to the frame slot the loop uses (`[ebp-0x1304]`), which the
+next writer overwrites, and the stage stamps nothing. **Zero rand sites in the span** — a
+property of the binary, not of how hard anyone looked, because the census above is
+exhaustive over the whole pre-chain.
+
+⚠ **This was expected to be the type-0xd half of the type-6 drift, and it cannot be.**
+`RE_camp_descriptor.md` and the last two handoffs said "type 0xd also fires the camp, so
+expect the same class of drift and the same one-run fix". It has no way to move anything.
+The same shape recurs at `0x51b016`, which is byte-for-byte the same discarded scan at the
+end of the 0xc stage — two occurrences, so it is an idiom in this function, not a misread.
+
+### `0x51ae29` — type 0xb, one giant knoll
+
+```
+cx = zone.zx*256 + 128 ;  cz = zone.zz*256 + 128               0x51aebd/0x51aec9 (sub -0x80)
+rv = rand() % 100 + 100                                        0x51aecc
+y  = Chunk_getColumnAt(cx, cz)->[0x10] + ->[0x1c]
+lib_fn_4ffbf0(cx, cz, y, 100, 100, rv)                         0x51af18
+jmp 0x51b101                                                   0x51af23  -- past the
+                                                               gen-scatter's count draw
+```
+
+`lib_fn_4ffbf0` contains **no reference to the rand pointer at all** (checked over its
+whole 1,802-byte body), which is why this stage is portable from the disassembly alone:
+its entire stream cost is the one draw.
+
+### `0x51af34` — type 0xc, one giant tree
+
+Identical shape, except the draw at `0x51afd6` is **discarded** (`eax` is dead at
+`0x51afdc`) and the builder is `lib_fn_513760(cx, cz, y, 0x50, 0x50, 6)` — size 80,
+height 80, tree **type 6**. That is the GIANT tree both ports already name as unsupported
+(`CwForest.cpp`'s `Unsupported` throw, `cw_forest.py`'s docstring, which had already
+guessed "zone-cell 0xc only" — now confirmed from the branch). `lib_fn_513760` has 27
+`call ebx` rand sites, so unlike 0xb this stage's stream cost is not statable without
+simulating the tree: **type-0xc centre zones are declined, not replayed.**
+
+### The gen-scatter's own guard, `0x51b05a` — real, and it was dismissed
+
+Immediately after these stages the builder reads `[ebp-0x1344] + [ebp-0x137c] + 0x18` —
+`region + idx*16 + 0x18`, the per-zone **SITE-KIND** grid (`RE_site_kind_grid.md`) — and
+skips the whole gen-scatter when the kind is **1 (town), 3 (dungeon) or 4 (runestone
+circle)**. `cw_forest.py` carried a note saying the guard "reads a 0x10-stride record
+byte, NOT the zone's feature cell — a live type-3-CELL zone runs gen-scatter normally, so
+the guard is NOT modeled here". Both halves of that observation are correct and the
+conclusion does not follow: the byte is the site kind, the 0x10 stride *is* the site-kind
+grid's entry size, and a type-3 feature CELL has nothing to do with site KIND 3.
+
+The capture settles it in one line. Of the 56 zones of `raw/zone_props2_capture.json`,
+exactly **one** — (33020,32660) — holds its feature cell's centre; that cell is type 0xE;
+a type-0xE cell marks its own zone kind 3; and that zone is the only one of the 56 that
+spends **zero** gen-scatter draws. The other 55 own no centre, carry kind 0, and all run
+the pass. `gate_zone_prechain.py` checks the implication both ways: **56/56**.
+
+★ **DURABLE: "the guard reads a different table than I assumed" is a reason to find out
+which table, not to drop the guard.** Same shape as the roughness deletion in
+`RE_zone_landform.md` — a true premise about the wrong operand.
+
+### Ported
+
+| | |
+|---|---|
+| `CwForest::buildZoneState` | the 0xb stage, the 0xc `Unsupported` throw, the site-kind guard; stage D documented as the no-op it is |
+| `CwZoneScatter::replayPreChain` | a store-free copy for the three entry points that had NO pre-chain at all (below) |
+| `CwZoneScatter::replayGenScatter` | the site-kind guard |
+| `CwFeatureGrid::zoneSiteKind` | the kind lookup, off the already-gated `subMarkers` |
+| `cw_forest.zone_prechain` | the Python's first copy of any of this, knoll grid included |
+
+⚠ **The three `CwZoneScatter` entry points had no pre-chain of any kind.**
+`zoneScatterRocks`, `zoneScatterProps`'s odd branch and `zoneScatterBlobs` each `srand`
+the zone stream and go straight to `replayGenScatter`, so every type-6 zone `classifyZone`
+called Exact was nine or more draws out of step there — the 2026-07-26 knoll-grid fix went
+into `CwForest::buildZoneState` only. That is the **third** time in this programme a fix
+has landed in one copy of a duplicated routine (see the odd-parity site draw below). They
+now share `replayPreChain`, which returns false — new class `ZoneClass::Feature` — for any
+zone whose pre-chain stamps terrain a store-free replay cannot follow.
 
 ## The tree loop, `0x51dc5d`-`0x51e5c7`
 
@@ -203,6 +320,38 @@ Three corrections came out of it:
 
 3. **`CwForest.cpp`'s odd-parity site draw was still X-first.** Detail below — it is the
    one that turned `rederive_forest` red and then green at wider coverage.
+
+## What the widened `rederive_forest` then found (2026-07-26c)
+
+The three stages above fire in worlds the forest gate had never visited, so
+`forest_oracle.ZONES` gained a type-6 zone, a type-0xb centre zone and a type-0xc centre
+zone (seed 444444). Two things fell out immediately:
+
+1. **`cw_forest.py` had hardcoded the mat-38 boost to `True` for the life of the file.**
+   The call read `cw_decoration._boost(...) if hasattr(cw_decoration, "_boost") else True`
+   — and `cw_decoration` has no `_boost`; the name lives in `cw_genscatter`. So the guard
+   was always false and the loop drew `rand()%10 + 10` rocks where the server draws
+   `rand()%10`. Every zone the file had ever run on happened to have `boost == True`;
+   zone (32840,32843) is the first with `boost == False`, and the Python reached the tree
+   loop **50 draws late** — 5 per phantom rock, exactly.
+   ★ **DURABLE: a silent `hasattr` fallback is a branch no gate can see.** It does not
+   fail, it does not warn, and it reads like defensive code.
+2. **The gate now carries the PRE-CHAIN draw count**, both sides. A tree-list mismatch
+   used to be ambiguous between "the pre-chain spent the wrong number of draws" and "the
+   tree loop did"; `pre{cpp 62 / py 112}` said which in one line, with no bisect. It is
+   diagnostic only — a zone whose trees match tree-for-tree necessarily agreed on the
+   pre-chain — and it is printed on mismatch and on forced replays.
+
+`rederive_forest` is now **6/6 over 8 zones, 245 trees**, and for the two zones the C++
+declines it replays them under `force` and checks the tree list anyway: both **IDENTICAL**
+(58 and 60 trees). For the type-0xb stage that forced comparison is the only cover
+obtainable — there is no live capture of such a zone in any world.
+
+⚠ **Still uncovered: the type-6 knoll grid's STAMPING path.** Zone (32840,32843) spends
+its 9 grid draws and keeps no cell, so the `+3 draws and a knoll` branch is exercised only
+by the C++ (live, via `rederive_campgrid`). A surviving cell needs `(1-w)^2 >= 0.5`, i.e.
+a column well inside the feature — and those zones are Landform, which the replay declines
+by construction. Do not read the Python knoll grid as gated on that branch.
 
 ## Open, carried forward
 

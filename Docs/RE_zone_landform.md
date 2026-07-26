@@ -140,7 +140,13 @@ unchanged.
   genuine Landform zones (16 / 575 / 1368 draws) — correctly declined, because the landform
   pass's own draw REPLAY (the keep/selector/case switch, and which columns append the bigrock
   list) is modelled in `cw_decoration` but not in cwgen, which only classifies.
-* **`0x51ad52` tests `desc->type == 0xd`** and branches to an unexamined stage — still open,
-  and type 0xd is the other half of this deform's gate.
-* `RE_camp_descriptor.md` calls zone (32800,32799) "a type-6 descriptor"; it is **type 7**.
-  cwgen still declines it for that reason, which is why `rederive_forest` reports it.
+* ✅ **`0x51ad52` is read (2026-07-26c, `RE_zone_tail.md`).** It is shared by types 0xd
+  **and 4**, it fires only in the zone holding the cell's centre, and it spends **zero
+  rand draws** — an exhaustive census of the pre-chain's 18 rand sites puts none of them
+  in the span. It computes a column-top scan and discards it. So it is *not* the type-0xd
+  counterpart of this deform and never could have been: it cannot move the stream, and
+  the deform above is what type 0xd actually needed.
+* ⚠ ~~`RE_camp_descriptor.md` calls zone (32800,32799) "a type-6 descriptor"; it is
+  **type 7**.~~ **Retracted 2026-07-26c — it is type 6.** Both ports index cell 35 of
+  region (513,512) and both read 6; cwgen declines the zone because `classifyZone` does
+  not call it Exact. Under `force` it now replays the Python's 58 trees exactly.

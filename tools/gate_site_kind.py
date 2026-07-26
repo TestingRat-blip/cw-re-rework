@@ -78,15 +78,20 @@ class Gate:
 _T = {}
 
 
-def toolkit():
+def toolkit(base=None):
+    """`base` defaults to seed 42069 -- the world every capture in this repo was made
+    in. Pass it explicitly from any other caller: the grid is seed-derived, and a
+    module that pins a seed once is a global-state bug waiting for the first caller
+    who changes it (cf. re_landform, Docs/RE_zone_landform.md)."""
     if "fg" not in _T:
         sys.path.insert(0, REDERIVE)
         import cw_seed
         import cw_feature
         import cw_featuregen
-        _T["base"] = cw_seed.base_for_seed(42069)
+        _T["default_base"] = cw_seed.base_for_seed(42069)
         _T["fg"] = cw_featuregen
         _T["fw"] = cw_feature.falloff_weight
+    _T["base"] = _T["default_base"] if base is None else base
     return _T
 
 
@@ -109,9 +114,9 @@ def town_zones(rx, rz, ti, cell):
     return [(t[1], t[2]) for t in cand[:4]]
 
 
-def derive(rx, rz):
+def derive(rx, rz, base=None):
     """The region's whole per-zone site-kind grid, ab initio. {(zx,zz): kind}."""
-    t = toolkit()
+    t = toolkit(base)
     cells = t["fg"].generated_cells(t["base"], rx, rz)
     grid = {}
     for want_type in (14, 10):                       # in the binary's write order

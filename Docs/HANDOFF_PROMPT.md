@@ -241,6 +241,19 @@ Running out of order silently empties the islands/roles (it oscillates).
    terrain and nobody noticed, because every 42069 zone it had ever run on had zero
    qualifying tiles. Re-sync at the entry point, not at import.
 
+23. **A silent `hasattr` fallback is a branch no gate can see.** `cw_forest.py` chose the
+   mat-38 boost with `cw_decoration._boost(...) if hasattr(cw_decoration, "_boost") else
+   True`. That attribute has never existed — the name is in `cw_genscatter` — so the file
+   hardcoded `True` for its whole life, and nothing failed, warned, or looked wrong. It
+   only surfaced when the gate's zone set finally reached a zone where the real boost was
+   False. Write the import, not the guard; if a fallback is genuinely needed, make it
+   loud.
+24. **Decoding a stage tells you what it CANNOT do, too, and that is worth writing down.**
+   `0x51ad52` was carried for three handoffs as the likely cause of the type-0xd drift.
+   Reading it settles that it spends zero draws and stamps nothing — so it is ruled out
+   permanently, and the gate now asserts the negative (no drifting zone even reaches these
+   stages) so the question cannot drift back open. A closed door is a result.
+
 7. **Both label sources are unreliable in opposite directions**: `CW_CONFIDENCE_XREF.md` had an
    off-by-one that filed proven worldgen as `lib_fn_*` (16 rows fixed); `cw_callgraph.py` gives
    game names to STL primitives. Always verify against the body.
@@ -274,6 +287,7 @@ closed — every emitter RE'd, every gate green, nothing captured that cannot be
 | the zone builder's **TAIL** (mat-38 -> emitter B = the dense-forest tree pass; emitter B derived and reachable from the seed) | `RE_zone_tail.md` | 6,558 / 28 even zones |
 | the camp **DESCRIPTOR** — all seven fields from the seed, `+0x20` = the region mission counter | `RE_camp_descriptor.md` | 198 firings / 52 cells |
 | the **LANDFORM** pass gate chain + the builder's second land mask (type 6/0xd) | `RE_zone_landform.md` | 22 / 2 zones, 16 draws ab initio |
+| the pre-chain's other **TYPE-GATED STAGES** (0xd/4, 0xb, 0xc) + the gen-scatter's site-kind guard | `RE_zone_tail.md` | 50 byte/capture checks |
 
 Two structural facts worth carrying:
 
@@ -434,13 +448,55 @@ of it needs another capture session.
    `zonescatter_oracle.py` (which rode on the import side effect) configures 444444
    explicitly. **A module that caches seed-derived tables at import is a global-state bug
    waiting for the first caller who changes the seed.**
+   ✅ **THE REST OF THE TYPE-GATED PRE-CHAIN IS READ (2026-07-26c) — AND IT IS NOT THE
+   DRIFT.** `Docs/RE_zone_tail.md`, gate `tools/gate_zone_prechain.py` (**50/50**).
+   `0x51ad52` is shared by types 0xd **and 4**; it scans a column top at the cell centre
+   and **discards it**, spending **zero draws**. That is not "no draws were recorded" but
+   a property of the binary: an EXHAUSTIVE rand-site census of `0x51a000`-`0x51b200`,
+   resolving `call <reg>` as well as `call [&rand]`, finds exactly 18 sites and the stage
+   map accounts for all of them. So the standing expectation in this file — "type 0xd is
+   the other half of the land-mask deform's gate, expect the same class of drift and the
+   same one-run fix" — is **falsified**: the stage has no way to move anything.
+   ★ Two genuinely new stages turned up beside it, and both were unmodelled everywhere:
+   **type 0xb** (`0x51ae29`, 1 draw, one radius-100 knoll at the zone centre) and
+   **type 0xc** (`0x51af34`, 1 DISCARDED draw, one GIANT tree 80x80 — builder tree type 6,
+   which is what `cw_forest.py`'s docstring had already guessed "zone-cell 0xc only"), and
+   both then `jmp 0x51b101`, **past the gen-scatter's count draw**: such a zone runs no
+   gen-scatter at all. All three need the zone to hold the cell's CENTRE (1 zone in 64).
+   ⚠ **They do NOT explain the 0xb/0xc drift.** Not one of the 14 drifting zones holds
+   its cell's centre, so the game takes the `jne` there exactly as the port does. The gate
+   asserts this so it cannot be silently re-opened. **Types 7 / 0xb / 0xc / 0xf are still
+   unexplained — but the cause is now known not to be a missing pre-chain stage.**
+   ✅ **The gen-scatter's own guard is real and both ports had dismissed it.** `0x51b05a`
+   reads the per-zone **SITE-KIND** byte (not the feature-cell type) and skips the whole
+   pass for kinds 1/3/4. `cw_forest.py`'s note said the guard read "a 0x10-stride record
+   byte, NOT the zone's feature cell" — true, and the 0x10 stride *is* the site-kind
+   grid's entry size. The capture decides it: of 56 zones exactly one has a non-zero
+   derived site kind and exactly that one spends zero gen-scatter draws — **56/56**.
+   ★ **DURABLE: "the guard reads a different table than I assumed" is a reason to find
+   out which table, not to drop the guard.**
+   ✅ **THE PRE-CHAIN HAD THREE MORE UNFIXED DUPLICATES.** `cw_forest.py` never had the
+   type-6 knoll grid at all, and `CwZoneScatter`'s `zoneScatterRocks` /
+   `zoneScatterProps`(odd) / `zoneScatterBlobs` each srand the zone and go straight to
+   `replayGenScatter` — so every type-6 zone `classifyZone` calls Exact was 9+ draws out
+   in four places. They now share `CwZoneScatter::replayPreChain`, which declines
+   (new `ZoneClass::Feature`) any zone whose pre-chain stamps terrain a store-free replay
+   cannot follow. Third instance of the duplicated-routine lesson.
+   ✅ **AND WIDENING `rederive_forest` PAID FOR ITSELF TWICE.** `forest_oracle.ZONES`
+   gained a type-6, a type-0xb-centre and a type-0xc-centre zone. (1) `cw_forest.py` had
+   **hardcoded the mat-38 boost to True** for the life of the file —
+   `cw_decoration._boost if hasattr(...) else True`, and `cw_decoration` has no `_boost`
+   (it is in `cw_genscatter`), so the loop drew `rand()%10 + 10` where the server draws
+   `rand()%10`. Every zone the file had run on happened to have boost=True; the first
+   boost=False zone arrived **50 draws late**. ★ **A silent `hasattr` fallback is a branch
+   no gate can see.** (2) the gate now carries the **pre-chain draw count** on both sides,
+   which turned an ambiguous tree mismatch into `pre{cpp 62 / py 112}` — pre-chain vs tree
+   loop, in one line. `rederive_forest` **6/6 over 8 zones / 245 trees**, and the two zones
+   cwgen declines both replay tree-for-tree under `force`.
    ▶ Still missing — **which emitter fires where** for the rest:
-   * **`0x51ad52` tests `desc->type == 0xd`** and branches to another unexamined stage.
-     Type 0xd fires the camp too, and it is the other half of the land-mask deform's gate —
-     expect the same class of drift, and the same one-run fix;
    * descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined. The
-     type-6 cause is the shape to look for: first a whole unmodelled stage (the knoll
-     grid), then a wrong terrain INPUT (this);
+     type-6 cause was first a whole unmodelled stage (the knoll grid) and then a wrong
+     terrain INPUT — the pre-chain is now exhaustively censused, so **look at the inputs**;
    * `Prop_settleOnTerrain` (a pure function of finished terrain — no captured state);
    * the rest of `camp_populator`: the arm tables and the coin branch are statable, and the
      waypoint draw COUNT is settled (3 iff the neighbour list is non-empty, `0x512dc1`);
