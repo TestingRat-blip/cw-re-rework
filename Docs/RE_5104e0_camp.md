@@ -51,6 +51,13 @@ kinds = [9]                              if featureType == 4
 kind  = kinds[ descriptor[+0x20] % len(kinds) ]      # UNSIGNED modulus, zero draws
 ```
 
+**`descriptor[+0x20]` is derived, not captured (2026-07-26).** It is the region's running
+MISSION counter — seeded by the region's third setup draw (`rand()%10000`) and advanced by
+`1 + rand()%0x32` per popped Loop-C candidate, the cell keeping the value from before its
+own advance. So is `+0x24` (the cell level) and `+0x28` (the count sub-switch). See
+`RE_camp_descriptor.md`; this gate now derives all three and checks them against the live
+bytes, and picks the kind from the derived value.
+
 `kind - 1` then indexes a 10-way jump table at `0x510728` (table at `0x5133b0`); kind 0 or
 > 10 takes the default arm. Each arm fills
 
@@ -170,3 +177,12 @@ branch, waypoints three at a time or not at all, and `rand()%3+1` companions. Ev
 3. **Kind 7**, which never came up.
 4. **The species ids themselves.** They are `Spawn+0x2c` values; nothing here maps them to
    creature names.
+5. ~~**The descriptor**~~ — **DONE, `RE_camp_descriptor.md`.** All seven fields derive from
+   the seed, 198/198 firings; `cwgen` carries them as `FeatureCell::mission/level/msub`
+   (gate `rederive_campdesc` 693/693).
+6. **The port is blocked on reachability, not on knowledge.** `cwgen` can now build the
+   candidate lattice ab initio (`CwZoneCamp`), but a camp only fires where the descriptor
+   is a present non-{0,1,5,0xa,0xe} cell, and the zone-stream replay drifts in exactly
+   those zones — 12 of 14 measured. Fixing that drift is what unblocks the populator; the
+   populator's own remaining gaps are `Prop_settleOnTerrain` and the waypoint neighbour
+   predicate (its draw COUNT is settled: 3 if the neighbour list is non-empty, else 0).

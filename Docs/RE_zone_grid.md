@@ -141,6 +141,19 @@ finishing a single zone.  The scanned z arrives in the pushed record anyway.
 
 ---
 
+## Update 2026-07-26 — the descriptor is derived, and the lattice is in cwgen
+
+The gate above drove `FUN_0052c820` from the **captured** descriptor. It no longer does:
+the descriptor is the feature cell containing the zone, all seven of its fields come out
+of the region generator, and the gate checks them before using them
+(`RE_camp_descriptor.md`, 693 new checks — 13,082 + 3,861 total).
+
+The lattice is ported (`RatForge/src/worldgen/cw/CwZoneCamp.cpp`, gate
+`rederive_campgrid` **15,486/15,486**) including the roll, the `+0.5` bias and the z-scan
+(`ZoneTailState::firstFreeFromBase` — the scan from the record base UP to the first
+air/water, which is not the same walk as the tree pass's `topSolid`). What is NOT closed
+is reaching it ab initio: see that doc's "What this blocks".
+
 ## Where this leaves Phase 2
 
 `gate_zone_camp.py` no longer has a captured input that this repo cannot derive: the

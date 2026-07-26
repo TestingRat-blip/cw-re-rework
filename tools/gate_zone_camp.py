@@ -146,6 +146,38 @@ ARMS = {
 }
 
 
+REDERIVE = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                         "..", "..", "cw_rederive"))
+_TOOLKIT = {}
+
+
+def derived_descriptor(zx, zz):
+    """The descriptor DERIVED from the seed -- the feature cell containing the zone.
+
+    This gate used to read the camp KIND straight out of the captured descriptor
+    (`desc[+0x20]`), which was the last captured input in the whole camp path. That field
+    is the region's running MISSION counter: it starts at the region's third setup draw
+    (rand()%10000) and advances by 1 + rand()%0x32 per popped Loop-C candidate, and a cell
+    keeps the value from BEFORE its own advance (Docs/RE_camp_descriptor.md). Returns None
+    if cw_rederive is not importable, in which case the gate falls back to the capture."""
+    if "mod" not in _TOOLKIT:
+        try:
+            sys.path.insert(0, REDERIVE)
+            import cw_seed
+            import cw_featuregrid
+            cw_seed.configure(42069)
+            _TOOLKIT["mod"] = cw_featuregrid
+        except Exception as exc:                                  # pragma: no cover
+            print("   (cw_rederive not importable: %s)" % exc)
+            _TOOLKIT["mod"] = None
+    m = _TOOLKIT["mod"]
+    if m is None:
+        return None
+    c = m.cell_for_column(zx * 256 + 128, zz * 256 + 128)
+    return {"type": c["type"], "mission": c.get("mission", -1),
+            "level": c.get("level", -1), "msub": c.get("msub", -1)}
+
+
 def kind_list(ftype):
     if ftype == 4:
         return [9]
@@ -277,6 +309,18 @@ def prologue(h, g, seen):
     ftype = struct.unpack_from("<I", d, 0x18)[0]
     sel = struct.unpack_from("<I", d, 0x20)[0]
 
+    # the whole descriptor is a function of the seed -- check it, then use the DERIVED
+    # fields for the kind so nothing downstream depends on the capture
+    dd = derived_descriptor(zx, zz)
+    if dd is not None:
+        g.eq("descriptor type, derived from the seed", dd["type"], ftype, w)
+        g.eq("descriptor mission counter (+0x20), derived from the seed", dd["mission"], sel, w)
+        g.eq("descriptor level (+0x24), derived from the seed", dd["level"],
+             struct.unpack_from("<i", d, 0x24)[0], w)
+        g.eq("descriptor msub (+0x28), derived from the seed", dd["msub"],
+             struct.unpack_from("<i", d, 0x28)[0], w)
+        ftype, sel = dd["type"], dd["mission"] & 0xFFFFFFFF
+
     g.true("the caller only reaches it for feature types outside {0,1,5,0xa,0xe}",
            ftype not in (0, 1, 5, 0xA, 0xE), w)
 
@@ -311,8 +355,14 @@ def prologue(h, g, seen):
 
 def camp_kind(h):
     d = bytes(h["desc"])
-    lst = kind_list(struct.unpack_from("<I", d, 0x18)[0])
-    k = lst[struct.unpack_from("<I", d, 0x20)[0] % len(lst)]
+    dd = derived_descriptor(*h["zone"])
+    if dd is not None and dd["mission"] >= 0:
+        ftype, sel = dd["type"], dd["mission"] & 0xFFFFFFFF
+    else:
+        ftype = struct.unpack_from("<I", d, 0x18)[0]
+        sel = struct.unpack_from("<I", d, 0x20)[0]
+    lst = kind_list(ftype)
+    k = lst[sel % len(lst)]
     return k if k in ARMS else "d"
 
 

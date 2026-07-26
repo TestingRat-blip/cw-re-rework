@@ -150,8 +150,16 @@ Three corrections came out of it:
 
 ## Open, carried forward
 
-* **Camp populator (`0x51eac7`) and emitter C (`0x51fa10`)** are now reachable in
-  principle — `zoneReplayTail` leaves the stream at `0x51e5c7` and the sites between
+* **2026-07-26: the camp lattice IS reached, and doing so found the tail's real limit.**
+  Nothing lies between emitter B (`0x51e774`, its dir draw) and the lattice's first roll
+  (`0x51e952`) — the capture shows gap 0 in every firing zone, on both parities — so
+  `CwZoneCamp::zoneCampGrid` walks straight through. But the camp only fires where the
+  zone's descriptor is a present feature cell, and **the replay drifts there**: 12 of 14
+  such zones land 2-629 draws off the live lattice index, in both directions
+  (`RE_camp_descriptor.md`). Every zone this tail was ever proven on has a descriptor of
+  type 0 / 0xa / 0xe. So the tail decode below is intact; its REACHABILITY in feature
+  zones is not.
+* **Emitter C (`0x51fa10`)** is reachable in principle — `zoneReplayTail` leaves the stream at `0x51e5c7` and the sites between
   there and them are enumerated in the table above (`0x51e774`, `0x51e952`,
   `0x51ed7e`/`0x51ed92`/`0x51edba`, `0x51f227`, `0x51f383`/`0x51f3fa`/`0x51f463`,
   `0x51f4f4`/`0x51f5a0`/`0x51f668`, `0x51f8f9`/`0x51f924`). Each needs decoding the way

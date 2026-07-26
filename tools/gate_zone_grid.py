@@ -92,7 +92,23 @@ def descriptor(desc):
     return {"fa": struct.unpack_from("<q", b, 0)[0],
             "fb": struct.unpack_from("<q", b, 8)[0],
             "radius": struct.unpack_from("<f", b, 0x10)[0],
-            "type": struct.unpack_from("<i", b, 0x18)[0]}
+            "type": struct.unpack_from("<i", b, 0x18)[0],
+            "mission": struct.unpack_from("<i", b, 0x20)[0],
+            "level": struct.unpack_from("<i", b, 0x24)[0],
+            "msub": struct.unpack_from("<i", b, 0x28)[0]}
+
+
+def derived_descriptor(zx, zz):
+    """The descriptor DERIVED from the seed: the feature cell containing the zone. All
+    seven fields, including the three (+0x20 mission / +0x24 level / +0x28 msub) that
+    this gate used to take as captured -- see Docs/RE_camp_descriptor.md."""
+    m = _toolkit()
+    if m is None:
+        return None
+    c = m.cell_for_column(zx * 256 + 128, zz * 256 + 128)
+    return {"fa": c["cx"], "fb": c["cz"], "radius": c["radius"], "type": c["type"],
+            "mission": c.get("mission", -1), "level": c.get("level", -1),
+            "msub": c.get("msub", -1)}
 
 
 def cells(h):
@@ -152,6 +168,17 @@ def check_zone(h, g, gw, gz, zsum):
 
     g.eq("the site's zone fields are the zone being built", tuple(h["siteZone"]), (zx, zz), w)
     g.eq("the qualification modulus is 5", h["mod"], 5, w)
+
+    # --- the DESCRIPTOR itself, derived from the seed ---------------------------
+    # This gate used to take `d` as captured. It is the feature cell containing the zone,
+    # and all seven fields come out of the region generator -- including the three that
+    # had never been derived: +0x20 (the camp KIND selector, = the region's running
+    # MISSION counter), +0x24 (level) and +0x28 (msub). Docs/RE_camp_descriptor.md.
+    dd = derived_descriptor(zx, zz)
+    if dd is not None:
+        for k in ("fa", "fb", "radius", "type", "mission", "level", "msub"):
+            g.eq("descriptor %s, derived from the seed" % k, dd[k], d[k], w)
+        d = dd                       # from here on the gate uses the DERIVED descriptor
 
     cs = cells(h)
     want = lattice(h["mod"])
