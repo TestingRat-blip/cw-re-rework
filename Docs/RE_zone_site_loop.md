@@ -1,10 +1,11 @@
 # The odd-parity SITE LOOP — and the list both ports invented
 
 ```
-python tools/gate_zone_siteloop.py     # 228 checks, 56 zones + Server.exe's bytes
+python tools/gate_zone_siteloop.py                 # 228 checks, 56 zones + Server.exe's bytes
+python tools/gate_zone_siteloop.py --ab-initio     # 243, adding the settle replayed from the seed
 ```
 
-**Two findings, one live-proven each.**
+**Three findings; `Prop_settleOnTerrain` is ported and gated at the end.**
 
 1. The zone builder's site list holds **at most one entry** — the odd-parity accepted
    site. Both ports were seeding it with every feature-cell centre in the 3×3 region
@@ -13,6 +14,10 @@ python tools/gate_zone_siteloop.py     # 228 checks, 56 zones + Server.exe's byt
    candidate up to ten times. Both ports hardcode "the first candidate is accepted",
    which is wrong in **10 of the 28 odd zones** of the 56-zone sweep — and in 2 of them
    nothing is accepted at all, so the list stays empty.
+3. `Prop_settleOnTerrain` (`FUN_005287b0`) — what decides accept vs retry — is a 3x3
+   **flatness test** over the finished terrain. Ported to both engines; on every odd
+   zone the port reaches at the live draw index it predicts the live iteration count
+   and accept flag exactly, **15/15**.
 
 ---
 
@@ -140,14 +145,15 @@ ab initio are EVEN, where the site loop does not run at all, and the 2 odd ones 
 replay are exactly what a first-iteration accept looks like.
 
 That is a correlation, not a proof: descriptor type and parity are independent, so it
-is real evidence, but only porting `0x5287b0` and re-measuring settles it. (What the drift is **not**: `gate_zone_prechain` censuses the pre-chain's
-rand sites exhaustively, and the live terrain probe below rules out a wrong surfH.)
+is real evidence. (What the drift is **not**: `gate_zone_prechain` censuses the
+pre-chain's rand sites exhaustively, and the live terrain probe below rules out a wrong
+surfH.)
 
-**`Prop_settleOnTerrain` (`FUN_005287b0`, 1077 bytes) is the whole remaining
-dependency.** Its callees are `Chunk_getColumnAt` / `World_getBlockAt` / `__alldiv` /
-`ftol` only — a pure function of the finished terrain, no rand, no captured state, as
-the handoff already assumed. Porting it closes the site loop, and with it the mat-38
-rejection and the tree loop's rejection in every odd zone.
+▶ **`Prop_settleOnTerrain` was then ported and re-measured — see the second half of this
+file.** The settle itself now predicts the live iteration count 15/15, so the retry is
+no longer the open question; what the same measurement turned up instead is that a
+third of the odd zones reach the site loop at the wrong draw index in the first place.
+That is now the prime suspect for the camp drift, ahead of the settle.
 
 ## A live terrain oracle that costs nothing
 
@@ -191,3 +197,135 @@ Reading the *inputs*, as `RE_zone_tail.md` said to:
 | `cw_decoration.site_loop` | docstring carries the real draw arithmetic + the measured blast radius |
 | `CwForest::buildZoneState` | same, both halves |
 | `CwZoneScatter` | `gatherSites()` **removed**; the type-6 knoll grid's `sites16` is empty |
+
+---
+
+# `Prop_settleOnTerrain` — ported (2026-07-26e)
+
+```
+python tools/gate_zone_siteloop.py --ab-initio    # 243/243; SLOW (~40 min: the landform
+                                                 # pass runs in Python, ~9,300 columns/zone)
+```
+
+`FUN_005287b0` is the whole content of the site loop's accept/reject decision, and it
+is a **pure function of the finished terrain**: no rand, no captured state.
+
+```
+settle(prop, support):
+    if (rot & 1) swap(sizeX, sizeZ)                                    0x5287e4
+    h  = ftol_round(f32(f32(size * 0.5) * 65536))                      0x528800-0x528818
+    x0 = (x16 - h) / 0x10000 ;  x1 = (x16 + h) / 0x10000    (__alldiv, truncating)
+    z0, z1 likewise from the (possibly swapped) Z size
+
+    1. DROP  up to 50 blocks until ANY column of the footprint is solid     0x528880
+    2. RAISE up to 50 blocks while ANY column of the footprint is solid     0x5289b6
+    3. reject if y16 <= 0                                                  0x528aa8
+    4. if `support`: reject unless EVERY column is solid one block below    0x528ac7
+    5. accept iff the block at the settled anchor is not water (class 2)    0x528bc8
+```
+
+"Solid" is `(block[3] & 0x1f) not in {0, 2}` throughout, and the block resolves through
+three live-read templates: a missing column or `y < base` is `DAT_005842c4` = 0x01
+(**solid**), above the record top it is `DAT_005842bc` = 0x82 (water) at `y <= 0` and
+`DAT_005842c0` = 0x00 (air) above that, and an unprotected air voxel inside the record
+at `y < 1` also reads as water. The air↔water substitutions never change a solidity
+test — both are in `{0,2}` — so they matter only at step 5.
+
+**Step 4 is the content.** With `support = 1` (what the site loop passes) the whole
+footprint must be solid one block down, so it is a **flatness test**. The campfire is
+2.4 × 2.4 (`0x4019999a`), giving `h = 78643`, and the site loop's anchor carries
++0.5 block, so the footprint is exactly **3 × 3**. A candidate on a slope fails, costs
+3 draws, and the caller draws another — which is the retry.
+
+Steps 1-3 are why a deep zone can never place anything: the candidate starts at the
+column's record top, and a zone whose terrain sits below sea level drops the full 50,
+raises nothing, and dies on `y16 <= 0`.
+
+## What it predicts
+
+Driving `cw_forest.build_zone_state` from the seed and comparing the site loop's
+iteration count and accept flag against the 56-zone sweep:
+
+| | |
+|---|---|
+| odd zones in the sweep | 28 |
+| the port reaches the site loop at the live draw index (STREAM-ALIGNED) | 15 |
+| of those, iteration count **and** accept flag predicted exactly | **15/15** |
+| the port reaches the loop at a different index — not a settle test | 13 |
+
+The aligned set is not a soft one: it contains both zones that accept **nothing**
+— (32885,32636) and (33107,32318), each predicted as exactly 10 iterations with no
+accept — plus a 2-iteration and a 4-iteration zone. The iteration count is a ten-way
+outcome decided entirely by terrain, so landing it 15 times in a row is the model, not
+a coincidence. (Of the 13 misaligned zones 6 also happen to match; they are not counted
+either way.)
+
+## Ported
+
+| | |
+|---|---|
+| `cw_forest.prop_settle_on_terrain` | the settle itself |
+| `cw_forest.zone_site_loop` | the retry loop + `FUN_004e0740`, against the zone's stamped `Store` |
+| `cw_forest.Store.block_class` / `record_top` | the three block templates and the record top the candidate starts from |
+| `CwForest::propSettleOnTerrain` / `zoneSiteLoop` | the same, in cwgen |
+| `CwForest::Store::blockClass` / `recordTop` | the same |
+| `featureFalloff16` (`CwHeight`) | the 16.16 form — the anchor's +0.5 block would be dropped by a block-coordinate call, and the type-1/5 gate reads it |
+| `CwForest::siteCandidateSettlesBare` | exported so the store-free replays can decline what they cannot follow |
+
+⚠ **`CwZoneScatter`'s three store-free replays cannot model the retry.** They never
+stamp the gen-scatter's knolls, so they do not have the terrain the settle reads. They
+now run the settle on BARE terrain and return `ZoneClass::Feature` for any odd zone
+whose first candidate would not settle, rather than silently emitting a wrong stream.
+A bare accept is **necessary, not sufficient** — a knoll under the candidate can still
+flip it — and that is stated at the call sites.
+
+Measured cost of that decline, and it is the point of it: the engine's `--proptest`
+places **33** campsite props over its 4,608 columns of 72 odd zones where it placed 43
+before. The ten that went away were being emitted from a stream the port had no right
+to claim. `rederive_zoneprops` is still 5/5, `--towntest` unchanged.
+
+▶ **Those ten are recoverable, and the route is known**: the store-free entry points
+could share `CwForest::buildZoneState`'s stamping (a `Store` materializes lazily, so it
+is the knoll footprints and nothing else) and then run the real site loop instead of the
+bare-terrain approximation. That is a refactor of three call sites, not new RE.
+
+## ⚠ And it measured something else: odd zones drift UPSTREAM of the site loop
+
+The comparison only means something where the port arrives at the site loop on the same
+draw the live server did — otherwise it is settling different candidates. Checking the
+first two candidate draw VALUES against live splits the 28 zones, and a third of them
+are **STREAM-OFF**: the port reaches the loop at a different index, with a live
+descriptor of type 0xa or 0xe — the class every earlier gate called proven.
+
+That is not a settle bug and it is not new drift; it is **newly measured**. No gate
+before this one derived an ODD zone's stream ab initio this far: `gate_zone_tail` runs
+28 EVEN zones, `rederive_zonepropsb`'s emitter B *is* the even branch, and the odd-zone
+gates (`gate_zone_props2`, `rederive_zoneprops`) replay the captured draws rather than
+deriving them. Fourth instance of the standing pattern — the pass was fine and the
+class that had never run was not.
+
+The live site-loop start index is recoverable for every odd zone (msvcrt's rand is a
+plain LCG, so stepping it from `base + zz*0x10000 + zx` until the recorded candidate
+pair appears pins it uniquely), which turns "STREAM-OFF" into a number for whoever
+picks this up:
+
+| zone | live index | iters | zone | live index | iters |
+|---|---|---|---|---|---|
+| 32790,32791 | 3220 | 1 | 32794,32791 | 42 | 1 |
+| 32790,32793 | 258 | 1 | 32794,32793 | 292 | 10 |
+| 32790,32795 | 2736 | 2 | 32794,32795 | 1 | 1 |
+| 32791,32790 | 7 | 2 | 32795,32790 | 13 | 1 |
+| 32791,32792 | 1504 | 1 | 32795,32792 | 1 | 1 |
+| 32791,32794 | 510 | 6 | 32795,32794 | 998 | 1 |
+| 32792,32791 | 238 | 4 | 32737,32848 | 31 | 1 |
+| 32792,32793 | 19 | 1 | 32811,32742 | 652 | 5 |
+| 32792,32795 | 135 | 4 | 32885,32636 | 501 | 10 |
+| 32793,32790 | 834 | 1 | 32959,32530 | 574 | 3 |
+| 32793,32792 | 312 | 1 | 33033,32424 | 28 | 1 |
+| 32793,32794 | 1 | 1 | 33107,32318 | 7 | 10 |
+| 32610,33111 | 990 | 1 | 33101,32778 | 110 | 1 |
+| 32530,32531 | 457 | 1 | 32660,33021 | 1475 | 1 |
+
+Diff the port's own pre-site-loop draw count against this column and the upstream drift
+is localised in one run — the same recovery trick that made the 22-draw type-6
+pre-chain legible.

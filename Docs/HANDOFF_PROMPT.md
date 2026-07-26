@@ -256,6 +256,11 @@ Running out of order silently empties the islands/roles (it oscillates).
    the centres in it, because in all 56 no rock landed within 40 blocks of one; the
    tree loop's 14x14 grid finally put a candidate there and the live server rejected
    nothing. **One `find` over the frame slot's disp32 settles who writes a list.**
+27. **A gate that feeds the port the CAPTURED draws does not prove the port derives
+   them.** Every odd-parity zone gate in this project replays the recorded stream; the
+   first thing to derive an odd zone's stream from the seed found 13 of 28 arriving at
+   the site loop at the wrong index, in the descriptor class everything else calls
+   proven. Ask what a green gate actually feeds its port before reading it as coverage.
 26. **When a replay models a CALLEE as a constant, that is a branch too.** The site
    loop calls `FUN_004e0740` and both ports encoded "it accepts, for 11 draws". It
    retries up to ten times (3 draws each) and sometimes accepts nothing — true in 10 of
@@ -304,6 +309,7 @@ closed — every emitter RE'd, every gate green, nothing captured that cannot be
 | the **LANDFORM** pass gate chain + the builder's second land mask (type 6/0xd) | `RE_zone_landform.md` | 22 / 2 zones, 16 draws ab initio |
 | the pre-chain's other **TYPE-GATED STAGES** (0xd/4, 0xb, 0xc) + the gen-scatter's site-kind guard | `RE_zone_tail.md` | 50 byte/capture checks |
 | the **ODD-PARITY SITE LOOP** + the builder's site list (it holds one entry, never the feature cells) | `RE_zone_site_loop.md` | 228 checks, 56 zones |
+| `Prop_settleOnTerrain` = `FUN_005287b0`, the 3x3 flatness test that decides the site loop | `RE_zone_site_loop.md` | 15/15 odd zones ab initio |
 
 Two structural facts worth carrying:
 
@@ -530,13 +536,36 @@ of it needs another capture session.
    all**, leaving the list empty. The arithmetic `draws == 3*iters + 8*accepted` holds
    in all 28. ★ **DURABLE: a replay that models a CALLEE as a constant has an
    unmodelled branch.**
+   ✅ **`Prop_settleOnTerrain` IS PORTED (2026-07-26e)** — `FUN_005287b0`, both
+   engines, `Docs/RE_zone_site_loop.md`. It is a **3x3 FLATNESS test**: drop ≤50
+   blocks to the first solid, raise ≤50 while solid, reject if `y16 <= 0`, then (with
+   the support flag the site loop passes) reject unless EVERY column of the footprint
+   is solid one block below, and finally accept iff the settled block is not water.
+   The campfire is 2.4x2.4 and the site loop's anchor carries +0.5 block, so the
+   footprint is exactly 3x3 — which is why a candidate on a slope is rejected and the
+   loop redraws. Landed: `cw_forest.prop_settle_on_terrain` / `zone_site_loop`,
+   `Store.block_class` / `record_top`; `CwForest::propSettleOnTerrain` /
+   `zoneSiteLoop` / `Store::blockClass` / `recordTop`, plus `featureFalloff16` (the
+   anchor's half block would be dropped by a block-coordinate call).
+   **Measured: on every odd zone the port reaches at the LIVE draw index it predicts
+   the live iteration count and accept flag exactly, 15/15** — including both zones
+   that accept nothing after all ten tries. `cwgen_test` all-pass, hash unchanged
+   (`B83C43DC55DA6A42`), and `rederive_campgrid`'s declined-zone lattice reproduction
+   went **7 → 11**.
+   ⚠ **The three STORE-FREE replays in `CwZoneScatter` cannot follow the retry** — they
+   never stamp the gen-scatter's knolls, so they do not have the terrain the settle
+   reads. They now run the settle on BARE terrain and **decline** (`ZoneClass::Feature`)
+   any odd zone whose first candidate would not settle, instead of silently emitting a
+   wrong stream. `rederive_zoneprops` is still 5/5, so no coverage was lost.
+   ⭐ **AND IT MEASURED A NEW THING: odd zones drift UPSTREAM of the site loop.**
+   13 of the 28 odd zones reach the site loop at a different draw index than the live
+   server, with descriptors of type 0xa/0xe — the class every earlier gate called
+   proven. Not new drift, **newly measured**: `gate_zone_tail` runs 28 EVEN zones,
+   emitter B *is* the even branch, and the odd-zone gates replay the captured draws
+   rather than deriving them. `RE_zone_site_loop.md` carries the recovered LIVE
+   site-loop start index for all 28 odd zones — diff the port's own pre-site-loop draw
+   count against that column and the drift is localised in one run.
    ▶ Still missing — **which emitter fires where** for the rest:
-   * **`Prop_settleOnTerrain` (`FUN_005287b0`, 1077 bytes) is now the top of the
-     queue** — it is the whole remaining dependency of the odd-parity site loop, and
-     its callees are `Chunk_getColumnAt` / `World_getBlockAt` / `__alldiv` / `ftol`
-     only, so it is pure finished-terrain with no rand and no captured state. Porting
-     it closes the site loop, the mat-38 rejection and the tree loop's rejection in
-     every odd zone.
    * descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined, and
      the search space is now much smaller. **Ruled out this session:** a missing
      pre-chain stage (the rand-site census is exhaustive), a missing terrain deform

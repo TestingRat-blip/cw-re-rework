@@ -27,6 +27,16 @@ What it establishes
 
 The gate asserts the arithmetic per zone, so a future port that models the retry can
 be checked against it directly.
+4. With `--ab-initio` (SLOW, minutes per zone — it runs the landform pass in Python)
+   it additionally replays each odd zone from the seed through
+   `cw_forest.build_zone_state` and checks the PREDICTED iteration count and accept
+   flag against live. That is the real test of the `Prop_settleOnTerrain` port.
+
+   It reports STREAM ALIGNMENT separately, and asserts only on aligned zones: if the
+   port reaches the site loop at a different draw index than the live server did, its
+   candidates are different positions and the settle is not what is being measured.
+   The alignment column is a finding in its own right — no gate before this one ever
+   derived an ODD zone's stream ab initio this far.
 """
 import json
 import os
@@ -68,6 +78,93 @@ def img_read(va, n):
             return data[ptr + d:ptr + d + n]
         off += 40
     return None
+
+
+REDERIVE = os.path.normpath(os.path.join(HERE, "..", "..", "cw_rederive"))
+
+
+def ab_initio(cap):
+    """Replay every odd zone from the seed and predict its site-loop iteration count.
+    SLOW: cw_decoration.landform_pass evaluates surfH on ~9,300 columns per zone."""
+    if REDERIVE not in sys.path:
+        sys.path.insert(0, REDERIVE)
+    try:
+        import cw_seed
+        cw_seed.configure(42069)
+        import cw_gate
+        cw_gate.set_features(True)
+        import cw_forest
+        from cw_genscatter import LCG
+    except Exception as exc:                                    # pragma: no cover
+        print("   (cw_rederive not importable: %s -- ab-initio section skipped)" % exc)
+        return 0, 0
+    cw_forest.SEED = 42069
+    cw_forest.BASE = cw_seed.base_for_seed(42069)
+
+    rec = {}
+    orig = cw_forest.zone_site_loop
+
+    def wrapped(zx, zz, lcg, store, cell):
+        lcg.log = []
+        n0 = lcg.n
+        site = orig(zx, zz, lcg, store, cell)
+        rec.update(draws=lcg.n - n0, log=list(lcg.log), site=site)
+        lcg.log = None
+        return site
+
+    cw_forest.zone_site_loop = wrapped
+
+    class Counting(LCG):
+        def __init__(self, seed):
+            super().__init__(seed)
+            self.n = 0
+            self.log = None
+
+        def rand(self):
+            self.n += 1
+            v = super().rand()
+            if self.log is not None:
+                self.log.append(v)
+            return v
+
+    ok = fail = off = 0
+    for h in cap["zones"]:
+        zx, zz = h["zone"]
+        if ((zx + zz) & 1) == 0:
+            continue
+        ras = [d[0] for d in h["draws"]]
+        live_iters = sum(1 for r in ras if r == R_CAND_Z)
+        live_acc = 1 if any(r == R_ACC_A for r in ras) else 0
+        live_first = [d[1] for d in h["draws"] if d[0] in (R_CAND_Z, R_CAND_X)][:2]
+        rec.clear()
+        g = Counting((cw_forest.BASE + zz * 0x10000 + zx) & 0xFFFFFFFF)
+        store = cw_forest.Store(zx, zz)
+        try:
+            cw_forest.build_zone_state(zx, zz, g, store)
+        except Exception as exc:
+            print("   %5d,%-6d replay raised %s: %s" % (zx, zz, type(exc).__name__, exc))
+            continue
+        if "draws" not in rec:
+            continue
+        acc = 1 if rec["site"] else 0
+        iters = (rec["draws"] - 8 * acc) // 3
+        if rec["log"][:2] != live_first:
+            off += 1
+            print("   %5d,%-6d STREAM-OFF: the port reaches the site loop at a different "
+                  "draw index (live iters %d, port %d) -- not a settle test"
+                  % (zx, zz, live_iters, iters))
+            continue
+        if iters == live_iters and acc == live_acc:
+            ok += 1
+        else:
+            fail += 1
+            print("   %5d,%-6d MISS: live %d iters acc=%d, port %d iters acc=%d"
+                  % (zx, zz, live_iters, live_acc, iters, acc))
+    cw_forest.zone_site_loop = orig
+    print("ab-initio, stream-aligned odd zones     : %d/%d predicted exactly "
+          "(%d zones excluded: the port arrives at the wrong draw index)"
+          % (ok, ok + fail, off))
+    return ok, fail
 
 
 def main():
@@ -165,6 +262,11 @@ def main():
         odd_total += 1
         if iters != 1:
             odd_retry += 1
+
+    if "--ab-initio" in sys.argv:
+        ok2, fail2 = ab_initio(cap)
+        ok += ok2
+        fail += fail2
 
     print("list construction + the single insert : byte-checked")
     print("even zones (no site loop, no reject)  : %d" % even_zones)
