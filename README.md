@@ -33,6 +33,7 @@ Docs/                  the detailed write-ups (one per stage)
   RE_hanging_decor.md            liana / cobwebs / chandelier -- gated; completes site+4
   RE_dungeon_loot.md             chest fills + scattered ground loot -- gated
   RE_dungeon_level_rank.md       where the dungeon's level and rarity byte come from
+  RE_zone_landform.md            the landform gate chain + the builder's SECOND land mask
   HANDOFF_PROMPT.md      session handoff: environment, rigs, lessons, next task
 tools/                 the pipeline (Ghidra scripts + Python passes)
 raw/                   intermediate JSONL + every audit trail
@@ -152,6 +153,7 @@ python tools/gate_dungeon_loot.py --all   # gate: chest fills + ground loot
 python tools/frida_dungeon_site.py [zx zz]   # live: the site record the assembler is given
 python tools/gate_dungeon_level_rank.py      # gate: the level formula + the rank bands
 python tools/gate_zone_tail.py               # gate: the zone-builder TAIL, mat-38 -> emitter B
+python tools/gate_zone_landform.py           # gate: the landform pass, ab initio from the zone seed
 python tools/disasm_range.py 0x51dc5d 0x51e5c7   # annotated x86 for any VA range (--cube for the client)
 ```
 

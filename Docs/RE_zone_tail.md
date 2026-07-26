@@ -50,7 +50,7 @@ port's own site comments; **positional** = ordering + per-zone counts only, i.e.
 
 | span | ret addrs | what | how | draws |
 |---|---|---|---|---|
-| `0x51a21a`-`0x51a50e` | 6 sites | LANDFORM 742-loop (0 draws on an Exact zone) | matched — `cw_decoration.landform_pass` names `0x51a266` / `0x51a37e` / `0x51a4ee` | 16,888 |
+| `0x51a21a`-`0x51a50e` | 6 sites | LANDFORM 742-loop (0 draws on an Exact zone) | **proven** — replayed ab initio, 16/16 values, `RE_zone_landform.md` | 16,888 |
 | `0x51aa86`-`0x51ac7b` | 4 sites | **the TYPE-6 KNOLL GRID** — see below | proven (ported; zone (32792,32748) pre-chain 22/22 ab initio) | 18 + 6 |
 | `0x51b08a`-`0x51b3dc` | 7 sites | GEN-SCATTER: count + 5/candidate + keep | proven (`rederive_zonescatter`) | 767 |
 | `0x51c09a` | 1 site | river/lake BED pass, 1 draw per bed column | positional — fires in only 8 of 56 zones, the water ones, at ~4,700 draws each | 37,476 |
@@ -206,6 +206,11 @@ Three corrections came out of it:
 
 ## Open, carried forward
 
+* ✅ **2026-07-26b: the LANDFORM predicate is fixed and descriptor type 6 is admitted**
+  (`RE_zone_landform.md`). It was not the predicate — `surfH` was short inside every
+  type-6/0xd cell because the builder keeps two land masks and both ports had one.
+  `rederive_campgrid` now replays **7 zones ab initio** (was 1) and `rederive_campstream`
+  is **4/4** (was 2/2). Types 7 / 0xb / 0xc / 0xf still drift.
 * **2026-07-26: the camp lattice IS reached, and doing so found the tail's real limit.**
   Nothing lies between emitter B (`0x51e774`, its dir draw) and the lattice's first roll
   (`0x51e952`) — the capture shows gap 0 in every firing zone, on both parities — so

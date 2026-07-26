@@ -230,6 +230,17 @@ Running out of order silently empties the islands/roles (it oscillates).
    `rederive_zonepropsb` structurally cannot cover it, because emitter B *is* the even
    branch. `forest_oracle.ZONES` now deliberately keeps an odd zone.
 
+21. **A deletion needs the same evidence bar as a claim, and about the RIGHT factor.**
+   `surfH`'s roughness term was `lm * roughness`; a feature deform belonging to `lm` was
+   deleted because *`roughness`* has no feature term. True premise, wrong factor, and it
+   left `surfH` wrong inside every type-6/0xd cell for months — invisible until a gate
+   finally entered one. See lesson 17/20b: the same class again, and it was the INPUT.
+22. **A module that caches seed-derived tables at import is a global-state bug waiting for
+   the first caller who changes the seed.** `re_landform` computed its `BASE` and octave
+   offsets once, for 444444; `cw_decoration.landform_pass` on seed 42069 used 444444's
+   terrain and nobody noticed, because every 42069 zone it had ever run on had zero
+   qualifying tiles. Re-sync at the entry point, not at import.
+
 7. **Both label sources are unreliable in opposite directions**: `CW_CONFIDENCE_XREF.md` had an
    off-by-one that filed proven worldgen as `lib_fn_*` (16 rows fixed); `cw_callgraph.py` gives
    game names to STL primitives. Always verify against the body.
@@ -262,6 +273,7 @@ closed — every emitter RE'd, every gate green, nothing captured that cannot be
 | the **prop-id table**, from the client's own init block | `RE_prop_ids.md` | 75 of 78 slots |
 | the zone builder's **TAIL** (mat-38 -> emitter B = the dense-forest tree pass; emitter B derived and reachable from the seed) | `RE_zone_tail.md` | 6,558 / 28 even zones |
 | the camp **DESCRIPTOR** — all seven fields from the seed, `+0x20` = the region mission counter | `RE_camp_descriptor.md` | 198 firings / 52 cells |
+| the **LANDFORM** pass gate chain + the builder's second land mask (type 6/0xd) | `RE_zone_landform.md` | 22 / 2 zones, 16 draws ab initio |
 
 Two structural facts worth carrying:
 
@@ -387,14 +399,48 @@ of it needs another capture session.
    the zone's own LCG stream and every stage's ABSOLUTE position becomes readable; that is
    what made a 22-draw pre-chain legible at a glance, and it is worth doing FIRST on any
    future capture from that rig.
+   ✅ **THE LANDFORM PREDICATE IS FIXED AND TYPE 6 IS ADMITTED (2026-07-26b).**
+   `Docs/RE_zone_landform.md`, gate `tools/gate_zone_landform.py` (22/22). It was never
+   the predicate: **`surfH` was short inside every type-6/0xd feature cell**, because the
+   zone builder keeps **two land masks** and both ports had one. `[ebp-0x12d8]` (what
+   `FUN_00523d80` returns) multiplies `term_a` in surfH and `inner`/`fb` in the predicate;
+   `[ebp-0x12f4]` — that value plus a deform the builder applies *itself* for types 6/0xd
+   (`0x518e6e`-`0x518fd3`) — multiplies the ROUGHNESS, so it feeds surfH's second term,
+   the slope weight (`0x51904e`) and the flat-rock weight (`0x5192fa`). Zone
+   (32795,32748)'s tallest relief came out **1.71 against a 2.0 cliff threshold**, so not
+   one of its 110 G1-G3 columns passed G4.
+   ★ **It was an UN-fix, not a discovery.** `CwColumn::roughBlend` carried exactly this
+   block until commit `08c8b67` deleted it as a "type-6/0xd roughness boost", reasoning
+   correctly that `cw_height.roughness` has no feature term — but the term was never in
+   the roughness, it is in the land mask that multiplies it. **"X has no feature term"
+   does not license deleting a feature term sitting next to X**; check which factor of
+   the product the evidence is about.
+   Proof: zone (32795,32748) replays its landform pass **16/16 draw values in order, ab
+   initio from the zone seed** (the predicate must pick exactly 15 of the ~9,300 columns
+   the stride samples), plus an independent live check — the same capture's settle
+   records put four columns of that cell on the known `surfH + 2` convention where the
+   old surfH was 3-5 blocks under. Blast radius measured: of `rederive_deform`'s 52,897
+   feature columns across 12 types, **1,252 moved and every one is type 6**.
+   Landed: `CwColumn::roughBlend` (+`SurfInfo::roughSum`/`specialLr`),
+   `CwZoneScatter::landformQualifies`, `CwWorldGen::dryColumnSurface`,
+   `cw_featuregrid.builder_lm_lr`, `cw_column`, `cw_forest`, `re_landform`. Result:
+   `zoneTreeExact` claims `{absent,0,2,6,0xa,0xe}`, **`rederive_campgrid` replays 7 zones
+   ab initio (was 1) = 273 live draw values, `rederive_campstream` 4/4 (was 2/2)**, whole
+   `cwgen_test` suite green.
+   ★ Also fixed in passing: **`re_landform` was pinned to seed 444444 at import** — its
+   `BASE`/octave tables were computed once, so a landform pass on any other world silently
+   used 444444's terrain. It never bit because every non-444444 zone the replay had run on
+   had zero qualifying tiles. It now re-syncs to `cw_seed.SEED` on every call, and
+   `zonescatter_oracle.py` (which rode on the import side effect) configures 444444
+   explicitly. **A module that caches seed-derived tables at import is a global-state bug
+   waiting for the first caller who changes the seed.**
    ▶ Still missing — **which emitter fires where** for the rest:
-   * **the LANDFORM predicate under-detects — this is the next task.**
-     `CwZoneScatter::landformQualifies` finds no qualifying tile in zone (32795,32748),
-     which live proves draws 15 + 1 in the landform loop, so cwgen calls it Exact when it
-     is not. It is not type-specific, and fixing it is what admits type 6 to
-     `zoneTreeExact` (6 of the 7 measured type-6 zones already replay exactly);
    * **`0x51ad52` tests `desc->type == 0xd`** and branches to another unexamined stage.
-     Type 0xd fires the camp too — expect the same class of drift, and the same one-run fix;
+     Type 0xd fires the camp too, and it is the other half of the land-mask deform's gate —
+     expect the same class of drift, and the same one-run fix;
+   * descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined. The
+     type-6 cause is the shape to look for: first a whole unmodelled stage (the knoll
+     grid), then a wrong terrain INPUT (this);
    * `Prop_settleOnTerrain` (a pure function of finished terrain — no captured state);
    * the rest of `camp_populator`: the arm tables and the coin branch are statable, and the
      waypoint draw COUNT is settled (3 iff the neighbour list is non-empty, `0x512dc1`);

@@ -143,10 +143,11 @@ a type-6 zone that skips it has every later stage reading the wrong draw. Full d
 
 Ported (`CwForest::buildZoneState`). Zone (32792,32748) is now **pre 22/22 and lattice
 1214/1214 ab initio**, and of the zones cwgen declines, **13 reproduce all 39 lattice
-draws** where 2 did before. `zoneTreeExact` still does not admit type 6, because one of
-the seven measured type-6 zones — (32795,32748) — remains 36 draws early for a *different*
-reason: it spends 16 draws in the LANDFORM loop that cwgen's landform predicate does not
-detect. That is not type-specific and is its own bug.
+draws** where 2 did before. `zoneTreeExact` did not yet admit type 6, because one of
+the seven measured type-6 zones — (32795,32748) — remained 36 draws early for a *different*
+reason: it spends 16 draws in the LANDFORM loop that cwgen's landform predicate did not
+detect. That was not type-specific and was its own bug — see the next section, which closes
+it and admits the type.
 
 ★ **The rig's draw index is not the zone's draw index.** `frida_zone_props2.py` stamps a
 process-global counter and does not hook the zone's `srand`, so its indices start
@@ -154,15 +155,38 @@ wherever the process was. Locating any recorded run in the zone's own LCG stream
 the offset; after that every stage's absolute position is readable, and a 22-draw
 pre-chain is legible at a glance.
 
+## The landform predicate — SOLVED the same day, and TYPE 6 IS ADMITTED
+
+✅ `RE_zone_landform.md`. The predicate did not under-detect: **`surfH` was short inside
+every type-6/0xd cell**, because the zone builder carries TWO land masks and both ports had
+one. `[ebp-0x12d8]` (FUN_00523d80's return) multiplies `term_a`, `inner` and `fb`;
+`[ebp-0x12f4]` — the same value plus a deform the builder applies itself for types 6/0xd —
+multiplies the roughness, hence surfH, hence the slope weight and the cover material. Zone
+(32795,32748)'s tallest relief came out 1.71 against a 2.0 threshold, so nothing qualified.
+Restored in `CwColumn::roughBlend` (it had been deleted as a "roughness boost") and added to
+`cw_featuregrid.builder_lm_lr`; that zone now replays its landform pass **16/16 ab initio**.
+
+`zoneTreeExact` now claims `{absent, 0, 2, 6, 0xa, 0xe}`. Measured, not assumed:
+
+| | before | after |
+|---|---|---|
+| `rederive_campgrid` zones replayed ab initio | 1 of 99 (39 draw values) | **7 of 99 (273 draw values)** |
+| `rederive_campstream` | 2/2 | **4/4** (zone (32792,32748), type 6, is now a claimed zone) |
+
+Every measured type-6 zone now either replays the live lattice exactly (32792,32748 /
+32792,32749 / 32793,32751 / 32794,32744 / 32795,32751 / 32713,32856) or is declined as a
+genuine Landform zone (32795,32748 / 32811,32742 / 32660,33021 — 16 / 575 / 1,368 draws).
+
+⚠ The table above says zone (32800,32799) has a type-6 descriptor. It is **type 7** — which
+is why cwgen still declines it and `rederive_forest` still reports it.
+
 ## Open
 
-1. **The landform predicate under-detects** (`CwZoneScatter::landformQualifies`): zone
-   (32795,32748) draws 15 + 1 in the landform loop live, and cwgen finds no qualifying
-   tile, so it calls the zone Exact when it is not. Fixing this is what admits type 6.
-2. **`0x51ad52` tests `desc->type == 0xd`** and branches to yet another stage — not
-   examined. Type 0xd fires the camp too, so expect the same class of drift there.
-3. Zones (32811,32742) and (32660,33021) spend 575 and 1,368 draws in the landform loop:
-   genuinely Landform zones, correctly declined, and not evidence of anything else.
+1. **`0x51ad52` tests `desc->type == 0xd`** and branches to yet another stage — not
+   examined. Type 0xd fires the camp too, and it is the other half of the land-mask deform's
+   gate, so expect the same class of drift there.
+2. Descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined; the type-6
+   cause (a whole unmodelled stage, then a wrong terrain input) is the shape to look for.
 2. **The populator itself** (`FUN_005104e0`) is now fully derivable in principle: the kind,
    the arm tables and the per-candidate coin branch are all statable. Two pieces are
    missing before it can be ported: `Prop_settleOnTerrain` (which decides where the 3x3
