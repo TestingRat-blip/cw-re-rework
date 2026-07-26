@@ -374,10 +374,27 @@ of it needs another capture session.
    so stepping it from the zone seed until a recorded draw run appears pins the absolute
    index. That is what turned "the port's draws are wrong" into "the port arrives 37 draws
    early", and what splits pre-chain drift from tree-loop drift.
+   ✅ **THE DRIFT IS SOLVED FOR TYPE 6 (same day).** The capture above was run at zone
+   (32792,32748) and answered in one shot: its whole live pre-chain is **22 draws**, and
+   the first nine are at `0x51aa86` — **a 3x3 grid of ground knolls gated on
+   `desc->type == 6`** (`0x51aa57`) that runs before everything else in the pre-chain and
+   that no port modelled and this repo's stage map never listed (it fired in 2 of the old
+   56 zones, where 18 draws read as noise). Decode in `RE_zone_tail.md`. Ported: that zone
+   is now **pre 22/22 and lattice 1214/1214 ab initio**, and of the zones cwgen declines
+   **13 reproduce all 39 lattice draws**, up from 2.
+   ★ **The rig's draw index is not the zone's** — `frida_zone_props2.py` stamps a
+   process-global counter and does not hook the zone's `srand`. Locate any recorded run in
+   the zone's own LCG stream and every stage's ABSOLUTE position becomes readable; that is
+   what made a 22-draw pre-chain legible at a glance, and it is worth doing FIRST on any
+   future capture from that rig.
    ▶ Still missing — **which emitter fires where** for the rest:
-   * **the descriptor drift above — this is the next task, and it needs one capture**: a
-     `frida_zone_props2.py` sweep at a couple of type-6/0xb zones names the diverging stage
-     from its per-draw return addresses in one run;
+   * **the LANDFORM predicate under-detects — this is the next task.**
+     `CwZoneScatter::landformQualifies` finds no qualifying tile in zone (32795,32748),
+     which live proves draws 15 + 1 in the landform loop, so cwgen calls it Exact when it
+     is not. It is not type-specific, and fixing it is what admits type 6 to
+     `zoneTreeExact` (6 of the 7 measured type-6 zones already replay exactly);
+   * **`0x51ad52` tests `desc->type == 0xd`** and branches to another unexamined stage.
+     Type 0xd fires the camp too — expect the same class of drift, and the same one-run fix;
    * `Prop_settleOnTerrain` (a pure function of finished terrain — no captured state);
    * the rest of `camp_populator`: the arm tables and the coin branch are statable, and the
      waypoint draw COUNT is settled (3 iff the neighbour list is non-empty, `0x512dc1`);
