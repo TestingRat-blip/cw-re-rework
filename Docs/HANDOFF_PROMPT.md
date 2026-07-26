@@ -248,6 +248,21 @@ Running out of order silently empties the islands/roles (it oscillates).
    only surfaced when the gate's zone set finally reached a zone where the real boost was
    False. Write the import, not the guard; if a fallback is genuinely needed, make it
    loud.
+25. **A list you build yourself is an input you invented — check that the binary ever
+   fills it.** Both ports seeded the zone builder's site list with every feature-cell
+   centre in the 3x3 region neighbourhood. The list (`[ebp-0x1378]`) is `_Buynode`'d
+   with `_Mysize = 0` and gets exactly ONE insert in the whole 19KB body: the
+   odd-parity accepted site. The mat-38 rejection had been "proven" over 56 zones with
+   the centres in it, because in all 56 no rock landed within 40 blocks of one; the
+   tree loop's 14x14 grid finally put a candidate there and the live server rejected
+   nothing. **One `find` over the frame slot's disp32 settles who writes a list.**
+26. **When a replay models a CALLEE as a constant, that is a branch too.** The site
+   loop calls `FUN_004e0740` and both ports encoded "it accepts, for 11 draws". It
+   retries up to ten times (3 draws each) and sometimes accepts nothing — true in 10 of
+   28 odd zones. Nothing looked wrong because the loop is odd-parity and nearly every
+   gate in this programme runs even zones. Fourth instance of the same shape
+   (flat/slope, even/odd, absent/present descriptor, and now callee-as-constant): the
+   pass under test was fine and the branch that never ran was not.
 24. **Decoding a stage tells you what it CANNOT do, too, and that is worth writing down.**
    `0x51ad52` was carried for three handoffs as the likely cause of the type-0xd drift.
    Reading it settles that it spends zero draws and stamps nothing — so it is ruled out
@@ -288,6 +303,7 @@ closed — every emitter RE'd, every gate green, nothing captured that cannot be
 | the camp **DESCRIPTOR** — all seven fields from the seed, `+0x20` = the region mission counter | `RE_camp_descriptor.md` | 198 firings / 52 cells |
 | the **LANDFORM** pass gate chain + the builder's second land mask (type 6/0xd) | `RE_zone_landform.md` | 22 / 2 zones, 16 draws ab initio |
 | the pre-chain's other **TYPE-GATED STAGES** (0xd/4, 0xb, 0xc) + the gen-scatter's site-kind guard | `RE_zone_tail.md` | 50 byte/capture checks |
+| the **ODD-PARITY SITE LOOP** + the builder's site list (it holds one entry, never the feature cells) | `RE_zone_site_loop.md` | 228 checks, 56 zones |
 
 Two structural facts worth carrying:
 
@@ -493,11 +509,58 @@ of it needs another capture session.
    which turned an ambiguous tree mismatch into `pre{cpp 62 / py 112}` — pre-chain vs tree
    loop, in one line. `rederive_forest` **6/6 over 8 zones / 245 trees**, and the two zones
    cwgen declines both replay tree-for-tree under `force`.
+   ✅ **THE SITE LIST WAS INVENTED, AND THE SITE LOOP RETRIES (2026-07-26d).**
+   `Docs/RE_zone_site_loop.md`, gate `tools/gate_zone_siteloop.py` (**228/228**).
+   Two things, both live-proven, found entirely offline by mining the existing captures.
+   (1) The list that the type-6 knoll grid, the mat-38 loop and the tree loop all walk
+   is one `std::list` at `[ebp-0x1378]`; it is `_Buynode`'d with `_Mysize = 0` at
+   `0x51a9a8` and the **only** insert in the whole `0x518630`-`0x522000` body is at
+   `0x51cd56`, when the odd-parity site loop accepts. Both ports had been seeding it
+   with every feature-cell centre in the 3x3 region neighbourhood. Live: 28/28 even
+   zones reject no tree candidate — including (33020,32660), the one zone of the 56
+   that holds its feature cell's CENTRE. Removed from `CwZoneScatter` (`gatherSites()`
+   deleted), `CwForest`, `cw_forest.py` and `cw_decoration.py`; every gate stayed
+   green, which is the point — it had never mattered anywhere a gate looked.
+   ★ **DURABLE: a list you build yourself is an input you invented.**
+   (2) `FUN_004e0740` spends 1 draw (`rand()&3`, `0x4e0825`) and then sweeps a 3x3
+   anchor grid through `Prop_settleOnTerrain`; if nothing settles it returns false and
+   the caller redraws, **up to 10 times** — 3 draws per failed iteration, 11 on accept.
+   Both ports encode "accepts on iteration 1". Measured against the sweep: **10 of the
+   28 odd zones retry** (2, 3, 4, 5, 6 and 10 iterations) and **2 accept nothing at
+   all**, leaving the list empty. The arithmetic `draws == 3*iters + 8*accepted` holds
+   in all 28. ★ **DURABLE: a replay that models a CALLEE as a constant has an
+   unmodelled branch.**
    ▶ Still missing — **which emitter fires where** for the rest:
-   * descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined. The
-     type-6 cause was first a whole unmodelled stage (the knoll grid) and then a wrong
-     terrain INPUT — the pre-chain is now exhaustively censused, so **look at the inputs**;
-   * `Prop_settleOnTerrain` (a pure function of finished terrain — no captured state);
+   * **`Prop_settleOnTerrain` (`FUN_005287b0`, 1077 bytes) is now the top of the
+     queue** — it is the whole remaining dependency of the odd-parity site loop, and
+     its callees are `Chunk_getColumnAt` / `World_getBlockAt` / `__alldiv` / `ftol`
+     only, so it is pure finished-terrain with no rand and no captured state. Porting
+     it closes the site loop, the mat-38 rejection and the tree loop's rejection in
+     every odd zone.
+   * descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined, and
+     the search space is now much smaller. **Ruled out this session:** a missing
+     pre-chain stage (the rand-site census is exhaustive), a missing terrain deform
+     (the ONLY descriptor-type gate in the whole column prologue `0x518630`-`0x51a300`
+     is the `6`/`0xd` pair already ported; `World_objectFalloffWeight`'s 0xb/0xc/0xe/0xd
+     special cases and `base_height`'s type-0xb ocean-repulsion exclusion are both
+     already in the port), and a wrong `surfH` — see the free live terrain probe below.
+     **The live candidate is the site-loop retry**: 5 of the 6 drifting zones are odd
+     parity, and a misplaced site moves ~15 of the tree loop's 196 candidates between
+     the 2-draw and the 6+-draw path, i.e. ±60 draws in either direction before any
+     tree-builder cost — which is the observed magnitude AND the observed
+     bidirectionality. Not proven; it is the thing to test first, and porting
+     `0x5287b0` is how.
+   * ★ **A FREE LIVE TERRAIN PROBE, no capture session needed.** Every camp-capture hit
+     carries a `cand` vector — the accepted lattice cells as `FUN_005104e0` sees them,
+     `0x18` bytes each = int64 `x16`, `z16`, `y16`. `y16 >> 16` is the finished world's
+     surface at a known column, with no rand stream involved. Over 27 zones and types
+     3/4/6/7/0xf the port sits on the known `surfH + 2` convention (the outliers all
+     read HIGH — the candidate settled on a knoll, a rock or a tree). Type-0xf zone
+     (32843,32817) samples terrain at **-19/-31/-33** and matches at +2, so deeply
+     negative terrain is REAL — two of the drifting zones sit at surfH ~ -85 and that
+     looks like a port bug until this is checked. (The tree loop's own `top < 0` bail
+     is real too: `test ecx,ecx / js` at `0x51e462`.) Use this before asking for
+     another live session.
    * the rest of `camp_populator`: the arm tables and the coin branch are statable, and the
      waypoint draw COUNT is settled (3 iff the neighbour list is non-empty, `0x512dc1`);
      the neighbour predicate itself is still read statically;
@@ -537,6 +600,10 @@ Smaller open threads, if you want a short task:
   game — the engine deliberately diverges and draws it anyway.
 - The three **gate-suite problems** in `RatForge/docs/CW_RE_MASTER_INDEX.md` §7 (split
   goldens, 23 probably-stale failures, `golden_rederive` has no manifest) are still untriaged.
+  One of them is concrete and reproducible today: **`tools/gate_town_props.py` FAILS**
+  — "every record lands in a plot of the derived lattice: 19 of 4579". It imports none
+  of the zone-scatter modules, so it is independent of the 2026-07-26 work; it wants
+  its own triage against the `CwTown` lattice rebuild (RatForge `14ab5f5`).
 
 **Gate data is on disk** — every `raw/*_capture*.json` in this repo, with the rig that made it
 named in the matching `Docs/RE_*.md`. Re-run any gate with `python tools/gate_<name>.py`; they

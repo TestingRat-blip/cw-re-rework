@@ -60,7 +60,7 @@ port's own site comments; **positional** = ordering + per-zone counts only, i.e.
 | `0x51c09a` | 1 site | river/lake BED pass, 1 draw per bed column | positional — fires in only 8 of 56 zones, the water ones, at ~4,700 draws each | 37,476 |
 | `0x51c313`-`0x51c341` | 3 sites | a 3-draw-per-entry consumer, same 8 zones (mat6) | positional | 603 |
 | `0x51c6a5`-`0x51c6db` | 3 sites | the BIGROCK consumer, 3 draws per list entry | matched — `cw_forest.build_zone_state` spends exactly 3 per bigrock | 387 |
-| `0x51cbc1`/`0x51cbfc` | 2 | the odd-parity retry loop (Y first, then X) | proven (`rederive_zoneprops`) | 148 |
+| `0x51cbc1`/`0x51cbfc` | 2 | the odd-parity retry loop (Y first, then X) — **it really does retry, 1-10 times**, `RE_zone_site_loop.md` | proven (`rederive_zoneprops`, `gate_zone_siteloop`) | 148 |
 | `0x51cd9b`-`0x51ceb9` | 6 sites | MAT-38: count + 5/rock | proven (`rederive_zonescatter`) | 1,760 |
 | `0x51d452` | — | town builder (site kind 1/5) | proven (`RE_town_props.md`) | — |
 | `0x51d46b`-`0x51dbf5` | — | emitter A, the runestone circle (site kind 4) | proven (`RE_zone_emitters_ac.md`) | — |

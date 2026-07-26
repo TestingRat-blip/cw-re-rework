@@ -196,11 +196,21 @@ pre-chain stage, because the rand-site census of the whole pre-chain is exhausti
 
 ## Open
 
-1. **`0x51ad52` tests `desc->type == 0xd`** and branches to yet another stage — not
-   examined. Type 0xd fires the camp too, and it is the other half of the land-mask deform's
-   gate, so expect the same class of drift there.
-2. Descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined; the type-6
-   cause (a whole unmodelled stage, then a wrong terrain input) is the shape to look for.
+1. ✅ **`0x51ad52` is read and closed** (2026-07-26c, `RE_zone_tail.md`): types 0xd **and**
+   4, centre-zone only, **zero rand sites**. It cannot move the stream.
+2. Descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined.
+   **What it is not** (2026-07-26d, `RE_zone_site_loop.md`): not a missing pre-chain
+   stage (the rand-site census is exhaustive), not a missing terrain deform (the only
+   descriptor-type gate in the whole column prologue `0x518630`-`0x51a300` is the
+   `6`/`0xd` pair already ported), and not a wrong `surfH` — the camp captures' own
+   `cand` vectors are a free live surface probe and the port lands on the `surfH + 2`
+   convention across types 3/4/6/7/0xf, negative terrain included.
+   **The live candidate with the right shape** is the odd-parity site loop: it retries
+   up to ten times and both ports assume one iteration, which is wrong in 10 of the 28
+   odd zones measured. A misplaced site moves ~15 of the tree loop's 196 candidates
+   between the 2-draw and the 6+-draw path, i.e. ±60 draws in **either** direction
+   before any tree-builder cost — and 5 of the 6 drifting zones are odd parity. Closing
+   it needs `Prop_settleOnTerrain` (`FUN_005287b0`), which is pure terrain.
 2. **The populator itself** (`FUN_005104e0`) is now fully derivable in principle: the kind,
    the arm tables and the per-candidate coin branch are all statable. Two pieces are
    missing before it can be ported: `Prop_settleOnTerrain` (which decides where the 3x3
