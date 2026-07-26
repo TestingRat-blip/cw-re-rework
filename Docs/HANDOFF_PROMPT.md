@@ -217,6 +217,14 @@ Running out of order silently empties the islands/roles (it oscillates).
    port, never port == game.**
 19. **When a fix lands in a duplicated routine, grep for the duplicate.** `%0xa0 + 0x30`
    had four copies; three got the fix. One grep would have found the fourth.
+20b. **A replay proven in one class of world has not been proven in the class it never
+   ran in.** The zone-stream replay was believed exact everywhere except four descriptor
+   types. It had only ever RUN where the descriptor was absent or type 0/0xa/0xe, because
+   that is what the earlier captures happened to cover; the first gate that entered a
+   type-6 zone found it 37 draws out. Same shape as 17 (flat vs slope) and 20 (even vs
+   odd) — three times now, always the reachability or the inputs, never the pass itself.
+   Before trusting a green gate, ask which worlds it never visited.
+
 20. **A parity-gated bug needs a gate that runs BOTH branches.** The site loop is
    odd-parity only, and every gate added in this programme happened to be even-parity —
    `rederive_zonepropsb` structurally cannot cover it, because emitter B *is* the even
@@ -253,6 +261,7 @@ closed — every emitter RE'd, every gate green, nothing captured that cannot be
 | the per-zone **site-kind grid**, from the seed | `RE_site_kind_grid.md` | 590 / 118 regions |
 | the **prop-id table**, from the client's own init block | `RE_prop_ids.md` | 75 of 78 slots |
 | the zone builder's **TAIL** (mat-38 -> emitter B = the dense-forest tree pass; emitter B derived and reachable from the seed) | `RE_zone_tail.md` | 6,558 / 28 even zones |
+| the camp **DESCRIPTOR** — all seven fields from the seed, `+0x20` = the region mission counter | `RE_camp_descriptor.md` | 198 firings / 52 cells |
 
 Two structural facts worth carrying:
 
@@ -339,10 +348,40 @@ of it needs another capture session.
    READS, not in the tree pass.** (2) the temperature probe is at the cell origin **+8**,
    not +2, in both axes; the climate field is flat over 6 blocks so the live capture
    cannot tell the two apart — only the disassembly can.
-   ▶ Still missing once that lands — **which emitter fires where** for the rest:
+   ✅ **THE CAMP DESCRIPTOR IS DERIVED (2026-07-26), and the grid is ported.** The camp
+   populator picks its KIND with `desc[+0x20] % len(kindList)` and spends no rand doing
+   it, so that one field decided everything a camp is — and both camp gates read it out
+   of the capture. It is the region's **mission counter**: seeded by the region's third
+   setup draw (`rand()%10000`, which `cw_featuregen` already modelled as `local_2ac`) and
+   advanced by `1 + rand()%0x32` per popped Loop-C candidate, each cell keeping the value
+   from BEFORE its own advance. `+0x24` is the cell level, `+0x28` the count sub-switch.
+   **52/52 cells, 198/198 firings.** Landed: `Docs/RE_camp_descriptor.md`, the two Python
+   gates now derive the descriptor (13,082+3,861 and 3,138 checks), and in the engine
+   `FeatureCell::mission` + `CwZoneCamp` (`rederive_campdesc` **693/693**,
+   `rederive_campgrid` **15,486/15,486**, `rederive_campstream` **2/2**).
+   ★ **When a derived quantity is off by a per-scope constant, search that scope's own
+   rand log for the constant before theorising about global state.** The per-region base
+   looked like a session-global counter for an hour; it is draw #1 of the region stream.
+   ⚠ **AND IT FOUND THE THING THAT NOW BLOCKS THE WHOLE CAMP PATH.** Reaching the lattice
+   ab initio needs the zone replay, and **the replay drifts in zones whose descriptor is a
+   present feature cell** — 12 of 14 measured, 2 to 629 draws, in BOTH directions, types
+   6/7/0xb/0xc/0xf. Every zone the replay was ever proven on has a descriptor of type
+   0/0xa/0xe (or type 2, now proven by two zones). A camp only fires in the other classes,
+   so **98 of 99 live firings are unreachable** and the populator cannot be ported until
+   this is fixed. `zoneTreeExact` was narrowed to what is proven; `cw_forest.py` still uses
+   the wider rule, so `rederive_forest` now REPORTS the one zone the C++ declines.
+   ★ The live stream indices are **recovered, not captured**: msvcrt's rand is a plain LCG,
+   so stepping it from the zone seed until a recorded draw run appears pins the absolute
+   index. That is what turned "the port's draws are wrong" into "the port arrives 37 draws
+   early", and what splits pre-chain drift from tree-loop drift.
+   ▶ Still missing — **which emitter fires where** for the rest:
+   * **the descriptor drift above — this is the next task, and it needs one capture**: a
+     `frida_zone_props2.py` sweep at a couple of type-6/0xb zones names the diverging stage
+     from its per-draw return addresses in one run;
    * `Prop_settleOnTerrain` (a pure function of finished terrain — no captured state);
-   * `camp_populator` + its candidate grid (the grid is pure arithmetic plus one `rand()` per
-     qualifying cell — 39 per firing zone, always);
+   * the rest of `camp_populator`: the arm tables and the coin branch are statable, and the
+     waypoint draw COUNT is settled (3 iff the neighbour list is non-empty, `0x512dc1`);
+     the neighbour predicate itself is still read statically;
    * the town chain (its **plot heights are region-cache-blocked**, so the verdict rule is
      statable but not seed-reproducible — port what is derivable and stop there);
    * emitters A and C, and the site-kind grid they gate on.
