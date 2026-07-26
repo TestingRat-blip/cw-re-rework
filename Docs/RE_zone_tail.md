@@ -51,6 +51,7 @@ port's own site comments; **positional** = ordering + per-zone counts only, i.e.
 | span | ret addrs | what | how | draws |
 |---|---|---|---|---|
 | `0x51a21a`-`0x51a50e` | 6 sites | LANDFORM 742-loop (0 draws on an Exact zone) | matched — `cw_decoration.landform_pass` names `0x51a266` / `0x51a37e` / `0x51a4ee` | 16,888 |
+| `0x51aa86`-`0x51ac7b` | 4 sites | **the TYPE-6 KNOLL GRID** — see below | proven (ported; zone (32792,32748) pre-chain 22/22 ab initio) | 18 + 6 |
 | `0x51b08a`-`0x51b3dc` | 7 sites | GEN-SCATTER: count + 5/candidate + keep | proven (`rederive_zonescatter`) | 767 |
 | `0x51c09a` | 1 site | river/lake BED pass, 1 draw per bed column | positional — fires in only 8 of 56 zones, the water ones, at ~4,700 draws each | 37,476 |
 | `0x51c313`-`0x51c341` | 3 sites | a 3-draw-per-entry consumer, same 8 zones (mat6) | positional | 603 |
@@ -69,6 +70,61 @@ The genuinely enormous counts (`0x520183` alone: 599,782 draws over 56 zones —
 per zone, i.e. roughly one per six of a zone's 65,536 columns) are in that last row.
 Whatever it is, it is **downstream of emitter C**, so it never blocked anything. It was
 the tree builder, not this, that made the gap look bottomless.
+
+## The TYPE-6 knoll grid, `0x51aa57`-`0x51ad4c` (found 2026-07-26)
+
+This stage is why the table above was not the whole pre-chain. It is **gated on the
+descriptor type alone** — `cmp dword [ecx+0x18], 6` at `0x51aa57` — so it fires in no
+zone the 56-zone sweep covered except two, where it read as noise (18 draws over 2 zones)
+and went unlabelled. It runs **before everything else in the pre-chain**, so a type-6 zone
+that misses it has every later stage reading the wrong draw.
+
+```
+if (desc->type != 6) skip                                        0x51aa57
+for i in {0, 0x100, 0x200}:            # i += 0x100, < 0x300     0x51ad30
+  for j in {0, 0x100, 0x200}:                                    0x51ad14
+    if ((rand() & 3) == 0) continue                              0x51aa86
+    X = zoneX*256 + i/3 + 42 ;  Z = zoneZ*256 + j/3 + 42         # 85-block spacing
+    d = 1 - World_objectFalloffWeight(desc, X<<16, Z<<16)
+    if (d <= 0) continue                                         0x51ab5d
+    if (d*d < 0.5) continue          # well INSIDE the feature    0x51ab72
+    for each entity in the site list:                            0x51ab90-0x51ac41
+        if dist^2 < 6400 (80 blocks): continue the grid loop
+    rx = rand()%10 + 20                                          0x51ac47
+    rz = rand()%10 + 20                                          0x51ac5e
+    rv = (rand()&15) + 20                                        0x51ac75
+    if dist^2 to the world spawn < 3600: continue   # AFTER the draws -> stream-neutral
+    lib_fn_4ffbf0(X, Z, colBase+colCount, rx, rz, rv)   # the ground KNOLL builder
+```
+
+So a type-6 zone spends **nine draws unconditionally** plus three per surviving cell —
+9 + 0 in zone (32792,32748), 9 + 3 in (32811,32742), (32660,33021) and (32795,32748).
+
+The proximity test is done in **16.16 with the entity's fraction**, not on block
+coordinates: each axis difference is `(int64) -> f32`, scaled by `[0x55869c]` = 2^-16,
+squared and summed in f32. Zone (32795,32748) sits 89 blocks from its cell centre, close
+enough that dropping the fraction would flip a cell and cost three draws.
+
+### What it cost, and how it was found
+
+The camp lattice sits ~1,200 draws downstream, and `rederive_campgrid` had cwgen landing
+**37 draws late** there in zone (32792,32748) — with 12 of 14 feature-descriptor zones off
+in both directions (`RE_camp_descriptor.md`). One `frida_zone_props2.py` run at that zone
+answered it: its whole live pre-chain is **22 draws — 9 here, 7 gen-scatter, 6 mat-38** —
+and the histogram of return addresses in zone-stream coordinates showed `0x51aa86` at
+index 0, a site no port modelled. With the stage ported, that zone is **pre 22/22 and
+lattice 1214/1214 ab initio**, and of the zones cwgen still declines, **13 now reproduce
+all 39 lattice draws** (was 2).
+
+★ **The rig's own index is not the zone's index.** `frida_zone_props2.py` stamps a
+process-global draw counter, and the zone's `srand` is not hooked, so the recorded indices
+start wherever the process happened to be. Locating one recorded run in the zone's own LCG
+stream (`base + zz*0x10000 + zx`) recovers the offset — after which every stage's *absolute*
+position is readable, which is what made a 22-draw pre-chain legible at a glance.
+
+⚠ `0x51ad52` immediately after this tests `desc->type == 0xd` and branches to another
+stage. **Not examined.** Type 0xd also fires the camp, so it is the obvious next candidate
+for a drift of the same kind.
 
 ## The tree loop, `0x51dc5d`-`0x51e5c7`
 

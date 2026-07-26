@@ -132,12 +132,37 @@ this programme: flat ground vs slope (`RE_zone_tail.md`), even vs odd parity (sa
 now no-feature vs feature descriptor. Each time the pass under test was fine and its
 INPUTS or its reachability were not.
 
+## The drift, solved for type 6 (2026-07-26, same day)
+
+The sweep suggested below was run, at zone (32792,32748), and answered in one shot: its
+whole live pre-chain is **22 draws**, and the first nine of them are at `0x51aa86` — a
+site no port modelled. It is a **type-6-only 3×3 grid of ground knolls**, gated on
+`desc->type == 6` at `0x51aa57` and running before everything else in the pre-chain, so
+a type-6 zone that skips it has every later stage reading the wrong draw. Full decode in
+`RE_zone_tail.md`.
+
+Ported (`CwForest::buildZoneState`). Zone (32792,32748) is now **pre 22/22 and lattice
+1214/1214 ab initio**, and of the zones cwgen declines, **13 reproduce all 39 lattice
+draws** where 2 did before. `zoneTreeExact` still does not admit type 6, because one of
+the seven measured type-6 zones — (32795,32748) — remains 36 draws early for a *different*
+reason: it spends 16 draws in the LANDFORM loop that cwgen's landform predicate does not
+detect. That is not type-specific and is its own bug.
+
+★ **The rig's draw index is not the zone's draw index.** `frida_zone_props2.py` stamps a
+process-global counter and does not hook the zone's `srand`, so its indices start
+wherever the process was. Locating any recorded run in the zone's own LCG stream recovers
+the offset; after that every stage's absolute position is readable, and a 22-draw
+pre-chain is legible at a glance.
+
 ## Open
 
-1. **The drift above.** The next step is a `frida_zone_props2.py` sweep aimed at a couple
-   of type-6/0xb zones: its per-draw return addresses would say immediately which stage
-   of the pre-chain or which tree candidate diverges. Nothing else in the camp path can
-   be proven ab initio until it is fixed — 98 of 99 live firings are unreachable.
+1. **The landform predicate under-detects** (`CwZoneScatter::landformQualifies`): zone
+   (32795,32748) draws 15 + 1 in the landform loop live, and cwgen finds no qualifying
+   tile, so it calls the zone Exact when it is not. Fixing this is what admits type 6.
+2. **`0x51ad52` tests `desc->type == 0xd`** and branches to yet another stage — not
+   examined. Type 0xd fires the camp too, so expect the same class of drift there.
+3. Zones (32811,32742) and (32660,33021) spend 575 and 1,368 draws in the landform loop:
+   genuinely Landform zones, correctly declined, and not evidence of anything else.
 2. **The populator itself** (`FUN_005104e0`) is now fully derivable in principle: the kind,
    the arm tables and the per-candidate coin branch are all statable. Two pieces are
    missing before it can be ported: `Prop_settleOnTerrain` (which decides where the 3x3
