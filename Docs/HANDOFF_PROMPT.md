@@ -777,9 +777,38 @@ of it needs another capture session.
      deltas): its only observable is whether the list is empty, so the thresholds are
      read statically and only the empty/non-empty split is live-proven (141/141 draws,
      47 of 48 creature branches non-empty). Kind **7** still never came up in 99 firings.
-   * **the camp's RENDERING half.** `CwZoneCamp` produces prop records; `ZoneProps.cpp`
-     turns the odd-parity site props into instances but not these. Same shape of work as
-     RatForge `b44fdcc`, and the sweep above says it is worth ~7 props per 144 zones.
+   * ~~the camp's RENDERING half~~ — **DONE (2026-07-27b).** `vx::columnCampProps`
+     (`src/worldgen/ZoneProps.cpp`), wired into `VegScatter` beside the odd-parity
+     campsites, cached per zone like `zoneStoneBlobs` because `zoneCampPopulate` replays
+     the whole zone stream and 64 columns touch each one. The five camp ids are the same
+     five the campsite emitter uses, so they share `zonePropModelName`. `--proptest` covers
+     it: it asks the populator which zones emit, then requires the render path to return
+     every record for its owning column (**5/5**, one emitting zone in a 32x32 sweep).
+     ★ **Unlike the campsite path it does NOT re-settle.** `columnZoneProps` re-derives Y
+     from the bare surface; the camp records already carry the `Y16`
+     `Prop_settleOnTerrain` left against the zone builder's own store, and that field is
+     gate-proven against the live server (`rederive_camppop`), so re-settling would replace
+     the game's answer with a worse one.
+     ⚠ **AND IT MEASURED A REAL ENGINE GAP, in the INPUT again (lesson 17/20b/21).**
+     Probing the one emitting zone: every candidate sits at exactly `storeTop + 1`, and
+     while 12 of its 17 columns have `storeTop == bare surface + 1`, the other **5 carry
+     +3/+8/+24/+37/+45 blocks of pre-chain stamp**. The engine grows its own knolls and
+     rocks from `ForestBlobs` / `StoneBlobs`, whose PLACEMENT is explicitly faithful and
+     not bit-exact — so the server's bump and the engine's are not in the same place and a
+     camp prop can end up over flat ground. **The fix is to make the engine's stamps
+     bit-exact, never to move the prop.**
+     ★ **Two wrong readings on the way, both caught by measuring instead of reasoning.**
+     First "the props stand on tree canopies" — falsified in one run by streaming the
+     zone's tree voxels (`treeTop=none` under all five). Then "the engine does not render
+     the stamps at all", read off `Store`'s comment that only tree fills reach the render
+     sink — **wrong, because knolls and rocks reach the mesher by a different path
+     entirely** (`ForestBlobs`/`StoneBlobs` stamp them into the terrain chunks). Neither
+     bound decides it: bare terrain under-estimates and the per-column blob max is a 32x32
+     over-estimate that reads these same five as 17-19 blocks BELOW the top. So
+     `--proptest` reports the bare-terrain delta as an explicit **upper bound on the
+     float**, not a float count. ★ **DURABLE: a comment about one render path is not a
+     statement about all of them — grep for the other consumers before concluding a thing
+     is not drawn.**
    * the town chain (its **plot heights are region-cache-blocked**, so the verdict rule is
      statable but not seed-reproducible — port what is derivable and stop there);
    * emitters A and C, and the site-kind grid they gate on.

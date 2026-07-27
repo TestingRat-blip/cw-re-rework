@@ -227,6 +227,36 @@ and reachability stays measured separately by `rederive_campgrid`.
 It is not unreachable in general, just rare: a 24×24 sweep on seed 42069 has 144 zones take
 the camp path, **20 replayable, 4 of those emitting** — 7 props and 18 spawns.
 
+### Rendering (RatForge, 2026-07-27b)
+
+`vx::columnCampProps` (`src/worldgen/ZoneProps.cpp`) turns the records into render
+instances, wired into `VegScatter` beside the odd-parity campsites and cached per zone
+(`zoneCampPopulate` replays the whole zone stream; 64 columns touch each zone). The five
+ids the populator writes — `0x41` anchor plus `0x10`/`0x0c`/`0x45`/`0x42` — are the same
+five the campsite emitter uses, so they share one type→model table.
+
+**It does not re-settle.** The record already carries the `Y16` `Prop_settleOnTerrain` left
+against the zone builder's own store, and that field is proven field-by-field against the
+live server; re-deriving it from the bare surface (which is what `columnZoneProps` does for
+the campsite path) would replace the game's answer with a worse one.
+
+⚠ **A camp prop can therefore settle on ground the engine does not reproduce.** Probing the
+one emitting zone of a 32×32 sweep on seed 444444: every candidate sits at exactly
+`storeTop + 1`; 12 of its 17 columns have `storeTop == bare surface + 1`, and the other
+**5 carry +3/+8/+24/+37/+45 blocks of pre-chain stamp**. The engine grows its own knolls
+and rocks from `ForestBlobs`/`StoneBlobs`, whose *placement* is explicitly faithful rather
+than bit-exact, so the server's bump and the engine's are not in the same place. The fix is
+to make the engine's stamps bit-exact — not to move the prop.
+
+Two wrong readings were caught by measuring on the way here, both worth remembering:
+"the props stand on tree canopies" (falsified in one run — streaming the zone's tree voxels
+reports none under any of the five), and "the engine renders none of the stamps", read off
+`Store`'s note that only tree fills reach its render sink — **wrong, because knolls and
+rocks reach the mesher through a different path entirely.** Neither height bound decides the
+question: bare terrain under-estimates, and the per-column blob max is a 32×32 over-estimate
+that reads the same five records as 17–19 blocks *below* the top. `--proptest` therefore
+reports the bare-terrain delta as an explicit **upper bound on the float**, not a count.
+
 ## ⚠ `ftol` is a truncation, and both ports had it as a rounding
 
 `FUN_0054a946` is MSVC's `_ftol2`: `fistp` rounds to nearest, then the function subtracts
