@@ -329,3 +329,45 @@ picks this up:
 Diff the port's own pre-site-loop draw count against this column and the upstream drift
 is localised in one run — the same recovery trick that made the 22-draw type-6
 pre-chain legible.
+
+---
+
+## ✅ RESOLVED (2026-07-26f): it was the landform loop's ORDER, and a bed pass
+
+The upstream drift above is closed for 9 of the 13 zones and localised exactly for the
+other 4. Full decode in `RE_zone_landform.md`; gate `tools/gate_zone_landform_order.py`
+(**187/187**). Neither cause is downstream of the site loop, and neither is new RE of the
+site loop itself.
+
+**1. The landform 742-loop iterates X-outer, Z-inner.** `cw_decoration.landform_pass` ran
+it transposed. That does not change the qualifying-tile SET — so it does not change the
+keep-roll count, and every gate that counted draws stayed green — but it changes which
+tile each roll lands on, and a tile that keeps runs a switch whose cases 0/1 spend inner
+draws gated on that tile's own `surf <= sh`. Live, over the 18 odd zones that reach it:
+**161/161 decisions predicted on the binary's order, 106/161 on the port's** — worse than
+the 112/161 you get by always answering "no", which is what said the rows were misaligned
+rather than the formula wrong.
+
+**2. The river/lake bed pass (`0x51c09a`) is not modelled at all** — 1 draw per bed column,
+`rand() % 200`, appending to the mat6 list that `0x51c313`-`0x51c341` then consumes 3 draws
+per entry. `% 200` is now pinned from the capture: the count of recorded bed draws
+divisible by 200 equals the observed append count in **all 8 zones that run the pass**
+(18, 19, 12, 2, 4, 69, 74, 3), which is the arithmetic settled without a server.
+
+Measured over the 28 odd zones, per stage, in the zone's own LCG coordinates:
+
+| | before | after |
+|---|---|---|
+| reach the site loop at the live draw index | 15 | **24** |
+| still drift | 13 | **4** |
+
+and the four are exactly the bed-pass zones — (32790,32791), (32790,32795), (32791,32792),
+(32610,33111) — each drifting by precisely its own `bed + mat6` draw count (3203, 2614,
+451, 959). **So nothing else is missing upstream of the site loop**: the residual is one
+named, unported pass, not a search.
+
+▶ What is left is therefore a well-posed slice, not a mystery: the bed pass's stream
+arithmetic is settled, and the only open part is **which columns are bed columns** — the
+geometry, which `cw_river` / `cw_column`'s type-4 lake fill already model for the finished
+world. Both ports currently DECLINE these zones (`any_river_in_zone`), so nothing claims
+them; porting the pass is what would admit them.

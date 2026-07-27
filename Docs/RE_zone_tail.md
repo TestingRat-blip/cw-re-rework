@@ -57,7 +57,7 @@ port's own site comments; **positional** = ordering + per-zone counts only, i.e.
 | `0x51afdc` | 1 site | type 0xc: one GIANT tree, then SKIP the gen-scatter | byte-proven; never seen live | 0 |
 | `0x51b05a` | — | the gen-scatter's SITE-KIND guard: kinds 1/3/4 skip the pass | proven — 56/56 against the capture (`gate_zone_prechain`) | — |
 | `0x51b08a`-`0x51b3dc` | 7 sites | GEN-SCATTER: count + 5/candidate + keep | proven (`rederive_zonescatter`) | 767 |
-| `0x51c09a` | 1 site | river/lake BED pass, 1 draw per bed column | positional — fires in only 8 of 56 zones, the water ones, at ~4,700 draws each | 37,476 |
+| `0x51c09a` | 1 site | river/lake BED pass, 1 draw per bed column: `rand() % 200`, and on 0 it appends the mat6 list the next row consumes | **arithmetic proven** (2026-07-26f) — the count of recorded draws ≡ 0 mod 200 equals the observed append count in all 8 zones that run it (18/19/12/2/4/69/74/3); WHICH columns are bed columns is still un-ported, and it is the last thing drifting upstream of the odd-parity site loop | 37,476 |
 | `0x51c313`-`0x51c341` | 3 sites | a 3-draw-per-entry consumer, same 8 zones (mat6) | positional | 603 |
 | `0x51c6a5`-`0x51c6db` | 3 sites | the BIGROCK consumer, 3 draws per list entry | matched — `cw_forest.build_zone_state` spends exactly 3 per bigrock | 387 |
 | `0x51cbc1`/`0x51cbfc` | 2 | the odd-parity retry loop (Y first, then X) — **it really does retry, 1-10 times**, `RE_zone_site_loop.md` | proven (`rederive_zoneprops`, `gate_zone_siteloop`) | 148 |

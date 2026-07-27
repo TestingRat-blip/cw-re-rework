@@ -274,6 +274,21 @@ Running out of order silently empties the islands/roles (it oscillates).
    permanently, and the gate now asserts the negative (no drifting zone even reaches these
    stages) so the question cannot drift back open. A closed door is a result.
 
+28. **A candidate that scores WORSE than a constant is not a wrong formula — the rows
+   are misaligned.** The landform switch's inner-draw gate was predicted 106 times out
+   of 161 by `surf <= sh`, against a 112/161 null baseline (always answer "no"). A
+   wrong threshold degrades gracefully; an uncorrelated score means the per-tile
+   observations are attributed to the wrong tiles. Reading it that way turned a hunt
+   for a missing term into "the enumeration order is wrong", which the loop tail
+   confirmed in one disassembly. **Always compute the null baseline before believing a
+   fit.**
+29. **Transposing a loop is invisible to every gate that counts.** `for wz: for wx:`
+   and `for wx: for wz:` visit the same tiles, so the qualifying-tile SET, the draw
+   COUNT and every total derived from them are identical. Order can only be caught by
+   an observable attached to an individual item — here the switch's per-tile inner
+   draws. When a pass is validated only by totals, its order is an untested free
+   parameter; say so in the doc.
+
 7. **Both label sources are unreliable in opposite directions**: `CW_CONFIDENCE_XREF.md` had an
    off-by-one that filed proven worldgen as `lib_fn_*` (16 rows fixed); `cw_callgraph.py` gives
    game names to STL primitives. Always verify against the body.
@@ -310,6 +325,7 @@ closed — every emitter RE'd, every gate green, nothing captured that cannot be
 | the pre-chain's other **TYPE-GATED STAGES** (0xd/4, 0xb, 0xc) + the gen-scatter's site-kind guard | `RE_zone_tail.md` | 50 byte/capture checks |
 | the **ODD-PARITY SITE LOOP** + the builder's site list (it holds one entry, never the feature cells) | `RE_zone_site_loop.md` | 228 checks, 56 zones |
 | `Prop_settleOnTerrain` = `FUN_005287b0`, the 3x3 flatness test that decides the site loop | `RE_zone_site_loop.md` | 15/15 odd zones ab initio |
+| the landform 742-loop's **ITERATION ORDER** (X-outer, Z-inner) — what the odd-zone upstream drift was | `RE_zone_landform.md` | 187 checks, 161/161 live per-tile decisions |
 
 Two structural facts worth carrying:
 
@@ -565,7 +581,55 @@ of it needs another capture session.
    rather than deriving them. `RE_zone_site_loop.md` carries the recovered LIVE
    site-loop start index for all 28 odd zones — diff the port's own pre-site-loop draw
    count against that column and the drift is localised in one run.
+   ✅ **AND THAT IS EXACTLY WHAT CLOSED IT (2026-07-26f). 13 drifting zones -> 4.**
+   `Docs/RE_zone_landform.md`, gate `tools/gate_zone_landform_order.py` (**187/187**).
+   Two causes, both upstream of the site loop, neither of them the site loop:
+   (1) **the landform 742-loop iterates X-OUTER, Z-INNER** and `cw_decoration.
+   landform_pass` ran it transposed. Transposing preserves the qualifying-tile SET, so
+   it preserves the keep-roll COUNT — which is why every landform gate in this project
+   stayed green, including `gate_zone_landform`'s own 22/22. It changes which TILE each
+   roll lands on, and a tile that keeps runs a switch whose cases 0/1 spend inner draws
+   gated on that tile's own `surf <= sh`. The capture holds 161 such decisions over 18
+   odd zones: **161/161 on the binary's order, 106/161 on the port's**. The binary's
+   loop tail names both variables (`0x51a902` inner on `[ebp-0x12c8]` = Z, `0x51a91e`
+   outer on `[ebp-0x1318]` = X) — the same slot pair the 2026-07-26 G5 stride fix
+   identified, which corrected the FORMULA and left the ORDER.
+   ★ **DURABLE: a predicate that scores WORSE than a constant is not a wrong formula,
+   it is misaligned rows.** 106/161 against a 112/161 null baseline said "uncorrelated",
+   which moved the search from the predicate to the enumeration and found it in one run.
+   ★ **DURABLE: transposing a loop is invisible to every gate that counts.** If the
+   only observable is a total, order is a free parameter; it took a PER-TILE observable
+   (the switch's inner draws) to see it at all.
+   (2) the remaining **4** zones are the ones running the **river/lake bed pass**
+   (`0x51c09a`), which no port models — and each drifts by *precisely* its own
+   `bed + mat6` draw count (3203, 2614, 451, 959), so nothing else is missing upstream.
+   Its arithmetic is now settled offline: 1 draw per bed column, `rand() % 200`,
+   appending the mat6 list that `0x51c313` consumes 3-per-entry — the count of recorded
+   draws ≡ 0 mod 200 equals the append count in all 8 zones that run it. **Only the
+   bed-COLUMN geometry is left.**
+   ⚠ **It also found the classifier answering about the wrong world.**
+   `cw_forest.zone_tree_exact` lazily imports `zonescatter_oracle`, which configures the
+   toolkit for **seed 444444** at import; nothing undid it, so the first call on any
+   other world moved `cw_seed`/`cw_gate`/`cw_height`/`cw_river`/`cw_color`/
+   `cw_featuregrid` to 444444 and then answered about 444444's zone. Measured on 42069:
+   it returned `exact=True` for (32793,32790), a zone whose live landform pass spends
+   785 draws. Fixed by saving/restoring around the import; `cw_seed.configure()` now
+   also re-points `cw_featuregrid` (it never did, so cw_height's octaves and the feature
+   cells could silently belong to different worlds).
+   ★ **Third instance of the seed-at-import bug**, and note the shape: the caller that
+   trips it is a **classifier**, so its wrong answer reads as a policy decision rather
+   than a failure.
    ▶ Still missing — **which emitter fires where** for the rest:
+   * ★ **THE NEXT SLICE IS THE RIVER/LAKE BED PASS** (`0x51c09a` + its `0x51c313`
+     consumer). It is the only thing still drifting upstream of the odd-parity site
+     loop, it is the last unmodelled pass in the whole pre-chain, and it is now a
+     well-posed job rather than a search: the stream arithmetic is proven from the
+     capture (1 draw per bed column, `rand() % 200`, append -> 3 draws each) and the
+     ONLY open part is which columns are bed columns. `cw_river` / `cw_column`'s type-4
+     lake fill already model the finished water. 8 of 56 captured zones run it, with
+     per-zone draw counts to check against (`raw/zone_props2_capture.json`), and both
+     ports currently DECLINE those zones (`any_river_in_zone`), so nothing regresses
+     while it is in progress — porting it is what ADMITS them.
    * descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined, and
      the search space is now much smaller. **Ruled out this session:** a missing
      pre-chain stage (the rand-site census is exhaustive), a missing terrain deform

@@ -150,3 +150,105 @@ unchanged.
   **type 7**.~~ **Retracted 2026-07-26c — it is type 6.** Both ports index cell 35 of
   region (513,512) and both read 6; cwgen declines the zone because `classifyZone` does
   not call it Exact. Under `force` it now replays the Python's 58 trees exactly.
+
+---
+
+# The 742-loop runs X-OUTER, Z-INNER (2026-07-26f)
+
+```
+python tools/gate_zone_landform_order.py     # 187/187, ~20 min, no server
+```
+
+The predicate above was right. The **loop order** was not: `cw_decoration.landform_pass`
+iterated `for wz: for wx:`, and the binary iterates `for wx: for wz:`.
+
+## Why nothing had caught it
+
+Transposing the two loops does not change the **set** of qualifying tiles, so it does not
+change the keep-roll **count**. Every landform check in this project counted draws, or
+replayed a zone whose tiles happened to agree, so all of them stayed green — including
+this file's own gate (22/22), which replays two zones with 16 and 0 draws.
+
+What it does change is **which tile each keep roll lands on**. A tile that keeps runs a
+4-way switch, and cases 0 and 1 spend inner draws only when that tile passes
+`surf <= sh` (`0x51a24b` / `0x51a3c2`), so the inner draws are a **per-tile** observable
+that a count cannot see. `raw/zone_props2_capture.json` holds 161 of those decisions
+across 18 odd zones.
+
+| tile order | live case-0/1 inner-draw decisions predicted |
+|---|---|
+| Z-outer, X-inner (what the port had) | 106 / 161 |
+| always answer "no" (the null baseline) | 112 / 161 |
+| **X-outer, Z-inner (the binary)** | **161 / 161** |
+
+★ **The port scored WORSE than a constant.** That is the tell, and it is a different tell
+from "the formula is a bit off": a wrong threshold degrades gracefully, an uncorrelated
+score means the rows are not the rows you think they are. It is what moved the search from
+the predicate to the enumeration.
+
+## The binary
+
+The column loop's two back-edges name both variables:
+
+```
+0051a902  inc ecx                        ; [ebp-0x12c8] = worldZ
+0051a908  mov [ebp-0x12c8], ecx
+0051a90e  cmp ecx, eax                   ; eax = [ebp-0x132c] + 0x100
+0051a910  jl  0x518bc0                   ; <- INNER back-edge
+0051a91e  inc edx                        ; [ebp-0x1318] = worldX
+0051a91f  mov [ebp-0x1318], edx
+0051a925  cmp edx, [ebp-0x1370]
+0051a92b  jge 0x51a938                   ; done
+0051a933  jmp 0x518b00                   ; <- OUTER back-edge, above the inner's target
+```
+
+and `0x51a1fa` builds G5's `(X + 3*Z) % 7` as `[ebp-0x1318] + 3*[ebp-0x12c8]`, which is
+the same pair of slots the 2026-07-26 G5 correction identified. **That fix corrected the
+stride formula and left the iteration order** — the two are independent halves of the
+same axis mix-up, and fixing one is what made the other's absence measurable.
+
+## What it was worth
+
+Diffing every odd zone's per-stage draw counts against the live capture, in the zone's own
+LCG coordinates (`RE_zone_site_loop.md`'s recovery trick):
+
+| | before | after |
+|---|---|---|
+| odd zones reaching the site loop at the live draw index | 15 / 28 | **24 / 28** |
+| the 4 that still do not | the river/lake **bed pass**, which no port models | same |
+
+and the residual is exact: each remaining zone's drift equals its own
+`bed + mat6` draw count to the draw (3203, 2614, 451, 959). Nothing else is missing
+upstream of the odd-parity site loop.
+
+Every existing gate stayed green (`gate_zone_landform` 22/22, `gate_zone_prechain` 50/50,
+`gate_zone_tail` 6558/6558, `gate_zone_siteloop` 228/228), and `golden_rederive/
+rederive_forest.bin` regenerates **byte-identical** — which is not luck: a zone is only
+Exact if it has NO qualifying landform tile, so for every zone in that golden the pass
+draws nothing whichever way round the loop runs.
+
+## And the classifier was answering about the wrong world
+
+Chasing which zones the ports *claim*, `cw_forest.zone_tree_exact` turned out to lazily
+import `zonescatter_oracle`, which **configures the toolkit for seed 444444 at import**
+(it is the capture world's golden exporter and says so) and was never undone. Measured:
+
+```
+before: cw_seed.SEED=42069  cw_featuregrid.BASE=6346
+zone_tree_exact(32793,32790) -> True
+after : cw_seed.SEED=444444 cw_featuregrid.BASE=9613
+```
+
+so the first call moved the whole toolkit to 444444 and answered about **444444's**
+(32793,32790) — a zone whose 42069 counterpart spends 785 live landform draws and is
+plainly not exact. With the seed saved and restored, all 13 zones measured as drifting
+classify as not-exact, and the process stays on the caller's world.
+
+`cw_seed.configure()` also never re-pointed `cw_featuregrid`, whose base is set separately
+— so a caller could hold cw_height's octaves for one world and the feature cells for
+another and get no warning. It does now.
+
+★ **Third instance of the same shape** (`re_landform` at import, then `zonescatter_oracle`
+via this lazy import): **a module that configures a seed at import is a global-state bug
+waiting for its first cross-seed caller** — and the caller that trips it is usually a
+*classifier*, whose wrong answer looks like a policy decision rather than a bug.
