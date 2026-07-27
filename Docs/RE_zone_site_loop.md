@@ -26,7 +26,8 @@ python tools/gate_zone_siteloop.py --ab-initio     # 243, adding the settle repl
 The proximity tests in the type-6 knoll grid (`0x51ab78`), the mat-38 loop (`0x51cf20`)
 and the tree loop (`0x51ded7`) all walk the **same** circular `std::list`, whose head
 pointer lives at `[ebp-0x1378]` and whose nodes carry the 16.16 position at `+0x08`
-(Z) and `+0x10` (X):
+(**X**) and `+0x10` (**Z**) — the axes were the other way round here until 2026-07-27;
+see §"The consumers test in 16.16" below for how they were pinned:
 
 ```
 0051ded7  mov  eax, [ebp-0x1378]        ; _Myhead (the sentinel)
@@ -370,6 +371,106 @@ and the four are exactly the bed-pass zones — (32790,32791), (32790,32795), (3
 (32610,33111) — each drifting by precisely its own `bed + mat6` draw count (3203, 2614,
 451, 959). **So nothing else is missing upstream of the site loop**: the residual is one
 named, unported pass, not a search.
+
+## The consumers test in 16.16 — the site carries a HALF BLOCK (2026-07-27)
+
+The two loops that see a non-empty list, `0x51cf20` (mat-38) and `0x51ded7` (tree),
+run the **same computation instruction for instruction** — they differ only in which
+frame slots and registers carry the coordinates — and it is not a block-coordinate
+compare:
+
+```
+0051df01  cdq / shld edx,eax,0x10 / shl eax,0x10   ; candidate Z -> Z<<16 (int64, exact)
+0051df0f  ...                                      ; candidate X -> X<<16
+0051df30  sub edx,[ecx+0x10] / sbb eax,[ecx+0x14]  ; Z16 - node.z16   (int64)
+0051df54  fild qword / fstp dword                  ; -> f32
+0051df92  mulss xmm1, [0x55869c]                   ; * 2^-16  (exact, power of two)
+0051dfa2  mulss xmm1, xmm1                         ; dz^2
+0051df6c  sub edx,[ecx+8] / sbb eax,[ecx+0xc]      ; X16 - node.x16
+0051dfb4  mulss xmm0, [0x55869c] / mulss xmm0,xmm0 ; dx^2
+0051dfc4  addss xmm1, xmm0                         ; d^2 = dz^2 + dx^2
+0051dfc8  movss xmm0, [0x558900]                   ; 1600.0
+0051dfd0  comiss xmm0, xmm1
+0051dfd3  ja  <loop tail>                          ; 1600 > d^2  ->  REJECT
+```
+
+`[0x55869c]` is `00008037` = exactly 2^-16, and `1600.0` is exact in f32, so the only
+rounding in the whole test is the `fild`/`fstp` int64 -> f32 and the two squares.
+
+★ **The list entry is `(block << 16) + 0x8000`.** `0x51cd56` appends the very record
+that was just handed to `FUN_004e0740` — `{int64 x16, z16, y16}`, the same struct the
+camp capture's `cand` vector holds — so the site anchor sits at the CENTRE of its
+block, the same `+0.5` that makes `Prop_settleOnTerrain`'s footprint 3x3 rather than
+4x4. The true test is therefore
+
+```
+(dx - 0.5)^2 + (dz - 0.5)^2  <  1600
+```
+
+and dropping the fraction moves `d^2` by up to `2*|d| = 80` at the 40-block ring —
+enough to flip any candidate within about 1.5 blocks of it.
+
+**Both ports compared block integers, in five places** (`cw_forest.tree_scatter`,
+`cw_decoration.mat38_loop`, `CwForest`'s mat-38 and tree loops, `CwZoneScatter::
+replayMat38`). The type-6 knoll grid at `0x51ab90` — which walks the *same list* —
+always had the 16.16 form, and its note even said so; the two consumers that can
+actually see a non-empty list did not. Another instance of **"when a fix lands in a
+duplicated routine, grep for the duplicate"** — with the twist that the copy which was
+RIGHT is the one that never runs.
+
+### Which slot is which axis
+
+**`node+0x08 = x16`, `node+0x10 = z16`** — §1 above had the two labels the other way
+round. Two independent lines pin it:
+
+1. **The tree loop's own clamp**, `0x51de9c`-`0x51ded4`. `[ebp-0x12cc]` is clamped
+   against `[ebp-0x1358] + 0x100 - size/2` and `[ebp-0x12e4]` against
+   `[ebp-0x132c] + 0x100 - size/2`; `[ebp-0x1358]` is the zone's X base, pinned by the
+   bed pass as `writeVoxel`'s FIRST argument at `0x51c07c` (`RE_zone_tail.md`). So
+   `[ebp-0x12cc]` is the candidate's X — and `[ebp-0x12cc]` is the slot subtracted from
+   `node[+8]` at `0x51df6c`.
+2. **The record layout.** `0x51cd56` appends the record `FUN_004e0740` was handed, and
+   the camp capture's `cand` vector is that same struct: `make_camp_golden.py` reads
+   `y16` at byte offset **16**, so offsets 0 and 8 are `x16` and `z16` in that order.
+   A list node's value begins at `+8`, hence `node+0x08 = x16`.
+
+⚠ **Do not use the mat-38 spawn test at `0x51cedb` for this.** It looks like a third
+line — `(float)[ebp-0x12f4] - [world+0x8000f0]` vs `(float)[ebp-0x12f8] -
+[world+0x8000f4]` — but this world's spawn has X == Z (the ports carry it as a single
+scalar, 8396928), so subtracting either component from either coordinate is the same
+number and the test distinguishes nothing.
+
+The axis labelling changes no result here — the distance is a symmetric sum and both
+axes carry the same `+0x8000` — but the layout is now pinned rather than assumed.
+
+### What it was worth
+
+The bug could only ever bite where the list is non-empty (odd parity, site accepted)
+**and** a candidate lands in the ~3-block flip band. No gate had one until the
+river/lake bed pass made zone **(32795,32744)** reachable, where it was worth exactly
+the **12 draws** that gate was short:
+
+| | before | after |
+|---|---|---|
+| `rederive_campgrid` | 15950/15990 (1 zone divergent) | **15990/15990** |
+| campgrid zones replayed ab initio | 13 (one wrong) | **13, all exact** |
+| declined zones reproducing all 39 draws under FORCE | 17 | **20** |
+
+That last row is the corroboration that matters: three zones the port does not even
+claim now reproduce their whole lattice, which a coincidental index match could not do.
+
+Both port-produced goldens were regenerated before trusting any of it (a stale golden
+agrees with the port by accident — that has already cost this project a session):
+
+* `rederive_zonescatter.bin` comes back **byte-identical**. None of its 17 zones has a
+  mat-38 candidate in the flip band, so its green was never a stale-golden artifact.
+* `rederive_forest.bin` **changed**: zone (32800,32799) — odd parity, so it has a site —
+  goes from 54 trees to **55**, and the golden's total from 245 to **252**. The old
+  golden and the old C++ shared the bug, which is exactly why `rederive_forest` was
+  green through it. Both sides now place the extra tree and the gate is 6/6 again.
+  It is only port == port; what makes it a FIX rather than a change is the live half
+  above — the same edit is what lands (32795,32744) on the live lattice index and moves
+  three forced zones to full agreement.
 
 ## ✅ CLOSED (2026-07-26g): the bed pass is ported, and the drift is ZERO
 

@@ -344,17 +344,23 @@ wrote itself does not.
   its live camp-lattice index exactly — an independent check no wrong bed predicate could
   survive.
 
-### What it did NOT fix, measured
+### What it did NOT fix — and what that residual turned out to be
 
-Admitting river zones makes `rederive_campgrid` claim zone **(32795,32744)**, whose
-lattice lands 12 draws short (cpp 1188 / live 1200). **That residual is not the bed
-pass**, and the measurements say so three ways: the entire zone has only **19**
+Admitting river zones made `rederive_campgrid` claim zone **(32795,32744)**, whose
+lattice landed 12 draws short (cpp 1188 / live 1200). **That residual was not the bed
+pass**, and the measurements said so three ways: the entire zone has only **19**
 gate-passing columns and all 19 spend their draw; none appends; and running the pass
 with its terrain writes suppressed leaves every draw index upstream of the tree loop
-unchanged. Decisive: with the bed pass **absent** the same zone lands at **1206** against
-the same live 1200 — so it was already 6 draws out before this slice, and was invisible
-only because `anyRiverInZone` declined it. It is a tree-loop residual in a newly reachable
-zone, not a regression. See "Open, carried forward".
+unchanged. Decisive: with the bed pass **absent** the same zone landed at **1206**
+against the same live 1200 — already 6 draws out, invisible only because
+`anyRiverInZone` declined the zone.
+
+✅ **Fixed 2026-07-27, and it was in the site list's PROXIMITY TEST**: `0x51cf20` and
+`0x51ded7` compare in **16.16 against the site entity's own half block**, not on block
+coordinates, and both ports (five copies between them) compared integers. Full decode
+in `RE_zone_site_loop.md`, "The consumers test in 16.16". `rederive_campgrid` is
+**15990/15990**, and the declined zones reproducing all 39 draws under FORCE went
+**17 → 20**.
 
 ## The tree loop, `0x51dc5d`-`0x51e5c7`
 

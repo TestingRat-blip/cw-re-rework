@@ -230,6 +230,15 @@ Running out of order silently empties the islands/roles (it oscillates).
    `rederive_zonepropsb` structurally cannot cover it, because emitter B *is* the even
    branch. `forest_oracle.ZONES` now deliberately keeps an odd zone.
 
+30. **A test that walks a LIST is dead code until something puts an entry in it — and
+   the copy that was right may be the copy that never runs.** The builder's "within 40
+   blocks of a site" test has five port copies. The one that had the 16.16 form with
+   the entity's half block was the type-6 knoll grid's, which walks a list that is
+   provably always empty; the two that can see a non-empty list compared block
+   integers, and were wrong by up to 80 in d² at a 1600 threshold. Nothing caught it
+   for a year because it needs BOTH an odd-parity zone that accepts a site AND a
+   candidate within ~1.5 blocks of the ring. Worth 12 draws the first time a gate had
+   both. When you port a proximity test, port the ARITHMETIC from the copy that runs.
 21. **A deletion needs the same evidence bar as a claim, and about the RIGHT factor.**
    `surfH`'s roughness term was `lm * roughness`; a feature deform belonging to `lm` was
    deleted because *`roughness`* has no feature term. True premise, wrong factor, and it
@@ -327,6 +336,7 @@ closed — every emitter RE'd, every gate green, nothing captured that cannot be
 | `Prop_settleOnTerrain` = `FUN_005287b0`, the 3x3 flatness test that decides the site loop | `RE_zone_site_loop.md` | **24/24** odd zones ab initio |
 | the landform 742-loop's **ITERATION ORDER** (X-outer, Z-inner) — what the odd-zone upstream drift was | `RE_zone_landform.md` | 187 checks, 161/161 live per-tile decisions |
 | the **RIVER/LAKE BED PASS** (`0x51c09a`) + its mat-6 consumer — the last pre-chain stage | `RE_zone_tail.md` | 44 checks, 8 zones, 37,476 live draws |
+| the site list's **16.16 proximity test** (`0x51cf20` / `0x51ded7`) — the entry carries a half block | `RE_zone_site_loop.md` | `rederive_campgrid` 15990/15990, 13 zones |
 
 Two structural facts worth carrying:
 
@@ -643,19 +653,45 @@ of it needs another capture session.
    ★ **An exhaustive rand census of `0x51b467`-`0x51c313` finds ONE site**, so the
    shore/road nest at `0x51b470` that runs just before is provably stream-free — a
    closed door, worth the same as a finding.
-   ⚠ **It exposed a pre-existing residual it is NOT the cause of.** Admitting rivers
-   makes `rederive_campgrid` claim zone **(32795,32744)**, which lands 12 draws short
-   (cpp 1188 / live 1200) — so **that gate now FAILS 15950/15990, one zone's worth**.
-   Measured, three ways, that this is not the bed pass: the zone has only **19**
-   gate-passing columns and all 19 spend their draw, none appends, and suppressing the
-   pass's terrain writes changes no draw index upstream of the tree loop. Decisive:
-   with the bed pass **absent** the same zone lands at **1206** against the same live
-   1200, so it was already 6 draws out and was only invisible because
-   `any_river_in_zone` declined it. ★ **This is the next task**: a tree-loop residual
-   in a type-6 river zone, with live ground truth (the camp golden's lattice start
-   1200) to check against, and `zone_props2_capture.json` does NOT cover the zone, so
-   localising it means either a capture at (32795,32744) or bisecting the 196
-   candidates against the 1200 target.
+   ✅ **AND THE RESIDUAL IT EXPOSED IS FIXED TOO (2026-07-27): the site list carries a
+   HALF BLOCK.** Admitting rivers made `rederive_campgrid` claim zone
+   **(32795,32744)**, which landed 12 draws short. Localised by elimination first — the
+   zone has only 19 gate-passing columns and spends all 19, appends none, its terrain
+   writes move no upstream index, and with the bed pass **absent** it lands at 1206
+   against the same live 1200, so the residual predated the slice — then read out of
+   the binary. `0x51cf20` (mat-38) and `0x51ded7` (tree loop) run the **same
+   computation instruction for instruction**, and it tests in **16.16 against the site entity's own
+   fraction**: `X<<16` minus the node's stored 16.16, `fild`'d to f32, scaled by
+   `[0x55869c]` = 2^-16, squared, `< 1600.0`. `0x51cd56` appends the record
+   `FUN_004e0740` was handed — `{int64 x16, z16, y16}` with the `+0x8000` that makes
+   the settle footprint 3x3 — so the real test is `(dx-0.5)^2 + (dz-0.5)^2 < 1600`, and
+   dropping the fraction moves d² by up to `2*|d|` = 80 at the 40-block ring.
+   **Both ports compared block integers, in FIVE places.** The type-6 knoll grid walks
+   the same list and always had the 16.16 form — the two consumers that can actually
+   see a non-empty list did not. Another instance of *grep for the duplicate*, with the
+   twist that the copy which was RIGHT is the one that never runs.
+   ★ **A branch needs BOTH a non-empty list and a candidate in a ~3-block band.** The
+   list is non-empty only in odd zones that accept a site, and no gate had a candidate
+   in the flip band until the bed pass made this one zone reachable. Result:
+   `rederive_campgrid` **15990/15990** with all 13 zones exact, and — the corroboration
+   that matters — the declined zones reproducing all 39 draws under FORCE went
+   **17 → 20**, which a coincidental index match could not do.
+   ⚠ **Both port-produced goldens were regenerated before any of this was believed.**
+   `rederive_zonescatter.bin` comes back byte-identical (no candidate in the flip band
+   in its 17 zones); `rederive_forest.bin` **changed** — odd zone (32800,32799) goes
+   54 -> **55** trees, the golden total 245 -> **252**. The old golden and the old C++
+   shared the bug, which is why that gate was green through it.
+   ★ Also pinned in passing: `node+0x08 = x16`, `node+0x10 = z16` (`RE_zone_site_loop.md`
+   §1 had the axes swapped) — from the tree loop's own clamp against `[ebp-0x1358]`, the
+   X base the bed pass pinned as `writeVoxel`'s first argument, and independently from
+   the record layout (`cand` reads `y16` at byte 16, so 0/8 are x16/z16).
+   ⚠ **The mat-38 spawn test at `0x51cedb` cannot settle an axis question** even though
+   it looks like it can: this world's spawn has X == Z (8396928, a single scalar in both
+   ports), so either component minus either coordinate is the same number.
+   ⚠ Don't repeat this dead end: sweeping "how many draws would land 1200?" is
+   **aliasing** — that zone's lattice values are quantised to ~6 over a ~70-wide range,
+   so spurious matches are common (2 in the first 14 samples). The disassembly is what
+   settled it; the index match only confirmed it.
    ▶ Still missing — **which emitter fires where** for the rest:
    * descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined, and
      the search space is now much smaller. **Ruled out this session:** a missing
