@@ -222,6 +222,14 @@ and the residual is exact: each remaining zone's drift equals its own
 `bed + mat6` draw count to the draw (3203, 2614, 451, 959). Nothing else is missing
 upstream of the odd-parity site loop.
 
+**✅ CLOSED 2026-07-26g.** The bed pass is decoded and ported (`RE_zone_tail.md`,
+`tools/gate_zone_bed.py` 44/44): one draw per riverbed column, `rand() % 200 == 0`
+appending the mat-6 list, and the bed-column predicate is exact in all eight captured
+zones. `gate_zone_siteloop --ab-initio` is now **28 / 28** with **no** zone excluded, and
+the gate totals **256/256**. The last four upstream drifters were exactly the four bed
+zones, so the whole odd-parity upstream drift — 13 zones when it was first measured — is
+now zero.
+
 Every existing gate stayed green (`gate_zone_landform` 22/22, `gate_zone_prechain` 50/50,
 `gate_zone_tail` 6558/6558, `gate_zone_siteloop` 228/228), and `golden_rederive/
 rederive_forest.bin` regenerates **byte-identical** — which is not luck: a zone is only

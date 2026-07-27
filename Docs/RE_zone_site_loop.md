@@ -371,6 +371,17 @@ and the four are exactly the bed-pass zones — (32790,32791), (32790,32795), (3
 451, 959). **So nothing else is missing upstream of the site loop**: the residual is one
 named, unported pass, not a search.
 
+## ✅ CLOSED (2026-07-26g): the bed pass is ported, and the drift is ZERO
+
+`Docs/RE_zone_tail.md`, gate `tools/gate_zone_bed.py` (**44/44**). One rand per riverbed
+column, `rand() % 200 == 0` appending the mat-6 list; the bed-column predicate is exact
+in all eight captured zones (445 / 950 / 1,273 / 2,408 / 2,578 / 3,149 / 12,563 / 14,110
+draws) and so are their append counts. `gate_zone_siteloop --ab-initio` is now
+**28/28 with no zone excluded** — the whole upstream drift, 13 zones when first measured,
+is closed — and the gate totals **256/256** (was 252).
+
+The paragraph below is kept because its framing is what made the slice tractable.
+
 ▶ What is left is therefore a well-posed slice, not a mystery: the bed pass's stream
 arithmetic is settled, and the only open part is **which columns are bed columns** — the
 geometry, which `cw_river` / `cw_column`'s type-4 lake fill already model for the finished

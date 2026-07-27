@@ -326,6 +326,7 @@ closed — every emitter RE'd, every gate green, nothing captured that cannot be
 | the **ODD-PARITY SITE LOOP** + the builder's site list (it holds one entry, never the feature cells) | `RE_zone_site_loop.md` | 228 checks, 56 zones |
 | `Prop_settleOnTerrain` = `FUN_005287b0`, the 3x3 flatness test that decides the site loop | `RE_zone_site_loop.md` | **24/24** odd zones ab initio |
 | the landform 742-loop's **ITERATION ORDER** (X-outer, Z-inner) — what the odd-zone upstream drift was | `RE_zone_landform.md` | 187 checks, 161/161 live per-tile decisions |
+| the **RIVER/LAKE BED PASS** (`0x51c09a`) + its mat-6 consumer — the last pre-chain stage | `RE_zone_tail.md` | 44 checks, 8 zones, 37,476 live draws |
 
 Two structural facts worth carrying:
 
@@ -619,17 +620,43 @@ of it needs another capture session.
    ★ **Third instance of the seed-at-import bug**, and note the shape: the caller that
    trips it is a **classifier**, so its wrong answer reads as a policy decision rather
    than a failure.
+   ✅ **THE RIVER/LAKE BED PASS IS DONE (2026-07-26g). THE UPSTREAM DRIFT IS ZERO.**
+   `Docs/RE_zone_tail.md`, gate `tools/gate_zone_bed.py` (**44/44**). One rand per
+   riverbed column at `0x51c094`, `rand() % 200 == 0` appending the mat-6 list that
+   `0x51c313` consumes 3 draws at a time; the bed-column predicate is EXACT in all
+   eight captured zones (445 / 950 / 1,273 / 2,408 / 2,578 / 3,149 / 12,563 / 14,110
+   live draws) and so is every append count. Landed in both ports
+   (`cw_forest.river_bed_pass` / `river_mat6_stamp`, `CwForest::riverBedPass` /
+   `riverMat6Stamp`), and river zones are now ADMITTED by both classifiers.
+   Result: **`gate_zone_siteloop --ab-initio` 28/28 with NO zone excluded** (was
+   24/28; gate 252 -> **256**) — the odd-parity upstream drift, 13 zones when first
+   measured, is closed — and `rederive_campgrid` replays **13** zones ab initio
+   (was 7), the four extra being river zones spending up to 8,544 bed draws and 36
+   appends and each landing its live camp-lattice index exactly.
+   ★ **The bed fires iff no water was just written over it** — `carveTop > terrace`,
+   i.e. `frac <= 0.1 or frac >= 0.7` where `frac = (max(bh,0) mod 5)/5` — **and the
+   block already at `bedY` is not water.** That second clause was invisible in seven
+   of the eight zones: only ocean-side (32610,33111) has columns whose `bedY` sits
+   above the terrain record at or below sea level, and it has exactly **1,540** of
+   them, which is exactly the over-count geometry alone produces. Same shape as
+   "a gate that only ran on flat ground does not cover a slope".
+   ★ **An exhaustive rand census of `0x51b467`-`0x51c313` finds ONE site**, so the
+   shore/road nest at `0x51b470` that runs just before is provably stream-free — a
+   closed door, worth the same as a finding.
+   ⚠ **It exposed a pre-existing residual it is NOT the cause of.** Admitting rivers
+   makes `rederive_campgrid` claim zone **(32795,32744)**, which lands 12 draws short
+   (cpp 1188 / live 1200) — so **that gate now FAILS 15950/15990, one zone's worth**.
+   Measured, three ways, that this is not the bed pass: the zone has only **19**
+   gate-passing columns and all 19 spend their draw, none appends, and suppressing the
+   pass's terrain writes changes no draw index upstream of the tree loop. Decisive:
+   with the bed pass **absent** the same zone lands at **1206** against the same live
+   1200, so it was already 6 draws out and was only invisible because
+   `any_river_in_zone` declined it. ★ **This is the next task**: a tree-loop residual
+   in a type-6 river zone, with live ground truth (the camp golden's lattice start
+   1200) to check against, and `zone_props2_capture.json` does NOT cover the zone, so
+   localising it means either a capture at (32795,32744) or bisecting the 196
+   candidates against the 1200 target.
    ▶ Still missing — **which emitter fires where** for the rest:
-   * ★ **THE NEXT SLICE IS THE RIVER/LAKE BED PASS** (`0x51c09a` + its `0x51c313`
-     consumer). It is the only thing still drifting upstream of the odd-parity site
-     loop, it is the last unmodelled pass in the whole pre-chain, and it is now a
-     well-posed job rather than a search: the stream arithmetic is proven from the
-     capture (1 draw per bed column, `rand() % 200`, append -> 3 draws each) and the
-     ONLY open part is which columns are bed columns. `cw_river` / `cw_column`'s type-4
-     lake fill already model the finished water. 8 of 56 captured zones run it, with
-     per-zone draw counts to check against (`raw/zone_props2_capture.json`), and both
-     ports currently DECLINE those zones (`any_river_in_zone`), so nothing regresses
-     while it is in progress — porting it is what ADMITS them.
    * descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined, and
      the search space is now much smaller. **Ruled out this session:** a missing
      pre-chain stage (the rand-site census is exhaustive), a missing terrain deform

@@ -243,6 +243,119 @@ has landed in one copy of a duplicated routine (see the odd-parity site draw bel
 now share `replayPreChain`, which returns false — new class `ZoneClass::Feature` — for any
 zone whose pre-chain stamps terrain a store-free replay cannot follow.
 
+## The RIVER/LAKE BED pass, `0x51bbf9`-`0x51c66c` (read + ported 2026-07-26g)
+
+```
+python tools/gate_zone_bed.py          # 44 checks: the bytes + all 8 captured zones
+```
+
+The last unmodelled stage of the pre-chain, and the whole of what was still drifting
+upstream of the odd-parity site loop. **Two** 256x256 column nests sit between the
+gen-scatter and the bigrock consumer:
+
+| nest | entry gate | what |
+|---|---|---|
+| `0x51b470` | `FUN_0052d990` (waterDepth) `<= 0.02` | the SHORE / road carve |
+| `0x51bc60` | `FUN_0052cd50` (the river climate gate) `<= 0.02` | the RIVER carve |
+
+An **exhaustive rand-site census of `0x51b467`-`0x51c313`** — resolving `call <reg>` as
+well as `call [&rand]`, the discipline `gate_zone_prechain` established — finds exactly
+**one** draw site in both nests together, `0x51c094`. So the shore nest is provably
+stream-free, and this port deliberately does not model it. (It is also inert in every
+zone measured: `biome_border <= 0.02` holds for zero columns in all five river zones the
+camp gate reaches.)
+
+Both nests iterate **X-OUTER, Z-INNER**, but through swapped frame slots — in the river
+nest `[ebp-0x12e4] <- [ebp-0x1358]` is X (it is `writeVoxel`'s first argument at
+`0x51c07c`, and `[ebp-0x1370]` is the same outer bound the landform 742-loop uses) and
+`[ebp-0x12cc] <- [ebp-0x132c]` is Z.
+
+```
+list = _Buynode(0,0)                                            0x51bbf9  -> [ebp-0x13a8]
+[ebp-0x12dc] = 200                                              0x51bc3e
+for X in [zx*256, zx*256+256):
+  for Z in [zz*256, zz*256+256):
+    band = 1 - 50*gate(X, Z)                                    0x51bc65
+    if band < 0: continue                                       0x51bc9b
+    if road(X, Z) > 0.95: continue         # FUN_004d19f0       0x51bcc9
+    l1304   = max(base_height(X, Z), 0)                         0x51bcde
+    terrace = ((int)l1304 / 5) * 5
+    frac    = (l1304 - terrace) / 5
+    w       = frac >= 0.5 ? 1 - (frac-0.5)*4 : frac*2 ; if w<0: w = (w+1)^2 - 1
+    bedY      = w < 0 ? (int)(terrace - 5w) : terrace
+    carveTop  = (int)(terrace - 5w + 2)
+    for y in [carveTop, terrace]:          # mat 2 water        0x51bde1
+        if !(block(X,Z,y) & 0x40): writeVoxel(y, mat 2, (0,0,(int)((1-w)*255)))
+    if bedY >= terrace                     # always true        0x51bfcf
+       and (block(X,Z,bedY) & 0x1f) != 2   # NOT already water  0x51bfed
+       and !(block(X,Z,bedY) & 0x40):                           0x51c011
+        writeVoxel(bedY, mat 3, ground_color(X,Z,bedY))         0x51c08f
+        if rand() % 200 == 0: list.push_back((X, Z, bedY))      0x51c094
+    top = (int)( (noise2d(X*.02+55432, Z*.02+974)+1)*2 + (1-(50*gate)^3)*5 + l1304 )
+    for y in (bedY, top):                  # AIR = DAT_005842c0 0x51c1e0
+        if !(block(X,Z,y) & 0x40): writeVoxel(y, air)
+```
+
+`cw_river.river_carve` / `CwColumn::riverCarve` already modelled the water and the
+riverbed byte-exact against the writer-hook captures; what was missing was **which
+columns spend the draw**, and the channel carve.
+
+### Which columns spend the draw
+
+`carveTop > terrace` is a pure function of the clamped base height — with
+`frac = (max(bh,0) mod 5)/5`, the bed fires iff `frac <= 0.1 or frac >= 0.7` — and that
+alone predicts **seven of the eight** captured zones exactly.
+
+★ **The eighth is what pinned the water test.** Zone (32610,33111) over-counts by
+**1,540** on geometry alone, and 1,540 is exactly the number of its columns whose `bedY`
+sits above the terrain record **and** at or below sea level, i.e. standing in the OCEAN:
+the pass will not bury water it did not write. Not one other captured zone has a single
+such column, so seven green zones could not have found it — the same shape as "a gate
+that only ever ran on flat ground does not cover a slope".
+
+| zone | bed draws (live == port) | appends |
+|---|---|---|
+| 32791,32792 | 445 | 2 |
+| 32610,33111 | 950 | 3 |
+| 32791,32793 | 1,273 | 4 |
+| 32790,32794 | 2,408 | 19 |
+| 32790,32795 | 2,578 | 12 |
+| 32790,32791 | 3,149 | 18 |
+| 32848,32688 | 12,563 | 69 |
+| 32996,32476 | 14,110 | 74 |
+
+### The consumer, `0x51c2dc`-`0x51c66c`
+
+Three draws per list entry — `rand()%3 + 2` for X, then Z, then Y — and a noisy **mat-6**
+ellipsoid, the same shape as `stoneWrites` with the Y half-extent doubled
+(`[C-2ry, C+2ry]`) and gated on **0x80 as well as 0x40** (`shr al,7 / not al / test al,1`
+at `0x51c53a`), so a boulder never buries standing water: of the three live-read
+templates only `DAT_005842bc` (water) carries 0x80, and a mat-2 voxel the river pass
+wrote itself does not.
+
+### What porting it closed
+
+* `gate_zone_siteloop --ab-initio`: **28/28** odd zones reach the site loop at the live
+  draw index and get their iteration count and accept flag predicted exactly (was 24/28
+  with four excluded — and the four excluded were exactly the four bed-pass zones, each
+  drifting by precisely its own `bed + 3*appends`). Gate total **256/256** (was 252).
+* `rederive_campgrid` replays **13** zones ab initio (was 7): the four extra correct ones
+  are river zones spending up to **8,544** bed draws and **36** appends, and each lands
+  its live camp-lattice index exactly — an independent check no wrong bed predicate could
+  survive.
+
+### What it did NOT fix, measured
+
+Admitting river zones makes `rederive_campgrid` claim zone **(32795,32744)**, whose
+lattice lands 12 draws short (cpp 1188 / live 1200). **That residual is not the bed
+pass**, and the measurements say so three ways: the entire zone has only **19**
+gate-passing columns and all 19 spend their draw; none appends; and running the pass
+with its terrain writes suppressed leaves every draw index upstream of the tree loop
+unchanged. Decisive: with the bed pass **absent** the same zone lands at **1206** against
+the same live 1200 — so it was already 6 draws out before this slice, and was invisible
+only because `anyRiverInZone` declined it. It is a tree-loop residual in a newly reachable
+zone, not a regression. See "Open, carried forward".
+
 ## The tree loop, `0x51dc5d`-`0x51e5c7`
 
 A **14 x 14 grid, stride 18**, X in the outer loop from `zx*256` and Z in the inner from
