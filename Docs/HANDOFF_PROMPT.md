@@ -324,7 +324,7 @@ closed — every emitter RE'd, every gate green, nothing captured that cannot be
 | the **LANDFORM** pass gate chain + the builder's second land mask (type 6/0xd) | `RE_zone_landform.md` | 22 / 2 zones, 16 draws ab initio |
 | the pre-chain's other **TYPE-GATED STAGES** (0xd/4, 0xb, 0xc) + the gen-scatter's site-kind guard | `RE_zone_tail.md` | 50 byte/capture checks |
 | the **ODD-PARITY SITE LOOP** + the builder's site list (it holds one entry, never the feature cells) | `RE_zone_site_loop.md` | 228 checks, 56 zones |
-| `Prop_settleOnTerrain` = `FUN_005287b0`, the 3x3 flatness test that decides the site loop | `RE_zone_site_loop.md` | 15/15 odd zones ab initio |
+| `Prop_settleOnTerrain` = `FUN_005287b0`, the 3x3 flatness test that decides the site loop | `RE_zone_site_loop.md` | **24/24** odd zones ab initio |
 | the landform 742-loop's **ITERATION ORDER** (X-outer, Z-inner) — what the odd-zone upstream drift was | `RE_zone_landform.md` | 187 checks, 161/161 live per-tile decisions |
 
 Two structural facts worth carrying:

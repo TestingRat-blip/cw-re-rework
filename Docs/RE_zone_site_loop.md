@@ -360,6 +360,11 @@ Measured over the 28 odd zones, per stage, in the zone's own LCG coordinates:
 |---|---|---|
 | reach the site loop at the live draw index | 15 | **24** |
 | still drift | 13 | **4** |
+| `--ab-initio` zones whose iteration count + accept flag are predicted exactly | 15/15 | **24/24** |
+
+`gate_zone_siteloop --ab-initio` is now **252/252** (was 243/243), and the four zones it
+still excludes are exactly the four below — an independent corroboration, since that gate
+knows nothing about the landform pass beyond running it.
 
 and the four are exactly the bed-pass zones — (32790,32791), (32790,32795), (32791,32792),
 (32610,33111) — each drifting by precisely its own `bed + mat6` draw count (3203, 2614,

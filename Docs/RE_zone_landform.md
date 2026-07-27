@@ -215,6 +215,7 @@ LCG coordinates (`RE_zone_site_loop.md`'s recovery trick):
 | | before | after |
 |---|---|---|
 | odd zones reaching the site loop at the live draw index | 15 / 28 | **24 / 28** |
+| `gate_zone_siteloop --ab-initio`, stream-aligned zones predicted exactly | 15 / 15 | **24 / 24** (gate 243 -> **252**) |
 | the 4 that still do not | the river/lake **bed pass**, which no port models | same |
 
 and the residual is exact: each remaining zone's drift equals its own
