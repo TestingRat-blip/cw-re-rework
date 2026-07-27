@@ -366,6 +366,7 @@ session; every open question left is reachable from the captures already on disk
 | the **RIVER/LAKE BED PASS** (`0x51c09a`) + its mat-6 consumer — the last pre-chain stage | `RE_zone_tail.md` | 44 checks, 8 zones, 37,476 live draws |
 | the site list's **16.16 proximity test** (`0x51cf20` / `0x51ded7`) — the entry carries a half block | `RE_zone_site_loop.md` | `rederive_campgrid` 15990/15990, 13 zones |
 | the **CAMP POPULATOR** `FUN_005104e0` end to end — every prop and every `Spawn` record | `RE_5104e0_camp.md` | 1,598 record checks / 99 zones; `rederive_camppop` 3111/3111 |
+| **EMITTER A** (the runestone circle) — RE'd *and ported*, reached from the seed | `RE_zone_emitters_ac.md` | `gate_zone_ac` 1,232 / 112 zones; **`rederive_zoneac` 107/109 ab initio** |
 
 Two structural facts worth carrying:
 
@@ -384,6 +385,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
+| 07-27c | **EMITTER A ported ab initio**, and `0x51cd79` — the mat-38 loop's site-kind guard **no port had** | `RE_zone_emitters_ac.md`, `RE_zone_tail.md` | `rederive_zoneac` 107/109 |
 | 07-27b | the camp's **RENDERING** half — `columnCampProps`, wired into `VegScatter`, cached per zone | `RE_5104e0_camp.md` §Rendering | `--proptest` 5/5 |
 | 07-27 | **`FUN_005104e0` end to end** — every prop and every `Spawn` field, from the seed | `RE_5104e0_camp.md` | `gate_zone_camp` 4,340; `rederive_camppop` 3111/3111 |
 | 07-27 | the site list's proximity test is **16.16 — the entry carries a half block** | `RE_zone_site_loop.md` | `rederive_campgrid` 15990/15990 |
@@ -413,25 +415,35 @@ to a numbered lesson above:
 
 ## YOUR TASK
 
-### The next slice: emitter C
+### The next slice: the OVERWORLD CREATURE-SPAWN SCATTER (`0x51ed70`-`0x51f981`)
 
-**A port, not new RE.** Emitters A and C are the two overworld emitters still un-ported;
-take **C** first, because it is the one with live coverage. `RE_zone_emitters_ac.md` has it
-gated already — `gate_zone_ac.py` sees **381 street lights from 6,523 rolls**, the
-finished-zone walk accounting for 6,003 of them (92%), exact in 66 zones. What is missing
-is the cwgen half.
+**Emitter A is done** (07-27c, `rederive_zoneac` 107/109 ab initio). **Emitter C is the
+stage after next, and the previous handoff mis-scoped both** — the record of that is in
+`RE_zone_emitters_ac.md`'s correction box; the short version is that A had 112 live
+instances all along and sits upstream of the tree pass, while C sits a **median 2,646
+draws** (min 1,197, max 101,190, over all 137 firing town zones) past anything cwgen can
+reach. Measured, not estimated: each town zone's recorded emitter-C draws were located in
+its own LCG, 249/249 zones verified.
 
-⚠ **A is a thinner target than the shared doc makes it look**: the same gate run reports
-**0 runestone circles**. Its arithmetic is RE'd, but that sweep gave it no live instance to
-check a port against, so scope A as "port it, then go find a zone that fires it" rather
-than assuming C's evidence covers both.
+Nearly all of that gap is **one stage**, and it is a good slice in its own right:
+`0x51ed70`-`0x51f981` is a 3x3 grid (85-block spacing, `+0x18 + rand()%10` jitter) that
+news up `cube::Spawn` objects — **the overworld creature spawner**, the thing that produced
+`raw/spawn_capture.json`'s 6,305 spawns. So it is not a blocker to route around; it is the
+last big unported worldgen stage, it has abundant live data, and finishing it puts emitter
+C within reach as a by-product.
 
-It is a decode job, not a mystery: `CwForest::zoneReplayTail` leaves the stream at
-`0x51e5c7`, and `RE_zone_tail.md`'s table enumerates every rand site between there and
-emitter C. Model it the way `CwZoneCamp` models the populator — name each `rand()`'s call
-site before reading its value — and gate it against `gate_zone_ac.py`'s zones.
+⚠ A rand-site census of `0x51eac0`-`0x51fd00` finds **18** sites, not the 11
+`RE_zone_tail.md`'s table lists — that table was built from *observed* return addresses, so
+stages that never fired in the 56-zone sweep are missing from it. Census the span from the
+bytes before trusting any enumeration of it.
 
-⚠ Two things that will bite, both already paid for elsewhere:
+⚠ **The town builder is probably not the blocker it was assumed to be.** It runs in every
+emitter-C zone, but its three rand sites each look spent *unconditionally per plot*, with
+the region-cache-blocked plot height only read *after* the draw — and the plot lattice is
+already derived (`rederive_townlattice` 16228/16228). Read the loop structure before
+relying on that; it is a lead from three call sites, not a finding. `RE_zone_tail.md`.
+
+⚠ Two things that will bite when you do reach emitter C, both already paid for elsewhere:
 * emitter C gates on the per-zone **site-kind** byte, which cwgen derives
   (`rederive_sitekind` 116/116) — do not re-derive it from the feature-cell type.
 * `lib_fn_4fc140` is thresholded at exactly 0.8 by emitter C's street-light variant *and*
@@ -453,6 +465,26 @@ site before reading its value — and gate it against `gate_zone_ac.py`'s zones.
    residue is left.
 
 ### Open problems
+
+**0. Two things `rederive_zoneac` measured on its first run (07-27c), both open.**
+Neither is an emitter-A defect; both are the gate doing its job.
+
+  * **The river/lake BED pass over-counts in 2 of its 30 river zones.** cwgen spends 30
+    draws where the server spends 0 in (32523,32659), and 12,808 against 5,533 in
+    (32595,32891) — whose zone centre sits at `surfH` 0, i.e. **at sea level**, which
+    points straight at the ocean-water test that zone (32610,33111) pinned in 07-26g.
+    This is the first check of that pass outside the eight zones it was proven on, and it
+    is why the gate reads 107/109 rather than green. A kind-4 even-parity zone has exactly
+    one draw source left in its pre-chain once both site-kind guards fire, so the
+    attribution is not a guess.
+  * **★ cwgen's terrain is 1-2 blocks out at a TYPE-10 cell CENTRE**, in 36 of 109 columns,
+    **bidirectionally** (so: not a missing stamp). It tracks `frac(surf)` — mean 0.24 where
+    cwgen reads low, 0.52 where it agrees, 0.64 where it reads high — the signature of a
+    small error in the pre-truncation float inside the type-10 deform crossing an integer.
+    Every kind-4 zone is a type-10 cell's zone, so this gate is the first thing in the
+    project to read terrain at a type-10 centre. Same shape as the type-6/0xd land-mask bug
+    of 07-26b, which was also invisible until something gated a cell centre. The gate
+    prints the histogram every run; closing it is a terrain-pipeline slice.
 
 **1. Descriptor types 7 / 0xb / 0xc / 0xf still drift and are still declined.**
 ⚠ **Re-measure before hunting — the standing note is stale.** The five-zone list below was
@@ -534,8 +566,21 @@ here before): run the gate suite, then `cwgen_test` in **both** Debug and Releas
 `build/cwgen_test.exe tools/cw_rederive/golden_rederive` and the same under `build-release/`.
 The two output hashes must be identical; if `build-release` is stale that check is silently
 not running. Rebuild release with CMake via the VS-bundled toolchain (`build.bat` only does
-Debug). Known-good as of 07-27b: whole suite green except `gate_town_props.py`, hash
-`26EE53FD808A174F`.
+Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fails on
+`cstdint`:
+
+```
+cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
+```
+
+**Known-good as of 07-27c:** the `cw_decomp` gate suite is green except
+`gate_town_props.py`; `cwgen_test` is green except **`rederive_zoneac` 107/109**, hash
+**`F06E7FAF50277143`** in both Debug and Release.
+
+⚠ **That 107/109 is deliberate and is not to be tuned green.** The two misses are the
+bed-pass over-count in open problem 0, and the obvious way to make the gate green — having
+`zoneRunestone` decline River zones — would delete the only evidence of it. A red gate that
+names a real bug beats a green one that hides it.
 
 ⚠ **The pipeline fixpoint is order-sensitive and destructive if you get it wrong.** Running
 `flirt_islands.py` / `adjudicate_none.py` against an already-structured tree finds nothing and

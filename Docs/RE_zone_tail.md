@@ -61,9 +61,9 @@ port's own site comments; **positional** = ordering + per-zone counts only, i.e.
 | `0x51c313`-`0x51c341` | 3 sites | a 3-draw-per-entry consumer, same 8 zones (mat6) | positional | 603 |
 | `0x51c6a5`-`0x51c6db` | 3 sites | the BIGROCK consumer, 3 draws per list entry | matched — `cw_forest.build_zone_state` spends exactly 3 per bigrock | 387 |
 | `0x51cbc1`/`0x51cbfc` | 2 | the odd-parity retry loop (Y first, then X) — **it really does retry, 1-10 times**, `RE_zone_site_loop.md` | proven (`rederive_zoneprops`, `gate_zone_siteloop`) | 148 |
-| `0x51cd9b`-`0x51ceb9` | 6 sites | MAT-38: count + 5/rock | proven (`rederive_zonescatter`) | 1,760 |
-| `0x51d452` | — | town builder (site kind 1/5) | proven (`RE_town_props.md`) | — |
-| `0x51d46b`-`0x51dbf5` | — | emitter A, the runestone circle (site kind 4) | proven (`RE_zone_emitters_ac.md`) | — |
+| `0x51cd9b`-`0x51ceb9` | 6 sites | MAT-38: count + 5/rock — ⚠ **`0x51cd79` skips the whole loop for site kinds 4/1/3**, see below | proven (`rederive_zonescatter`) | 1,760 |
+| `0x51d452` | — | town builder — gated on the **DESCRIPTOR type** 1 or 5, not the site kind; `FUN_004e28e0` has **3 rand sites** of its own | proven (`RE_town_props.md`) | — |
+| `0x51d46b`-`0x51dbf5` | — | emitter A, the runestone circle (site kind 4) — **ported 2026-07-27c**, `rederive_zoneac` | proven (`RE_zone_emitters_ac.md`) | — |
 | **`0x51dc5d`-`0x51e5c7`** | **12 sites** | **the 14x14 TREE loop + `lib_fn_513760`** | **proven here + `rederive_zonepropsb`** | **65,796 + builder** |
 | `0x51e5c7` | 3 | **emitter B**, the even-parity statue | proven here | 84 |
 | `0x51e839`-`0x51eac7` | — | camp candidate grid + `camp_populator` | proven (`RE_zone_grid.md`, `RE_5104e0_camp.md`) | — |
@@ -202,6 +202,36 @@ height 80, tree **type 6**. That is the GIANT tree both ports already name as un
 guessed "zone-cell 0xc only" — now confirmed from the branch). `lib_fn_513760` has 27
 `call ebx` rand sites, so unlike 0xb this stage's stream cost is not statable without
 simulating the tree: **type-0xc centre zones are declined, not replayed.**
+
+### ★ The SECOND site-kind guard, `0x51cd79` — the mat-38 loop has one too (2026-07-27c)
+
+```
+0051cd79  mov al, [eax + ecx + 0x18]      ; region + idx*16 + 0x18, the site-kind byte
+0051cd7d  cmp al, 4 / je 0x51d435
+0051cd85  cmp al, 1 / je 0x51d435
+0051cd8d  cmp al, 3 / je 0x51d435
+0051cd95  call rand                       ; the mat-38 count -- SKIPPED for 4/1/3
+```
+
+Byte-for-byte the guard the gen-scatter has at `0x51b05a`, on a **second read of the same
+table 7KB further on**, and `0x51d435` lands just before the town builder. **No port had
+it** — not `CwForest.cpp`, not `CwZoneScatter::replayMat38`, not `cw_decoration.mat38_loop`.
+
+Two independent live proofs, on two different site kinds and from two different rigs:
+
+* zone **(33020,32660)** is the one kind-3 zone of `raw/zone_props2_capture.json`, and it
+  spends **zero** mat-38 draws as well as zero gen-scatter draws;
+* **41 of the 112** kind-4 zones of `raw/zone_ac_capture_zones_112.json` reach the
+  emitter-A gate at absolute stream index **0** — impossible if the loop ran, because its
+  count draw is unconditional. (All 41 are even parity; every odd-parity kind-4 zone
+  spends the site loop's draws and none reaches 0.)
+
+Without it every kind-1/3/4 zone spent `1 + 5*count` phantom draws and put the tree pass,
+emitter B and the camp lattice out of step behind them. Nothing caught it because **no
+gate in the project had ever replayed a zone whose site kind is non-zero** — the 56-zone
+sweep contains exactly one, and it is the only one that was ever checked, for the *other*
+guard. ★ Fourth instance of "a fix landed in one copy of a duplicated routine"; this time
+the fix had never landed in any of the three.
 
 ### The gen-scatter's own guard, `0x51b05a` — real, and it was dismissed
 
@@ -488,11 +518,32 @@ by construction. Do not read the Python knoll grid as gated on that branch.
   (`RE_camp_descriptor.md`). Every zone this tail was ever proven on has a descriptor of
   type 0 / 0xa / 0xe. So the tail decode below is intact; its REACHABILITY in feature
   zones is not.
-* **Emitter C (`0x51fa10`)** is reachable in principle — `zoneReplayTail` leaves the stream at `0x51e5c7` and the sites between
-  there and them are enumerated in the table above (`0x51e774`, `0x51e952`,
-  `0x51ed7e`/`0x51ed92`/`0x51edba`, `0x51f227`, `0x51f383`/`0x51f3fa`/`0x51f463`,
-  `0x51f4f4`/`0x51f5a0`/`0x51f668`, `0x51f8f9`/`0x51f924`). Each needs decoding the way
-  the tree loop just was; none of it is a mystery stage.
+* **Emitter C (`0x51fa10`) — measured 2026-07-27c, and it is a much bigger slice than the
+  handoff scoped it as.** Two things were established without a capture session:
+
+  1. **How far it is.** Locating each town zone's recorded emitter-C draws in its own LCG
+     (`make_zoneac_golden.py`'s verified-origin search) puts the first street-light roll a
+     median of **2,646 draws** past the emitter-A gate — min 1,197, max 101,190, in all
+     **137** town zones that fire. Every one of those draws must be reproduced before a
+     single lamp can be placed.
+  2. **What is in the gap.** A rand-site census of `0x51eac0`-`0x51fd00` finds **18** sites,
+     not the 11 the table above lists — the table was built from observed return addresses,
+     so stages that never fired in the 56-zone sweep are absent from it. The bulk of the
+     gap is `0x51ed70`-`0x51f981`: a **3x3 grid (85-block spacing, `+0x18 + rand()%10`
+     jitter) that news up `cube::Spawn` objects** — i.e. the **overworld creature-spawn
+     scatter**, the producer of `raw/spawn_capture.json`'s 6,305 spawns. It is a slice of
+     its own, and it has plenty of live data to gate against.
+
+  ⚠ **The town builder is probably NOT the blocker it was assumed to be.** It runs in every
+  emitter-C zone (a kind-1 zone's descriptor cell is type 1, and `0x51d43e` gates on
+  descriptor type 1/5). Its three rand sites are `0x4e2d83` (`%4`, a rotation), `0x4e2e3b`
+  (`/32767`, a 0..1 roll) and `0x4e3039` (`&1`, a coin), and on a static read each is
+  spent **unconditionally per plot**, with the region-cache-blocked plot HEIGHT only
+  affecting what happens after the draw (`0x4e304d` reads the height *after* the coin).
+  The plot lattice itself is already derived (`rederive_townlattice` 16228/16228). So the
+  town builder's draw SPEND may well be derivable even though its plot heights are not —
+  **a lead from three call sites, not a finding**; it wants the loop structure read before
+  anyone relies on it.
 * **The pass at `0x51fdb1`-`0x52162b`** is the one part of the tail whose identity is
   still open, and it is the biggest draw consumer in the whole zone build. The obvious
   guess is the per-column ground-vegetation scatter (`CW_RE_MASTER_INDEX.md` lists a

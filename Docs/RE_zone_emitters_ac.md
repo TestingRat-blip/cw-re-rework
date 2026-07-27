@@ -1,5 +1,20 @@
 # Zone-builder emitters A and C — the runestone and the street light
 
+> **2026-07-27c — emitter A is PORTED and gated ab initio, and four things below were
+> wrong.** Read this box before the body.
+>
+> | correction | what it really is | how it was settled |
+> |---|---|---|
+> | "that sweep gave A no live instance" (`HANDOFF_PROMPT.md`) | **A has 112 live instances.** `zone_ac_capture_zones_112.json` is 112 kind-4 zones and every one emits. The "0 runestones" line is the *144-zone town* file, where the kind is 1. | reading both files' gate output instead of the last one |
+> | "`ang = i*PI/N` — HALF a circle" | **a FULL circle**: the ring counter is `add eax,2` at `0x51d994`, so `ang = 2i*PI/N` | disassembly + the decompile's `+ 2`, agreeing |
+> | the site list's only insert is `0x51cd56` (`RE_zone_site_loop.md`) | **emitter A inserts a second entry** at `0x51d52d` — the runestone's centre, 16.16 with NO half block. The tree loop (`0x51ded7`) and the creature-spawn scatter (`0x51ef3f`) both walk it. | a byte census of every `lea ecx,[ebp-0x1378]` in the builder: three, the ctor and those two |
+> | the mat-38 loop runs in every zone | **`0x51cd79` skips it for site kinds 4/1/3**, the same guard the gen-scatter has at `0x51b05a`, on a second read of the table 7KB later. No port had it. | 41 of the 112 kind-4 zones reach emitter A at stream index **0**, and the one kind-3 zone of `zone_props2_capture` spends 0 mat-38 draws |
+>
+> **Emitter A is upstream of the tree pass** — `0x51d46b` sits between the mat-38 loop and
+> the 14x14 tree loop — so it needs only the pre-chain, which is why it was the cheap
+> target and emitter C is not. `cwgen`: `CwForest::zoneRunestone`, gate
+> `rederive_zoneac` **107/109**, both misses River-class (see the bottom of this file).
+
 The last two open slices of Phase 2. `RE_zone_props.md` could only read their record
 content statically:
 
@@ -74,20 +89,38 @@ is captured any more.
 
 ```
 if (kind != 4) skip                                                        0x51d46b
+z0 = column(zoneCentre)[0x10] + [0x1c]              # base + count         0x51d493
+siteList.push_back((cx<<16, cz<<16, z0<<16))        # NO half block        0x51d52d
 N = rand()%3 + 6                                                           0x51d563
 for i in 0..N-1:                                    # a ring, radius 25
-    ang = i*PI/N                                    # HALF a circle, not a full one
-    cx = zoneCentreX + (int)(cos(ang)*25.0)
-    cy = zoneCentreY + (int)(sin(ang)*25.0)
-    z  = column top + 4
-    hx = rand()%4 + 3 ;  hy = rand()%4 + 3          # two draws per ring point
-    ... an ellipsoid voxel stamp over [-2hx,2hx] x [-2hy,2hy] x [z-20,z+20],
-        material 6 with a material-0x26 shell (0x51d8f2 / 0x51d47e) ...
+    ang = (float)((double)(2*i) * PI / (double)N)   # a FULL circle
+    rx = zoneCentreX + (int)(cosf(ang)*25.0f)       # 0x51d5df -> [0x5582e4] cos
+    rz = zoneCentreZ + (int)(sinf(ang)*25.0f)       # 0x51d5c3 -> [0x5582e8] sin
+    zc = (column(rx,rz) ? its base+count : z0) + 4
+    hx = rand()%4 + 3 ;  hz = rand()%4 + 3          # two draws per ring point
+    ... a noisy material-6 ellipsoid over [-2hx,2hx] x [-2hz,2hz] x [zc-20,zc+20] ...
+z = z0 descended to the first solid, then ascended to the first clear       0x51da60
 rec.type = 0x2d      (runestone)                                           0x51dbab
-rec.pos  = ((zoneCentreX<<16) + ftol(229376.0), (zoneCentreY<<16) + ftol(229376.0), z<<16)
+rec.pos  = ((zoneCentreX<<16) + ftol(229376.0), (zoneCentreZ<<16) + ftol(229376.0), z<<16)
 rec.dir  = rand()%4 ;  rec.size = (4, 4, 5)                                0x51dbb5
 push -> site+0xc                                                           0x51dbf5
 ```
+
+The ring blob, `0x51d700`-`0x51d97f`, per (x, z, y) — **read from the disassembly, not the
+decompile**, because Ghidra prints `4d5d30`'s hidden double halves as extra parameters and
+the first call therefore reads as one-argument when the binary pushes the same value twice
+(`movsd [esp+8], xmm0 / movsd [esp], xmm0` at `0x51d72a`):
+
+```
+nz = valueNoise(z*0.05, z*0.05) * 0.3               # BOTH args are z
+u  = (float)(y - zc) / 10.0f                        # [0x55873c]
+v  = (float)(z - rz) / (float)hz + nz
+w  = valueNoise(x*0.05, y*0.05) * 0.3 + (float)(x - rx) / (float)hx
+if ((w*w + v*v) + u*u <= 1.0f && !(block & 0x40)) write material 6
+```
+
+`valueNoise` = `FUN_004d5d30`, the **truncating**-lattice noise, which matters because
+`y*0.05` goes negative near sea level.
 
 Two details worth keeping:
 
@@ -211,3 +244,76 @@ counted independently by walking the finished zone's own columns and calling the
 * `FUN_004d6670` is **thiscall** — `ecx` is the vector and the record is `args[0]`, not
   `args[1]`. Reading the wrong slot gave a record with type `0x80035ff` and a position of
   −82 billion, which is what a plausible-looking garbage read looks like.
+
+---
+
+## The PORT (2026-07-27c) — emitter A, ab initio
+
+```
+python tools/cw_rederive/make_zoneac_golden.py    # section 58, from the live captures
+build/cwgen_test.exe tools/cw_rederive/golden_rederive     # gate rederive_zoneac
+```
+
+`CwForest::zoneRunestone` replays the zone's pre-chain from the seed and derives the
+runestone; `cw_forest.build_zone_state` carries the same code (draws, site entry, ring
+stamp) so the two ports stay in step.
+
+### What the new gate adds, and why it is a different claim
+
+`gate_zone_ac.py` proves the **decode** against 112 live records. It cannot prove
+**reachability** — whether a port starting from the seed arrives with the stream in the
+right place — and reachability is what every other emitter in this builder gets wrong.
+The golden therefore carries the **absolute zone-stream index** of the emitter-A gate,
+recovered by locating each zone's recorded draws in its own LCG.
+
+⚠ Two traps in that recovery, both paid for here:
+
+* the rig's `randN` is **never reset**, so the origin is **negative** for every zone but
+  the first. Rejecting `o < 0` rejects every real origin — and the search then "locates" a
+  handful of zones on a chance match, which looks like partial success.
+* a 3-4 value run matches a 15-bit LCG by accident often enough to matter. An origin is
+  accepted only when **every** recorded `(n, value)` of the zone satisfies
+  `lcg[n + o] == v`. With that, **249 of 249** zones of both captures locate — which also
+  proves each zone's seed is `base + zz*0x10000 + zx` as assumed.
+
+### Result: `rederive_zoneac` 107/109
+
+| claim | result |
+|---|---|
+| the emitter is reached at the live absolute stream index | **107 / 109** |
+| `N = rand()%3 + 6`, and the ring spends exactly 2 draws per point | 109 / 109 |
+| the record's X and Z are the zone centre + 3.5 blocks | 109 / 109 |
+| `dir` is the last draw `% 4` | 109 / 109 |
+| cwgen declines the zone rather than guessing | 3 of 112 |
+
+**The two index misses are the river/lake BED pass, not the emitter.** Once the
+gen-scatter and the mat-38 loop are both skipped by the site-kind guards and the parity is
+even, a kind-4 zone's pre-chain has exactly one draw source left. Both misses are
+River-class — cwgen spends 30 draws where the server spends 0 in `(32523,32659)`, and
+12,808 against 5,533 in `(32595,32891)`, whose zone centre sits at `surfH` 0, i.e. at sea
+level. This is the **first check of the bed pass outside the eight zones it was proven on**
+in 2026-07-26g, and 28 of the 30 river zones here are exact. Closing the other two is a
+bed-pass slice, and the sea-level shape of the second one points at the ocean-water test
+that zone (32610,33111) pinned.
+
+### ★ A new terrain finding, from the same gate
+
+The record's **Y is deliberately not part of the pass criterion**, and that is a finding
+rather than a convenience. Y is the centre column's `[0x10]+[0x1c]` settled down-then-up —
+a pure function of the finished terrain, to which emitter A contributes nothing.
+
+Every kind-4 zone is by construction a **type-10 feature cell's** zone
+(`RE_site_kind_grid.md`: kind 4 marks every type-10 cell), so this is the first gate in the
+project to read terrain at a **type-10 cell centre** — and cwgen is off by one or two
+blocks in **36 of 109** columns:
+
+| live − cwgen | −2 | −1 | 0 | +1 | +2 |
+|---|---|---|---|---|---|
+| columns | 3 | 16 | 73 | 14 | 3 |
+
+**Bidirectional, so it is not a missing stamp.** It tracks `frac(surf)` — mean 0.24 where
+cwgen reads a block low, 0.52 where it agrees, 0.64 where it reads high — which is the
+signature of a small error in the pre-truncation float `surf` inside the type-10 deform,
+visible only when it crosses an integer. That is the same shape as the type-6/0xd land-mask
+bug of 2026-07-26b (`RE_zone_landform.md`), which was likewise invisible until something
+gated a cell centre. The gate prints the histogram every run so the number cannot rot.

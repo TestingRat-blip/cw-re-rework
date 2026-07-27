@@ -48,9 +48,26 @@ it is initialised to zero two instructions earlier:
 0051a9b2  call 0x4f7b60                 ; _Buynode
 0051a9b7  mov [ebp-0x1378], eax         ; _Myhead
 ...
-0051cd56  call 0x4f3ba0                 ; the ONLY insert
+0051cd56  call 0x4f3ba0                 ; insert #1 (of two -- see the correction below)
 0051cd61  mov dword [ebp-0x1374], 1     ; _Mysize := 1
 ```
+
+> ⚠ **Correction, 2026-07-27c: `0x51cd56` is not the only insert — there are TWO.**
+> **Emitter A** appends the runestone's centre at `0x51d52d`, and it *increments*
+> `[ebp-0x1374]` (`inc dword [ebp-0x1374]` at `0x51d555`) where the site loop *stores* 1.
+> A byte census of every `lea ecx, [ebp-0x1378]` in the builder finds exactly three — the
+> `_Buynode` ctor at `0x51a994`, the site loop at `0x51cd4f`, and emitter A at `0x51d527`
+> — and the reads are `0x51d511`/`0x51d54f` (emitter A's own bookkeeping), `0x51ded7`
+> (the tree loop) and `0x51ef3f` (the creature-spawn scatter).
+>
+> So: in a zone whose **site kind is 4** the list holds the runestone, and in an odd-parity
+> kind-4 zone it holds **two** entries. Everything else in this file is unaffected —
+> emitter A runs *after* the site loop and after the mat-38 loop, so the knoll grid's and
+> the mat-38 loop's "the list is empty / holds at most one" reasoning still stands. What
+> changes is the **tree loop**, which in a kind-4 zone rejects candidates within 40 blocks
+> of the runestone. ⚠ The entry emitter A pushes is `(block << 16)` with **no** `+0x8000` —
+> unlike the site loop's, which carries the half block (§"The consumers test in 16.16").
+> `RE_zone_emitters_ac.md`.
 
 Between the construction and the type-6 knoll grid at `0x51aa80` there is nothing but
 two climate reads (`0x51a9d0`, `0x51aa18`). So **the knoll grid's 80-block proximity
