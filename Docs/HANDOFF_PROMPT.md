@@ -16,13 +16,15 @@ client + `Server.exe` dedicated server). Read this whole prompt before acting, t
   of prior CW reverse-engineering (`RatForge\docs\`, `RatForge\tools\`). It IS a git repo
   (branch `master`).
 - **THE WORK YOU CONTINUE:** `...\RatForge\tools\cw_decomp\` — a **standalone git repo**,
-  public at **https://github.com/TestingRat-blip/cw-re-rework** (branch `master`, last commit
-  `cb32c30`). Everything below lives here unless stated.
+  public at **https://github.com/TestingRat-blip/cw-re-rework** (branch `master`).
+  Everything below lives here unless stated.
 
 **Read first, in this order:** `README.md` (the whole attempt), `Docs/PIPELINE.md` (every tool
 + why), `Docs/WORLDGEN_RE_PLAN.md` (the current objective — Phases 1-3 are closed, Phase 4 is
-not), then the "Where we are right now" table at the end of this file and whichever
-`Docs/RE_*.md` it points at for the slice you are picking up.
+not), then this file's **"Where we are right now"** table and whichever `Docs/RE_*.md` it
+points at for the slice you are picking up.
+
+**In a hurry?** "Hard-won lessons" group B, then "YOUR TASK". The rest is reference.
 
 ## What this project is
 
@@ -125,190 +127,203 @@ Running out of order silently empties the islands/roles (it oscillates).
 
 ## Hard-won lessons — internalise these
 
-1. **Rule out your own source/flags before blaming the compiler.** A "RTM vs Update 1 codegen
-   gap" turned out to be my reconstruction writing `if (0<f)` instead of the decompiler's
-   `if (f<=0)`. Fixing the source gave a 100% match.
-2. **Live capture has corrected static reads three times.** Trust the binary over the
-   decompiler's pseudo-C.
-2b. **A captured byte is data; what it *means* is still a guess until you test it.** Two
-   retractions in one session came from reading semantics off raw values: a uniform grey
-   `(200,200,200)` read as "the dungeon's own palette stone" (it is global underground rock —
-   one `Counter` across three differently-styled dungeons kills it), and a pointer passed
-   next to a spawn call read as "the species list" (twelve instructions of its callee show a
-   vec4 float store). Both cost a wrong "port gap" in a doc. **Before writing a finding down,
-   name the cheapest observation that would falsify it and make it.**
-3b. **A helper can be wrong most of the time and invisible to every gate.** `ftol`
-   (`FUN_0054a946` = `_ftol2`) TRUNCATES: `fistp` rounds, then the function corrects the
-   result back toward zero. Two of the three places this project implements it had it as
-   round-half-even, and 91,021 of the suite's 133,408 calls disagree between the two — yet
-   the whole suite, hash included, is byte-identical, because every result is a 16.16
-   coordinate and the error is 1/65536 of a block. Ask what resolution a value is
-   *compared* at, not how often it is computed. It took the camp ring — the first consumer
-   checked at full 16.16 against live data — to make it observable at all.
-3. **Ghidra collapses `/GS` function bodies** to just the security-cookie epilogue — `0x522cc0`
-   looked like a stub but is a 16.16 fixed-point distance. Check raw bytes when a body looks
-   too short for its size.
-4. **Big functions need a 600s decompiler timeout**, not the 60s default — the four "failures"
-   were the zone/town/dungeon builders and the `.cub` loader.
-5. **`analyzeHeadless` splits script args on commas** — pass address lists as separate args.
-6. **0 direct callers ≠ artifact — and ≠ a function.** Vtable slots and dispatch-table targets
-   look like orphans; `IndirectRefs.java` catches those. But a zero-reference "function" may be
-   no function at all: **90 of Server.exe's 129 zero-reference functions start on an MSVC
-   alignment NOP inside a bigger body** (`tools/nop_split_audit.py`). `0050702a` was one — the
-   bytes there are `8d 9b 00 00 00 00`, jumped over by an `eb 06` at `0x507028`, inside the
-   dungeon assembler. Check the entry bytes before believing a function boundary. (Cube.exe
-   has 0 of these; its orphans are real functions.)
-8. **`unaff_EBP` in a decompile means the frame belongs to someone else** — that is a function
-   boundary error, not an exotic calling convention.
-9. **When Ghidra warns it cannot track the stack, read the disassembly for loop induction
-   variables.** In the mob pass the decompiled C aliased `K` and `K+1` onto one name and made
-   the qualification test unreadable; twelve lines of disassembly settled it.
-10. **Check the existing port before doing new RE.** The `counter` feeding the level formula
-   was documented as "must arrive by another route" because the decompile showed only a
-   `= 0` store. It was the loop's induction variable — the decompiler had merged that stack
-   slot with two unrelated reuses of it, so its increment read as belonging to something else.
-   Twenty lines of disassembly at the *loop tail* settled it, and **both ports were already
-   computing the value** (`_sub_count(idx)` / `cellLevel(k)`) and discarding it. When a value
-   lives inside a function that is already bit-exact, the answer is in the port, not the binary.
-11. **A hook that reads a float mid-expression can CHANGE the value it reads.** Frida's ia32
-   Interceptor preserves neither x87 nor SSE state. Hooking `0x51e913`/`0x51e926` — inside live
-   `xmm0` and mid-way through `0x52c820`'s x87 result — returned a *constant* 2.74e21 weight and
-   zero candidates for a zone that really keeps 22. The tell was uniformity across 39 different
-   positions; the falsifier was one command, running the already-ported function on the same
-   inputs. **Hook where the values are spilled to the frame** (here `rand()`'s own entry, where
-   EBP is still the caller's). Related: never `Interceptor.attach` `FUN_00406100` — the hottest
-   function in a zone build; it stalled one zone past 13 minutes.
-12. **When you mirror a game loop in a checker, mirror the BRANCH, not your idea of it.** The
-   column run-walk's `jge` at `0x51fa92` makes the LAST block always qualify, reading the class
-   at index `count` — one past the counted extent. Modelling it `k < n-1` undercounted by 3–18
-   per town and failed the gate. (Mirroring an out-of-range read can also *fault* under Frida
-   where the game survives on allocation slack — guard it.)
-13. **A thiscall table read from the decompile can be two tables.** The client's prop
-   type→model init block fills TWO `vector<VoxelModel*>`s; the implicit `this` makes both print
-   as a bare `vector_at_stride4(type)`, so every low type looks assigned twice and taking either
-   the first or the last value is wrong for a different half of the range. Only the
-   `lea ecx, [ebx + …]` separates them. **Census by byte-scanning the image when a decompile
-   pattern search comes up short** — the six site-kind stores were found that way after a text
-   search over the decompile missed one entirely.
-14. **A spatial pattern read off ONE sample is a hypothesis, not a rule.** "Kind 1 is always a
-   2×2 block of zones" survived one region and died on the next (it is the top four of 64 by
-   *warped* falloff, and the town's own centre zone often is not among them). That is the second
-   manufactured stencil in this project — see also the nearest-neighbour "fence group" in
-   `RE_town_props.md`. Test on the next sample before writing it down.
-15. **Regenerating an asset can silently delete content if a hardcoded consumer disagrees.**
-   `dungeonPropModelName` carried `chest-base` where the `.cub` is `chest-base02`; it resolved
-   only because the old map propagated the same wrong name into the pack. Diff every hardcoded
-   consumer against the new source *before* rebuilding.
+Grouped, because they repeat. If you are about to write a finding down, read group A;
+if you are about to trust a green gate, read group B. Every one of these cost real time.
 
-16. **A filtered capture's own filter is part of the measurement.** `frida_zone_props2.py`
-   records only draws whose return address is inside the zone builder, but stamps each with
-   a GLOBAL draw index — so a callee's draws are counted and not listed, and the gap reads
-   exactly like an unknown stage. A whole slice was blocked on "twelve unmodelled rand
-   sites plus something spending thousands, almost certainly the un-RE'd ground-plant
-   scatter"; the span was the **dense-forest tree pass this repo already had bit-exact**,
-   and the thousands were its builder's. **Before believing a gap, ask whether the rig
-   would have recorded a stage you already know.** A histogram of the per-draw RETURN
-   ADDRESSES answers in one command what a search over draw values had mis-attributed.
-17. **A gate that only ever ran on flat ground does not cover what happens on a slope.**
+### A. What counts as evidence
+
+1. **A captured byte is data; what it *means* is still a guess until you test it.**
+   Two retractions in one session came from reading semantics off raw values: a uniform
+   grey `(200,200,200)` read as "the dungeon's own palette stone" (it is global
+   underground rock — one `Counter` across three differently-styled dungeons kills it),
+   and a pointer passed next to a spawn call read as "the species list" (twelve
+   instructions of its callee show a vec4 float store). **Before writing a finding down,
+   name the cheapest observation that would falsify it and make it.**
+2. **Trust the binary over the decompiler's pseudo-C.** Live capture has corrected static
+   reads at least three times.
+3. **A spatial pattern read off ONE sample is a hypothesis, not a rule.** "Kind 1 is
+   always a 2×2 block of zones" survived one region and died on the next (it is the top
+   four of 64 by *warped* falloff, and the town's own centre zone often is not among
+   them). Second manufactured stencil in this project — see also the nearest-neighbour
+   "fence group" in `RE_town_props.md`. Test on the next sample before writing it down.
+4. **A deletion needs the same evidence bar as a claim, and about the RIGHT factor.**
+   `surfH`'s roughness term was `lm * roughness`; a feature deform belonging to `lm` was
+   deleted because *`roughness`* has no feature term. True premise, wrong factor, and it
+   left `surfH` wrong inside every type-6/0xd cell for months. **"X has no feature term"
+   does not license deleting a feature term sitting next to X** — check which factor of
+   the product the evidence is about.
+5. **A candidate that scores WORSE than a constant is not a wrong formula — the rows are
+   misaligned.** The landform switch's inner-draw gate was predicted 106 times out of 161
+   by `surf <= sh`, against a 112/161 null baseline (always answer "no"). A wrong
+   threshold degrades gracefully; an uncorrelated score means the per-tile observations
+   are attributed to the wrong tiles. That turned a hunt for a missing term into "the
+   enumeration order is wrong", which the loop tail confirmed in one disassembly.
+   **Always compute the null baseline before believing a fit.**
+6. **Decoding a stage tells you what it CANNOT do, too, and that is worth writing down.**
+   `0x51ad52` was carried for three handoffs as the likely cause of the type-0xd drift.
+   Reading it settles that it spends zero draws and stamps nothing — ruled out
+   permanently, and the gate now asserts the negative so the question cannot drift back
+   open. **A closed door is a result.**
+7. **A comment about one render path is not a statement about all of them.** `Store`'s
+   note that only tree fills reach its render sink was read as "the engine does not draw
+   the pre-chain knolls" — wrong: knolls and rocks reach the mesher through
+   `ForestBlobs`/`StoneBlobs` entirely separately. **Grep for the other consumers before
+   concluding a thing is not drawn.** (Same session, an earlier guess — "the props stand
+   on tree canopies" — fell to one run streaming the zone's tree voxels.)
+
+### B. What a green gate does NOT prove
+
+The single most expensive family in this project. Five separate instances of the same
+shape: **the pass under test was fine, and the branch that never ran was not.**
+
+8. **A gate that only ever ran on flat ground does not cover what happens on a slope.**
    The forest replay was proven on "flat/dry" zones for months. Its terrain store read the
    plain cover material, missing that a slope-blended column gets rock 6 — worth 18
    phantom trees in the first zone whose candidates reached into a feature deform. Note
    where the bug was: not in the pass under test, but in **what that pass reads**. When a
    replay is validated on one terrain class, its INPUTS are only validated there too.
-18. **A stale golden agrees with the port by accident, and it hid a real bug.**
-   `golden_rederive/*.bin` is gitignored and has no manifest, so `rederive_forest` had been
-   green against a golden an older `cw_forest.py` produced. Regenerating it exposed a
-   58-vs-54 Python↔C++ drift whose cause was concrete: **`CwForest.cpp` keeps its own copy
-   of the pre-chain, and the 2026-07-25 "Y is drawn FIRST" site fix went into
-   `CwZoneScatter.cpp` and `cw_decoration.py` but not into it.** Regenerate a port-produced
-   golden before trusting a gate that uses it, and remember what it can prove: **port ==
-   port, never port == game.**
-19. **When a fix lands in a duplicated routine, grep for the duplicate.** `%0xa0 + 0x30`
-   had four copies; three got the fix. One grep would have found the fourth.
-20b. **A replay proven in one class of world has not been proven in the class it never
-   ran in.** The zone-stream replay was believed exact everywhere except four descriptor
+9. **A replay proven in one class of world has not been proven in the class it never ran
+   in.** The zone-stream replay was believed exact everywhere except four descriptor
    types. It had only ever RUN where the descriptor was absent or type 0/0xa/0xe, because
-   that is what the earlier captures happened to cover; the first gate that entered a
-   type-6 zone found it 37 draws out. Same shape as 17 (flat vs slope) and 20 (even vs
-   odd) — three times now, always the reachability or the inputs, never the pass itself.
-   Before trusting a green gate, ask which worlds it never visited.
+   that is what the earlier captures happened to cover; the first gate to enter a type-6
+   zone found it 37 draws out. **Before trusting a green gate, ask which worlds it never
+   visited.**
+10. **A parity-gated bug needs a gate that runs BOTH branches.** The site loop is
+    odd-parity only, and every gate added in one whole programme happened to be
+    even-parity — `rederive_zonepropsb` structurally cannot cover it, because emitter B
+    *is* the even branch. `forest_oracle.ZONES` now deliberately keeps an odd zone.
+11. **When a replay models a CALLEE as a constant, that is a branch too.** The site loop
+    calls `FUN_004e0740` and both ports encoded "it accepts, for 11 draws". It retries up
+    to ten times (3 draws each) and sometimes accepts nothing — true in 10 of 28 odd zones.
+12. **A gate that feeds the port the CAPTURED draws does not prove the port derives
+    them.** Every odd-parity zone gate in this project replays the recorded stream; the
+    first thing to derive an odd zone's stream from the seed found 13 of 28 arriving at
+    the site loop at the wrong index, in the descriptor class everything else called
+    proven. **Ask what a green gate actually FEEDS its port before reading it as coverage**
+    — and prefer to find this out when choosing the gate's design, not after.
+13. **Transposing a loop is invisible to every gate that counts.** `for wz: for wx:` and
+    `for wx: for wz:` visit the same tiles, so the qualifying-tile SET, the draw COUNT and
+    every total derived from them are identical. Order can only be caught by an observable
+    attached to an individual item — here the switch's per-tile inner draws. **When a pass
+    is validated only by totals, its order is an untested free parameter; say so.**
+14. **A test that walks a LIST is dead code until something puts an entry in it — and the
+    copy that was right may be the copy that never runs.** The builder's "within 40 blocks
+    of a site" test has five port copies. The one with the correct 16.16 form was the
+    type-6 knoll grid's, which walks a provably-always-empty list; the two that can see a
+    non-empty list compared block integers and were wrong by up to 80 in d² at a 1600
+    threshold. Nothing caught it for a year because it needs BOTH an odd-parity zone that
+    accepts a site AND a candidate within ~1.5 blocks of the ring. **When you port a
+    proximity test, port the ARITHMETIC from the copy that runs.**
+15. **A silent `hasattr` fallback is a branch no gate can see.** `cw_forest.py` chose the
+    mat-38 boost with `cw_decoration._boost(...) if hasattr(cw_decoration, "_boost") else
+    True`. That attribute has never existed — the name is in `cw_genscatter` — so the file
+    hardcoded `True` for its whole life, and nothing failed, warned or looked wrong.
+    **Write the import, not the guard;** if a fallback is genuinely needed, make it loud.
+16. **A helper can be wrong most of the time and invisible to every gate.** `ftol`
+    (`FUN_0054a946` = `_ftol2`) TRUNCATES: `fistp` rounds, then the function corrects the
+    result back toward zero. Two of the three places this project implements it had it as
+    round-half-even, and 91,021 of the suite's 133,408 calls disagree between the two —
+    yet the whole suite, hash included, is byte-identical, because every result is a 16.16
+    coordinate and the error is 1/65536 of a block. **Ask what resolution a value is
+    *compared* at, not how often it is computed.** It took the camp ring — the first
+    consumer checked at full 16.16 against live data — to make it observable at all.
+17. **A stale golden agrees with the port by accident, and it can hide a real bug.**
+    `golden_rederive/*.bin` is gitignored and has no manifest, so `rederive_forest` had
+    been green against a golden an older `cw_forest.py` produced, through a real
+    Python↔C++ drift. **Regenerate a port-produced golden before trusting a gate that uses
+    it, and remember what it can prove: port == port, never port == game.**
+18. **A filtered capture's own filter is part of the measurement.** `frida_zone_props2.py`
+    records only draws whose return address is inside the zone builder, but stamps each
+    with a GLOBAL draw index — so a callee's draws are counted and not listed, and the gap
+    reads exactly like an unknown stage. A whole slice was blocked on "twelve unmodelled
+    rand sites plus something spending thousands"; the span was the **dense-forest tree
+    pass this repo already had bit-exact**. **Before believing a gap, ask whether the rig
+    would have recorded a stage you already know.** A histogram of the per-draw RETURN
+    ADDRESSES answers in one command what a search over draw values mis-attributes.
 
-20. **A parity-gated bug needs a gate that runs BOTH branches.** The site loop is
-   odd-parity only, and every gate added in this programme happened to be even-parity —
-   `rederive_zonepropsb` structurally cannot cover it, because emitter B *is* the even
-   branch. `forest_oracle.ZONES` now deliberately keeps an odd zone.
+### C. Reading the binary
 
-30. **A test that walks a LIST is dead code until something puts an entry in it — and
-   the copy that was right may be the copy that never runs.** The builder's "within 40
-   blocks of a site" test has five port copies. The one that had the 16.16 form with
-   the entity's half block was the type-6 knoll grid's, which walks a list that is
-   provably always empty; the two that can see a non-empty list compared block
-   integers, and were wrong by up to 80 in d² at a 1600 threshold. Nothing caught it
-   for a year because it needs BOTH an odd-parity zone that accepts a site AND a
-   candidate within ~1.5 blocks of the ring. Worth 12 draws the first time a gate had
-   both. When you port a proximity test, port the ARITHMETIC from the copy that runs.
-21. **A deletion needs the same evidence bar as a claim, and about the RIGHT factor.**
-   `surfH`'s roughness term was `lm * roughness`; a feature deform belonging to `lm` was
-   deleted because *`roughness`* has no feature term. True premise, wrong factor, and it
-   left `surfH` wrong inside every type-6/0xd cell for months — invisible until a gate
-   finally entered one. See lesson 17/20b: the same class again, and it was the INPUT.
-22. **A module that caches seed-derived tables at import is a global-state bug waiting for
-   the first caller who changes the seed.** `re_landform` computed its `BASE` and octave
-   offsets once, for 444444; `cw_decoration.landform_pass` on seed 42069 used 444444's
-   terrain and nobody noticed, because every 42069 zone it had ever run on had zero
-   qualifying tiles. Re-sync at the entry point, not at import.
+19. **Ghidra collapses `/GS` function bodies** to just the security-cookie epilogue —
+    `0x522cc0` looked like a stub but is a 16.16 fixed-point distance. Check raw bytes when
+    a body looks too short for its size.
+20. **0 direct callers ≠ artifact — and ≠ a function.** Vtable slots and dispatch-table
+    targets look like orphans; `IndirectRefs.java` catches those. But a zero-reference
+    "function" may be no function at all: **90 of Server.exe's 129 zero-reference functions
+    start on an MSVC alignment NOP inside a bigger body** (`tools/nop_split_audit.py`).
+    `0050702a` was one — `8d 9b 00 00 00 00`, jumped over by an `eb 06` at `0x507028`,
+    inside the dungeon assembler. Check the entry bytes before believing a function
+    boundary. (Cube.exe has 0 of these; its orphans are real functions.)
+21. **`unaff_EBP` in a decompile means the frame belongs to someone else** — that is a
+    function boundary error, not an exotic calling convention.
+22. **When Ghidra warns it cannot track the stack, read the disassembly for loop induction
+    variables.** In the mob pass the decompiled C aliased `K` and `K+1` onto one name and
+    made the qualification test unreadable; twelve lines of disassembly settled it.
+23. **A thiscall table read from the decompile can be two tables.** The client's prop
+    type→model init block fills TWO `vector<VoxelModel*>`s; the implicit `this` makes both
+    print as a bare `vector_at_stride4(type)`, so every low type looks assigned twice and
+    taking either the first or the last value is wrong for a different half of the range.
+    Only the `lea ecx, [ebx + …]` separates them. **Census by byte-scanning the image when
+    a decompile pattern search comes up short** — the six site-kind stores were found that
+    way after a text search over the decompile missed one entirely.
+24. **When you mirror a game loop in a checker, mirror the BRANCH, not your idea of it.**
+    The column run-walk's `jge` at `0x51fa92` makes the LAST block always qualify, reading
+    the class at index `count` — one past the counted extent. Modelling it `k < n-1`
+    undercounted by 3–18 per town and failed the gate. (Mirroring an out-of-range read can
+    also *fault* under Frida where the game survives on allocation slack — guard it.)
+25. **Both label sources are unreliable in opposite directions**: `CW_CONFIDENCE_XREF.md`
+    had an off-by-one that filed proven worldgen as `lib_fn_*` (16 rows fixed);
+    `cw_callgraph.py` gives game names to STL primitives. Always verify against the body.
 
-23. **A silent `hasattr` fallback is a branch no gate can see.** `cw_forest.py` chose the
-   mat-38 boost with `cw_decoration._boost(...) if hasattr(cw_decoration, "_boost") else
-   True`. That attribute has never existed — the name is in `cw_genscatter` — so the file
-   hardcoded `True` for its whole life, and nothing failed, warned, or looked wrong. It
-   only surfaced when the gate's zone set finally reached a zone where the real boost was
-   False. Write the import, not the guard; if a fallback is genuinely needed, make it
-   loud.
-25. **A list you build yourself is an input you invented — check that the binary ever
-   fills it.** Both ports seeded the zone builder's site list with every feature-cell
-   centre in the 3x3 region neighbourhood. The list (`[ebp-0x1378]`) is `_Buynode`'d
-   with `_Mysize = 0` and gets exactly ONE insert in the whole 19KB body: the
-   odd-parity accepted site. The mat-38 rejection had been "proven" over 56 zones with
-   the centres in it, because in all 56 no rock landed within 40 blocks of one; the
-   tree loop's 14x14 grid finally put a candidate there and the live server rejected
-   nothing. **One `find` over the frame slot's disp32 settles who writes a list.**
-27. **A gate that feeds the port the CAPTURED draws does not prove the port derives
-   them.** Every odd-parity zone gate in this project replays the recorded stream; the
-   first thing to derive an odd zone's stream from the seed found 13 of 28 arriving at
-   the site loop at the wrong index, in the descriptor class everything else calls
-   proven. Ask what a green gate actually feeds its port before reading it as coverage.
-26. **When a replay models a CALLEE as a constant, that is a branch too.** The site
-   loop calls `FUN_004e0740` and both ports encoded "it accepts, for 11 draws". It
-   retries up to ten times (3 draws each) and sometimes accepts nothing — true in 10 of
-   28 odd zones. Nothing looked wrong because the loop is odd-parity and nearly every
-   gate in this programme runs even zones. Fourth instance of the same shape
-   (flat/slope, even/odd, absent/present descriptor, and now callee-as-constant): the
-   pass under test was fine and the branch that never ran was not.
-24. **Decoding a stage tells you what it CANNOT do, too, and that is worth writing down.**
-   `0x51ad52` was carried for three handoffs as the likely cause of the type-0xd drift.
-   Reading it settles that it spends zero draws and stamps nothing — so it is ruled out
-   permanently, and the gate now asserts the negative (no drifting zone even reaches these
-   stages) so the question cannot drift back open. A closed door is a result.
+### D. Porting
 
-28. **A candidate that scores WORSE than a constant is not a wrong formula — the rows
-   are misaligned.** The landform switch's inner-draw gate was predicted 106 times out
-   of 161 by `surf <= sh`, against a 112/161 null baseline (always answer "no"). A
-   wrong threshold degrades gracefully; an uncorrelated score means the per-tile
-   observations are attributed to the wrong tiles. Reading it that way turned a hunt
-   for a missing term into "the enumeration order is wrong", which the loop tail
-   confirmed in one disassembly. **Always compute the null baseline before believing a
-   fit.**
-29. **Transposing a loop is invisible to every gate that counts.** `for wz: for wx:`
-   and `for wx: for wz:` visit the same tiles, so the qualifying-tile SET, the draw
-   COUNT and every total derived from them are identical. Order can only be caught by
-   an observable attached to an individual item — here the switch's per-tile inner
-   draws. When a pass is validated only by totals, its order is an untested free
-   parameter; say so in the doc.
+26. **Check the existing port before doing new RE.** The `counter` feeding the level
+    formula was documented as "must arrive by another route" because the decompile showed
+    only a `= 0` store. It was the loop's induction variable, and **both ports were already
+    computing the value** (`_sub_count(idx)` / `cellLevel(k)`) and discarding it. When a
+    value lives inside a function that is already bit-exact, the answer is in the port, not
+    the binary.
+27. **When a fix lands in a duplicated routine, grep for the duplicate.** `%0xa0 + 0x30`
+    had four copies; three got the fix. The pre-chain had four more. One grep each time.
+28. **A list you build yourself is an input you invented — check that the binary ever
+    fills it.** Both ports seeded the zone builder's site list with every feature-cell
+    centre in the 3x3 region neighbourhood. The list (`[ebp-0x1378]`) is `_Buynode`'d with
+    `_Mysize = 0` and gets exactly ONE insert in the whole 19KB body: the odd-parity
+    accepted site. **One `find` over the frame slot's disp32 settles who writes a list.**
+29. **A module that caches seed-derived tables at import is a global-state bug waiting for
+    the first caller who changes the seed.** `re_landform` computed its `BASE` and octave
+    offsets once, for 444444; a pass on seed 42069 silently used 444444's terrain. Three
+    instances now — and note the shape of the third: the caller that tripped it is a
+    **classifier**, so its wrong answer reads as a policy decision rather than a failure.
+    Re-sync at the entry point, not at import.
+30. **Regenerating an asset can silently delete content if a hardcoded consumer
+    disagrees.** `dungeonPropModelName` carried `chest-base` where the `.cub` is
+    `chest-base02`; it resolved only because the old map propagated the same wrong name
+    into the pack. Diff every hardcoded consumer against the new source *before*
+    rebuilding.
+31. **Rule out your own source/flags before blaming the compiler.** A "RTM vs Update 1
+    codegen gap" turned out to be my reconstruction writing `if (0<f)` instead of the
+    decompiler's `if (f<=0)`. Fixing the source gave a 100% match.
 
-7. **Both label sources are unreliable in opposite directions**: `CW_CONFIDENCE_XREF.md` had an
-   off-by-one that filed proven worldgen as `lib_fn_*` (16 rows fixed); `cw_callgraph.py` gives
-   game names to STL primitives. Always verify against the body.
+### E. Rigs and tooling
+
+32. **A hook that reads a float mid-expression can CHANGE the value it reads.** Frida's
+    ia32 Interceptor preserves neither x87 nor SSE state. Hooking `0x51e913`/`0x51e926` —
+    inside live `xmm0` and mid-way through `0x52c820`'s x87 result — returned a *constant*
+    2.74e21 weight and zero candidates for a zone that really keeps 22. The tell was
+    uniformity across 39 different positions; the falsifier was one command, running the
+    already-ported function on the same inputs. **Hook where the values are spilled to the
+    frame** (here `rand()`'s own entry, where EBP is still the caller's). Related: never
+    `Interceptor.attach` `FUN_00406100` — the hottest function in a zone build; it stalled
+    one zone past 13 minutes.
+33. **The rig's draw index is not the zone's.** `frida_zone_props2.py` stamps a
+    process-global counter and does not hook the zone's `srand`. msvcrt's rand is a plain
+    LCG, so stepping it from the zone seed until a recorded draw run appears pins the
+    ABSOLUTE index of every stage. That is what turns "the port's draws are wrong" into
+    "the port arrives 37 draws early". **Do this FIRST on any capture from that rig.**
+34. **Big functions need a 600s decompiler timeout**, not the 60s default — the four
+    "failures" were the zone/town/dungeon builders and the `.cub` loader.
+35. **`analyzeHeadless` splits script args on commas** — pass address lists as separate
+    args.
 
 ## Working style expected
 
@@ -321,10 +336,15 @@ repo** after each meaningful step.
 ## Where we are right now
 
 Objective: **finish "populated worldgen"**. The deterministic geometry was already bit-exact;
-this year's work has been the **entity / prop layer**, and as of 2026-07-25 that layer is
-closed — every emitter RE'd, every gate green, nothing captured that cannot be derived.
+this year's work has been the **entity / prop layer**.
 
-| layer | doc | gate coverage |
+⚠ **Read this table as "the RE is done and gated *in this repo*" — not "the port is done".**
+Those are two different ledgers and they are not in step: emitters A and C have a green RE
+gate here and **no cwgen port at all**, which is why porting C is the next task. Where a
+cwgen gate exists it is named in the last column. Nothing below needs another capture
+session; every open question left is reachable from the captures already on disk.
+
+| layer (RE + gate in THIS repo) | doc | gate coverage |
 |---|---|---|
 | `FUN_00524540` = `creature_spawn_builder` (0 `rand()` for type 0) | `RE_524540_creature_spawn.md` | 6,442 live spawns |
 | the dungeon mob pass (`0x507401`-`0x50775a`; `FUN_0050702a` is an alignment NOP, not a function) | `RE_50702a_mob_populator.md` | 1,350 cells / 1,122 spawns |
@@ -333,7 +353,7 @@ closed — every emitter RE'd, every gate green, nothing captured that cannot be
 | `FUN_005104e0` = `camp_populator` (overworld encampments) | `RE_5104e0_camp.md` | 2,742 / 99 zones |
 | the town prop chain: plot lattice → promotion → role-2 house → 3×3 modules → 13-block lattice | `RE_town_props.md` | 8,646+ / 67 towns |
 | the camp populator's **candidate grid** | `RE_zone_grid.md` | 16,250 / 99 zones |
-| zone emitters **A** (runestone circle) + **C** (village street light) | `RE_zone_emitters_ac.md` | 3,937 / 256 zones |
+| zone emitters **A** (runestone circle) + **C** (village street light) — ⚠ **RE only, NOT ported** | `RE_zone_emitters_ac.md` | 3,937 / 256 zones |
 | the per-zone **site-kind grid**, from the seed | `RE_site_kind_grid.md` | 590 / 118 regions |
 | the **prop-id table**, from the client's own init block | `RE_prop_ids.md` | 75 of 78 slots |
 | the zone builder's **TAIL** (mat-38 -> emitter B = the dense-forest tree pass; emitter B derived and reachable from the seed) | `RE_zone_tail.md` | 6,558 / 28 even zones |
@@ -356,485 +376,138 @@ Two structural facts worth carrying:
 - **There are two static-entity namespaces**, not one: `world+0x800718` (vegetation / wall
   decor, the "hanging" ids) and `world+0x800724` (the props proper, 78 slots).
 
+## What landed recently — do NOT redo
+
+All closed, gated and documented. One line each, newest first; the detail is in the doc and
+the gate named is what keeps it true. None of it needed a capture session — every one was
+mined out of the captures already on disk.
+
+| when | slice | doc | gate |
+|---|---|---|---|
+| 07-27b | the camp's **RENDERING** half — `columnCampProps`, wired into `VegScatter`, cached per zone | `RE_5104e0_camp.md` §Rendering | `--proptest` 5/5 |
+| 07-27 | **`FUN_005104e0` end to end** — every prop and every `Spawn` field, from the seed | `RE_5104e0_camp.md` | `gate_zone_camp` 4,340; `rederive_camppop` 3111/3111 |
+| 07-27 | the site list's proximity test is **16.16 — the entry carries a half block** | `RE_zone_site_loop.md` | `rederive_campgrid` 15990/15990 |
+| 07-26g | the **river/lake bed pass** (`0x51c09a`) — the last pre-chain stage | `RE_zone_tail.md` | `gate_zone_bed` 44/44 |
+| 07-26f | the landform 742-loop runs **X-outer, Z-inner** — the odd-zone upstream drift | `RE_zone_landform.md` | `gate_zone_landform_order` 187/187 |
+| 07-26e | **`Prop_settleOnTerrain` = `FUN_005287b0`**, a 3×3 flatness test | `RE_zone_site_loop.md` | 24/24 odd zones ab initio |
+| 07-26d | the site list holds **one** entry; the site loop **retries** up to 10× | `RE_zone_site_loop.md` | `gate_zone_siteloop` 228/228 |
+| 07-26c | the rest of the type-gated pre-chain (0xd/4, 0xb, 0xc) + the gen-scatter's site-kind guard | `RE_zone_tail.md` | `gate_zone_prechain` 50/50 |
+| 07-26b | the landform predicate — **`surfH` was short in every type-6/0xd cell** (two land masks) | `RE_zone_landform.md` | `gate_zone_landform` 22/22 |
+| 07-26 | the camp **descriptor** is derived; `+0x20` is the region mission counter | `RE_camp_descriptor.md` | `rederive_campdesc` 693/693 |
+| 07-26 | the **type-6 3×3 knoll grid** at `0x51aa57` — nine draws no port modelled | `RE_zone_tail.md` | (folded into the above) |
+| 07-25b | **emitter B is the dense-forest tree pass** — already bit-exact; the "gap" was the rig's own filter | `RE_zone_tail.md` | `gate_zone_tail` 6,558; `rederive_zonepropsb` 5/5 |
+| 07-25 | the odd-parity `FUN_004e0740` props; village paths are CW's own cosine groove | `RE_zone_props.md` | `rederive_zoneprops` 5/5 |
+| 07-25 | the site-kind grid in cwgen; the town generator on the derived lattice | `RE_site_kind_grid.md`, `RE_town_props.md` | `rederive_sitekind` 116/116; `rederive_townlattice` 16228/16228 |
+
+**Corrections inside those that are easy to re-break.** Each was a real bug, and each maps
+to a numbered lesson above:
+
+* the odd-parity retry loop draws **Y first** (`0x51cbbb`) then X (`0x51cbfc`). Both ports
+  had them swapped — found and re-found in three files on three separate occasions (27).
+* **`ftol` truncates** — it is `_ftol2`, not a rounding (16).
+* the landform 742-loop is **X-outer, Z-inner** (13).
+* the site list is **never** seeded with feature-cell centres (28).
+* `surfH` multiplies the **second** land mask `[ebp-0x12f4]` inside types 6/0xd (4).
+* `cw_seed.configure()` must re-point `cw_featuregrid`, and nothing may cache
+  seed-derived tables at import (29).
+
 ## YOUR TASK
 
-**The next slice is a PORT, not new RE.** Everything below is already gated in this repo; none
-of it needs another capture session.
+### The next slice: emitter C
 
-0. **Already landed (2026-07-25, RatForge `3c2f7a2`, `14ab5f5`, `8aacb8d`)** — read these
-   before re-doing them:
-   * **the site-kind grid is in cwgen** (`CwFeatureGrid.cpp`), gate `rederive_sitekind`
-     **116/116**. cwgen already had kinds 3 and 4 derived independently (type-0xE → 3,
-     type-0xA → 4, which cross-checks `RE_site_kind_grid.md` from the other end); the TOWN
-     kind was missing and its old note called it a "2×2 quad", which is wrong.
-   * **the town generator is rebuilt on the derived lattice** (`CwTown.h` + `Towns.cpp`),
-     gate `rederive_townlattice` **16228/16228** — every live town-builder record lands in
-     the plot the shipping header predicts. Three corrections: the lattice is anchored to
-     the ZONE not the cell, a town spans its cell's whole 8×8 TILE (measured live: 25/25
-     zones ran the builder, 9 emitted), and the falloff is the WARPED one. Houses now sit
-     on their 3×3 × 13-block module grid (origin + 39/2), not the plot centre.
-   * Still **faithful, not exact**, and marked so in the code: which plots come out
-     buildable. Plot minH/maxH are region-cache-blocked, so the binary's exact `>16`
-     flatness reject is kept and the rest is scored against cwgen terrain.
+**A port, not new RE.** Emitters A and C are the two overworld emitters still un-ported;
+take **C** first, because it is the one with live coverage. `RE_zone_emitters_ac.md` has it
+gated already — `gate_zone_ac.py` sees **381 street lights from 6,523 rolls**, the
+finished-zone walk accounting for 6,003 of them (92%), exact in 66 zones. What is missing
+is the cwgen half.
 
-1. **Port the overworld/town PROP PLACEMENT into `cwgen`.** `CwPropEmit` (gate
-   `rederive_props` 9273/9273) is only the emitter *library* — `--proptest` says so out loud:
-   *"placement = the town/dungeon driver"*.
-   ✅ **DONE (RatForge `1585e6a`): the odd-parity `FUN_004e0740` props.** `zoneScatterProps`
-   emits stage 1's campfire and stage 2's four candidates with their real ids; gate
-   `rederive_zoneprops` **5/5** replays the stream ab-initio and lands the anchor on the live
-   16.16 position. ★ It also found a genuine bug in **both** ports: the retry loop draws
-   **Y first** (`0x51cbbb`) then X (`0x51cbfc`), and C++ *and* `cw_decoration.py` had them
-   swapped — the Python's own comment named the two return addresses in the right order
-   beside variables assigned the other way round. Not cosmetic: the accepted site is what the
-   mat-38 pass rejects rocks against, so fixing C++ alone broke `rederive_zonescatter` 16/17
-   against a golden the old Python had generated. Both fixed, golden regenerated, 17/17.
-   Settled on live data (8/8 zones), not by reading harder.
-   ✅ **RENDERED (RatForge `b44fdcc`)**: `src/worldgen/ZoneProps.cpp` turns the records into
-   instances and `VegScatter` gathers them, so campfires/tents/tables/stools/mats appear.
-   `--proptest` now covers PLACEMENT, not just assets — 4,608 columns of 72 odd zones,
-   43 props, deterministic.
-   ✅ **VILLAGE PATHS are CW's own (RatForge `7ef7ae6`)**: the engine had an invented
-   ground DISC, which the tile-wide town rebuild blew up into a brown landscape. CW has no
-   town road segments — its paths are the cosine groove `FUN_0052d990` carves wherever the
-   road field is non-zero, which cwgen already applies to the HEIGHT. `villagePath()` shares
-   that derivation so colour cannot drift from geometry. ★ First cut thresholded the raw
-   groove depth and covered **60%** of a village (a dirt field); normalising by strength —
-   `-cos(..)` of the nearer axis, i.e. distance to a trough CENTRE — gives ~20% and a path
-   grid. `--towntest` now fails above 60% so it cannot regress silently.
-   ✅ **EMITTER B DONE (2026-07-25b), and the block it was behind was a MISREADING.**
-   The previous note here said emitter B, the camp populator and emitter C sat behind an
-   un-RE'd stage — "twelve unmodelled rand sites plus something spending thousands,
-   almost certainly the ground-plant scatter". Every number in that note is right; the
-   identification was wrong. The span `0x51d396`-`0x51e5c7` is the **dense-forest tree
-   pass**, which this repo has had bit-exact for months (`cw_forest.py` / `CwForest.cpp`
-   / `FOREST_TREE_BUILDER_513760.md`): the twelve sites are the 14x14 candidate loop's
-   own, and the thousands of draws are `lib_fn_513760`'s — **counted but not recorded**,
-   because `frida_zone_props2.py`'s `inRange` filter only keeps return addresses inside
-   the zone-builder body. The capture already held the proof.
-   ★ **DURABLE: a filtered capture's own filter is part of the measurement.** A gap
-   between recorded draws is not evidence of an unknown stage until you check whether the
-   rig would have recorded a known one. Reading the per-draw RETURN ADDRESSES out of the
-   capture settled in minutes what a search over draw values had mis-attributed.
-   Landed: `Docs/RE_zone_tail.md` + `tools/gate_zone_tail.py` (**6,558 checks**, 28 even
-   zones — including a state-machine replay of all 5,488 candidates' branch structure),
-   and in the engine `CwForest::zoneReplayTail` + the even branch of `zoneScatterProps`,
-   gate **`rederive_zonepropsb` 5/5** over **115 live trees with every stream index
-   exact** on seed 42069 (a world the forest port had never been run against). The gate
-   checks four numbers per zone — pre-chain draw count, emitter B's absolute stream
-   index, tree count, record — so a failure says where the drift is.
-   ★ Two corrections it forced: (1) the forest replay's terrain store read
-   `surface_placer`'s cover material, but a **slope-blended column gets rock 6** wherever
-   the slope weight > 0.5 (`surface_assembly`, L880) — identical on flat ground, which is
-   why every "flat/dry" test zone missed it, and worth **18 phantom trees** (59 vs 41) in
-   the one zone that reaches into a type-0xA feature cell. **A gate that only runs on
-   flat terrain does not cover cover selection — and the bug was in what the tree pass
-   READS, not in the tree pass.** (2) the temperature probe is at the cell origin **+8**,
-   not +2, in both axes; the climate field is flat over 6 blocks so the live capture
-   cannot tell the two apart — only the disassembly can.
-   ✅ **THE CAMP DESCRIPTOR IS DERIVED (2026-07-26), and the grid is ported.** The camp
-   populator picks its KIND with `desc[+0x20] % len(kindList)` and spends no rand doing
-   it, so that one field decided everything a camp is — and both camp gates read it out
-   of the capture. It is the region's **mission counter**: seeded by the region's third
-   setup draw (`rand()%10000`, which `cw_featuregen` already modelled as `local_2ac`) and
-   advanced by `1 + rand()%0x32` per popped Loop-C candidate, each cell keeping the value
-   from BEFORE its own advance. `+0x24` is the cell level, `+0x28` the count sub-switch.
-   **52/52 cells, 198/198 firings.** Landed: `Docs/RE_camp_descriptor.md`, the two Python
-   gates now derive the descriptor (13,082+3,861 and 3,138 checks), and in the engine
-   `FeatureCell::mission` + `CwZoneCamp` (`rederive_campdesc` **693/693**,
-   `rederive_campgrid` **15,486/15,486**, `rederive_campstream` **2/2**).
-   ★ **When a derived quantity is off by a per-scope constant, search that scope's own
-   rand log for the constant before theorising about global state.** The per-region base
-   looked like a session-global counter for an hour; it is draw #1 of the region stream.
-   ⚠ **AND IT FOUND THE THING THAT NOW BLOCKS THE WHOLE CAMP PATH.** Reaching the lattice
-   ab initio needs the zone replay, and **the replay drifts in zones whose descriptor is a
-   present feature cell** — 12 of 14 measured, 2 to 629 draws, in BOTH directions, types
-   6/7/0xb/0xc/0xf. Every zone the replay was ever proven on has a descriptor of type
-   0/0xa/0xe (or type 2, now proven by two zones). A camp only fires in the other classes,
-   so **98 of 99 live firings are unreachable** and the populator cannot be ported until
-   this is fixed. `zoneTreeExact` was narrowed to what is proven; `cw_forest.py` still uses
-   the wider rule, so `rederive_forest` now REPORTS the one zone the C++ declines.
-   ★ The live stream indices are **recovered, not captured**: msvcrt's rand is a plain LCG,
-   so stepping it from the zone seed until a recorded draw run appears pins the absolute
-   index. That is what turned "the port's draws are wrong" into "the port arrives 37 draws
-   early", and what splits pre-chain drift from tree-loop drift.
-   ✅ **THE DRIFT IS SOLVED FOR TYPE 6 (same day).** The capture above was run at zone
-   (32792,32748) and answered in one shot: its whole live pre-chain is **22 draws**, and
-   the first nine are at `0x51aa86` — **a 3x3 grid of ground knolls gated on
-   `desc->type == 6`** (`0x51aa57`) that runs before everything else in the pre-chain and
-   that no port modelled and this repo's stage map never listed (it fired in 2 of the old
-   56 zones, where 18 draws read as noise). Decode in `RE_zone_tail.md`. Ported: that zone
-   is now **pre 22/22 and lattice 1214/1214 ab initio**, and of the zones cwgen declines
-   **13 reproduce all 39 lattice draws**, up from 2.
-   ★ **The rig's draw index is not the zone's** — `frida_zone_props2.py` stamps a
-   process-global counter and does not hook the zone's `srand`. Locate any recorded run in
-   the zone's own LCG stream and every stage's ABSOLUTE position becomes readable; that is
-   what made a 22-draw pre-chain legible at a glance, and it is worth doing FIRST on any
-   future capture from that rig.
-   ✅ **THE LANDFORM PREDICATE IS FIXED AND TYPE 6 IS ADMITTED (2026-07-26b).**
-   `Docs/RE_zone_landform.md`, gate `tools/gate_zone_landform.py` (22/22). It was never
-   the predicate: **`surfH` was short inside every type-6/0xd feature cell**, because the
-   zone builder keeps **two land masks** and both ports had one. `[ebp-0x12d8]` (what
-   `FUN_00523d80` returns) multiplies `term_a` in surfH and `inner`/`fb` in the predicate;
-   `[ebp-0x12f4]` — that value plus a deform the builder applies *itself* for types 6/0xd
-   (`0x518e6e`-`0x518fd3`) — multiplies the ROUGHNESS, so it feeds surfH's second term,
-   the slope weight (`0x51904e`) and the flat-rock weight (`0x5192fa`). Zone
-   (32795,32748)'s tallest relief came out **1.71 against a 2.0 cliff threshold**, so not
-   one of its 110 G1-G3 columns passed G4.
-   ★ **It was an UN-fix, not a discovery.** `CwColumn::roughBlend` carried exactly this
-   block until commit `08c8b67` deleted it as a "type-6/0xd roughness boost", reasoning
-   correctly that `cw_height.roughness` has no feature term — but the term was never in
-   the roughness, it is in the land mask that multiplies it. **"X has no feature term"
-   does not license deleting a feature term sitting next to X**; check which factor of
-   the product the evidence is about.
-   Proof: zone (32795,32748) replays its landform pass **16/16 draw values in order, ab
-   initio from the zone seed** (the predicate must pick exactly 15 of the ~9,300 columns
-   the stride samples), plus an independent live check — the same capture's settle
-   records put four columns of that cell on the known `surfH + 2` convention where the
-   old surfH was 3-5 blocks under. Blast radius measured: of `rederive_deform`'s 52,897
-   feature columns across 12 types, **1,252 moved and every one is type 6**.
-   Landed: `CwColumn::roughBlend` (+`SurfInfo::roughSum`/`specialLr`),
-   `CwZoneScatter::landformQualifies`, `CwWorldGen::dryColumnSurface`,
-   `cw_featuregrid.builder_lm_lr`, `cw_column`, `cw_forest`, `re_landform`. Result:
-   `zoneTreeExact` claims `{absent,0,2,6,0xa,0xe}`, **`rederive_campgrid` replays 7 zones
-   ab initio (was 1) = 273 live draw values, `rederive_campstream` 4/4 (was 2/2)**, whole
-   `cwgen_test` suite green.
-   ★ Also fixed in passing: **`re_landform` was pinned to seed 444444 at import** — its
-   `BASE`/octave tables were computed once, so a landform pass on any other world silently
-   used 444444's terrain. It never bit because every non-444444 zone the replay had run on
-   had zero qualifying tiles. It now re-syncs to `cw_seed.SEED` on every call, and
-   `zonescatter_oracle.py` (which rode on the import side effect) configures 444444
-   explicitly. **A module that caches seed-derived tables at import is a global-state bug
-   waiting for the first caller who changes the seed.**
-   ✅ **THE REST OF THE TYPE-GATED PRE-CHAIN IS READ (2026-07-26c) — AND IT IS NOT THE
-   DRIFT.** `Docs/RE_zone_tail.md`, gate `tools/gate_zone_prechain.py` (**50/50**).
-   `0x51ad52` is shared by types 0xd **and 4**; it scans a column top at the cell centre
-   and **discards it**, spending **zero draws**. That is not "no draws were recorded" but
-   a property of the binary: an EXHAUSTIVE rand-site census of `0x51a000`-`0x51b200`,
-   resolving `call <reg>` as well as `call [&rand]`, finds exactly 18 sites and the stage
-   map accounts for all of them. So the standing expectation in this file — "type 0xd is
-   the other half of the land-mask deform's gate, expect the same class of drift and the
-   same one-run fix" — is **falsified**: the stage has no way to move anything.
-   ★ Two genuinely new stages turned up beside it, and both were unmodelled everywhere:
-   **type 0xb** (`0x51ae29`, 1 draw, one radius-100 knoll at the zone centre) and
-   **type 0xc** (`0x51af34`, 1 DISCARDED draw, one GIANT tree 80x80 — builder tree type 6,
-   which is what `cw_forest.py`'s docstring had already guessed "zone-cell 0xc only"), and
-   both then `jmp 0x51b101`, **past the gen-scatter's count draw**: such a zone runs no
-   gen-scatter at all. All three need the zone to hold the cell's CENTRE (1 zone in 64).
-   ⚠ **They do NOT explain the 0xb/0xc drift.** Not one of the 14 drifting zones holds
-   its cell's centre, so the game takes the `jne` there exactly as the port does. The gate
-   asserts this so it cannot be silently re-opened. **Types 7 / 0xb / 0xc / 0xf are still
-   unexplained — but the cause is now known not to be a missing pre-chain stage.**
-   ✅ **The gen-scatter's own guard is real and both ports had dismissed it.** `0x51b05a`
-   reads the per-zone **SITE-KIND** byte (not the feature-cell type) and skips the whole
-   pass for kinds 1/3/4. `cw_forest.py`'s note said the guard read "a 0x10-stride record
-   byte, NOT the zone's feature cell" — true, and the 0x10 stride *is* the site-kind
-   grid's entry size. The capture decides it: of 56 zones exactly one has a non-zero
-   derived site kind and exactly that one spends zero gen-scatter draws — **56/56**.
-   ★ **DURABLE: "the guard reads a different table than I assumed" is a reason to find
-   out which table, not to drop the guard.**
-   ✅ **THE PRE-CHAIN HAD THREE MORE UNFIXED DUPLICATES.** `cw_forest.py` never had the
-   type-6 knoll grid at all, and `CwZoneScatter`'s `zoneScatterRocks` /
-   `zoneScatterProps`(odd) / `zoneScatterBlobs` each srand the zone and go straight to
-   `replayGenScatter` — so every type-6 zone `classifyZone` calls Exact was 9+ draws out
-   in four places. They now share `CwZoneScatter::replayPreChain`, which declines
-   (new `ZoneClass::Feature`) any zone whose pre-chain stamps terrain a store-free replay
-   cannot follow. Third instance of the duplicated-routine lesson.
-   ✅ **AND WIDENING `rederive_forest` PAID FOR ITSELF TWICE.** `forest_oracle.ZONES`
-   gained a type-6, a type-0xb-centre and a type-0xc-centre zone. (1) `cw_forest.py` had
-   **hardcoded the mat-38 boost to True** for the life of the file —
-   `cw_decoration._boost if hasattr(...) else True`, and `cw_decoration` has no `_boost`
-   (it is in `cw_genscatter`), so the loop drew `rand()%10 + 10` where the server draws
-   `rand()%10`. Every zone the file had run on happened to have boost=True; the first
-   boost=False zone arrived **50 draws late**. ★ **A silent `hasattr` fallback is a branch
-   no gate can see.** (2) the gate now carries the **pre-chain draw count** on both sides,
-   which turned an ambiguous tree mismatch into `pre{cpp 62 / py 112}` — pre-chain vs tree
-   loop, in one line. `rederive_forest` **6/6 over 8 zones / 245 trees**, and the two zones
-   cwgen declines both replay tree-for-tree under `force`.
-   ✅ **THE SITE LIST WAS INVENTED, AND THE SITE LOOP RETRIES (2026-07-26d).**
-   `Docs/RE_zone_site_loop.md`, gate `tools/gate_zone_siteloop.py` (**228/228**).
-   Two things, both live-proven, found entirely offline by mining the existing captures.
-   (1) The list that the type-6 knoll grid, the mat-38 loop and the tree loop all walk
-   is one `std::list` at `[ebp-0x1378]`; it is `_Buynode`'d with `_Mysize = 0` at
-   `0x51a9a8` and the **only** insert in the whole `0x518630`-`0x522000` body is at
-   `0x51cd56`, when the odd-parity site loop accepts. Both ports had been seeding it
-   with every feature-cell centre in the 3x3 region neighbourhood. Live: 28/28 even
-   zones reject no tree candidate — including (33020,32660), the one zone of the 56
-   that holds its feature cell's CENTRE. Removed from `CwZoneScatter` (`gatherSites()`
-   deleted), `CwForest`, `cw_forest.py` and `cw_decoration.py`; every gate stayed
-   green, which is the point — it had never mattered anywhere a gate looked.
-   ★ **DURABLE: a list you build yourself is an input you invented.**
-   (2) `FUN_004e0740` spends 1 draw (`rand()&3`, `0x4e0825`) and then sweeps a 3x3
-   anchor grid through `Prop_settleOnTerrain`; if nothing settles it returns false and
-   the caller redraws, **up to 10 times** — 3 draws per failed iteration, 11 on accept.
-   Both ports encode "accepts on iteration 1". Measured against the sweep: **10 of the
-   28 odd zones retry** (2, 3, 4, 5, 6 and 10 iterations) and **2 accept nothing at
-   all**, leaving the list empty. The arithmetic `draws == 3*iters + 8*accepted` holds
-   in all 28. ★ **DURABLE: a replay that models a CALLEE as a constant has an
-   unmodelled branch.**
-   ✅ **`Prop_settleOnTerrain` IS PORTED (2026-07-26e)** — `FUN_005287b0`, both
-   engines, `Docs/RE_zone_site_loop.md`. It is a **3x3 FLATNESS test**: drop ≤50
-   blocks to the first solid, raise ≤50 while solid, reject if `y16 <= 0`, then (with
-   the support flag the site loop passes) reject unless EVERY column of the footprint
-   is solid one block below, and finally accept iff the settled block is not water.
-   The campfire is 2.4x2.4 and the site loop's anchor carries +0.5 block, so the
-   footprint is exactly 3x3 — which is why a candidate on a slope is rejected and the
-   loop redraws. Landed: `cw_forest.prop_settle_on_terrain` / `zone_site_loop`,
-   `Store.block_class` / `record_top`; `CwForest::propSettleOnTerrain` /
-   `zoneSiteLoop` / `Store::blockClass` / `recordTop`, plus `featureFalloff16` (the
-   anchor's half block would be dropped by a block-coordinate call).
-   **Measured: on every odd zone the port reaches at the LIVE draw index it predicts
-   the live iteration count and accept flag exactly, 15/15** — including both zones
-   that accept nothing after all ten tries. `cwgen_test` all-pass, hash unchanged
-   (`B83C43DC55DA6A42`), and `rederive_campgrid`'s declined-zone lattice reproduction
-   went **7 → 11**.
-   ⚠ **The three STORE-FREE replays in `CwZoneScatter` cannot follow the retry** — they
-   never stamp the gen-scatter's knolls, so they do not have the terrain the settle
-   reads. They now run the settle on BARE terrain and **decline** (`ZoneClass::Feature`)
-   any odd zone whose first candidate would not settle, instead of silently emitting a
-   wrong stream. `rederive_zoneprops` is still 5/5, so no coverage was lost.
-   ⭐ **AND IT MEASURED A NEW THING: odd zones drift UPSTREAM of the site loop.**
-   13 of the 28 odd zones reach the site loop at a different draw index than the live
-   server, with descriptors of type 0xa/0xe — the class every earlier gate called
-   proven. Not new drift, **newly measured**: `gate_zone_tail` runs 28 EVEN zones,
-   emitter B *is* the even branch, and the odd-zone gates replay the captured draws
-   rather than deriving them. `RE_zone_site_loop.md` carries the recovered LIVE
-   site-loop start index for all 28 odd zones — diff the port's own pre-site-loop draw
-   count against that column and the drift is localised in one run.
-   ✅ **AND THAT IS EXACTLY WHAT CLOSED IT (2026-07-26f). 13 drifting zones -> 4.**
-   `Docs/RE_zone_landform.md`, gate `tools/gate_zone_landform_order.py` (**187/187**).
-   Two causes, both upstream of the site loop, neither of them the site loop:
-   (1) **the landform 742-loop iterates X-OUTER, Z-INNER** and `cw_decoration.
-   landform_pass` ran it transposed. Transposing preserves the qualifying-tile SET, so
-   it preserves the keep-roll COUNT — which is why every landform gate in this project
-   stayed green, including `gate_zone_landform`'s own 22/22. It changes which TILE each
-   roll lands on, and a tile that keeps runs a switch whose cases 0/1 spend inner draws
-   gated on that tile's own `surf <= sh`. The capture holds 161 such decisions over 18
-   odd zones: **161/161 on the binary's order, 106/161 on the port's**. The binary's
-   loop tail names both variables (`0x51a902` inner on `[ebp-0x12c8]` = Z, `0x51a91e`
-   outer on `[ebp-0x1318]` = X) — the same slot pair the 2026-07-26 G5 stride fix
-   identified, which corrected the FORMULA and left the ORDER.
-   ★ **DURABLE: a predicate that scores WORSE than a constant is not a wrong formula,
-   it is misaligned rows.** 106/161 against a 112/161 null baseline said "uncorrelated",
-   which moved the search from the predicate to the enumeration and found it in one run.
-   ★ **DURABLE: transposing a loop is invisible to every gate that counts.** If the
-   only observable is a total, order is a free parameter; it took a PER-TILE observable
-   (the switch's inner draws) to see it at all.
-   (2) the remaining **4** zones are the ones running the **river/lake bed pass**
-   (`0x51c09a`), which no port models — and each drifts by *precisely* its own
-   `bed + mat6` draw count (3203, 2614, 451, 959), so nothing else is missing upstream.
-   Its arithmetic is now settled offline: 1 draw per bed column, `rand() % 200`,
-   appending the mat6 list that `0x51c313` consumes 3-per-entry — the count of recorded
-   draws ≡ 0 mod 200 equals the append count in all 8 zones that run it. **Only the
-   bed-COLUMN geometry is left.**
-   ⚠ **It also found the classifier answering about the wrong world.**
-   `cw_forest.zone_tree_exact` lazily imports `zonescatter_oracle`, which configures the
-   toolkit for **seed 444444** at import; nothing undid it, so the first call on any
-   other world moved `cw_seed`/`cw_gate`/`cw_height`/`cw_river`/`cw_color`/
-   `cw_featuregrid` to 444444 and then answered about 444444's zone. Measured on 42069:
-   it returned `exact=True` for (32793,32790), a zone whose live landform pass spends
-   785 draws. Fixed by saving/restoring around the import; `cw_seed.configure()` now
-   also re-points `cw_featuregrid` (it never did, so cw_height's octaves and the feature
-   cells could silently belong to different worlds).
-   ★ **Third instance of the seed-at-import bug**, and note the shape: the caller that
-   trips it is a **classifier**, so its wrong answer reads as a policy decision rather
-   than a failure.
-   ✅ **THE RIVER/LAKE BED PASS IS DONE (2026-07-26g). THE UPSTREAM DRIFT IS ZERO.**
-   `Docs/RE_zone_tail.md`, gate `tools/gate_zone_bed.py` (**44/44**). One rand per
-   riverbed column at `0x51c094`, `rand() % 200 == 0` appending the mat-6 list that
-   `0x51c313` consumes 3 draws at a time; the bed-column predicate is EXACT in all
-   eight captured zones (445 / 950 / 1,273 / 2,408 / 2,578 / 3,149 / 12,563 / 14,110
-   live draws) and so is every append count. Landed in both ports
-   (`cw_forest.river_bed_pass` / `river_mat6_stamp`, `CwForest::riverBedPass` /
-   `riverMat6Stamp`), and river zones are now ADMITTED by both classifiers.
-   Result: **`gate_zone_siteloop --ab-initio` 28/28 with NO zone excluded** (was
-   24/28; gate 252 -> **256**) — the odd-parity upstream drift, 13 zones when first
-   measured, is closed — and `rederive_campgrid` replays **13** zones ab initio
-   (was 7), the four extra being river zones spending up to 8,544 bed draws and 36
-   appends and each landing its live camp-lattice index exactly.
-   ★ **The bed fires iff no water was just written over it** — `carveTop > terrace`,
-   i.e. `frac <= 0.1 or frac >= 0.7` where `frac = (max(bh,0) mod 5)/5` — **and the
-   block already at `bedY` is not water.** That second clause was invisible in seven
-   of the eight zones: only ocean-side (32610,33111) has columns whose `bedY` sits
-   above the terrain record at or below sea level, and it has exactly **1,540** of
-   them, which is exactly the over-count geometry alone produces. Same shape as
-   "a gate that only ran on flat ground does not cover a slope".
-   ★ **An exhaustive rand census of `0x51b467`-`0x51c313` finds ONE site**, so the
-   shore/road nest at `0x51b470` that runs just before is provably stream-free — a
-   closed door, worth the same as a finding.
-   ✅ **AND THE RESIDUAL IT EXPOSED IS FIXED TOO (2026-07-27): the site list carries a
-   HALF BLOCK.** Admitting rivers made `rederive_campgrid` claim zone
-   **(32795,32744)**, which landed 12 draws short. Localised by elimination first — the
-   zone has only 19 gate-passing columns and spends all 19, appends none, its terrain
-   writes move no upstream index, and with the bed pass **absent** it lands at 1206
-   against the same live 1200, so the residual predated the slice — then read out of
-   the binary. `0x51cf20` (mat-38) and `0x51ded7` (tree loop) run the **same
-   computation instruction for instruction**, and it tests in **16.16 against the site entity's own
-   fraction**: `X<<16` minus the node's stored 16.16, `fild`'d to f32, scaled by
-   `[0x55869c]` = 2^-16, squared, `< 1600.0`. `0x51cd56` appends the record
-   `FUN_004e0740` was handed — `{int64 x16, z16, y16}` with the `+0x8000` that makes
-   the settle footprint 3x3 — so the real test is `(dx-0.5)^2 + (dz-0.5)^2 < 1600`, and
-   dropping the fraction moves d² by up to `2*|d|` = 80 at the 40-block ring.
-   **Both ports compared block integers, in FIVE places.** The type-6 knoll grid walks
-   the same list and always had the 16.16 form — the two consumers that can actually
-   see a non-empty list did not. Another instance of *grep for the duplicate*, with the
-   twist that the copy which was RIGHT is the one that never runs.
-   ★ **A branch needs BOTH a non-empty list and a candidate in a ~3-block band.** The
-   list is non-empty only in odd zones that accept a site, and no gate had a candidate
-   in the flip band until the bed pass made this one zone reachable. Result:
-   `rederive_campgrid` **15990/15990** with all 13 zones exact, and — the corroboration
-   that matters — the declined zones reproducing all 39 draws under FORCE went
-   **17 → 20**, which a coincidental index match could not do.
-   ⚠ **Both port-produced goldens were regenerated before any of this was believed.**
-   `rederive_zonescatter.bin` comes back byte-identical (no candidate in the flip band
-   in its 17 zones); `rederive_forest.bin` **changed** — odd zone (32800,32799) goes
-   54 -> **55** trees, the golden total 245 -> **252**. The old golden and the old C++
-   shared the bug, which is why that gate was green through it.
-   ★ Also pinned in passing: `node+0x08 = x16`, `node+0x10 = z16` (`RE_zone_site_loop.md`
-   §1 had the axes swapped) — from the tree loop's own clamp against `[ebp-0x1358]`, the
-   X base the bed pass pinned as `writeVoxel`'s first argument, and independently from
-   the record layout (`cand` reads `y16` at byte 16, so 0/8 are x16/z16).
-   ⚠ **The mat-38 spawn test at `0x51cedb` cannot settle an axis question** even though
-   it looks like it can: this world's spawn has X == Z (8396928, a single scalar in both
-   ports), so either component minus either coordinate is the same number.
-   ⚠ Don't repeat this dead end: sweeping "how many draws would land 1200?" is
-   **aliasing** — that zone's lattice values are quantised to ~6 over a ~70-wide range,
-   so spurious matches are common (2 in the first 14 samples). The disassembly is what
-   settled it; the index match only confirmed it.
-   ✅ **THE CAMP POPULATOR IS PORTED (2026-07-27). `FUN_005104e0` is done end to end.**
-   `Docs/RE_5104e0_camp.md`, `tools/gate_zone_camp.py` (now **4,340** checks, the new
-   block being **1,598 RECORD** checks), and in the engine `CwZoneCamp::campPopulate` +
-   `ZoneTailState::propSettle`, gate **`rederive_camppop` 3111/3111**. The model names
-   each `rand()`'s CALL SITE before it may read the value and each
-   `Prop_settleOnTerrain` call's whole record before it reads the verdict, then produces
-   every live prop and every live `Spawn` field by field — 30 props, 254 spawns, 99
-   zones, both engines.
-   ⚠ **Its gate is deliberately NOT ab initio, and finding out why is the result.** Of
-   the 99 live firing zones, the 13 cwgen replays from the seed reach the populator with
-   an **EMPTY candidate list — all 13**. They are the zones far from their feature, which
-   is exactly why their tree pass is replayable. An ab-initio gate over them would call
-   the populator 13 times on nothing and report green; so `rederive_camppop` drives the
-   port with the live stream (the `rederive_itemgen` design) and reachability stays
-   measured by `rederive_campgrid`. ★ **Check what a green gate would actually FEED the
-   port before choosing its design** — this is lesson 27 caught in advance instead of
-   after. It is not unreachable in general: a 24x24 sweep has 144 zones take the camp
-   path, 20 replayable, **4 of those emitting** (7 props, 18 spawns), and the gate prints
-   that number every run.
-   ★ **`local_420` is a SPECIES list, not the "prop-id list" the doc called it.** No prop
-   the populator emits ever carries a value from it — the only ids it writes are the
-   hardcoded `0x41` anchor and the four scatter ids. It is read twice: the emptiness test
-   that routes a structure branch to the creature branch (`0x511ba9`) and the camp ring's
-   own species draw (`0x5128a4`). Falsifier: 108/108 ring creatures carry a species from
-   it, one command over the existing captures.
-   ★ **AND IT SETTLED A HELPER BOTH PORTS HAD WRONG: `ftol` TRUNCATES.**
-   `FUN_0054a946` is MSVC's `_ftol2` — `fistp` rounds to nearest, then the function
-   corrects the result back **toward zero**. `cw_forest.py`'s `_round64`/`_ftol_round` and
-   `CwForest.cpp`'s `round64` implemented round-half-even and called it "the x87
-   default", which is true of `fistp` and not of the function; `cw_feature.py` has had it
-   right by direct-call all along, so the project carried both readings side by side.
-   The camp ring is the first consumer compared at full 16.16 against live data: **68 of
-   its 108 coordinates land on a fraction and round-to-nearest misses every one by
-   exactly 1**, in both directions. Blast radius measured BEFORE believing it: **91,021 of
-   the 133,408 `round64` calls in the suite have a fractional argument** and the suite is
-   **byte-identical either way** — output hash unchanged, both port-produced goldens
-   regenerate byte-identical — because every result there is a 16.16 coordinate and the
-   error is 1/65536 of a block. Fixed in both ports anyway.
-   ★ **DURABLE: a helper can be wrong in 68% of its calls and invisible to every gate**,
-   if its result is only ever consumed at a coarser resolution than the error. Ask what
-   resolution a value is *compared* at, not how often it is computed.
-   ▶ Still missing — **which emitter fires where** for the rest:
-   * descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined, and
-     the search space is now much smaller. **Ruled out this session:** a missing
-     pre-chain stage (the rand-site census is exhaustive), a missing terrain deform
-     (the ONLY descriptor-type gate in the whole column prologue `0x518630`-`0x51a300`
-     is the `6`/`0xd` pair already ported; `World_objectFalloffWeight`'s 0xb/0xc/0xe/0xd
-     special cases and `base_height`'s type-0xb ocean-repulsion exclusion are both
-     already in the port), and a wrong `surfH` — see the free live terrain probe below.
-     **The live candidate is the site-loop retry**, and the parity correlation is
-     total: **all five still-drifting zones are ODD** ((32726,32791) 0xf,
-     (32726,32869) 7, (32752,32765) 0xb, (32856,32739) 0xc, (32869,32726) 0xb), while
-     5 of the 7 zones `rederive_campgrid` replays ab initio are EVEN — where the site
-     loop does not run at all — and the 2 odd ones that do replay are exactly what a
-     first-iteration accept looks like. A misplaced site moves ~15 of the tree loop's
-     196 candidates between
-     the 2-draw and the 6+-draw path, i.e. ±60 draws in either direction before any
-     tree-builder cost — which is the observed magnitude AND the observed
-     bidirectionality. Not proven; it is the thing to test first, and porting
-     `0x5287b0` is how.
-   * ★ **A FREE LIVE TERRAIN PROBE, no capture session needed.** Every camp-capture hit
-     carries a `cand` vector — the accepted lattice cells as `FUN_005104e0` sees them,
-     `0x18` bytes each = int64 `x16`, `z16`, `y16`. `y16 >> 16` is the finished world's
-     surface at a known column, with no rand stream involved. Over 27 zones and types
-     3/4/6/7/0xf the port sits on the known `surfH + 2` convention (the outliers all
-     read HIGH — the candidate settled on a knoll, a rock or a tree). Type-0xf zone
-     (32843,32817) samples terrain at **-19/-31/-33** and matches at +2, so deeply
-     negative terrain is REAL — two of the drifting zones sit at surfH ~ -85 and that
-     looks like a port bug until this is checked. (The tree loop's own `top < 0` bail
-     is real too: `test ecx,ecx / js` at `0x51e462`.) Use this before asking for
-     another live session.
-   * ~~the rest of `camp_populator`~~ — **DONE, see above.** The one soft spot left is
-     the waypoint NEIGHBOUR PREDICATE (`25 < dx² + dz² < 16384` in f32 over the 16.16
-     deltas): its only observable is whether the list is empty, so the thresholds are
-     read statically and only the empty/non-empty split is live-proven (141/141 draws,
-     47 of 48 creature branches non-empty). Kind **7** still never came up in 99 firings.
-   * ~~the camp's RENDERING half~~ — **DONE (2026-07-27b).** `vx::columnCampProps`
-     (`src/worldgen/ZoneProps.cpp`), wired into `VegScatter` beside the odd-parity
-     campsites, cached per zone like `zoneStoneBlobs` because `zoneCampPopulate` replays
-     the whole zone stream and 64 columns touch each one. The five camp ids are the same
-     five the campsite emitter uses, so they share `zonePropModelName`. `--proptest` covers
-     it: it asks the populator which zones emit, then requires the render path to return
-     every record for its owning column (**5/5**, one emitting zone in a 32x32 sweep).
-     ★ **Unlike the campsite path it does NOT re-settle.** `columnZoneProps` re-derives Y
-     from the bare surface; the camp records already carry the `Y16`
-     `Prop_settleOnTerrain` left against the zone builder's own store, and that field is
-     gate-proven against the live server (`rederive_camppop`), so re-settling would replace
-     the game's answer with a worse one.
-     ⚠ **AND IT MEASURED A REAL ENGINE GAP, in the INPUT again (lesson 17/20b/21).**
-     Probing the one emitting zone: every candidate sits at exactly `storeTop + 1`, and
-     while 12 of its 17 columns have `storeTop == bare surface + 1`, the other **5 carry
-     +3/+8/+24/+37/+45 blocks of pre-chain stamp**. The engine grows its own knolls and
-     rocks from `ForestBlobs` / `StoneBlobs`, whose PLACEMENT is explicitly faithful and
-     not bit-exact — so the server's bump and the engine's are not in the same place and a
-     camp prop can end up over flat ground. **The fix is to make the engine's stamps
-     bit-exact, never to move the prop.**
-     ★ **Two wrong readings on the way, both caught by measuring instead of reasoning.**
-     First "the props stand on tree canopies" — falsified in one run by streaming the
-     zone's tree voxels (`treeTop=none` under all five). Then "the engine does not render
-     the stamps at all", read off `Store`'s comment that only tree fills reach the render
-     sink — **wrong, because knolls and rocks reach the mesher by a different path
-     entirely** (`ForestBlobs`/`StoneBlobs` stamp them into the terrain chunks). Neither
-     bound decides it: bare terrain under-estimates and the per-column blob max is a 32x32
-     over-estimate that reads these same five as 17-19 blocks BELOW the top. So
-     `--proptest` reports the bare-terrain delta as an explicit **upper bound on the
-     float**, not a float count. ★ **DURABLE: a comment about one render path is not a
-     statement about all of them — grep for the other consumers before concluding a thing
-     is not drawn.**
-   * the town chain (its **plot heights are region-cache-blocked**, so the verdict rule is
-     statable but not seed-reproducible — port what is derivable and stop there);
-   * emitters A and C, and the site-kind grid they gate on.
-   Suggested order: **camp → C**, both now reachable — `zoneReplayTail` leaves the stream
-   at `0x51e5c7` and `RE_zone_tail.md`'s table enumerates every rand site between there
-   and them, so each is a decode job like the tree loop was, not a mystery. Then town.
-   Each has a `gate_*.py` here to check the port against.
-   ✅ It also surfaced AND fixed a pre-existing Python↔C++ forest drift: zone
-   `(32800, 32799)` gave 58 trees in Python and 54 in C++ because **`CwForest.cpp` has its
-   own copy of the pre-chain and its odd-parity site draw was still X-first** — the
-   2026-07-25 Y-first fix reached `CwZoneScatter.cpp` and `cw_decoration.py` only. The
-   misplaced site rejected 5 candidates it should not have, and a reject spends 2 draws
-   instead of 6: exactly the 20-draw offset observed. Three filters hid it — the site loop
-   is odd-parity only, `rederive_zonepropsb` tests only even zones, and the golden was
-   stale. `rederive_forest` is now **5/5 with 111/111 trees and 388,538/388,538 colored
-   writes** (was 107/107 / 186,419 against the stale golden).
-2. **Port the dungeon mob pass + boss spawn + light sources** into `cw_rederive`/`cwgen`. All
+⚠ **A is a thinner target than the shared doc makes it look**: the same gate run reports
+**0 runestone circles**. Its arithmetic is RE'd, but that sweep gave it no live instance to
+check a port against, so scope A as "port it, then go find a zone that fires it" rather
+than assuming C's evidence covers both.
+
+It is a decode job, not a mystery: `CwForest::zoneReplayTail` leaves the stream at
+`0x51e5c7`, and `RE_zone_tail.md`'s table enumerates every rand site between there and
+emitter C. Model it the way `CwZoneCamp` models the populator — name each `rand()`'s call
+site before reading its value — and gate it against `gate_zone_ac.py`'s zones.
+
+⚠ Two things that will bite, both already paid for elsewhere:
+* emitter C gates on the per-zone **site-kind** byte, which cwgen derives
+  (`rederive_sitekind` 116/116) — do not re-derive it from the feature-cell type.
+* `lib_fn_4fc140` is thresholded at exactly 0.8 by emitter C's street-light variant *and*
+  by the forest tree builder's type pick. See the open thread below — read the body before
+  labelling it.
+
+### Then, in order
+
+1. **The town chain.** Its **plot heights are region-cache-blocked**, so the verdict rule
+   is statable but not seed-reproducible — port what is derivable and stop there.
+   `gate_town_props.py` currently FAILS and wants triage first (see the short tasks).
+2. **The dungeon mob pass + boss spawn + light sources** into `cw_rederive`/`cwgen`. All
    gated; all pure functions of the finished dungeon voxel stamp, which the port already
-   produces bit-exact — no captured booleans, no order state. Then the engine half of **light
-   emission** (rendering kind-7 / kind-4 records as actual lights), which is RatForge work.
+   produces bit-exact — no captured booleans, no order state. Then the engine half of
+   **light emission** (rendering kind-7 / kind-4 records as actual lights), RatForge work.
 3. **Phase 4 — the infrastructure completeness sweep** (`WORLDGEN_RE_PLAN.md`): the ~84
    `world/logic` functions that are chunk/zone containers, serialisation and `map`/`set`
    storage. Low RE value, no gates needed; the goal is coverage, so no `Unsorted` worldgen
    residue is left.
 
-Smaller open threads, if you want a short task:
+### Open problems
+
+**1. Descriptor types 7 / 0xb / 0xc / 0xf still drift and are still declined.**
+⚠ **Re-measure before hunting — the standing note is stale.** The five-zone list below was
+taken when `rederive_campgrid` replayed **7** zones ab initio; it now replays **13**, after
+the bed pass and the 16.16 half-block fix both changed reachability. The old note also said
+"the live candidate is the site-loop retry, and porting `0x5287b0` is how" — `0x5287b0` was
+ported in 07-26e and the retry is now modelled, so that hypothesis has been actioned and
+its result has not been re-read. Start by re-running `rederive_campstream` /
+`rederive_campgrid` and rebuilding the drifting-zone list.
+
+*Ruled out, and recorded so they stay shut:* a missing pre-chain stage (the rand-site
+census of `0x51a000`-`0x51b200` is exhaustive — 18 sites, all accounted for); a missing
+terrain deform (the ONLY descriptor-type gate in the whole column prologue
+`0x518630`-`0x51a300` is the 6/0xd pair, already ported, and `World_objectFalloffWeight`'s
+0xb/0xc/0xe/0xd cases plus `base_height`'s type-0xb ocean-repulsion exclusion are both
+already in the port); and a wrong `surfH` — see the free probe below.
+
+*The last measured state, for reference only:* all five drifting zones were ODD
+((32726,32791) 0xf, (32726,32869) 7, (32752,32765) 0xb, (32856,32739) 0xc,
+(32869,32726) 0xb), which pointed at the site loop. A misplaced site moves ~15 of the tree
+loop's 196 candidates between the 2-draw and the 6+-draw path, i.e. ±60 draws either way
+before any tree-builder cost — the observed magnitude AND the observed bidirectionality.
+
+**2. ★ A FREE LIVE TERRAIN PROBE — use it before asking for a capture session.** Every
+camp-capture hit carries a `cand` vector: the accepted lattice cells as `FUN_005104e0`
+sees them, `0x18` bytes each = int64 `x16`, `z16`, `y16`. `y16 >> 16` is the finished
+world's surface at a known column with no rand stream involved. Over 27 zones and types
+3/4/6/7/0xf the port sits on the known `surfH + 2` convention, the outliers all reading
+HIGH (the candidate settled on something stamped). Type-0xf zone (32843,32817) samples
+terrain at **-19/-31/-33** and matches at +2, so deeply negative terrain is REAL — two of
+the drifting zones sit at `surfH ~ -85` and that looks like a port bug until this is
+checked. (The tree loop's own `top < 0` bail is real too: `test ecx,ecx / js` at
+`0x51e462`.)
+  * *Corroborated from the other end, on a different seed and one zone only* (07-27b, so
+    do not over-generalise it): replaying zone (32796,32804) on 444444, every candidate
+    sits at exactly `storeTop + 1`, 12 of its 17 columns have `storeTop == bare + 1`, and
+    the other 5 carry +3/+8/+24/+37/+45 of stamp. Trees were **excluded** for those five by
+    streaming the zone's tree voxels — so in that zone the outliers are knoll/rock stamps,
+    not canopy.
+
+**3. The engine's terrain stamps are faithful, not bit-exact.** `ForestBlobs`/`StoneBlobs`
+place cwgen's knolls and rocks with their own scatter, so the server's bump and the
+engine's are not in the same place, and a camp prop that settled on a server bump can
+render over flat ground. **The fix is to make the stamps bit-exact, never to move the
+prop** — a camp record's `Y16` is proven field-by-field against the live server. The
+zone-builder store already computes the real stamps during `zoneReplayTail`; what is
+missing is routing them to a render sink the way tree fills already are.
+
+**4. The camp's waypoint NEIGHBOUR predicate is the one soft spot in `FUN_005104e0`**
+(`25 < dx² + dz² < 16384` in f32 over the 16.16 deltas). Its only observable is whether
+the list is empty, so the thresholds are read statically and only the empty/non-empty
+split is live-proven (141/141 draws, 47 of 48 creature branches non-empty). Camp kind **7**
+still never came up in 99 firings.
+
+### Smaller open threads, if you want a short task
 
 - **`lib_fn_4fc140` is probably misfiled under `_library`.** Two independent worldgen
   decisions threshold it at exactly 0.8 — emitter C's street-light variant and the forest tree
@@ -850,9 +523,19 @@ Smaller open threads, if you want a short task:
   of the zone-scatter modules, so it is independent of the 2026-07-26 work; it wants
   its own triage against the `CwTown` lattice rebuild (RatForge `14ab5f5`).
 
+## Before you start, and before you finish
+
 **Gate data is on disk** — every `raw/*_capture*.json` in this repo, with the rig that made it
 named in the matching `Docs/RE_*.md`. Re-run any gate with `python tools/gate_<name>.py`; they
 read the captures and need no server.
+
+**Establish the baseline before building on it** (a stale build has hidden a broken invariant
+here before): run the gate suite, then `cwgen_test` in **both** Debug and Release —
+`build/cwgen_test.exe tools/cw_rederive/golden_rederive` and the same under `build-release/`.
+The two output hashes must be identical; if `build-release` is stale that check is silently
+not running. Rebuild release with CMake via the VS-bundled toolchain (`build.bat` only does
+Debug). Known-good as of 07-27b: whole suite green except `gate_town_props.py`, hash
+`26EE53FD808A174F`.
 
 ⚠ **The pipeline fixpoint is order-sensitive and destructive if you get it wrong.** Running
 `flirt_islands.py` / `adjudicate_none.py` against an already-structured tree finds nothing and
