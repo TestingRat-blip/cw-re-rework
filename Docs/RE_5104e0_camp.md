@@ -16,7 +16,11 @@ python tools/frida_zone_camp.py --grid  32700 32700 16 13  # sparse: more distin
 python tools/gate_zone_camp.py
 ```
 
-**Gated over 99 firing zones (512 zones swept): 2,742 checks green.**
+**Gated over 99 firing zones (512 zones swept): 4,340 checks green** — 2,742 on the
+branch structure and, since 2026-07-27, **1,598 on the RECORDS**: every prop and every
+`Spawn` derived from the draw stream, with the model naming each `rand()`'s call site
+before it may read the value. Ported to `cwgen` as `CwZoneCamp::campPopulate`
+(gate `rederive_camppop`, 3,111/3,111).
 
 ---
 
@@ -61,15 +65,26 @@ bytes, and picks the kind from the derived value.
 `kind - 1` then indexes a 10-way jump table at `0x510728` (table at `0x5133b0`); kind 0 or
 > 10 takes the default arm. Each arm fills
 
-* a **prop-id list**, and
+* a **camp species list** (`local_420`), and
 * one or more **species groups** — `FUN_004f7540` builds a 0x18-byte group of two
   `vector<int>` (leader list at `+0`, companion list at `+0xc`), `FUN_005285c0` pushes it.
+
+⚠ **CORRECTION (2026-07-27): `local_420` is a SPECIES list, not the "prop-id list" the
+first version of this doc called it.** Nothing the populator emits as a prop ever carries
+a value from it — the only prop ids it writes are the hardcoded `0x41` campfire anchor
+and the four scatter ids `0x10 / 0x0c / 0x45 / 0x42`. The list is read in exactly two
+places: the emptiness test at `0x511ba9` that sends a structure branch to the creature
+branch, and the camp ring's own species draw at `0x5128a4`. The falsifier is one command
+over the captures: **all 108 ring creatures carry a species from it, 108/108**, and the
+table below reads as creature ids throughout (kind 9's `0x56`/`0x6a` are the same values
+its species groups hold). The mislabel is why the ring looked like it had no species
+source of its own.
 
 Arms 1–5 and the default spend one or two `rand()`s picking species; arms 6–10 spend
 none. **Only the default arm skips `FUN_004f7540`** — it zeroes the group inline — so a
 `FUN_004f7540` count of 0 identifies it.
 
-| kind | prop ids | leader list | companion list |
+| kind | camp species (`local_420`) | leader list | companion list |
 |---|---|---|---|
 | 1 | 0x0f 0x10 | `rand()%4` → 0x11 / 0x29 / 0x61 / *(none)* | `rand()%4` → [0x28,0x25,0x26,0x27] / 0x3b / 0x29 / 0x60 |
 | 2 | 2 3 | `rand()%3` → 0x5e / 0x4f / 0x52 | `rand()%4` → 0x1e / 0x1a / 0x13 / 0x21 |
@@ -83,8 +98,8 @@ none. **Only the default arm skips `FUN_004f7540`** — it zeroes the group inli
 | 10 | 0x23 0x5a 0x5b | 0x23 · 0x5a · 0x5b | same, three groups |
 | *default* | 0x0b 0x0c | 0x2e | 0x13, 0x21, 0x1a |
 
-Every arm ends by resetting the group's two lists to the **prop ids** and pushing the
-group once more, so the last group is always the prop-id pair.
+Every arm ends by resetting the group's two lists to the **camp species** and pushing the
+group once more, so the last group is always that pair.
 
 Two details the gate reads off the live groups rather than assuming:
 
@@ -105,11 +120,11 @@ for each candidate i:
     if i != leaderIndex:
         if rand() % 2 != 0:  skip this candidate                    (0x511b4b)
         if rand() % 2 == 0:  -> CREATURE                            (0x511b95)
-    if the prop-id list is empty: -> CREATURE                       (0x511ba9)
+    if the camp species list is empty: -> CREATURE                  (0x511ba9)
     -> STRUCTURE
 ```
 
-Every arm pushes at least one prop id, so **the leader always takes the structure
+Every arm pushes at least one camp species, so **the leader always takes the structure
 branch** — which is what lets the gate account for the two coins it never spends.
 
 ### STRUCTURE
@@ -128,13 +143,32 @@ table (`0x10` / `0x0c` / `0x45` / `0x42`). Two differences from `FUN_004e0740`:
 * it offsets from **where the anchor was placed**, not from the original anchor (falling
   back to the anchor when the sweep placed nothing).
 
-Then, always, a **camp ring**:
+Then, always, a **camp ring** — decoded in full 2026-07-27 and reproduced on all 108 live
+ring creatures:
 
 ```
-base  = rand() * 2π / 32767                             (0x512707)
-n     = rand() % 3 + 1                                  (0x51272d)
-for i in 0..n-1:  angle = base + 2πi/n; one species draw; one Spawn -> site+0x18
+base   = f32(rand() * 2π / 32767)                        (0x512707, double then -> f32)
+n      = rand() % 3 + 1                                  (0x51272d)
+for i in 0..n-1:
+    ang    = f32(2πi/n + base)                            (double, stored f32)
+    facing = f32(f32(ang * 180f) / π + 90.0)               -> Spawn+0x50
+    X      = anchorX16 + ftol(f32(f32(cos(ang) * 3f) * 65536f))     (0x51283f)
+    Z      = anchorZ16 + ftol(f32(f32(sin(ang) * 3f) * 65536f))     (0x5127f8)
+    Y      = anchorY16, unchanged
+    species = campSpecies[rand() % len]                  (0x5128a4)
 ```
+
+★ **`ftol` here is `FUN_0054a946` = MSVC's `_ftol2`, which TRUNCATES.** It rounds with
+`fistp` and then corrects the result back toward zero, which is the step a "round-half-
+even (x87 default)" reading of it misses. The ring is the first place in this project
+where the difference is observable: **68 of the 108 live ring coordinates land on a
+fraction, and round-to-nearest misses every one of them by exactly 1**, in both
+directions. `cw_feature.py` had it right ("verified by direct-call"); `cw_forest.py` and
+`CwForest.cpp` had it wrong at every call site. Fixed in both — see the note at the end
+of this file for the blast radius, which is zero.
+
+⚠ The ring hangs off **where the anchor settled**, not off the candidate, so a kind that
+places no props (arms 6-10, flag clear) rings the raw candidate position.
 
 ### CREATURE
 
@@ -154,6 +188,7 @@ Over `raw/zone_camp_capture*.json` — 512 zones swept, 99 fired, camp kinds
 | the camp kind and its species tables, derived from the descriptor | 693 |
 | the per-candidate branch, replayed from the coin draws | 1,485 |
 | the camp's props are `FUN_004e0740`'s two shapes, verbatim | 564 |
+| **every prop and every `Spawn` record, derived from the draw stream** | **1,598** |
 
 The second row is a full accounting of the draw stream: one coin per candidate, two per
 placed one, minus the leader's shortcut; one ring-angle and ring-count draw per structure
@@ -161,6 +196,58 @@ branch with `rand()%3+1` creatures each; one group / facing / species draw per c
 branch, waypoints three at a time or not at all, and `rand()%3+1` companions. Every
 `Spawn` in `site+0x18` is accounted to one of the three push sites (`0x512b12`,
 `0x512f72`, `0x513218`).
+
+The fourth row (2026-07-27) is the one the port needed. The first three account for the
+branch STRUCTURE — how many draws, how many settles, how many spawns. `records()` runs
+the populator as a program instead: it names each `rand()`'s **call site** before it may
+read the value, names each `Prop_settleOnTerrain` call's **whole record** before it reads
+the verdict, and then has to produce every live prop (type, 16.16 position including the
+settled Y, direction, size) and every live `Spawn` (position, species, level, msub,
+facing) field by field. A wrong branch surfaces as a call-site mismatch rather than as a
+value that silently shifts. 1,598/1,598 over the 99 firing zones — 30 props and 254
+spawns.
+
+## The port
+
+`cwgen`: `CwZoneCamp::campPopulate` (`src/worldgen/cw/CwZoneCamp.{h,cpp}` in RatForge),
+driven through a `CampEnv` that supplies `rand()` and `Prop_settleOnTerrain` and is handed
+the call-site tag for each. `zoneCampPopulate` wires it to the real zone state through a
+new `ZoneTailState::propSettle`, so the settle sees the finished terrain — gen-scatter
+knolls, mat-38 stones and every placed tree — which is the whole reason the populator hangs
+off `CwForest::zoneReplayTail`.
+
+⚠ **The port's gate is deliberately NOT ab initio, and the reason is a measurement worth
+carrying: of the 99 live firing zones, the 13 cwgen can replay from the seed reach the
+populator with an EMPTY candidate list — all 13.** They are the zones far from their
+feature, which is exactly why their tree pass is replayable at all. An ab-initio gate over
+those would call the populator 13 times on nothing and report green. So `rederive_camppop`
+drives the port with the live stream (3,111/3,111), the same design as `rederive_itemgen`,
+and reachability stays measured separately by `rederive_campgrid`.
+
+It is not unreachable in general, just rare: a 24×24 sweep on seed 42069 has 144 zones take
+the camp path, **20 replayable, 4 of those emitting** — 7 props and 18 spawns.
+
+## ⚠ `ftol` is a truncation, and both ports had it as a rounding
+
+`FUN_0054a946` is MSVC's `_ftol2`: `fistp` rounds to nearest, then the function subtracts
+the result off the argument and corrects by 1 **toward zero**. Net effect: C truncation.
+`cw_feature.py` has had this right since it was written ("verified by direct-call", and
+303/303 exact 16.16 candidate positions); `cw_forest.py`'s `_round64`/`_ftol_round` and
+`CwForest.cpp`'s `round64` implemented round-half-even and called it "the x87 default" —
+true of `fistp`, not of the function.
+
+Measured before changing it: **91,021 of the 133,408 `round64` calls the whole `cwgen_test`
+suite makes have a fractional argument**, so the two forms genuinely disagree most of the
+time — and the suite is **byte-identical either way**, output hash included, and both
+port-produced goldens (`rederive_forest.bin`, `rederive_zonescatter.bin`) regenerate
+byte-identical. Every result there is a 16.16 coordinate, so the disagreement is 1/65536 of
+a block and reaches no threshold anything checks. Fixed in both ports because it is
+provably the binary's semantics, not because anything moved.
+
+★ **Durable:** a helper can be wrong in 68% of its calls and still be invisible to every
+gate, if its result is only ever used at a coarser resolution than the error. The camp ring
+is what made it visible — it is the first consumer whose output is compared at full 16.16
+precision against live data.
 
 ## Open
 
@@ -173,16 +260,20 @@ branch, waypoints three at a time or not at all, and `rand()%3+1` companions. Ev
    Positions carry a `+0.5` block bias (`[0x5737c0] = -32768.0`, *subtracted*).
    `tools/frida_zone_grid.py`, `tools/gate_zone_grid.py`, 8,308 checks over 51 zones.
 2. **The leader index** — only one zone in the sample was its feature's own zone, so the
-   "largest falloff weight" rule is read statically and barely exercised.
+   "largest falloff weight" rule is exercised exactly once (it passes there).
 3. **Kind 7**, which never came up.
 4. **The species ids themselves.** They are `Spawn+0x2c` values; nothing here maps them to
    creature names.
 5. ~~**The descriptor**~~ — **DONE, `RE_camp_descriptor.md`.** All seven fields derive from
    the seed, 198/198 firings; `cwgen` carries them as `FeatureCell::mission/level/msub`
    (gate `rederive_campdesc` 693/693).
-6. **The port is blocked on reachability, not on knowledge.** `cwgen` can now build the
-   candidate lattice ab initio (`CwZoneCamp`), but a camp only fires where the descriptor
-   is a present non-{0,1,5,0xa,0xe} cell, and the zone-stream replay drifts in exactly
-   those zones — 12 of 14 measured. Fixing that drift is what unblocks the populator; the
-   populator's own remaining gaps are `Prop_settleOnTerrain` and the waypoint neighbour
-   predicate (its draw COUNT is settled: 3 if the neighbour list is non-empty, else 0).
+6. ~~**The port is blocked on reachability, not on knowledge.**~~ — **PORTED
+   2026-07-27** (see "The port" above). `Prop_settleOnTerrain` landed 2026-07-26e and the
+   waypoint neighbour predicate is now exercised: `25 < dx² + dz² < 16384` in float32 over
+   the 16.16 deltas, i.e. between 5 and 128 blocks horizontally, which reproduces all 141
+   live waypoint draws (47 of 48 creature branches have a non-empty list). It remains a
+   WEAK check — its only observable is whether the list is empty, so the exact thresholds
+   are read statically and only the empty/non-empty split is live-proven.
+7. **The rendering half.** The camp's props are records in cwgen; `src/worldgen/ZoneProps.cpp`
+   turns the odd-parity site props into instances but not these. Same shape of work as
+   RatForge `b44fdcc`.

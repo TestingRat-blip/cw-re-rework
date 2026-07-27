@@ -26,7 +26,7 @@ then picks `kind = list[desc[+0x20] % len(list)]` -- an UNSIGNED modulus of a de
 field, **no rand at all** -- and runs a 10-way jump table on `kind - 1` (`0x510728`,
 table at `0x5133b0`; kind 0 or > 10 takes the default arm).  Each arm fills
 
-  * a PROP id list (`local_420`),
+  * a CAMP SPECIES list (`local_420`),
   * one or more SPECIES GROUPS (0x18 bytes = two `vector<int>`, leader list at +0 and
     companion list at +0xc), pushed into a group vector.
 
@@ -34,10 +34,17 @@ Arms 1-5 and the default spend one or two `rand()`s choosing species; arms 6-10 
 none.  The default arm is the only one that does **not** call `FUN_004f7540` -- it
 zeroes the group inline, so a gctor count of 0 identifies it.
 
-Every arm ends by resetting the group's two lists to the PROP ids and pushing the group
-again, so the last group is always the prop-id pair.  Arm 7 resets only the companion
+Every arm ends by resetting the group's two lists to the camp species and pushing the
+group again, so the last group is always that pair.  Arm 7 resets only the companion
 list before its third push, which leaves `[0x3c, 0x34]` in the leader list -- the gate
 checks the captured contents rather than assuming.
+
+⚠ `local_420` was called a "prop id list" in the first version of this gate and of
+`RE_5104e0_camp.md`.  It is not: no prop the populator emits ever carries a value from
+it -- the only prop ids it writes are the hardcoded `0x41` anchor and the four scatter
+ids.  It is read in exactly two places, the emptiness test that sends a structure branch
+to the creature branch (`0x511ba9`) and the camp ring's own species draw (`0x5128a4`),
+and all 108 ring creatures in the two captures carry a species from it.
 
 ## The per-candidate branch
 
@@ -56,11 +63,22 @@ checks the captured contents rather than assuming.
         from the group's leader list, up to 3 walk-path waypoints, one Spawn pushed at
         0x512f72, then rand()%3+1 companions pushed at 0x513218.
 
+## The fourth block: the RECORDS
+
+The three older checks account for the branch STRUCTURE -- how many draws, how many
+settles, how many spawns.  `records()` runs the populator as a program instead: it names
+each `rand()`'s CALL SITE before it is allowed to read the value, names each
+`Prop_settleOnTerrain` call's whole record before it reads the verdict, and then has to
+produce every live prop and every live `Spawn` field by field.  1,598 checks over the 99
+firing zones.  That is what the cwgen port (`CwZoneCamp::campPopulate`) implements, and
+what `rederive_camppop` re-checks on the C++ side from the same captures.
+
 Reads raw/zone_camp_capture*.json (tools/frida_zone_camp.py).
 """
 import collections
 import glob
 import json
+import math
 import os
 import struct
 import sys
@@ -457,6 +475,201 @@ def candidates(h, g):
     return branches + ["leader"] * leader, home
 
 
+# --------------------------------------------------------------------------------
+# The RECORD derivation: every prop and every Spawn, from the draw stream alone.
+#
+# The three checks above account for the branch STRUCTURE -- how many draws, how many
+# settles, how many spawns. This one runs the populator as a program: it predicts each
+# rand()'s CALL SITE before reading its value, predicts each Prop_settleOnTerrain call's
+# whole record before reading its verdict, and then has to produce the live prop and
+# Spawn records field by field. A wrong branch shows up as a site mismatch rather than as
+# a value that silently shifts, which is what makes it a derivation and not a replay.
+# --------------------------------------------------------------------------------
+R_ARM_END = 0x111631
+ONE16 = 1.52587890625e-05          # 2^-16, the constant at 0x5118bc
+
+
+def f32(x):
+    return struct.unpack("<f", struct.pack("<f", x))[0]
+
+
+def ftol(x):
+    """FUN_0054a946 = MSVC's `_ftol2`: rounds with fistp, then corrects back toward zero,
+    so it TRUNCATES. The camp ring is what discriminates -- 68 of the 108 live ring
+    coordinates land on a fraction, and round-to-nearest misses every one by exactly 1."""
+    return int(x)
+
+
+class Derail(Exception):
+    pass
+
+
+def _i64(b, o):
+    return struct.unpack_from("<q", b, o)[0]
+
+
+def _rec(b):
+    return (struct.unpack_from("<i", b, 0)[0], _i64(b, 8), _i64(b, 0x10), _i64(b, 0x18),
+            struct.unpack_from("<i", b, 0x20)[0],
+            tuple(round(struct.unpack_from("<f", b, 0x24 + 4 * i)[0], 4) for i in range(3)))
+
+
+def _zone_of(v16):
+    b = v16 // 0x10000 if v16 >= 0 else -((-v16) // 0x10000)      # truncating
+    return (b + ((b >> 31) & 0xFF)) >> 8
+
+
+def _falloff_t(x16, z16, cell):
+    import cw_feature
+    w = cw_feature.falloff_weight(cell["cx"], cell["cz"], cell["radius"], cell["type"],
+                                  x16, z16)
+    d = f32(1.0 - w)
+    return f32(d * d) if d > 0.0 else 0.0
+
+
+def records(h, cell, g):
+    """Derive every record, consuming the recorded draws and settle verdicts in order."""
+    zx, zz = h["zone"]
+    w = "%d,%d" % (zx, zz)
+    draws, di = list(h["draws"]), 0
+    settles, si = list(h["settles"]), 0
+    props, spawns = [], []
+
+    def draw(site):
+        nonlocal di
+        if di >= len(draws):
+            raise Derail("out of draws at %06X" % site)
+        ra, v, _n = draws[di]
+        if ra != site:
+            raise Derail("draw %d: model asks at %06X, live %06X" % (di, site, ra))
+        di += 1
+        return v
+
+    def settle(site, rec):
+        nonlocal si
+        if si >= len(settles):
+            raise Derail("out of settles at %06X" % site)
+        s = settles[si]
+        si += 1
+        if s["ra"] != site:
+            raise Derail("settle %d: model asks at %06X, live %06X" % (si - 1, site, s["ra"]))
+        if _rec(bytes(s["before"])) != rec:
+            raise Derail("settle %d record %r != live %r"
+                         % (si - 1, rec, _rec(bytes(s["before"]))))
+        a = bytes(s["after"])
+        return bool(s["ok"]), (_i64(a, 8), _i64(a, 0x10), _i64(a, 0x18))
+
+    # the arm: its draws are the ones below R_ARM_END, and run_arm consumes exactly them
+    rolls = []
+    while di < len(draws) and draws[di][0] < R_ARM_END:
+        rolls.append(draws[di][1])
+        di += 1
+    kind = camp_kind(h)
+    species, groups, _gc, used, ok = run_arm(kind, rolls)
+    if not ok or used != len(rolls):
+        raise Derail("arm %r consumed %d of %d prologue draws" % (kind, used, len(rolls)))
+    flag = kind in FLAGGED
+
+    cands = [(_i64(bytes(c), 0), _i64(bytes(c), 8), _i64(bytes(c), 16))
+             for c in (h.get("cand") or [])]
+
+    # the leader: only when the descriptor's own centre is in this zone (0x5118e0)
+    d = bytes(h["desc"])
+    leader, best = -1, 0.0
+    if (_zone_of(_i64(d, 0)), _zone_of(_i64(d, 8))) == (zx, zz):
+        for i, (cx, cz, _cy) in enumerate(cands):
+            t = _falloff_t(cx, cz, cell)
+            if t > best:
+                leader, best = i, t
+
+    for i, (cx, cz, cy) in enumerate(cands):
+        # the waypoint NEIGHBOUR list -- no draws, but its emptiness decides three
+        nbr = False
+        for (ox, oz, _oy) in cands:
+            dx, dz = f32((ox - cx) * ONE16), f32((oz - cz) * ONE16)
+            d2 = f32(f32(dz * dz) + f32(dx * dx))
+            if 25.0 < d2 < 16384.0:
+                nbr = True
+                break
+        creature = False
+        if i != leader:
+            if draw(R_COIN1) % 2 != 0:
+                continue
+            creature = (draw(R_COIN2) % 2 == 0)
+        if not creature and not species:
+            creature = True
+
+        if creature:
+            if not groups:
+                continue
+            gi = draw(R_CR_GROUP) % len(groups)
+            lead, comp = groups[gi]
+            if not lead:
+                continue                       # one draw spent, nothing emitted
+            facing = float(draw(R_CR_FACING) % 0x168)
+            spawns.append(((cx, cz, cy), facing,
+                           lead[draw(R_CR_SPECIES) % len(lead)]))
+            if nbr:
+                for _ in range(3):
+                    draw(R_CR_WAYPOINT)
+            if comp:
+                for _ in range(draw(R_CR_COMPCOUNT) % 3 + 1):
+                    spawns.append(((cx, cz, cy), None,
+                                   comp[draw(R_CR_COMPSPECIES) % len(comp)]))
+            continue
+
+        px, pz, py = cx, cz, cy                        # the STRUCTURE branch
+        if flag:
+            adir = draw(R_STRUCT_DIR) % 4
+            placed = False
+            for a in range(3):                         # X outer, Z inner
+                for b in range(3):
+                    rec = (ANCHOR_TYPE, px + (a << 16), pz + (b << 16), py, adir, ANCHOR_SIZE)
+                    okk, after = settle(S_ANCHOR, rec)
+                    if okk:
+                        props.append(rec[:1] + after + rec[4:])
+                        px, pz, py = after             # the record is written in place
+                        placed = True
+                        break
+                if placed:
+                    break
+            for a in (0, 7):
+                for b in (0, 7):
+                    tid, tsz = SCATTER[draw(R_SCAT_TYPE) % 4]
+                    sdir = draw(R_SCAT_DIR) % 4
+                    rec = (tid, px + (a << 16) - BIAS, pz + (b << 16) - BIAS, py, sdir, tsz)
+                    okk, after = settle(S_SCATTER, rec)
+                    if okk:
+                        props.append(rec[:1] + after + rec[4:])
+        base = f32(draw(R_RING_ANGLE) * 6.283185307179586 / 32767.0)
+        n = draw(R_RING_COUNT) % 3 + 1
+        for k in range(n):
+            ang = f32((2 * k) * 3.141592653589793 / float(n) + base)
+            facing = f32(f32(ang * f32(180.0)) / 3.141592653589793 + 90.0)
+            spawns.append(((px + ftol(f32(f32(f32(math.cos(ang)) * 3.0) * 65536.0)),
+                            pz + ftol(f32(f32(f32(math.sin(ang)) * 3.0) * 65536.0)), py),
+                           facing, species[draw(R_RING_SPECIES) % len(species)]))
+
+    g.eq("every rand() draw predicted, at its own call site, in order", di, len(draws), w)
+    g.eq("every Prop_settleOnTerrain call predicted, in order", si, len(settles), w)
+
+    live = [bytes(p) for p in (h.get("props") or [])][h["props0"]:]
+    g.eq("prop count", len(props), len(live), w)
+    for k, (lp, mine) in enumerate(zip(live, props)):
+        g.eq("prop %d record" % k, mine, _rec(lp), w)
+
+    ls = [bytes(s) for s in (h.get("spawns") or [])]
+    g.eq("spawn count", len(spawns), len(ls), w)
+    for k, (s, (pos, facing, sp)) in enumerate(zip(ls, spawns)):
+        g.eq("spawn %d position" % k, pos, (_i64(s, 0x10), _i64(s, 0x18), _i64(s, 0x20)), w)
+        g.eq("spawn %d species" % k, sp, struct.unpack_from("<i", s, 0x2C)[0], w)
+        g.eq("spawn %d level (descriptor +0x24)" % k, cell["level"],
+             struct.unpack_from("<i", s, 0x34)[0], w)
+        g.eq("spawn %d msub (descriptor +0x28, a byte)" % k, cell["msub"] & 0xFF, s[0x58], w)
+        if facing is not None:
+            g.eq("spawn %d facing" % k, facing, struct.unpack_from("<f", s, 0x54)[0], w)
+
+
 def main():
     names = sorted(glob.glob(os.path.join(RAW, "zone_camp_capture*.json")))
     if not names:
@@ -486,6 +699,25 @@ def main():
         for h in hits:
             props_placed(h, g, "%d,%d" % tuple(h["zone"]))
         ok &= g.report("the camp's props are FUN_004e0740's two shapes, verbatim")
+
+        g = Gate()
+        derail = []
+        for h in hits:
+            cell = derived_descriptor(*h["zone"])
+            if cell is None:
+                continue
+            import cw_featuregrid
+            zx, zz = h["zone"]
+            full = cw_featuregrid.cell_for_column(zx * 256 + 128, zz * 256 + 128)
+            try:
+                records(h, full, g)
+            except Derail as exc:
+                derail.append("%d,%d: %s" % (zx, zz, exc))
+        for x in derail[:10]:
+            print("        DERAILED " + x)
+        g.n += len(derail)
+        g.bad.extend(derail)
+        ok &= g.report("every prop and every Spawn record, derived from the draw stream")
 
         print("   camp kinds seen: %s" % dict(sorted(seen.items())))
         print("   branches: %s" % dict(tot))

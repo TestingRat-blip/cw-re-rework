@@ -137,6 +137,14 @@ Running out of order silently empties the islands/roles (it oscillates).
    next to a spawn call read as "the species list" (twelve instructions of its callee show a
    vec4 float store). Both cost a wrong "port gap" in a doc. **Before writing a finding down,
    name the cheapest observation that would falsify it and make it.**
+3b. **A helper can be wrong most of the time and invisible to every gate.** `ftol`
+   (`FUN_0054a946` = `_ftol2`) TRUNCATES: `fistp` rounds, then the function corrects the
+   result back toward zero. Two of the three places this project implements it had it as
+   round-half-even, and 91,021 of the suite's 133,408 calls disagree between the two — yet
+   the whole suite, hash included, is byte-identical, because every result is a 16.16
+   coordinate and the error is 1/65536 of a block. Ask what resolution a value is
+   *compared* at, not how often it is computed. It took the camp ring — the first consumer
+   checked at full 16.16 against live data — to make it observable at all.
 3. **Ghidra collapses `/GS` function bodies** to just the security-cookie epilogue — `0x522cc0`
    looked like a stub but is a 16.16 fixed-point distance. Check raw bytes when a body looks
    too short for its size.
@@ -337,6 +345,7 @@ closed — every emitter RE'd, every gate green, nothing captured that cannot be
 | the landform 742-loop's **ITERATION ORDER** (X-outer, Z-inner) — what the odd-zone upstream drift was | `RE_zone_landform.md` | 187 checks, 161/161 live per-tile decisions |
 | the **RIVER/LAKE BED PASS** (`0x51c09a`) + its mat-6 consumer — the last pre-chain stage | `RE_zone_tail.md` | 44 checks, 8 zones, 37,476 live draws |
 | the site list's **16.16 proximity test** (`0x51cf20` / `0x51ded7`) — the entry carries a half block | `RE_zone_site_loop.md` | `rederive_campgrid` 15990/15990, 13 zones |
+| the **CAMP POPULATOR** `FUN_005104e0` end to end — every prop and every `Spawn` record | `RE_5104e0_camp.md` | 1,598 record checks / 99 zones; `rederive_camppop` 3111/3111 |
 
 Two structural facts worth carrying:
 
@@ -692,6 +701,47 @@ of it needs another capture session.
    **aliasing** — that zone's lattice values are quantised to ~6 over a ~70-wide range,
    so spurious matches are common (2 in the first 14 samples). The disassembly is what
    settled it; the index match only confirmed it.
+   ✅ **THE CAMP POPULATOR IS PORTED (2026-07-27). `FUN_005104e0` is done end to end.**
+   `Docs/RE_5104e0_camp.md`, `tools/gate_zone_camp.py` (now **4,340** checks, the new
+   block being **1,598 RECORD** checks), and in the engine `CwZoneCamp::campPopulate` +
+   `ZoneTailState::propSettle`, gate **`rederive_camppop` 3111/3111**. The model names
+   each `rand()`'s CALL SITE before it may read the value and each
+   `Prop_settleOnTerrain` call's whole record before it reads the verdict, then produces
+   every live prop and every live `Spawn` field by field — 30 props, 254 spawns, 99
+   zones, both engines.
+   ⚠ **Its gate is deliberately NOT ab initio, and finding out why is the result.** Of
+   the 99 live firing zones, the 13 cwgen replays from the seed reach the populator with
+   an **EMPTY candidate list — all 13**. They are the zones far from their feature, which
+   is exactly why their tree pass is replayable. An ab-initio gate over them would call
+   the populator 13 times on nothing and report green; so `rederive_camppop` drives the
+   port with the live stream (the `rederive_itemgen` design) and reachability stays
+   measured by `rederive_campgrid`. ★ **Check what a green gate would actually FEED the
+   port before choosing its design** — this is lesson 27 caught in advance instead of
+   after. It is not unreachable in general: a 24x24 sweep has 144 zones take the camp
+   path, 20 replayable, **4 of those emitting** (7 props, 18 spawns), and the gate prints
+   that number every run.
+   ★ **`local_420` is a SPECIES list, not the "prop-id list" the doc called it.** No prop
+   the populator emits ever carries a value from it — the only ids it writes are the
+   hardcoded `0x41` anchor and the four scatter ids. It is read twice: the emptiness test
+   that routes a structure branch to the creature branch (`0x511ba9`) and the camp ring's
+   own species draw (`0x5128a4`). Falsifier: 108/108 ring creatures carry a species from
+   it, one command over the existing captures.
+   ★ **AND IT SETTLED A HELPER BOTH PORTS HAD WRONG: `ftol` TRUNCATES.**
+   `FUN_0054a946` is MSVC's `_ftol2` — `fistp` rounds to nearest, then the function
+   corrects the result back **toward zero**. `cw_forest.py`'s `_round64`/`_ftol_round` and
+   `CwForest.cpp`'s `round64` implemented round-half-even and called it "the x87
+   default", which is true of `fistp` and not of the function; `cw_feature.py` has had it
+   right by direct-call all along, so the project carried both readings side by side.
+   The camp ring is the first consumer compared at full 16.16 against live data: **68 of
+   its 108 coordinates land on a fraction and round-to-nearest misses every one by
+   exactly 1**, in both directions. Blast radius measured BEFORE believing it: **91,021 of
+   the 133,408 `round64` calls in the suite have a fractional argument** and the suite is
+   **byte-identical either way** — output hash unchanged, both port-produced goldens
+   regenerate byte-identical — because every result there is a 16.16 coordinate and the
+   error is 1/65536 of a block. Fixed in both ports anyway.
+   ★ **DURABLE: a helper can be wrong in 68% of its calls and invisible to every gate**,
+   if its result is only ever consumed at a coarser resolution than the error. Ask what
+   resolution a value is *compared* at, not how often it is computed.
    ▶ Still missing — **which emitter fires where** for the rest:
    * descriptor types **7 / 0xb / 0xc / 0xf** still drift and are still declined, and
      the search space is now much smaller. **Ruled out this session:** a missing
@@ -722,9 +772,14 @@ of it needs another capture session.
      looks like a port bug until this is checked. (The tree loop's own `top < 0` bail
      is real too: `test ecx,ecx / js` at `0x51e462`.) Use this before asking for
      another live session.
-   * the rest of `camp_populator`: the arm tables and the coin branch are statable, and the
-     waypoint draw COUNT is settled (3 iff the neighbour list is non-empty, `0x512dc1`);
-     the neighbour predicate itself is still read statically;
+   * ~~the rest of `camp_populator`~~ — **DONE, see above.** The one soft spot left is
+     the waypoint NEIGHBOUR PREDICATE (`25 < dx² + dz² < 16384` in f32 over the 16.16
+     deltas): its only observable is whether the list is empty, so the thresholds are
+     read statically and only the empty/non-empty split is live-proven (141/141 draws,
+     47 of 48 creature branches non-empty). Kind **7** still never came up in 99 firings.
+   * **the camp's RENDERING half.** `CwZoneCamp` produces prop records; `ZoneProps.cpp`
+     turns the odd-parity site props into instances but not these. Same shape of work as
+     RatForge `b44fdcc`, and the sweep above says it is worth ~7 props per 144 zones.
    * the town chain (its **plot heights are region-cache-blocked**, so the verdict rule is
      statable but not seed-reproducible — port what is derivable and stop there);
    * emitters A and C, and the site-kind grid they gate on.
