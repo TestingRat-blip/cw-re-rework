@@ -392,7 +392,6 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `00416d60` | 256 | 4 | 4 |  |  |
 | `00470aa0` | 256 | 2 | 5 |  | c0e09560d26f0a6456be9dd3447f5311eb4f238f, misuse at line %d of [%.10s] |
 | `004a5e90` | 256 | 2 | 8 |  | c0e09560d26f0a6456be9dd3447f5311eb4f238f, misuse at line %d of [%.10s] |
-| `004e15f0` | 256 | 1 | 1 |  |  |
 | `004c79b0` | 255 | 1 | 3 |  |  |
 | `00419670` | 254 | 0 | 2 | orphan |  |
 | `00462150` | 254 | 1 | 7 |  | %04d-%02d-%02d, string or blob too big |
@@ -412,5 +411,6 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `00422b10` | 240 | 1 | 1 |  |  |
 | `0042af50` | 239 | 1 | 8 |  | bad cast |
 | `0042e9a0` | 239 | 2 | 8 |  | bad cast |
+| `004672d0` | 238 | 0 | 4 | orphan | %.*s"%w"%s, string or blob too big |
 
-**Total unnamed non-library functions: 1649** (116 of the listed 400 are orphans)
+**Total unnamed non-library functions: 1648** (117 of the listed 400 are orphans)

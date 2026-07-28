@@ -1,4 +1,4 @@
-// cw_lib (_library) -- server. 54 functions. Bodies = Ghidra pseudo-C.
+// cw_lib (_library) -- server. 55 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "cw_lib.h"
 
@@ -702,7 +702,52 @@ float10 __thiscall FUN_004d9010(void *param_1,float param_2,float param_3,int pa
 }
 
 
-/* lib_fn_4e19f0 @ 004e19f0  kind=lib  attributed-by=ledger  size=232 */
+/* std_insertion_sort_4byte @ 004e15f0  kind=lib  attributed-by=ledger  size=256 */
+
+void __cdecl FUN_004e15f0(int *param_1,int *param_2,int *param_3)
+
+{
+  float *pfVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  int *piVar5;
+  int *piVar6;
+  int *local_8;
+  
+  if ((param_1 != param_2) && (piVar5 = param_1 + 1, piVar5 != param_2)) {
+    do {
+      iVar3 = *piVar5;
+      fVar2 = *(float *)(*param_3 + 0x18 + iVar3 * 0x1c);
+      if (*(float *)(*param_3 + 0x18 + *param_1 * 0x1c) <= fVar2) {
+        iVar4 = piVar5[-1];
+        piVar6 = piVar5;
+        local_8 = piVar5;
+        if (fVar2 < *(float *)(*param_3 + 0x18 + iVar4 * 0x1c)) {
+          do {
+            local_8 = piVar6 + -1;
+            *piVar6 = iVar4;
+            iVar4 = piVar6[-2];
+            fVar2 = *(float *)(*param_3 + 0x18 + iVar4 * 0x1c);
+            pfVar1 = (float *)(*param_3 + 0x18 + iVar3 * 0x1c);
+            piVar6 = local_8;
+          } while (*pfVar1 <= fVar2 && fVar2 != *pfVar1);
+        }
+        *local_8 = iVar3;
+      }
+      else {
+        iVar4 = (int)piVar5 - (int)param_1 >> 2;
+        memmove(piVar5 + (1 - iVar4),param_1,iVar4 * 4);
+        *param_1 = iVar3;
+      }
+      piVar5 = piVar5 + 1;
+    } while (piVar5 != param_2);
+  }
+  return;
+}
+
+
+/* std_sort_4byte @ 004e19f0  kind=lib  attributed-by=ledger  size=232 */
 
 void __cdecl FUN_004e19f0(int *param_1,int *param_2,int param_3,int *param_4)
 

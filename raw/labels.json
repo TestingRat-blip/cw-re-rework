@@ -687,10 +687,15 @@
    "name": "vec4_f32_to_i32",
    "src": "ADJUDICATION.md"
   },
+  "004e15f0": {
+   "kind": "lib",
+   "name": "std_insertion_sort_4byte",
+   "src": "ADJUDICATION.md"
+  },
   "004e19f0": {
    "kind": "lib",
-   "name": "lib_fn_4e19f0",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "name": "std_sort_4byte",
+   "src": "ADJUDICATION.md"
   },
   "004e1f80": {
    "kind": "game",

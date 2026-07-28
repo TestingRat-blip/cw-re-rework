@@ -110,7 +110,13 @@ if maxH - minH > 16:  verdict 0                                      0x4e2e7f
 ```
 
 Record layout, `0x1c` bytes: `+0` minH, `+4` maxH, `+8` interior height, `+0xc` verdict
-(later the role), `+0x10` —, `+0x14` rotation, `+0x18` score.
+(later the role), `+0x10` a sub-role, `+0x14` rotation, `+0x18` score.
+
+> `+0x10` was "—" here until 2026-07-28d. It is written **only** by the promotion pass:
+> `1` for corner tags 0/3 and `2, 3, 4, 5` for the four plots tag 1 pops
+> (`RE_town_promotion.md` §2). That pass also **overwrites `+0x14`** for its ruin roles,
+> so the rotation the nudge leaves and the rotation the table finally holds are two
+> different values — a port that folds them together loses this gate 8 towns.
 
 **The score is derivable ab initio.** The descriptor the builder receives *is* a
 `cw_featuregen` cell — `+0` `cx` (i64 16.16), `+8` `cz`, `+0x10` radius (f32), `+0x14`
@@ -323,24 +329,23 @@ repeated, not 78 independent ones.
    downstream of the builder may be believed in a type-1/5 zone. Two of them
    (`0x4e54e8`, `0x4ef7c8`) carry 36% of all the draws this layer spends.
 
-   **But the next stage after the scan is nearly free, and that is the lead.** The
-   PROMOTION pass (`0x4e31c7`-`0x4e37aa`, the sort-and-pop that assigns special roles)
-   spends a **median of 1 draw per town** — min 0, max 10, 252 draws across all 92 towns,
-   and it fires in only 56 of them. So the stage after the one just ported costs about as
-   much as a single plot does. The order to work in, measured rather than guessed:
+   ✅ **The first of them, the PROMOTION pass, is CLOSED (2026-07-28d) — RE'd, live-gated
+   and ported ab initio. See `RE_town_promotion.md`.** Both inputs this section listed as
+   blockers turned out to be misfiled: `FUN_004e19f0` has no sort key of its own (it is
+   `std::sort`; the key is `plot[+0x18]` ascending, in the predicate), and `site+0x79` is
+   not a faction but the **site-kind grid entry's second byte** — the zone's corner rank
+   1..4, which `cw_featuregen` was already computing and discarding. A third input the
+   lead never named, the RUIN's `desc+0x1c`, was derived in the same slice.
+   `gate_town_promotion.py` 2,071 checks; `rederive_townpromo` 140/140.
+
+   The order to work in for the rest, measured rather than guessed:
 
    | site | draws | towns | |
    |---|---|---|---|
-   | promotion (`0x4e33c8`/`0x4e35c5`/`0x4e3646`/`0x4e3766`) | 252 | 56 | the faction role pops — **next** |
-   | `0x4eda58` | 2,968 | 69 | the first genuinely broad site |
+   | ~~promotion (`0x4e33c8`/`0x4e35c5`/`0x4e3646`/`0x4e3766`)~~ | 252 | 56 | ✅ **closed 07-28d** |
+   | `0x4eda58` | 2,968 | 69 | the first genuinely broad site — **next** |
    | `0x4e742e` | 15,609 | 70 | |
    | `0x4e54e8`, `0x4ef7c8` | 132,928 | 15 / 28 | per-column loops, 36% of the layer |
-
-   What the promotion pass still needs is not draw budget but two inputs:
-   `FUN_004e19f0`'s **sort key** (cw_town.py has carried it as TODO since 2026-07-07) and
-   whether **`site+0x79`**, the faction that selects the role set, is derivable from the
-   seed at all. Both are small, self-contained questions — and the captures on disk carry
-   `faction` next to every town, so the second is checkable without a server.
 4. **The 38 of 72 towns cwgen declines** as `Landform`/`Feature`. Unlike the `Village`
    admission in §6.2 these are genuine — but nobody has checked whether they are genuine
    *for a town zone specifically*, given how much of the pre-chain a site-kind-1 zone

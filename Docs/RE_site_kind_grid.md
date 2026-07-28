@@ -51,6 +51,17 @@ The four town stores each pair with a `+0x19` store of `1`, `2`, `3`, `4` — a 
 index — and read their zone from a 12-byte-stride array (`+4` = zone X index, `+8` = zone
 Z index).
 
+> ★ **2026-07-28d: that `+0x19` byte has a consumer, and it is a big one.** It is the
+> town builder's `site+0x79` — the site record's descriptor base is `site+0x60`, so
+> `+0x78`/`+0x79` are this entry's kind and tag — and it selects the entire special-role
+> set of the builder's promotion pass. Derived tag == live byte in **92 of 92** captured
+> towns (`RE_town_promotion.md`), which also explains why every RUIN reads 0: a type-5
+> cell writes no site-kind entry at all. `zoneSiteTag()` in cwgen returns it.
+>
+> The rank is only well defined if the top-4 selection has no tie at its boundary. Over
+> the 25 type-1 cells of the sampled regions there is none anywhere in or at the boundary
+> of the top four, and the smallest 4th-best score is 0.287 — measured, not assumed.
+
 ## The rules
 
 * **kind 3** at the zone containing every **type-14** feature cell's centre.

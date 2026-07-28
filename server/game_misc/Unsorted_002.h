@@ -219,9 +219,6 @@ undefined __thiscall FUN_004dde00(void * this, float * param_1, float * param_2)
 /* 004e1560  gamemisc  [none] */
 undefined __cdecl FUN_004e1560(int param_1, int param_2, int param_3, int * param_4, int * param_5);
 
-/* 004e15f0  gamemisc  [none] */
-undefined __cdecl FUN_004e15f0(int * param_1, int * param_2, int * param_3);
-
 /* 004e16f0  gamemisc  [none] */
 undefined __cdecl FUN_004e16f0(int param_1, int param_2, int * param_3);
 
@@ -452,4 +449,7 @@ undefined8 __stdcall __aulldiv(uint param_1, uint param_2, uint param_3, uint pa
 
 /* 0054b0c0  gamemisc  [none] */
 undefined8 __stdcall __aulldvrm(uint param_1, uint param_2, uint param_3, uint param_4);
+
+/* 0054b160  gamemisc  [none] */
+undefined8 __stdcall __aullrem(uint param_1, uint param_2, uint param_3, uint param_4);
 

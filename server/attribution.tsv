@@ -2399,13 +2399,13 @@ addr	name	kind	module	class	attributed_by	size
 004e14e0	FUN_004e14e0	gamemisc	world	_helpers_wrapper	role:wrapper	58
 004e1520	FUN_004e1520	gamemisc	world	Unsorted	logic:caller-vote	56
 004e1560	FUN_004e1560	gamemisc	game_misc	Unsorted_002	none	141
-004e15f0	FUN_004e15f0	gamemisc	game_misc	Unsorted_002	none	256
+004e15f0	std_insertion_sort_4byte	lib	_library	cw_lib	ledger	256
 004e16f0	FUN_004e16f0	gamemisc	game_misc	Unsorted_002	none	206
 004e17c0	FUN_004e17c0	gamemisc	game_misc	Unsorted_002	none	168
 004e1870	FUN_004e1870	gamemisc	game_misc	Unsorted_002	none	159
 004e1910	FUN_004e1910	gamemisc	game_misc	Unsorted_002	none	64
 004e1950	FUN_004e1950	gamemisc	game_misc	Unsorted_002	none	158
-004e19f0	lib_fn_4e19f0	lib	_library	cw_lib	ledger	232
+004e19f0	std_sort_4byte	lib	_library	cw_lib	ledger	232
 004e1ae0	FUN_004e1ae0	gamemisc	game_misc	Unsorted_002	none	82
 004e1b40	FUN_004e1b40	gamemisc	game_misc	Unsorted_002	none	532
 004e1d70	FUN_004e1d70	gamemisc	world	Unsorted	logic:caller-vote	53
@@ -2896,7 +2896,7 @@ addr	name	kind	module	class	attributed_by	size
 0054b030	__allshl	gamemisc	game_misc	Unsorted_002	none	31
 0054b050	__aulldiv	gamemisc	game_misc	Unsorted_002	none	104
 0054b0c0	__aulldvrm	gamemisc	game_misc	Unsorted_002	none	149
-0054b160	__aullrem	gamemisc	game_misc	Unsorted_003	none	117
+0054b160	__aullrem	gamemisc	game_misc	Unsorted_002	none	117
 0054b1d6	MSVCR110.DLL::libm_sse2_acos_precise	lib	_library	imports	import-ns	6
 0054b1dc	MSVCR110.DLL::libm_sse2_exp_precise	lib	_library	imports	import-ns	6
 0054b29b	FUN_0054b29b	gamemisc	game_misc	_indirect_dispatch-target	role:dispatch-target	75

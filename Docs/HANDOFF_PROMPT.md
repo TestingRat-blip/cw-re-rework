@@ -233,6 +233,18 @@ if you are about to trust a green gate, read group B. Every one of these cost re
    before accepting a "not replayable" verdict, check whether the thing that motivated it
    still runs.**
 
+7g. **"What is X's <thing>?" can be the wrong question, and the cheapest check is
+   whether X is a LIBRARY function.** A whole handoff item was scoped as "the promotion
+   pass needs `FUN_004e19f0`'s sort key". `FUN_004e19f0` has no sort key: it is MSVC's
+   `std::_Sort` over a 4-byte element (the `_ISORT_MAX` `cmp eax, 0x20`, the ideal
+   halving, `_Insertion_sort` below 32), and the key lives in the **predicate** it
+   forwards untouched. Ten minutes of disassembly turned an open question into a
+   one-line answer — and the same slice found `site+0x79`, carried as "the faction" for
+   a year, was the site-kind grid's corner rank that `cw_featuregen` **was already
+   computing and discarding** (26, third instance), and that a third input nobody had
+   named at all (the ruin's `desc+0x1c`) fell to one byte scan. **Read the function
+   before budgeting for what is inside it.**
+
 ### B. What a green gate does NOT prove
 
 The single most expensive family in this project. Five separate instances of the same
@@ -433,13 +445,18 @@ captures already on disk.
 | the **OVERWORLD CREATURE SCATTER** (`0x51ed60`-`0x51f981`) — 3x3 grid, species tree, pack ring; RE'd *and ported* | `RE_zone_creatures.md` | `gate_zone_creatures` **217/217**; **`rederive_creatures` 1043/1043 ab initio**, 18 zones |
 | `FUN_005290d0` = `World_pickCreatureSpecies` + `FUN_0052bfa0` = `World_pickPackMemberSpecies` | `RE_zone_creatures.md` | (folded into the two above) |
 | the town builder's **PLOT VERDICT** pass (`0x4e2a80`-`0x4e3093`) + its plot score + its rotation/nudge, from the seed — RE'd *and ported* | `RE_town_verdict.md` | `gate_town_verdict` **5,469** / 72 towns; **`rederive_townverdict` 641/641 ab initio**, 34/34 arrivals |
+| the town builder's **PROMOTION** pass (`0x4e3095`-`0x4e39e9`) — the sort key, `site+0x79` and the ruin `desc+0x1c`, all from the seed — RE'd *and ported* | `RE_town_promotion.md` | `gate_town_promotion` **2,071** / 92 towns; **`rederive_townpromo` 140/140 ab initio** |
 
 Two structural facts worth carrying:
 
 - **The region's per-zone SITE-KIND grid** (`region + idx*16 + 0x18`,
   `idx = (zx%64)*64 + (zz%64)`, 4096 entries) is what the zone builder gates its site
   branches on — **1 = town, 3 = dungeon, 4 = runestone circle** — and it is a product of
-  `FUN_0050e080`, the feature generator `cw_featuregen` already ports bit-exact.
+  `FUN_0050e080`, the feature generator `cw_featuregen` already ports bit-exact. Its
+  entry's **second byte** (`+0x19`) matters too: a site record's descriptor base is
+  `site+0x60`, so those two bytes are `site+0x78`/`site+0x79`, and for a town the second
+  is the zone's **corner rank 1..4** — the byte the town builder's promotion pass picks
+  its whole role set from (`zoneSiteTag`, 92/92).
 - **There are two static-entity namespaces**, not one: `world+0x800718` (vegetation / wall
   decor, the "hanging" ids) and `world+0x800724` (the props proper, 78 slots).
 
@@ -451,6 +468,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
+| 07-28d | ★ **the town builder's PROMOTION pass RE'd, gated and PORTED** — and all three of its inputs were misfiled: `FUN_004e19f0` is `std::sort` (the key is `plot[+0x18]` ASCENDING, in the predicate), `site+0x79` is **not a faction** but the site-kind grid's CORNER RANK (which `cw_featuregen` already computed and threw away), and the RUIN's `desc+0x1c` — a third input the lead never named — is a no-draw climate branch on the region site. Corner tag **4 hands out no role at all**, closing `RE_town_props.md` open problem 2 | `RE_town_promotion.md` | **`gate_town_promotion` 2,071**; **`rederive_townpromo` 140/140** |
 | 07-28c | ★ **the TOWN BUILDER's scan pass PORTED, and towns become reachable**: the builder sits at the HEAD of the zone stream (entry index **0 in 23 of 71** towns, median 53), and a town zone's `Village` classification is **vacuous** — both its consumers are skipped at site kind 1/3/4. First ab-initio gate ever to enter a town zone | `RE_town_verdict.md` §6 | **`rederive_townverdict` 641/641**, arrival **34/34**, whole scan phase exact in **29/34**; `gate_town_verdict` 3,984 → **5,469** |
 | 07-28b | ✅ **`cwgen_test` GOES FULLY GREEN**: the bed pass's CARVE LEVEL is `FUN_004f9b70` in FULL — the type-1 village damp and the ocean-site repulsion live inside it, and all three ports used the *open* base height. `rederive_zoneac` 107/109 → **109/109** | `RE_zone_tail.md` | `gate_zone_bed` still 44/44; `rederive_river` regenerated (1 row of 3,005, `w` by 1 ULP) |
 | 07-28 | ★ **the "type-10 terrain drift" RETRACTED** — it was emitter A settling on the zone centre instead of `(cx+3, cz+3)`; Y went 73/109 → **109/109**, terrain untouched. Plus three prologue findings, one of them an open gap (the land mask's village-road cube) | `RE_zone_emitters_ac.md`, `RE_zone_landform.md` | `rederive_zoneac` Y **109/109**, now in the pass criterion |
@@ -569,22 +587,29 @@ it. Read the span before assuming where the emitter begins.
 — all gates pass, both configs, hash `2D52E0BE1C55FFAB`. So the list below is the whole of
 what is next; take item 1.
 
-1. **The rest of the town chain.** ⚠ **Re-scoped 07-28c — read `RE_town_verdict.md` §6
-   before planning it.** The verdict SCAN pass is now RE'd *and ported*
-   (`rederive_townverdict`, arrival 34/34, whole scan phase exact in 29/34), and the thing
-   that slice found changes the shape of the rest: **the builder is entered at zone-stream
-   index 0 in 23 of 71 towns, median 53.** Arriving was never the hard part; the 173 rand
-   sites *downstream of the scan* are, and they are what still stands between here and
-   emitter C. **Start with the PROMOTION pass** (`0x4e31c7`-`0x4e37aa`) — the very next
-   stage after the ported scan, and it is nearly free: a **median of 1 draw per town**,
-   252 in all 92 towns, firing in 56 of them. What it needs is not budget but two small
-   self-contained inputs — `FUN_004e19f0`'s **sort key** (`cw_town.py` has carried it as
-   TODO since 2026-07-07) and whether **`site+0x79`**, the faction that picks the role
-   set, is derivable from the seed; the captures carry `faction` next to every town, so
-   that is checkable with no server. Only after that do the expensive sites bite
-   (`0x4eda58` 2,968 draws / 69 towns, then `0x4e54e8` / `0x4ef7c8` per-column loops at
-   36% of the layer — both of which read terrain cwgen already produces). The **plot
-   heights** stay region-cache-blocked. `gate_town_props.py` is **fixed and green** (07-27f).
+1. **The rest of the town chain.** ⚠ **Re-scoped again 07-28d — read
+   `RE_town_promotion.md` §5 and `RE_town_verdict.md` §6 before planning it.** Two of the
+   builder's stages are now RE'd *and ported*: the verdict SCAN (`rederive_townverdict`,
+   arrival 34/34, whole scan exact in 29/34) and the PROMOTION pass
+   (`rederive_townpromo` 140/140, whole pass exact in the same 29/34 — it adds no new
+   error). The builder is entered at zone-stream index **0 in 23 of 71 towns**, median 53,
+   so arriving was never the hard part; the rand sites *downstream* are, and there are now
+   **172** of them left.
+
+   **The next one is `0x4eda58`** — 2,968 draws across 69 of the 92 towns, the first
+   genuinely broad site, and the first that is not nearly free. After it: `0x4e742e`
+   (15,609 / 70 towns), then the two per-column loops `0x4e54e8` / `0x4ef7c8` that carry
+   **36%** of everything this layer spends — both read terrain cwgen already produces. The
+   **plot heights** stay region-cache-blocked. `gate_town_props.py` is fixed and green.
+
+   ⚠ **What the promotion slice teaches about scoping the rest** (and it happened three
+   times in one afternoon): every input that slice was blocked on was *misfiled*, not
+   missing. `FUN_004e19f0` was asked for "its sort key" and has none — it is `std::sort`
+   and the key is in the predicate. `site+0x79` was called a faction for a year and is the
+   site-kind grid's corner rank, **which `cw_featuregen` was already computing and
+   discarding** (lesson 26, the third instance). And the ruin's `desc+0x1c` — an input
+   nothing had named at all — fell to one byte scan. **Before budgeting for a stage, check
+   whether its inputs are already in a port under another name.**
 2. **The dungeon mob pass + boss spawn + light sources** into `cw_rederive`/`cwgen`. All
    gated; all pure functions of the finished dungeon voxel stamp, which the port already
    produces bit-exact — no captured booleans, no order state. Then the engine half of
@@ -723,19 +748,29 @@ Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fail
 cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
 ```
 
-**Known-good as of 07-28c:** the `cw_decomp` gate suite is **fully green** (28 gates), and
-**`cwgen_test` is fully green** (29 gates now — `rederive_townverdict` is new). Hash
-**`F20252B941259929`** in both Debug and Release.
+**Known-good as of 07-28d:** the `cw_decomp` gate suite is **fully green** (29 gates now —
+`gate_town_promotion` is new), and **`cwgen_test` is fully green** (30 gates now —
+`rederive_townpromo` is new). Hash **`E2A65B45E448E9C6`** in both Debug and Release.
 
-⚠ **`cwgen_test` now takes about 5 minutes per config** — the town scan reads all 65,536
+⚠ **`cwgen_test` takes about 5 minutes per config** — the town scan reads all 65,536
 columns of every town zone it replays. That is the gate doing real work, not a hang.
 
-⚠ **The 07-28c hash change was isolated before it was accepted**: moving *only*
-`rederive_townverdict.bin` aside restores `2D52E0BE1C55FFAB` exactly, so the delta is the
-new gate's own hashed values and nothing else moved. Do that check on any new gate — it
-costs one run and turns "I think nothing else changed" into a measurement (lesson 17).
+⚠ **Every hash change here is isolated before it is accepted.** 07-28d: moving *only*
+`rederive_townpromo.bin` aside restores `F20252B941259929` exactly, so the delta is the new
+gate's own hashed values — and that also proves the slice's `FeatureCell.subtype` change
+(village + ruin, previously unset) moved nothing else. 07-28c was the same check against
+`rederive_townverdict.bin` and `2D52E0BE1C55FFAB`. Do it on any new gate: it costs one run
+and turns "I think nothing else changed" into a measurement (lesson 17).
 
-**Superseded:** hash **`2D52E0BE1C55FFAB`** was the 07-28b known-good. The whole chain was
+⚠ **And check the OLD gates' reported numbers, not just their verdicts.** The promotion
+port initially wrote its rotation back into the same `TownPlot::rot` the scan leaves, which
+is what the binary does — and silently dropped `rederive_townverdict`'s scan-exact count
+from 29/34 to **21/34** while both gates still said PASS, because that count is *reported*
+and not asserted. The fix is a separate `rotFinal`. A measured number nobody diffs is a
+gate that cannot fail.
+
+**Superseded:** hash **`F20252B941259929`** was the 07-28c known-good and
+**`2D52E0BE1C55FFAB`** the 07-28b one. The whole chain was
 re-verified from the 07-27f baseline (`F5D7D16E92EE5C38`) before anything changed.
 
 ⚠ **The hash changed TWICE on 07-28**, both deliberately and both because a real bug was

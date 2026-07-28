@@ -267,6 +267,20 @@ the body was the only way to settle these.
         # then ends `type = rand() % 3 + 0x15` with the size hard-coded to (3.5, 2, 3).
         # Its fourth argument is pushed by every caller and never read.
         "004f3630": {"name": "TownProp_make_0x15", "kind": "game", "verdict": "DEEP-RE"},
+        # CONFIRMED library, and worth pinning because the previous handoff asked for
+        # "FUN_004e19f0's sort key" as if the function had one (Docs/RE_town_promotion.md).
+        # It is MSVC's std::_Sort over a 4-byte element -- the `sar eax,2` count, the
+        # _ISORT_MAX `cmp eax,0x20` at 0x4e1a06, the ideal-halving recursion on the smaller
+        # half, _Insertion_sort below 32 and _Make_heap/_Sort_heap when ideal runs out --
+        # and the KEY lives in the predicate it forwards as [ebp+0x14]. In the town builder
+        # that predicate is the one-dword functor `&plotBase` and compares plot[+0x18]
+        # ascending, which MSVC inlined identically into both instantiations below.
+        "004e19f0": {"name": "std_sort_4byte", "kind": "lib", "verdict": "DEEP-RE"},
+        # _Insertion_sort_unchecked for the same (iterator, predicate): the front-insert
+        # memmove at 0x4e1675, then the walk-back loop, comparing score(plot[*]) at
+        # 0x4e164e/0x4e1696. This is the ONLY body that runs for a town -- plotCount is 16
+        # or 25, so the introsort above never leaves its `count <= 0x20` arm.
+        "004e15f0": {"name": "std_insertion_sort_4byte", "kind": "lib", "verdict": "DEEP-RE"},
         # its MSVC alignment-NOP body split, pinned here because adjudicate_none.py stamped
         # the fragment with the parent's OLD name and must not be re-run on a structured tree
         "0051210a": {"name": "camp_populator__split_51210a", "kind": "game",

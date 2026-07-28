@@ -266,9 +266,15 @@ headless town, which is what gave the mistake away. The sets are **disjoint**:
 | 3 | 3 | 3, 10, 11, 12, 13 |
 | 0 | 38 | 5, 18, 20 — conditional, not all towns get them |
 
-Factions 1, 2 and 3 hand out their whole set in **every** town of that faction. A fifth
-value, 4, appears on three towns in the sample but none of them reached the late snapshot,
-so its set is unobserved.
+Factions 1, 2 and 3 hand out their whole set in **every** town of that faction.
+
+> ⚠ **2026-07-28d: "faction" is the wrong word, and value 4 is no longer unobserved.**
+> `site+0x79` is the per-zone **site-kind grid entry's second byte** — the zone's CORNER
+> RANK 1..4 among the four zones the type-1 cell's tile sweep picks, and 0 for a zone
+> that is not one of the four (so every RUIN reads 0: a type-5 cell writes no site-kind
+> entry at all). Derived from the seed in 92 of 92 towns. And **value 4 hands out no
+> special role at all** — it matches none of the branches, and all four tag-4 towns spend
+> exactly the six cull draws and nothing else. `RE_town_promotion.md` has the whole pass.
 
 ### The prop layer is village-only
 
@@ -306,7 +312,12 @@ creatures; only 25 emitted props. Nothing here decodes that split.
    `World_falloffSquared(cell, plotOrigin + span/2)` and is derived from the seed. What
    is still blocked is only the three terrain booleans and the heights themselves
    (`CW_REGIONCACHE_SCHEDULER.md`).
-2. **`site+0x79` = 4**, whose special-role set no town in the sample revealed.
+2. ~~**`site+0x79` = 4**, whose special-role set no town in the sample revealed.~~ —
+   **CLOSED 2026-07-28d, `RE_town_promotion.md`.** There is no set: 4 matches none of the
+   promotion's branches, so a tag-4 town runs only the six-iteration cull. The live draw
+   census agrees — all four spend exactly 6 promotion draws, every one at `0x4e3646`. And
+   the byte is not a faction at all but the site-kind grid's corner rank, derived from the
+   seed 92/92.
 3. ~~**The 25-of-67 split**~~ — **it is feature type 1 vs 5**, 67 for 67. Villages emit
    props; ruins emit none.
 4. **The `eb145`-`ebaf4` interior pass**, 4,279 records over 18 prop ids, the largest

@@ -6428,51 +6428,6 @@ void __cdecl FUN_004e1560(int param_1,int param_2,int param_3,int *param_4,int *
 }
 
 
-/* FUN_004e15f0 @ 004e15f0  kind=gamemisc  attributed-by=none  size=256 */
-
-void __cdecl FUN_004e15f0(int *param_1,int *param_2,int *param_3)
-
-{
-  float *pfVar1;
-  float fVar2;
-  int iVar3;
-  int iVar4;
-  int *piVar5;
-  int *piVar6;
-  int *local_8;
-  
-  if ((param_1 != param_2) && (piVar5 = param_1 + 1, piVar5 != param_2)) {
-    do {
-      iVar3 = *piVar5;
-      fVar2 = *(float *)(*param_3 + 0x18 + iVar3 * 0x1c);
-      if (*(float *)(*param_3 + 0x18 + *param_1 * 0x1c) <= fVar2) {
-        iVar4 = piVar5[-1];
-        piVar6 = piVar5;
-        local_8 = piVar5;
-        if (fVar2 < *(float *)(*param_3 + 0x18 + iVar4 * 0x1c)) {
-          do {
-            local_8 = piVar6 + -1;
-            *piVar6 = iVar4;
-            iVar4 = piVar6[-2];
-            fVar2 = *(float *)(*param_3 + 0x18 + iVar4 * 0x1c);
-            pfVar1 = (float *)(*param_3 + 0x18 + iVar3 * 0x1c);
-            piVar6 = local_8;
-          } while (*pfVar1 <= fVar2 && fVar2 != *pfVar1);
-        }
-        *local_8 = iVar3;
-      }
-      else {
-        iVar4 = (int)piVar5 - (int)param_1 >> 2;
-        memmove(piVar5 + (1 - iVar4),param_1,iVar4 * 4);
-        *param_1 = iVar3;
-      }
-      piVar5 = piVar5 + 1;
-    } while (piVar5 != param_2);
-  }
-  return;
-}
-
-
 /* FUN_004e16f0 @ 004e16f0  kind=gamemisc  attributed-by=none  size=206 */
 
 void __cdecl FUN_004e16f0(int param_1,int param_2,int *param_3)
@@ -20500,6 +20455,65 @@ undefined8 __aulldvrm(uint param_1,uint param_2,uint param_3,uint param_4)
     uVar3 = 0;
   }
   return CONCAT44(uVar3,iVar4);
+}
+
+
+/* __aullrem @ 0054b160  kind=gamemisc  attributed-by=none  size=117 */
+
+/* Library Function - Single Match
+    __aullrem
+   
+   Library: Visual Studio */
+
+undefined8 __aullrem(uint param_1,uint param_2,uint param_3,uint param_4)
+
+{
+  ulonglong uVar1;
+  longlong lVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  bool bVar11;
+  
+  uVar3 = param_1;
+  uVar4 = param_4;
+  uVar9 = param_2;
+  uVar10 = param_3;
+  if (param_4 == 0) {
+    iVar6 = (int)(((ulonglong)param_2 % (ulonglong)param_3 << 0x20 | (ulonglong)param_1) %
+                 (ulonglong)param_3);
+    iVar7 = 0;
+  }
+  else {
+    do {
+      uVar5 = uVar4 >> 1;
+      uVar10 = uVar10 >> 1 | (uint)((uVar4 & 1) != 0) << 0x1f;
+      uVar8 = uVar9 >> 1;
+      uVar3 = uVar3 >> 1 | (uint)((uVar9 & 1) != 0) << 0x1f;
+      uVar4 = uVar5;
+      uVar9 = uVar8;
+    } while (uVar5 != 0);
+    uVar1 = CONCAT44(uVar8,uVar3) / (ulonglong)uVar10;
+    uVar3 = (int)uVar1 * param_4;
+    lVar2 = (uVar1 & 0xffffffff) * (ulonglong)param_3;
+    uVar9 = (uint)((ulonglong)lVar2 >> 0x20);
+    uVar4 = (uint)lVar2;
+    uVar10 = uVar9 + uVar3;
+    if (((CARRY4(uVar9,uVar3)) || (param_2 < uVar10)) || ((param_2 <= uVar10 && (param_1 < uVar4))))
+    {
+      bVar11 = uVar4 < param_3;
+      uVar4 = uVar4 - param_3;
+      uVar10 = (uVar10 - param_4) - (uint)bVar11;
+    }
+    iVar6 = -(uVar4 - param_1);
+    iVar7 = -(uint)(uVar4 - param_1 != 0) - ((uVar10 - param_2) - (uint)(uVar4 < param_1));
+  }
+  return CONCAT44(iVar7,iVar6);
 }
 
 
