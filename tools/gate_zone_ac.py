@@ -16,6 +16,11 @@ region's 4096 zones are the kind emitter A wants.
     rec.type = 0x2d  (runestone)                                                0x51dbab
     rec.pos  = (zoneCentre<<16) + ftol(229376.0) on BOTH axes  # +3.5 blocks
     rec.z    = descend to the first solid, then ascend to the first clear       0x51dad1
+               # the walk probes column (centre+3, centre+3): 0x51da10-0x51da3a
+               # reuses the record's own +ftol(229376.0) 16.16 coordinates and
+               # 0x406050 floors them. Only the SEED z0 is the centre column
+               # (0x51d493, block coords). Settling on the centre instead put
+               # cwgen's Y out in 36 of 109 zones -- RE_zone_emitters_ac.md.
     rec.dir  = rand()%4;  rec.size = (4, 4, 5);  push to site+0xc               0x51dbf5
 
 ## Emitter C -- the village street light (needs a village on sand)

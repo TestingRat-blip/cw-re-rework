@@ -261,3 +261,76 @@ another and get no warning. It does now.
 via this lazy import): **a module that configures a seed at import is a global-state bug
 waiting for its first cross-seed caller** — and the caller that trips it is usually a
 *classifier*, whose wrong answer looks like a policy decision rather than a bug.
+
+---
+
+# The column prologue, re-read (2026-07-28)
+
+Read end to end while falsifying the "type-10 terrain drift" (`RE_zone_emitters_ac.md`).
+None of it changed a port — the drift was an emitter bug, not a terrain one — but three
+facts about `FUN_00518630`'s prologue and `FUN_00523d80` were not written down anywhere,
+and two of them are open gaps.
+
+## The base height comes out of a precomputed 257x257 table
+
+The builder does **not** call `base_height` per column inside its main loop. It runs three
+passes before the loop:
+
+```
+0x518900-0x5189c8   for Z in [z0, z0+256): for X in [x0, x0+256):      # 65,536 columns
+                        col+4  = lib_fn_4f8570(X, Z)
+                        col+8  = lib_fn_4f8b40(X, Z)
+                        col+0xc = FUN_00522e20(X, Z)                   # flagBlend
+0x5189d4            buf = malloc(0x40804)                              # 257*257*4 exactly
+0x518a11-0x518a9c   for Z in [z0, z0+256]: for X in [x0, x0+256]:      # INCLUSIVE, 257x257
+                        buf[(X-x0)*0x101 + (Z-z0)] = FUN_004f9b70(Z, X, edi)
+```
+
+and the main loop reads `bh = buf[(X-x0)*0x101 + (Z-z0)]` at `0x518c0c`, using the
+neighbour at `+4` for its slope term. So the builder's `bh` **is** `base_height`, sampled
+per block — no coarse grid, no interpolation. The surfH assembly that consumes it
+(`0x519046`-`0x5190f4`) transliterates exactly as `CwColumn::surfHFull` has it:
+`termA = cvtpd2ps((double)noise2d(X*.01+34432, Z*.01+8992) + 1.5) * 60)`, then
+`cvttss2si(f32(f32(termA*special + lr*8) + bh))`, and `col[0x10] = surfH` at `0x5192de`.
+
+⚠ Note the table's range is **inclusive** on both axes — it covers one row and one column
+*past* the zone. That edge is the only place the two passes above disagree about which
+chunk a column belongs to.
+
+## `FUN_0052cd50` takes a THIRD argument, and the humidity term is CACHED
+
+`ret 0xc`, not `ret 8`. The gate's tail is:
+
+```
+0x52cfec   col = Chunk_getColumnAt(X, Z, arg2)         # 0x406100
+0x52cffd   hum = col ? col[0xc] : FUN_00522e20(X, Z)   # 0x522e20 = flagBlend
+0x52d016   gate = hum + ridge
+```
+
+so once a column exists, the gate reads its cached humidity rather than recomputing it.
+The builder's first pass fills `col+0xc` with exactly `flagBlend(X, Z)`, so **in-zone the
+two are the same number** and `CwHeight::climateGate`'s two-argument model is right — this
+is a closed door, not a bug. The third argument is threaded through `base_height`
+(`[esp+0xa4]`, forwarded to both `0x52cd50` and `0x52d990`) and is passed by the bh-table
+fill *and* by the river/lake bed pass at `0x51bcde`. Where it could bite: the 257x257 edge
+above, and any caller that reaches a column some other pass populated.
+
+## ⚠ OPEN: the land mask has a VILLAGE-ROAD cube factor the ports do not model
+
+`FUN_00523d80`'s gate-combine is four factors, not three:
+
+```
+0x524117   v    = min(climateGate(X,Z) * 2, 1) ;  l80 = smoothstep(v) * raw
+0x52417d   wd   = min(waterDepth(X,Z), 1)      ;  l88 = smoothstep(wd) * l80
+0x5241d7   r    = min(villageRoad(X,Z) * 2, 1)                       # FUN_004d19f0
+0x524239   l88 *= (1 - smoothstep(r))^3                              # <- MISSING
+```
+
+`CwColumn::landMaskCombine` stops after the second factor and says so ("NO village-road
+factor ... a documented simplification"). The cube is **inert everywhere the ports are
+gated today** — `FUN_004d19f0` returns 0 outside a type-1 cell, so `smoothstep(0) = 0` and
+the factor is 1 — which is why nothing has ever caught it. Inside a village it drives the
+land mask to **zero** at the road centres (`road >= 0.5` saturates `r`), i.e. it is the
+term that flattens village ground. It goes with the same routine's other village
+simplification (`biomeBorder` standing in for the live `FUN_0052d990` water depth), and
+both are for whoever ports the town chain.

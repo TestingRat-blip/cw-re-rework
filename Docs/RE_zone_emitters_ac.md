@@ -1,5 +1,15 @@
 # Zone-builder emitters A and C — the runestone and the street light
 
+> **2026-07-28 — the runestone's Y is CLOSED, and the "type-10 terrain drift" it was
+> blamed on does not exist.** Emitter A's Z settle probes column `(cx+3, cz+3)`, not the
+> zone centre: the walk reuses the record's own `+ftol(229376.0)` = +3.5-block 16.16
+> coordinates. The port settled on the centre column, which put the record's Y one or two
+> blocks out in **36 of 109** live runestones — read for a whole handoff as a terrain bug
+> at type-10 cell centres and carried as the starred open problem. Fixing the probe column
+> took Y to **109/109** with cwgen's terrain untouched, and Y is now part of
+> `rederive_zoneac`'s pass criterion. Full retraction + the three measurements that killed
+> the terrain reading: "★ A new terrain finding" at the bottom of this file.
+
 > **2026-07-27c — emitter A is PORTED and gated ab initio, and four things below were
 > wrong.** Read this box before the body.
 >
@@ -100,6 +110,7 @@ for i in 0..N-1:                                    # a ring, radius 25
     hx = rand()%4 + 3 ;  hz = rand()%4 + 3          # two draws per ring point
     ... a noisy material-6 ellipsoid over [-2hx,2hx] x [-2hz,2hz] x [zc-20,zc+20] ...
 z = z0 descended to the first solid, then ascended to the first clear       0x51da60
+    # ⚠ the walk probes column (cx+3, cz+3), NOT the zone centre -- see below
 rec.type = 0x2d      (runestone)                                           0x51dbab
 rec.pos  = ((zoneCentreX<<16) + ftol(229376.0), (zoneCentreZ<<16) + ftol(229376.0), z<<16)
 rec.dir  = rand()%4 ;  rec.size = (4, 4, 5)                                0x51dbb5
@@ -130,6 +141,14 @@ Two details worth keeping:
   `World_getBlockFloat` (`FUN_00406050`): descend one block at a time while the block is
   non-solid, then ascend while it is solid — **uncapped**, where `FUN_005287b0` caps both
   at 50, and with no footprint or support test.
+* ★ **The settle probes the RECORD's column, not the zone centre** (2026-07-28).
+  `0x51da10`-`0x51da3a` builds the two horizontal arguments of every `World_getBlockFloat`
+  call in the walk as `X16 + ftol(229376.0)` and `Z16 + ftol(229376.0)` — the *same* +3.5
+  blocks the record carries — and `0x406050` floors a 16.16 coordinate (`__alldiv` by
+  `0x10000` after a negative pre-adjust), so the walk reads column **(cx+3, cz+3)**.
+  Only the SEED `z0` comes from the centre column: `0x51d493` calls `Chunk_getColumnAt`
+  with plain block coordinates. The two coordinates never move during the walk — only the
+  Y slot (`[ebp-0x6e0]`) is stepped by `0xffff0000`.
 * The `+ftol(229376.0)` = **+3.5 blocks** on both horizontal axes is the same constant
   `FUN_004e0740`'s stage 2 uses (`RE_zone_props.md`), applied here as a plain bias rather
   than a `{0,7}` offset pair.
@@ -283,6 +302,7 @@ recovered by locating each zone's recorded draws in its own LCG.
 | the emitter is reached at the live absolute stream index | **107 / 109** |
 | `N = rand()%3 + 6`, and the ring spends exactly 2 draws per point | 109 / 109 |
 | the record's X and Z are the zone centre + 3.5 blocks | 109 / 109 |
+| the record's **Y** — the settle at `(cx+3, cz+3)` | **109 / 109** (was 73, fixed 07-28) |
 | `dir` is the last draw `% 4` | 109 / 109 |
 | cwgen declines the zone rather than guessing | 3 of 112 |
 
@@ -296,24 +316,48 @@ in 2026-07-26g, and 28 of the 30 river zones here are exact. Closing the other t
 bed-pass slice, and the sea-level shape of the second one points at the ocean-water test
 that zone (32610,33111) pinned.
 
-### ★ A new terrain finding, from the same gate
+### ~~★ A new terrain finding, from the same gate~~ — RETRACTED 2026-07-28
 
-The record's **Y is deliberately not part of the pass criterion**, and that is a finding
-rather than a convenience. Y is the centre column's `[0x10]+[0x1c]` settled down-then-up —
-a pure function of the finished terrain, to which emitter A contributes nothing.
-
-Every kind-4 zone is by construction a **type-10 feature cell's** zone
-(`RE_site_kind_grid.md`: kind 4 marks every type-10 cell), so this is the first gate in the
-project to read terrain at a **type-10 cell centre** — and cwgen is off by one or two
-blocks in **36 of 109** columns:
+The gate reported the record's Y separately from its pass criterion, and Y disagreed in
+**36 of 109** zones, bidirectionally:
 
 | live − cwgen | −2 | −1 | 0 | +1 | +2 |
 |---|---|---|---|---|---|
 | columns | 3 | 16 | 73 | 14 | 3 |
 
-**Bidirectional, so it is not a missing stamp.** It tracks `frac(surf)` — mean 0.24 where
-cwgen reads a block low, 0.52 where it agrees, 0.64 where it reads high — which is the
-signature of a small error in the pre-truncation float `surf` inside the type-10 deform,
-visible only when it crosses an integer. That is the same shape as the type-6/0xd land-mask
-bug of 2026-07-26b (`RE_zone_landform.md`), which was likewise invisible until something
-gated a cell centre. The gate prints the histogram every run so the number cannot rot.
+This file, `HANDOFF_PROMPT.md` and `cwgen_test/main.cpp` all read that as **"cwgen's
+terrain is 1-2 blocks out at a type-10 cell CENTRE ... a small error in the pre-truncation
+float `surf` inside the type-10 deform"**, and filed closing it as a terrain-pipeline
+slice — open problem 0, the starred one.
+
+**The terrain was never wrong.** cwgen's height at all 109 type-10 cell centres is exact.
+The residual was **emitter A settling on the wrong column**: the port walked the zone
+centre, the game walks `(cx+3, cz+3)` (see the settle note above). Correcting the probe
+column took Y from **73/109 to 109/109** with no terrain change at all, and Y is now part
+of the gate's pass criterion so it cannot rot back.
+
+Three cheap measurements falsified the terrain reading *before* anything was changed, and
+they are the reusable part:
+
+1. **The land mask cannot pay for it.** Dumping `special` at all 109 columns: the type-10
+   deform drives it to ≤ 0.0089, worth at most **0.32 blocks** of `surf` (the coefficient
+   is `term_a + 8*SUM` ≈ 98) — and it is < 0.0001 in 20 of the 38 drifting zones, several
+   of which need |δ| > 0.9. E.g. (32652,32763) has `frac(surf) = 0.944`, `lmTerm = 0.0000`
+   and live one block LOW: no land-mask term of any size can move it.
+2. **The ocean repulsion cannot pay for it either.** `FUN_004f9b70`'s repulsion is
+   `smoothstep(min((1-fall)*1.1, 1)) * (int)elev` with `cvtdq2ps` on an integer site
+   elevation (`0x4fab33`), and at a cell centre `fall ≈ 0.06` so the smoothstep is
+   saturated. It is therefore **exactly 0 or +100** in all 109 columns — never a fraction —
+   and it fires in 33 of them at the *same* rate in the agreeing zones (20/71) as in the
+   drifting ones (13/38).
+3. **No constant or proportional bias fits.** Sweeping a constant δ over [−2, +2] at 0.001
+   scores at best **74/109** against the then-current 73; scaling by `surf` or `baseH` does
+   no better. The error was per-column and zero-mean — which is what reading a column three
+   blocks away looks like.
+
+Also checked and clean along the way: the type-10 branch of `FUN_00523d80`
+(`0x524305`-`0x5243f6`) transliterates exactly as the port has it — the `radius > 0` guard,
+`w = (dx² + dz²)/r²` off `lib_fn_4f79f0`'s plain 128-bit centre−position subtract, the
+`w < 1` guard and `l88 *= 1 - (1-w)²`; and `FUN_0052cd50`'s feature repulsion covers
+`{1,2,4,0xd}` and `{6,7}` only, so type 10 correctly adds nothing to the climate gate.
+**Closed doors, recorded so they stay shut.**

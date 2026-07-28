@@ -182,6 +182,21 @@ if you are about to trust a green gate, read group B. Every one of these cost re
    **3,837**. Both cost nothing to check and both changed the plan. **`ls` the capture,
    and bucket the stream, before scoping work around either.**
 
+7d. **Before blaming a term for a residual, check the term is BIG ENOUGH to pay for it —
+   and price the alternatives too.** A 36-of-109 height residual at type-10 cell centres
+   was carried for a whole handoff as "a small error in the pre-truncation float inside
+   the type-10 deform", on the strength of one plausible-looking `frac(surf)` correlation.
+   Three measurements, none costing more than a printf, killed it before any code moved:
+   the land-mask term is worth **at most 0.32 blocks** there and is < 0.0001 in 20 of the
+   38 drifting zones, several of which need |δ| > 0.9; the only other type-10-specific
+   term, the ocean repulsion, is `smoothstep(clamped) * (int)elev` and so is **exactly 0
+   or +100**, never a fraction; and no constant or height-proportional δ beats the status
+   quo by more than one zone. The real cause was three blocks away — the settle probing
+   the wrong column. **A residual your suspect cannot pay for is evidence about the
+   suspect.** Corollary, and the third instance in this project: when a stage carries a
+   16.16 bias, ask whether its PROBES carry it too (see 14, and the site list's proximity
+   test).
+
 7c. **A literal table copied out of an image needs a machine to keep it honest.**
    `CwZoneCreatures.cpp`'s species group/level tables were typed by hand instead of pasted
    from the extractor that had just printed them, and were wrong in **17 and 109 entries**.
@@ -386,7 +401,7 @@ session; every open question left is reachable from the captures already on disk
 | the **RIVER/LAKE BED PASS** (`0x51c09a`) + its mat-6 consumer — the last pre-chain stage | `RE_zone_tail.md` | 44 checks, 8 zones, 37,476 live draws |
 | the site list's **16.16 proximity test** (`0x51cf20` / `0x51ded7`) — the entry carries a half block | `RE_zone_site_loop.md` | `rederive_campgrid` 15990/15990, 13 zones |
 | the **CAMP POPULATOR** `FUN_005104e0` end to end — every prop and every `Spawn` record | `RE_5104e0_camp.md` | 1,598 record checks / 99 zones; `rederive_camppop` 3111/3111 |
-| **EMITTER A** (the runestone circle) — RE'd *and ported*, reached from the seed | `RE_zone_emitters_ac.md` | `gate_zone_ac` 1,232 / 112 zones; **`rederive_zoneac` 107/109 ab initio** |
+| **EMITTER A** (the runestone circle) — RE'd *and ported*, reached from the seed; its Z settle probes `(cx+3, cz+3)` | `RE_zone_emitters_ac.md` | `gate_zone_ac` 1,232 / 112 zones; **`rederive_zoneac` 107/109 ab initio, record Y 109/109** |
 | the **OVERWORLD CREATURE SCATTER** (`0x51ed60`-`0x51f981`) — 3x3 grid, species tree, pack ring; RE'd *and ported* | `RE_zone_creatures.md` | `gate_zone_creatures` **217/217**; **`rederive_creatures` 1043/1043 ab initio**, 18 zones |
 | `FUN_005290d0` = `World_pickCreatureSpecies` + `FUN_0052bfa0` = `World_pickPackMemberSpecies` | `RE_zone_creatures.md` | (folded into the two above) |
 | the town builder's **PLOT VERDICT** pass (`0x4e2a80`-`0x4e3093`) + its plot score, from the seed | `RE_town_verdict.md` | `gate_town_verdict` 3,984 / 72 towns |
@@ -408,6 +423,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
+| 07-28 | ★ **the "type-10 terrain drift" RETRACTED** — it was emitter A settling on the zone centre instead of `(cx+3, cz+3)`; Y went 73/109 → **109/109**, terrain untouched. Plus three prologue findings, one of them an open gap (the land mask's village-road cube) | `RE_zone_emitters_ac.md`, `RE_zone_landform.md` | `rederive_zoneac` Y **109/109**, now in the pass criterion |
 | 07-27f | the town builder's **plot verdict** decoded in full + the town-builder draw cost MEASURED (17-19,576); `gate_town_props` fixed and green | `RE_town_verdict.md` | `gate_town_verdict` 3,984 |
 | 07-27e | **the scatter PORTED ab initio** + both species pickers decoded; the port's hand-typed tables were wrong | `RE_zone_creatures.md` | `rederive_creatures` 1043/1043 |
 | 07-27d | **the OVERWORLD CREATURE SCATTER** RE'd + gated — and the emitter-C gap is the TREE PASS, not this | `RE_zone_creatures.md` | `gate_zone_creatures` 217/217 |
@@ -519,11 +535,13 @@ it. Read the span before assuming where the emitter begins.
 
 ### Then, in order
 
-⚠ **The recommended next slice is now open problem 0**, not the town chain. Both of its
-items are concrete, bounded, reachable from captures already on disk, and the second one
-(the type-10 centre drift) is a *terrain* bug whose fix also feeds the town verdict's two
-blocked booleans (`water`, `sand` are column-class reads). Fixing it turns
-`rederive_zoneac` green for the right reason.
+⚠ **The recommended next slice is the remaining half of open problem 0** — the river/lake
+**bed-pass over-count** in 2 of 30 river zones. Its sibling (the "type-10 centre drift")
+was closed on 07-28 and was never a terrain bug at all, so the "terrain-pipeline slice"
+framing this section used to carry is gone. The bed-pass item is concrete, bounded,
+reachable from captures already on disk, and it is the only thing keeping
+`rederive_zoneac` at 107/109; 07-28 narrowed it to `band` or a water voxel the port's
+`Store` never writes (see open problem 0).
 
 1. **The rest of the town chain.** Now correctly sized: 176 rand sites, up to 19,576 draws
    a town, and the only route to emitter C. The **verdict** pass is done
@@ -541,8 +559,9 @@ blocked booleans (`water`, `sand` are column-class reads). Fixing it turns
 
 ### Open problems
 
-**0. Two things `rederive_zoneac` measured on its first run (07-27c), both open.**
-Neither is an emitter-A defect; both are the gate doing its job.
+**0. One of the two things `rederive_zoneac` measured on its first run (07-27c) is still
+open.** Neither was an emitter-A defect *as filed*; the second one turned out to be
+exactly that.
 
   * **The river/lake BED pass over-counts in 2 of its 30 river zones.** cwgen spends 30
     draws where the server spends 0 in (32523,32659), and 12,808 against 5,533 in
@@ -552,14 +571,27 @@ Neither is an emitter-A defect; both are the gate doing its job.
     is why the gate reads 107/109 rather than green. A kind-4 even-parity zone has exactly
     one draw source left in its pre-chain once both site-kind guards fire, so the
     attribution is not a guess.
-  * **★ cwgen's terrain is 1-2 blocks out at a TYPE-10 cell CENTRE**, in 36 of 109 columns,
-    **bidirectionally** (so: not a missing stamp). It tracks `frac(surf)` — mean 0.24 where
-    cwgen reads low, 0.52 where it agrees, 0.64 where it reads high — the signature of a
-    small error in the pre-truncation float inside the type-10 deform crossing an integer.
-    Every kind-4 zone is a type-10 cell's zone, so this gate is the first thing in the
-    project to read terrain at a type-10 centre. Same shape as the type-6/0xd land-mask bug
-    of 07-26b, which was also invisible until something gated a cell centre. The gate
-    prints the histogram every run; closing it is a terrain-pipeline slice.
+    ★ **Narrowed to one thing, 07-28** (`RE_zone_tail.md`, "Where it still over-counts").
+    All 30 columns of (32523,32659) measured: they are one river corner at local
+    `x+196..214, z+0..1`, every gate within 0.0019 of the band edge, and every one with
+    `base_height <= 0`, `terrace = 0`, `w = 0`, **`bedY = 0`** — exactly sea level. `road`
+    cannot discriminate (type-10 cell ⇒ `FUN_004d19f0 ≡ 0`), and the SHORE nest is ruled
+    out by measurement (`waterDepth` there is **106.3-107.2**, not ≤ 0.02, 0 of 30). What
+    is left is that **the replay `Store` never materialises a WATER column**:
+    `Store::col()` always writes `surfHFull` stone + cover and never consults
+    `riverCarveGeom`/`lakeFill`, so it cannot produce the water/riverbed column kinds
+    `cw_column.generate_column` already models. Where the record holds water at `bedY` the
+    server refuses to bury it and spends nothing. This is the *in-record* half of the term
+    zone (32610,33111) pinned in 07-26g — `rawBlock`'s `y <= 0 -> 0x82` only covers blocks
+    **above** the record. ⚠ Fixing it moves the terrain the tree loop and site loop read:
+    re-run the whole suite, not just this gate.
+  * ~~**★ cwgen's terrain is 1-2 blocks out at a TYPE-10 cell CENTRE**~~ — **CLOSED and
+    RETRACTED 07-28. There was never a terrain bug.** It was emitter A's Z settle: the walk
+    reuses the record's own `+ftol(229376.0)` 16.16 coordinates, so it probes column
+    `(cx+3, cz+3)`, and the port settled on the zone centre three blocks away. Y went
+    **73/109 → 109/109** with cwgen's terrain untouched, and Y is now part of the gate's
+    pass criterion. The retraction and the three measurements that killed the terrain
+    reading are in `RE_zone_emitters_ac.md`; the general lesson is 7d below.
 
 **1. Descriptor types 7 / 0xb / 0xc / 0xf still drift and are still declined.**
 ⚠ **Re-measure before hunting — the standing note is stale.** The five-zone list below was
@@ -647,16 +679,16 @@ Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fail
 cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
 ```
 
-**Known-good as of 07-27f:** the `cw_decomp` gate suite is **fully green** (28 gates —
-`gate_town_props.py` was fixed this pass, and `gate_town_verdict.py` is new);
-`cwgen_test` is green except **`rederive_zoneac` 107/109**, hash **`F5D7D16E92EE5C38`**
-in both Debug and Release. Both were re-verified at the start of 07-27f.
+**Known-good as of 07-28:** the `cw_decomp` gate suite is **fully green** (28 gates);
+`cwgen_test` is green except **`rederive_zoneac` 107/109**, hash **`01BF4F82DADAB46E`**
+in both Debug and Release. The suite and both hashes were re-verified at the start of
+07-28 at the previous baseline (`F5D7D16E92EE5C38`) before anything changed.
 
-⚠ **The hash CHANGED at 07-27e** (was `F06E7FAF50277143`) because the creature scatter's
-records now feed it. That was deliberate: this stage is the only place in cwgen that runs
-`sin`/`cos` through the `cvtpd2ps`/`cvtps2pd` round and then `ftol2`, so Debug-vs-Release
-agreement on it is worth more than a stable constant. Nothing else moved -- every other
-gate's counts are unchanged.
+⚠ **The hash CHANGED at 07-28** (was `F5D7D16E92EE5C38`) because emitter A's settle now
+probes `(cx+3, cz+3)` and the runestone's `Y16` feeds the hash. Nothing else moved --
+every other gate's counts are unchanged, and the change is the one that took the record's
+Y from 73/109 to 109/109 against live. (It changed at 07-27e too, from
+`F06E7FAF50277143`, when the creature scatter's records started feeding it.)
 
 ⚠ **Grepping the suite for "FAIL" gives two false alarms.** `gate_zone_bed.py` ends with
 `44 ok, 0 FAIL`, and six gates (`gate_dungeon_counter`, `gate_zone_landform`,

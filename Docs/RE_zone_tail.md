@@ -355,6 +355,50 @@ that only ever ran on flat ground does not cover a slope".
 | 32848,32688 | 12,563 | 69 |
 | 32996,32476 | 14,110 | 74 |
 
+### ⚠ Where it still over-counts, and how far that is narrowed (2026-07-28)
+
+`rederive_zoneac` is the first check of this pass outside the eight zones above, and it
+puts **28 of 30** river zones exactly right. The two misses, both kind-4 zones:
+
+| zone | cwgen draws | live draws |
+|---|---|---|
+| (32523,32659) | 30 | **0** |
+| (32595,32891) | 12,808 | 5,533 |
+
+(32523,32659) is the sharper of the two — cwgen admits 30 columns and the server admits
+none — and running the Python mirror over its 65,536 columns pins every one of them:
+
+* all **30** columns that pass `band >= 0 && road <= 0.95` sit at local **x+196..214,
+  z+0..1** — the river clipping one corner of the zone — with `gate` in
+  **0.01810 .. 0.01999**, i.e. every one within 0.0019 of the `<= 0.02` band edge;
+* all 30 have `base_height <= 0` (clamped `l1304` = **0.000**), `terrace = 0`, `w = 0`,
+  **`bedY = 0`** and `carveTop = 2`. So the water fill `[carveTop .. terrace]` is empty,
+  which is why all 30 reach the block test, and `bedY` is **exactly sea level**;
+* the type-10 cell makes `FUN_004d19f0` identically 0, so `road <= 0.95` cannot be the
+  discriminator — only `band` and the block test are left.
+
+**Ruled out by measurement, so it stays shut:** the SHORE nest (`0x51b470`) is not
+secretly writing the water that would reject them. Its gate is `FUN_0052d990 <= 0.02` and
+`waterDepth` at those 30 columns is **106.3 .. 107.2** — `0 of 30`. (It was worth checking:
+"stream-free, therefore not modelled" is exactly the shape that hides a stage which spends
+no draws but changes what a later stage READS.)
+
+**What is left, and it is one thing.** The block test reads the column RECORD, and the
+port's `Store::col()` materialises every column as `surfHFull` stone + one cover voxel —
+it never consults `riverCarveGeom`/`lakeFill`, so it cannot produce the *water* and
+*riverbed* column kinds `cw_column.generate_column` already models. Where the record holds
+**water at `bedY`** the server refuses to bury it and spends nothing; the port sees stone
+and spends a draw. Both misses are at or below sea level, both have `bedY = 0`, and this is
+the in-record half of exactly the term zone (32610,33111) pinned in 07-26g — that fix only
+covered blocks **above** the record (`rawBlock`'s `y <= 0 -> 0x82`). Eight zones could not
+see it because a *riverbed*-kind record carries mat 3 at `bedY`, class 3, which accepts just
+like the port's stone.
+
+So the next step is not a new bed-pass predicate: it is making the replay `Store`
+materialise the ocean/river column, and re-running `rederive_zoneac`. ⚠ Doing that WILL
+move the terrain the tree loop and the site loop read, so re-run the whole suite, not just
+this gate.
+
 ### The consumer, `0x51c2dc`-`0x51c66c`
 
 Three draws per list entry — `rand()%3 + 2` for X, then Z, then Y — and a noisy **mat-6**
