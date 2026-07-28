@@ -181,7 +181,30 @@ gate-suite problems in `RatForge/docs/CW_RE_MASTER_INDEX.md` §7.
 
 ---
 
-## 5. Still open
+## 5. ⚠ Attribution — most of §2 was already known, in the *other* corpus
+
+Lesson 26, and it cost about half this slice. `RatForge/tools/cubeworld_re/cw_town.py`
+has had `plot_verdict(minH, maxH, on_site, water, special, center_falloff, rng)` since
+2026-07-07 — the water / on-site / special-`0xb` / roll / span chain, in that order, with
+the same `f32` care — and the role-6 coin and the rotation-nudge pass are in its comments
+too. It was validated 25/25 against **one** captured town. `RE_town_props.md` in this
+repo, written later and from a fresh decompile, listed the same rule as open. **Two
+corpora, one question, asked twice.** Grep the old tree before re-deriving a rule here.
+
+What is actually new, and why the slice was still worth running:
+
+* **the draw-cost measurement** — the question the slice was opened to answer;
+* **the score, derived ab initio.** The old port takes `center_falloff` as an *input*, and
+  the old note recorded "cnoise = 1.0 for every plot ⇒ the SITE's falloff radius is
+  degenerate". That reading was of the wrong object: the falloff is evaluated on the
+  builder's **second** argument — the feature **cell** — with the cell's real radius, and
+  the plot centre is `plotOrigin + span/2`. 1,485 scores reproduced exactly from the seed
+  settles it, and it explains the old capture that saw scores varying 0..0.32;
+* **72 towns instead of one**, and the per-plot draw-to-verdict check in the 41 towns
+  where the map is forced;
+* the two `gate_town_props.py` corrections in §4.
+
+## 6. Still open
 
 1. **The three terrain booleans** (`water`, `near`, `sand`) are read off the finished
    zone's columns. `near` is pure (`World_falloffSquared > 0.1`); `water` and `sand` need

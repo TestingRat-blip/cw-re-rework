@@ -486,6 +486,11 @@ passes `score + 0.25 > rand()/32767` -- then the `maxH - minH > 16` cull; and th
 `World_falloffSquared(cell, plotOrigin + span/2)`, **derived from the seed**, 1,485/1,485.
 Role 6 is a later villages-only coin pass. Read that file before touching the builder.
 
+⚠ **And read its §5 before re-deriving anything about towns.** Most of that verdict rule
+had been in `RatForge/tools/cubeworld_re/cw_town.py` since 2026-07-07 — validated against
+one town — while this repo's `RE_town_props.md` carried it as open. Two corpora, one
+question, asked twice (lesson 26). **Grep the old tree first.**
+
 ⚠ Two things that will bite at emitter C, both already paid for elsewhere:
 * it gates on the per-zone **site-kind** byte, which cwgen derives
   (`rederive_sitekind` 116/116) -- do not re-derive it from the feature-cell type.
