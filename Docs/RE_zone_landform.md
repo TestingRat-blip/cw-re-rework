@@ -297,6 +297,15 @@ per block — no coarse grid, no interpolation. The surfH assembly that consumes
 *past* the zone. That edge is the only place the two passes above disagree about which
 chunk a column belongs to.
 
+
+## The river/lake bed pass reads the SAME base_height, in full
+
+Worth stating next to the table above, because it is the same fact and it was a real bug:
+the bed pass calls `FUN_004f9b70` at `0x51bcde` with **the same three-argument shape** the
+bh-table fill uses at `0x518a55`. So the bed pass's carve level is the *full* base height --
+type-1 village damp and ocean-site repulsion included -- not the open one. All three ports
+had the open one until 2026-07-28 (`RE_zone_tail.md`, falsification record #24).
+
 ## `FUN_0052cd50` takes a THIRD argument, and the humidity term is CACHED
 
 `ret 0xc`, not `ret 8`. The gate's tail is:

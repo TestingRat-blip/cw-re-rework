@@ -182,6 +182,18 @@ if you are about to trust a green gate, read group B. Every one of these cost re
    **3,837**. Both cost nothing to check and both changed the plan. **`ls` the capture,
    and bucket the stream, before scoping work around either.**
 
+7e. **A modelling claim written in a comment is not a reading, and "provably inert" is a
+   claim about the WORLDS YOU MEASURED.** Three ports and this repo's own doc said the
+   river/lake bed pass's carve level was "base_height(open, closed gate) + the 4/6/7/0xd
+   deform (NO village/ocean repulsion)". The binary calls `FUN_004f9b70` at `0x51bcde` with
+   the same three-argument shape the zone builder's bh-table fill uses — and the ocean-site
+   repulsion is *inside* that function. Nobody had followed the call; the sentence had been
+   copied forward instead. It survived a 44/44 live gate over 37,476 draws because the
+   repulsion needs an OCEAN nearest-site and none of those eight zones has one — group B
+   again, from the other direction: not "the branch that never ran", but **a term that is
+   identically zero in every world the gate visited**. When a port drops a term, write down
+   which worlds would show it, and go find one.
+
 7d. **Before blaming a term for a residual, check the term is BIG ENOUGH to pay for it —
    and price the alternatives too.** A 36-of-109 height residual at type-10 cell centres
    was carried for a whole handoff as "a small error in the pre-truncation float inside
@@ -401,7 +413,7 @@ session; every open question left is reachable from the captures already on disk
 | the **RIVER/LAKE BED PASS** (`0x51c09a`) + its mat-6 consumer — the last pre-chain stage | `RE_zone_tail.md` | 44 checks, 8 zones, 37,476 live draws |
 | the site list's **16.16 proximity test** (`0x51cf20` / `0x51ded7`) — the entry carries a half block | `RE_zone_site_loop.md` | `rederive_campgrid` 15990/15990, 13 zones |
 | the **CAMP POPULATOR** `FUN_005104e0` end to end — every prop and every `Spawn` record | `RE_5104e0_camp.md` | 1,598 record checks / 99 zones; `rederive_camppop` 3111/3111 |
-| **EMITTER A** (the runestone circle) — RE'd *and ported*, reached from the seed; its Z settle probes `(cx+3, cz+3)` | `RE_zone_emitters_ac.md` | `gate_zone_ac` 1,232 / 112 zones; **`rederive_zoneac` 107/109 ab initio, record Y 109/109** |
+| **EMITTER A** (the runestone circle) — RE'd *and ported*, reached from the seed; its Z settle probes `(cx+3, cz+3)` | `RE_zone_emitters_ac.md` | `gate_zone_ac` 1,232 / 112 zones; **`rederive_zoneac` 109/109 ab initio**, record Y included |
 | the **OVERWORLD CREATURE SCATTER** (`0x51ed60`-`0x51f981`) — 3x3 grid, species tree, pack ring; RE'd *and ported* | `RE_zone_creatures.md` | `gate_zone_creatures` **217/217**; **`rederive_creatures` 1043/1043 ab initio**, 18 zones |
 | `FUN_005290d0` = `World_pickCreatureSpecies` + `FUN_0052bfa0` = `World_pickPackMemberSpecies` | `RE_zone_creatures.md` | (folded into the two above) |
 | the town builder's **PLOT VERDICT** pass (`0x4e2a80`-`0x4e3093`) + its plot score, from the seed | `RE_town_verdict.md` | `gate_town_verdict` 3,984 / 72 towns |
@@ -423,6 +435,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
+| 07-28b | ✅ **`cwgen_test` GOES FULLY GREEN**: the bed pass's CARVE LEVEL is `FUN_004f9b70` in FULL — the type-1 village damp and the ocean-site repulsion live inside it, and all three ports used the *open* base height. `rederive_zoneac` 107/109 → **109/109** | `RE_zone_tail.md` | `gate_zone_bed` still 44/44; `rederive_river` regenerated (1 row of 3,005, `w` by 1 ULP) |
 | 07-28 | ★ **the "type-10 terrain drift" RETRACTED** — it was emitter A settling on the zone centre instead of `(cx+3, cz+3)`; Y went 73/109 → **109/109**, terrain untouched. Plus three prologue findings, one of them an open gap (the land mask's village-road cube) | `RE_zone_emitters_ac.md`, `RE_zone_landform.md` | `rederive_zoneac` Y **109/109**, now in the pass criterion |
 | 07-27f | the town builder's **plot verdict** decoded in full + the town-builder draw cost MEASURED (17-19,576); `gate_town_props` fixed and green | `RE_town_verdict.md` | `gate_town_verdict` 3,984 |
 | 07-27e | **the scatter PORTED ab initio** + both species pickers decoded; the port's hand-typed tables were wrong | `RE_zone_creatures.md` | `rederive_creatures` 1043/1043 |
@@ -535,13 +548,9 @@ it. Read the span before assuming where the emitter begins.
 
 ### Then, in order
 
-⚠ **The recommended next slice is the remaining half of open problem 0** — the river/lake
-**bed-pass over-count** in 2 of 30 river zones. Its sibling (the "type-10 centre drift")
-was closed on 07-28 and was never a terrain bug at all, so the "terrain-pipeline slice"
-framing this section used to carry is gone. The bed-pass item is concrete, bounded,
-reachable from captures already on disk, and it is the only thing keeping
-`rederive_zoneac` at 107/109; 07-28 narrowed it to `band` or a water voxel the port's
-`Store` never writes (see open problem 0).
+✅ **Open problem 0 is fully closed (07-28) and `cwgen_test` is GREEN for the first time**
+— all gates pass, both configs, hash `2D52E0BE1C55FFAB`. So the list below is the whole of
+what is next; take item 1.
 
 1. **The rest of the town chain.** Now correctly sized: 176 rand sites, up to 19,576 draws
    a town, and the only route to emitter C. The **verdict** pass is done
@@ -559,39 +568,46 @@ reachable from captures already on disk, and it is the only thing keeping
 
 ### Open problems
 
-**0. One of the two things `rederive_zoneac` measured on its first run (07-27c) is still
-open.** Neither was an emitter-A defect *as filed*; the second one turned out to be
-exactly that.
+~~**0. The two things `rederive_zoneac` measured on its first run (07-27c).**~~
+✅ **BOTH CLOSED 2026-07-28, and NEITHER was what it was filed as.** `rederive_zoneac` is
+**109/109** — the first cwgen gate to derive an overworld emitter from the seed with
+nothing left over.
 
-  * **The river/lake BED pass over-counts in 2 of its 30 river zones.** cwgen spends 30
-    draws where the server spends 0 in (32523,32659), and 12,808 against 5,533 in
-    (32595,32891) — whose zone centre sits at `surfH` 0, i.e. **at sea level**, which
-    points straight at the ocean-water test that zone (32610,33111) pinned in 07-26g.
-    This is the first check of that pass outside the eight zones it was proven on, and it
-    is why the gate reads 107/109 rather than green. A kind-4 even-parity zone has exactly
-    one draw source left in its pre-chain once both site-kind guards fire, so the
-    attribution is not a guess.
-    ★ **Narrowed to one thing, 07-28** (`RE_zone_tail.md`, "Where it still over-counts").
-    All 30 columns of (32523,32659) measured: they are one river corner at local
-    `x+196..214, z+0..1`, every gate within 0.0019 of the band edge, and every one with
-    `base_height <= 0`, `terrace = 0`, `w = 0`, **`bedY = 0`** — exactly sea level. `road`
-    cannot discriminate (type-10 cell ⇒ `FUN_004d19f0 ≡ 0`), and the SHORE nest is ruled
-    out by measurement (`waterDepth` there is **106.3-107.2**, not ≤ 0.02, 0 of 30). What
-    is left is that **the replay `Store` never materialises a WATER column**:
-    `Store::col()` always writes `surfHFull` stone + cover and never consults
-    `riverCarveGeom`/`lakeFill`, so it cannot produce the water/riverbed column kinds
-    `cw_column.generate_column` already models. Where the record holds water at `bedY` the
-    server refuses to bury it and spends nothing. This is the *in-record* half of the term
-    zone (32610,33111) pinned in 07-26g — `rawBlock`'s `y <= 0 -> 0x82` only covers blocks
-    **above** the record. ⚠ Fixing it moves the terrain the tree loop and site loop read:
-    re-run the whole suite, not just this gate.
-  * ~~**★ cwgen's terrain is 1-2 blocks out at a TYPE-10 cell CENTRE**~~ — **CLOSED and
-    RETRACTED 07-28. There was never a terrain bug.** It was emitter A's Z settle: the walk
-    reuses the record's own `+ftol(229376.0)` 16.16 coordinates, so it probes column
-    `(cx+3, cz+3)`, and the port settled on the zone centre three blocks away. Y went
-    **73/109 → 109/109** with cwgen's terrain untouched, and Y is now part of the gate's
-    pass criterion. The retraction and the three measurements that killed the terrain
-    reading are in `RE_zone_emitters_ac.md`; the general lesson is 7d below.
+  * ~~the river/lake BED pass over-counts in 2 of its 30 river zones~~ — **the CARVE LEVEL
+    was wrong in all three ports.** `0x51bcde` calls `FUN_004f9b70` with the same
+    three-argument shape the zone builder's bh-table fill uses at `0x518a55`, and **both the
+    type-1 village damp and the ocean-site repulsion (`0x4fa965`-`0x4fab54`) live inside that
+    function**, ahead of the per-type deforms. Every port modelled the carve level as the
+    *open* base height plus the 4/6/7/0xd deform — a claim, never a reading. Invisible in the
+    eight zones `gate_zone_bed` was proven on because the repulsion needs the
+    cell-centre-nearest region site to be OCEAN and none of them has one; in (32523,32659)
+    the open base height at a bed column is **-99.99**, the repulsion's own -100 site
+    elevation showing through. `gate_zone_bed` is **still 44/44** with the fix, and of the 13
+    port-produced goldens exactly one changed (`rederive_river.bin`, 1 row of 3,005, `w` by
+    **1 ULP** — the repulsion's smoothstep tail). `RE_zone_tail.md`.
+  * ~~**★ cwgen's terrain is 1-2 blocks out at a TYPE-10 cell CENTRE**~~ — **there was never a
+    terrain bug.** Emitter A's Z settle reuses the record's own `+ftol(229376.0)` 16.16
+    coordinates, so it probes column `(cx+3, cz+3)`; the port settled on the zone centre
+    three blocks away. Y went **73/109 → 109/109** with cwgen's terrain untouched, and Y is
+    now part of the gate's pass criterion. `RE_zone_emitters_ac.md`; the general lesson is
+    7d below.
+
+*Closed doors from the bed-pass hunt, byte-proven, recorded so they stay shut:* the three
+block templates `World_getBlockAt` (`0x405fd0`) returns are initialised at `0x556a10` /
+`0x5569b0` / `0x5569e0` as `DAT_00583d0c` = class **2 water**, `DAT_00583d10` = class **0
+air**, `DAT_00583d14` = (200,200,200) class **1 solid** — so `Store::rawBlock`'s below-base
+mapping was right and "the below-base template reads as water" is dead (it would have
+explained one zone exactly); the SHORE nest is not writing the water either (`waterDepth`
+at those columns is 106.3-107.2, 0 of 30 pass its `<= 0.02` gate); `bedY >= terrace` really
+is `>=` (`0x51bfcf` is `jl → skip`); and the gate is called `(X, Z)` with X the outer loop
+variable, the same order `FUN_004f9b70` gets — no transposition.
+
+⚠ **A retraction of this file's own 07-28 morning entry.** It narrowed the bed-pass
+over-count to "the replay `Store` never materialises a WATER column". That was read off
+(32523,32659) alone, whose 30 columns all sit at `bedY = 0` — sea level. **(32595,32891)
+kills it**: all 12,631 of its bed columns have `bedY ≥ 40` with a clamped base well above 0,
+nowhere near ocean water. A stencil off one sample again (lesson 3), and it survived less
+than a day.
 
 **1. Descriptor types 7 / 0xb / 0xc / 0xf still drift and are still declined.**
 ⚠ **Re-measure before hunting — the standing note is stale.** The five-zone list below was
@@ -679,26 +695,32 @@ Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fail
 cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
 ```
 
-**Known-good as of 07-28:** the `cw_decomp` gate suite is **fully green** (28 gates);
-`cwgen_test` is green except **`rederive_zoneac` 107/109**, hash **`01BF4F82DADAB46E`**
-in both Debug and Release. The suite and both hashes were re-verified at the start of
-07-28 at the previous baseline (`F5D7D16E92EE5C38`) before anything changed.
+**Known-good as of 07-28b:** the `cw_decomp` gate suite is **fully green** (28 gates), and
+**`cwgen_test` is fully green too — for the first time** (`rederive_zoneac` was deliberately
+red for a day). Hash **`2D52E0BE1C55FFAB`** in both Debug and Release. The whole chain was
+re-verified from the 07-27f baseline (`F5D7D16E92EE5C38`) before anything changed.
 
-⚠ **The hash CHANGED at 07-28** (was `F5D7D16E92EE5C38`) because emitter A's settle now
-probes `(cx+3, cz+3)` and the runestone's `Y16` feeds the hash. Nothing else moved --
-every other gate's counts are unchanged, and the change is the one that took the record's
-Y from 73/109 to 109/109 against live. (It changed at 07-27e too, from
-`F06E7FAF50277143`, when the creature scatter's records started feeding it.)
+⚠ **The hash changed TWICE on 07-28**, both deliberately and both because a real bug was
+fixed: `F5D7D16E92EE5C38` → `01BF4F82DADAB46E` when emitter A's settle moved to
+`(cx+3, cz+3)` (the runestone's `Y16` feeds the hash), then → `2D52E0BE1C55FFAB` when the
+river carve level picked up the ocean repulsion (the carve geometry feeds several gates).
+Every other gate's counts are unchanged across both.
+
+⚠ **`rederive_river.bin` was regenerated** (`python tools/cw_rederive/rederive_oracle.py
+tools/cw_rederive/golden_rederive`) because it is a PORT-PRODUCED golden and the Python
+moved with the C++. Of the 13 goldens that script writes, only that one changed, in 1 row of
+3,005 and only in `w`, by 1 ULP — diff the directory before and after, as here, so the blast
+radius is a measurement and not a hope (lesson 17).
 
 ⚠ **Grepping the suite for "FAIL" gives two false alarms.** `gate_zone_bed.py` ends with
 `44 ok, 0 FAIL`, and six gates (`gate_dungeon_counter`, `gate_zone_landform`,
 `gate_zone_landform_order`, `gate_zone_prechain`, `gate_zone_siteloop`, `gate_zone_tail`)
 print their own verdict format with no PASS/FAIL token at all. Read the tail of each.
 
-⚠ **That 107/109 is deliberate and is not to be tuned green.** The two misses are the
-bed-pass over-count in open problem 0, and the obvious way to make the gate green — having
-`zoneRunestone` decline River zones — would delete the only evidence of it. A red gate that
-names a real bug beats a green one that hides it.
+~~⚠ **That 107/109 is deliberate and is not to be tuned green.**~~ — obsolete: it went green
+on 2026-07-28 for the right reason (the bed pass's carve level), not by tuning. The
+principle stands and is worth keeping: **a red gate that names a real bug beats a green one
+that hides it** — leaving `rederive_zoneac` red for a day is what kept both bugs findable.
 
 ⚠ **The pipeline fixpoint is order-sensitive and destructive if you get it wrong.** Running
 `flirt_islands.py` / `adjudicate_none.py` against an already-structured tree finds nothing and

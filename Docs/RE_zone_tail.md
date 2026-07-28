@@ -355,49 +355,70 @@ that only ever ran on flat ground does not cover a slope".
 | 32848,32688 | 12,563 | 69 |
 | 32996,32476 | 14,110 | 74 |
 
-### ⚠ Where it still over-counts, and how far that is narrowed (2026-07-28)
+### ✅ The over-count is CLOSED: the carve level is `FUN_004f9b70` in FULL (2026-07-28)
 
-`rederive_zoneac` is the first check of this pass outside the eight zones above, and it
-puts **28 of 30** river zones exactly right. The two misses, both kind-4 zones:
+`rederive_zoneac` was the first check of this pass outside the eight zones above, and it
+found two kind-4 river zones out:
 
-| zone | cwgen draws | live draws |
+| zone | cwgen draws (before) | live draws |
 |---|---|---|
 | (32523,32659) | 30 | **0** |
 | (32595,32891) | 12,808 | 5,533 |
 
-(32523,32659) is the sharper of the two — cwgen admits 30 columns and the server admits
-none — and running the Python mirror over its 65,536 columns pins every one of them:
+**The bug was the carve level, and all three ports had it.** `0x51bcde` calls
+`FUN_004f9b70` with the *same three-argument shape* the zone builder's bh-table fill uses
+at `0x518a55` — and **both the type-1 village damp and the OCEAN-SITE REPULSION
+(`0x4fa965`-`0x4fab54`) live inside that function**, ahead of the per-type deforms. Every
+port modelled the carve level as the *open* base height plus the 4/6/7/0xd deform, and this
+file said so in as many words ("NO village/ocean repulsion"). It was a claim, never a
+reading.
 
-* all **30** columns that pass `band >= 0 && road <= 0.95` sit at local **x+196..214,
-  z+0..1** — the river clipping one corner of the zone — with `gate` in
-  **0.01810 .. 0.01999**, i.e. every one within 0.0019 of the `<= 0.02` band edge;
-* all 30 have `base_height <= 0` (clamped `l1304` = **0.000**), `terrace = 0`, `w = 0`,
-  **`bedY = 0`** and `carveTop = 2`. So the water fill `[carveTop .. terrace]` is empty,
-  which is why all 30 reach the block test, and `bedY` is **exactly sea level**;
-* the type-10 cell makes `FUN_004d19f0` identically 0, so `road <= 0.95` cannot be the
-  discriminator — only `band` and the block test are left.
+Fixed in all three (`CwColumn::riverCarveGeom`, `cw_river.river_carve`,
+`cw_forest._bed_geometry`): pass the containing cell / call `shapedHeight`.
 
-**Ruled out by measurement, so it stays shut:** the SHORE nest (`0x51b470`) is not
-secretly writing the water that would reject them. Its gate is `FUN_0052d990 <= 0.02` and
-`waterDepth` at those 30 columns is **106.3 .. 107.2** — `0 of 30`. (It was worth checking:
-"stream-free, therefore not modelled" is exactly the shape that hides a stage which spends
-no draws but changes what a later stage READS.)
+* `rederive_zoneac` **107/109 → 109/109**, both zones exact.
+* `gate_zone_bed` **unchanged at 44/44** — all 8 zones, 37,476 live draws, every bed and
+  append count still exact. That is the point: the repulsion needs the cell-centre-nearest
+  region site to be OCEAN, and not one of those eight has one, so the whole term was
+  invisible there. In (32523,32659) the open base height at a bed column is
+  **-99.99** — the repulsion's own -100 site elevation, showing through.
+* Of the 13 port-produced goldens `rederive_oracle.py` writes, exactly **one** changed:
+  `rederive_river.bin`, in **one** of 3,005 rows, and only in `w` — by **1 ULP**. That row
+  sits at the outer edge of the `(radius+256)` falloff where the repulsion's smoothstep tail
+  is worth ~1e-5 blocks. Everything else about it (terrace, hasWater, waterBot, bedY, water
+  colour, bed RGB) was already identical.
 
-**What is left, and it is one thing.** The block test reads the column RECORD, and the
-port's `Store::col()` materialises every column as `surfHFull` stone + one cover voxel —
-it never consults `riverCarveGeom`/`lakeFill`, so it cannot produce the *water* and
-*riverbed* column kinds `cw_column.generate_column` already models. Where the record holds
-**water at `bedY`** the server refuses to bury it and spends nothing; the port sees stone
-and spends a draw. Both misses are at or below sea level, both have `bedY = 0`, and this is
-the in-record half of exactly the term zone (32610,33111) pinned in 07-26g — that fix only
-covered blocks **above** the record (`rawBlock`'s `y <= 0 -> 0x82`). Eight zones could not
-see it because a *riverbed*-kind record carries mat 3 at `bedY`, class 3, which accepts just
-like the port's stone.
+### Closed doors from the same hunt, so they stay shut
 
-So the next step is not a new bed-pass predicate: it is making the replay `Store`
-materialise the ocean/river column, and re-running `rederive_zoneac`. ⚠ Doing that WILL
-move the terrain the tree loop and the site loop read, so re-run the whole suite, not just
-this gate.
+* **The three block templates are byte-proven, and `Store::rawBlock` was right all along.**
+  Their initialisers: `0x556a10` writes `DAT_00583d0c` = FF FF FF **0x82** → class 2
+  **water**; `0x5569b0` writes `DAT_00583d10` = FF FF FF **0x00** → class 0 **air**;
+  `0x5569e0` writes `DAT_00583d14` = C8 C8 C8 **0x01** → class 1 **solid**, i.e. the grey
+  (200,200,200) underground rock. So `World_getBlockAt` (`0x405fd0`) resolves
+  below-base/no-column to SOLID, and "the below-base template reads as water" — which would
+  have explained (32523,32659) exactly, 30 rejected of 30 — is **dead**.
+* **The SHORE nest is not writing the water either.** Its gate is `FUN_0052d990 <= 0.02`
+  and `waterDepth` at those 30 columns is **106.3-107.2**: 0 of 30.
+* **`bedY >= terrace` is `>=`, not `>`** — `0x51bfcf` is `jl → skip`.
+* **No transposition**: `0x51bc60` pushes the gate's arguments `(X, Z)` with X the OUTER
+  loop variable, the same order `0x51bcd8` hands `FUN_004f9b70`.
+
+⚠ **And a retraction of this file's own 07-28 morning entry.** It read: "what is left is
+that the replay `Store` never materialises a WATER column ... where the record holds water at
+`bedY` the server refuses to bury it". That was built on (32523,32659) alone, whose 30
+columns all sit at `bedY = 0`, i.e. sea level. **(32595,32891) kills it**: all 12,631 of its
+bed columns have `bedY ≥ 40` with a clamped base well above 0 — there is no ocean water
+anywhere near them. A stencil read off one sample again (lesson 3).
+
+### The diagnostics that found it, kept
+
+`ZoneRunestone` now carries, for DIAGNOSTICS only (never hashed, never a pass criterion):
+the pre-chain draw spend split `pre-bed / bed / mat6`, and a census of where each bed
+column's `bedY` sits relative to the column RECORD (below base / in record + depth
+histogram / above), plus the class `rawBlock` returns there. `rederive_zoneac` prints them
+for any zone that misses. That split is what turned "the port's index is 12,808 against
+5,533" into "all 12,631 draws are the bed pass and none of the geometry matches", in one
+run.
 
 ### The consumer, `0x51c2dc`-`0x51c66c`
 

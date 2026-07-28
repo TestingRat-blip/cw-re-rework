@@ -9,6 +9,11 @@
 > took Y to **109/109** with cwgen's terrain untouched, and Y is now part of
 > `rederive_zoneac`'s pass criterion. Full retraction + the three measurements that killed
 > the terrain reading: "★ A new terrain finding" at the bottom of this file.
+>
+> **Later the same day the gate went GREEN, 109/109**: its other two misses were the
+> river/lake bed pass reading the wrong carve level (the ocean repulsion, `RE_zone_tail.md`).
+> `rederive_zoneac` is now the first cwgen gate to derive an overworld emitter from the seed
+> with nothing left over.
 
 > **2026-07-27c — emitter A is PORTED and gated ab initio, and four things below were
 > wrong.** Read this box before the body.
@@ -23,7 +28,8 @@
 > **Emitter A is upstream of the tree pass** — `0x51d46b` sits between the mat-38 loop and
 > the 14x14 tree loop — so it needs only the pre-chain, which is why it was the cheap
 > target and emitter C is not. `cwgen`: `CwForest::zoneRunestone`, gate
-> `rederive_zoneac` **107/109**, both misses River-class (see the bottom of this file).
+> `rederive_zoneac` **109/109** (was 107 — the two River-class misses were the bed pass's
+> carve level, closed 07-28).
 
 The last two open slices of Phase 2. `RE_zone_props.md` could only read their record
 content statically:
@@ -295,26 +301,28 @@ recovered by locating each zone's recorded draws in its own LCG.
   `lcg[n + o] == v`. With that, **249 of 249** zones of both captures locate — which also
   proves each zone's seed is `base + zz*0x10000 + zx` as assumed.
 
-### Result: `rederive_zoneac` 107/109
+### Result: `rederive_zoneac` 109/109
 
 | claim | result |
 |---|---|
-| the emitter is reached at the live absolute stream index | **107 / 109** |
+| the emitter is reached at the live absolute stream index | **109 / 109** (was 107, fixed 07-28) |
 | `N = rand()%3 + 6`, and the ring spends exactly 2 draws per point | 109 / 109 |
 | the record's X and Z are the zone centre + 3.5 blocks | 109 / 109 |
 | the record's **Y** — the settle at `(cx+3, cz+3)` | **109 / 109** (was 73, fixed 07-28) |
 | `dir` is the last draw `% 4` | 109 / 109 |
 | cwgen declines the zone rather than guessing | 3 of 112 |
 
-**The two index misses are the river/lake BED pass, not the emitter.** Once the
-gen-scatter and the mat-38 loop are both skipped by the site-kind guards and the parity is
-even, a kind-4 zone's pre-chain has exactly one draw source left. Both misses are
-River-class — cwgen spends 30 draws where the server spends 0 in `(32523,32659)`, and
-12,808 against 5,533 in `(32595,32891)`, whose zone centre sits at `surfH` 0, i.e. at sea
-level. This is the **first check of the bed pass outside the eight zones it was proven on**
-in 2026-07-26g, and 28 of the 30 river zones here are exact. Closing the other two is a
-bed-pass slice, and the sea-level shape of the second one points at the ocean-water test
-that zone (32610,33111) pinned.
+✅ **The two index misses were the river/lake BED pass, and they are CLOSED (07-28).**
+Once the gen-scatter and the mat-38 loop are both skipped by the site-kind guards and the
+parity is even, a kind-4 zone's pre-chain has exactly one draw source left — so the
+attribution was never a guess. cwgen spent 30 draws where the server spends 0 in
+`(32523,32659)` and 12,808 against 5,533 in `(32595,32891)`. The cause was the bed pass's
+CARVE LEVEL: `0x51bcde` calls `FUN_004f9b70` in full, and the ocean-site repulsion lives
+inside it, but all three ports used the *open* base height. Both zones are ocean-adjacent
+(the open base at a bed column of the first is **-99.99**, the repulsion's own -100 site
+elevation); none of the eight zones the bed pass was proven on has an ocean nearest-site,
+which is why it stayed invisible. Full account in `RE_zone_tail.md`. `gate_zone_bed` is
+still 44/44 with the fix.
 
 ### ~~★ A new terrain finding, from the same gate~~ — RETRACTED 2026-07-28
 
