@@ -880,7 +880,7 @@ columns of every town zone it replays. That is the gate doing real work, not a h
 
 ⚠ **Every hash change here is isolated before it is accepted.** 07-28j: moving *only*
 `rederive_townfurnish.bin` aside restores `CE700304401BFC57` exactly, and the whole
-144-line output was diffed — every other gate's reported numbers are byte-identical and
+141-line output was diffed — every other gate's reported numbers are byte-identical and
 Debug and Release agree byte for byte, so the delta is entirely the new gate's own hashed
 records. (That also proves the `kTownHouseOrigin` correction moved nothing in cwgen: its
 only consumer is the engine's `Towns.cpp`.) 07-28h: moving *only*
