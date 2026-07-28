@@ -67,6 +67,7 @@ port's own site comments; **positional** = ordering + per-zone counts only, i.e.
 | **`0x51dc5d`-`0x51e5c7`** | **12 sites** | **the 14x14 TREE loop + `lib_fn_513760`** | **proven here + `rederive_zonepropsb`** | **65,796 + builder** |
 | `0x51e5c7` | 3 | **emitter B**, the even-parity statue | proven here | 84 |
 | `0x51e839`-`0x51eac7` | — | camp candidate grid + `camp_populator` | proven (`RE_zone_grid.md`, `RE_5104e0_camp.md`) | — |
+| **`0x51ed60`-`0x51f981`** | **18 sites** | **the OVERWORLD CREATURE SCATTER** — a 3x3 grid of creature packs | **proven** (`RE_zone_creatures.md`, `gate_zone_creatures` 211/211) | **3,263** |
 | `0x51fa10` | — | emitter C, the village street light | proven (`RE_zone_emitters_ac.md`) | — |
 | `0x51fdb1`-`0x52162b` | ~20 sites | **identity not established.** The tail's biggest spender by far | positional | 750,000+ |
 
@@ -533,6 +534,23 @@ by construction. Do not read the Python knoll grid as gated on that branch.
      jitter) that news up `cube::Spawn` objects** — i.e. the **overworld creature-spawn
      scatter**, the producer of `raw/spawn_capture.json`'s 6,305 spawns. It is a slice of
      its own, and it has plenty of live data to gate against.
+
+     ✅ **RE'd 2026-07-27d (`RE_zone_creatures.md`, `gate_zone_creatures` 211/211) — and
+     three claims in that paragraph are wrong.** The grid is real and so is the jitter, but:
+
+     * **it is not the bulk of the gap.** Bucketing all 56 zones by stage puts this stage
+       at a median **58** draws and the **tree pass at 3,837** — the gap to emitter C is
+       the tree pass, which is already bit-exact and reached ab initio by
+       `CwForest::zoneReplayTail`. Table in `RE_zone_creatures.md`.
+     * **the entities are not `cube::Spawn`,** and the stage never calls
+       `creature_spawn_builder` (`0x524540`) — a call census of the span asserts the
+       negative. It runs `operator_new(0x10f0)` + `FUN_004e0f40` inline.
+     * **it did not produce `raw/spawn_capture.json`,** which is a different code path —
+       and that file is 57 bytes and empty on disk anyway, overwritten by a later run.
+
+     ★ The general shape is the one this file already warns about twice: **a stage sized
+     by where its draws are, rather than by counting them, reads as much bigger than it
+     is.** One histogram over the 56-zone capture answered it before any decode.
 
   ⚠ **The town builder is probably NOT the blocker it was assumed to be.** It runs in every
   emitter-C zone (a kind-1 zone's descriptor cell is type 1, and `0x51d43e` gates on

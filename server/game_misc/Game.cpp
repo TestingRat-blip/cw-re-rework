@@ -1,4 +1,4 @@
-// Game (game_misc) -- server. 23 functions. Bodies = Ghidra pseudo-C.
+// Game (game_misc) -- server. 25 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Game.h"
 
@@ -29,6 +29,162 @@ undefined4 __fastcall FUN_004061f0(int param_1)
     return 1;
   }
   return 0;
+}
+
+
+/* species_groupRange @ 0040efc0  kind=game  attributed-by=ledger  size=76 */
+
+void __cdecl FUN_0040efc0(undefined4 param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  *param_2 = 1;
+  *param_3 = 1;
+  switch(param_1) {
+  case 0x15:
+  case 0x1c:
+  case 0x2a:
+  case 0x32:
+  case 0x37:
+  case 0x3f:
+  case 0x45:
+  case 0x46:
+  case 0x57:
+  case 0x58:
+    *param_2 = 1;
+    *param_3 = 3;
+    break;
+  case 0x16:
+  case 0x23:
+  case 0x24:
+  case 0x36:
+  case 0x38:
+  case 0x3c:
+  case 0x47:
+  case 0x48:
+  case 0x49:
+  case 0x62:
+  case 99:
+  case 100:
+  case 0x66:
+  case 0x67:
+  case 0x68:
+  case 0x69:
+  case 0x9a:
+    *param_2 = 1;
+    *param_3 = 5;
+    return;
+  }
+  return;
+}
+
+
+/* species_levelRange @ 0040f0a0  kind=game  attributed-by=ledger  size=192 */
+
+void __cdecl FUN_0040f0a0(undefined4 param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  *param_2 = 1;
+  *param_3 = 1;
+  switch(param_1) {
+  case 0x11:
+  case 0x31:
+  case 0x67:
+  case 0x71:
+  case 0x72:
+  case 0x9a:
+    *param_2 = 0x2f;
+    *param_3 = 0x51;
+    return;
+  default:
+    *param_2 = 2;
+    *param_3 = 4;
+    return;
+  case 0x13:
+  case 0x14:
+  case 0x19:
+  case 0x1a:
+  case 0x1e:
+  case 0x1f:
+  case 0x20:
+  case 0x3c:
+  case 0x3f:
+  case 0x43:
+  case 0x45:
+  case 0x46:
+    *param_2 = 3;
+    *param_3 = 6;
+    return;
+  case 0x15:
+  case 0x2e:
+  case 0x2f:
+  case 0x32:
+  case 0x3a:
+  case 0x4b:
+  case 0x50:
+  case 0x56:
+  case 0x59:
+  case 0x66:
+  case 0x68:
+  case 0x96:
+    *param_2 = 0x1f;
+    *param_3 = 0x2f;
+    return;
+  case 0x1c:
+  case 0x3d:
+  case 0x5a:
+  case 0x9b:
+    *param_2 = 0xe;
+    *param_3 = 0x15;
+    return;
+  case 0x24:
+  case 0x36:
+  case 0x40:
+  case 0x41:
+  case 0x42:
+  case 0x48:
+  case 0x49:
+  case 0x5b:
+  case 99:
+  case 0x98:
+  case 0x99:
+    *param_2 = 0x15;
+    *param_3 = 0x1f;
+    return;
+  case 0x25:
+  case 0x26:
+  case 0x27:
+  case 0x28:
+  case 0x35:
+  case 0x3b:
+  case 0x58:
+  case 0x69:
+  case 0x6a:
+  case 0x97:
+    *param_2 = 9;
+    *param_3 = 0xe;
+    return;
+  case 0x3e:
+  case 0x52:
+  case 0x55:
+  case 0x61:
+  case 0x6e:
+  case 0x70:
+    *param_2 = 0xb4;
+    *param_3 = 0x4e0d;
+    return;
+  case 0x51:
+  case 0x53:
+  case 0x54:
+  case 0x5e:
+    *param_2 = 0x51;
+    *param_3 = 0xb4;
+    return;
+  case 0x62:
+  case 100:
+    *param_2 = 6;
+    *param_3 = 9;
+    return;
+  }
 }
 
 

@@ -127,6 +127,16 @@
    "name": "Region_getChunkCell",
    "verdict": "B"
   },
+  "0040efc0": {
+   "kind": "game",
+   "name": "species_groupRange",
+   "verdict": "DEEP-RE"
+  },
+  "0040f0a0": {
+   "kind": "game",
+   "name": "species_levelRange",
+   "verdict": "DEEP-RE"
+  },
   "00411090": {
    "kind": "game",
    "name": "monster_level_formula",
@@ -497,6 +507,11 @@
    "name": "item_gen_kinds_4_9",
    "verdict": "DEEP-RE"
   },
+  "005290d0": {
+   "kind": "game",
+   "name": "World_pickCreatureSpecies",
+   "verdict": "DEEP-RE"
+  },
   "0052a760": {
    "kind": "game",
    "name": "item_special_candidate",
@@ -511,6 +526,11 @@
    "kind": "game",
    "name": "rarityRoll",
    "verdict": "A"
+  },
+  "0052bfa0": {
+   "kind": "game",
+   "name": "World_pickPackMemberSpecies",
+   "verdict": "DEEP-RE"
   },
   "0052c370": {
    "kind": "game",

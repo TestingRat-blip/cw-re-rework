@@ -182,8 +182,8 @@ addr	name	kind	module	class	attributed_by	size
 0040a7f0	FUN_0040a7f0	gamemisc	game_misc	Unsorted_000	none	79
 0040a840	FUN_0040a840	gamemisc	world	Unsorted	logic:caller-vote	17600
 0040ef90	FUN_0040ef90	gamemisc	game_misc	Unsorted_000	none	48
-0040efc0	FUN_0040efc0	gamemisc	world	Unsorted	logic:caller-vote	76
-0040f0a0	FUN_0040f0a0	gamemisc	world	Unsorted	logic:caller-vote	192
+0040efc0	species_groupRange	game	game_misc	Game	ledger	76
+0040f0a0	species_levelRange	game	game_misc	Game	ledger	192
 0040f220	FUN_0040f220	gamemisc	game_misc	_helpers_wrapper	role:wrapper	116
 0040f2b0	FUN_0040f2b0	gamemisc	ai	Helpers	caller-vote	61
 0040f2f0	FUN_0040f2f0	gamemisc	ai	Helpers	caller-vote	377
@@ -2640,7 +2640,7 @@ addr	name	kind	module	class	attributed_by	size
 00528730	FUN_00528730	gamemisc	world	Unsorted	logic:caller-vote	115
 005287b0	Prop_settleOnTerrain	game	world	Proven	ledger	1077
 00528bf0	item_gen_kinds_4_9	game	entity	Proven	ledger	1240
-005290d0	FUN_005290d0	gamemisc	world	Unsorted	logic:caller-vote	5775
+005290d0	World_pickCreatureSpecies	game	world	Proven	ledger	5775
 0052a760	item_special_candidate	game	entity	Proven	ledger	194
 0052a830	dungeon_scatter_emitter	game	world	Proven	ledger	1448
 0052ae10	FUN_0052ae10	gamemisc	game_misc	Unsorted_002	none	934
@@ -2649,7 +2649,7 @@ addr	name	kind	module	class	attributed_by	size
 0052b3f0	FUN_0052b3f0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	126
 0052b470	item_generator	game	entity	Proven	ledger	2765
 0052bf40	rarityRoll	game	game_misc	Game	ledger	94
-0052bfa0	FUN_0052bfa0	gamemisc	world	Unsorted	logic:caller-vote	311
+0052bfa0	World_pickPackMemberSpecies	game	world	Proven	ledger	311
 0052c160	lib_fn_52c160	lib	_library	cw_lib	ledger	502
 0052c370	dungeon_decor_emitter	game	world	Proven	ledger	341
 0052c4e0	item_gen_kind_3	game	entity	Proven	ledger	820

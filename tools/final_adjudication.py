@@ -318,6 +318,30 @@ the body was the only way to settle these.
         # cw_rederive's port reproduces the live return BIT-EXACTLY at 1,989 rolled cells
         # over 51 zones (gate_zone_grid.py), on top of its own 91,880/91,880 direct-call gate.
         "0052c820": {"name": "World_objectFalloffWeight", "kind": "game", "verdict": "DEEP-RE"},
+        # ---- the overworld creature scatter, 0x51ed60-0x51f981 (Docs/RE_zone_creatures.md,
+        # tools/gate_zone_creatures.py 211/211 over 56 zones and 324 spawned leaders).
+        #
+        # The two range tables. Both are jump tables keyed on the creature species id, and
+        # both are read straight out of the image by the gate. 0040efc0 is additionally
+        # LIVE-proven: `count = rand()%(hi-lo+1) + lo - 1` reproduces all 167 captured pack
+        # sizes from each leader's own recorded group roll, and only (1,1)/(1,3)/(1,5) exist.
+        "0040efc0": {"name": "species_groupRange", "kind": "game", "verdict": "DEEP-RE"},
+        # 0040f0a0 is the same shape one table over; its (lo,hi) feeds `rand()%(hi-lo+1)+lo`
+        # stored to the entity's +0x34, the field the ctor 004e0f40 initialises to 1 (level).
+        "0040f0a0": {"name": "species_levelRange", "kind": "game", "verdict": "DEEP-RE"},
+        # Named from the CALL SITE, which is ground truth for what the return value is:
+        # 0051f26c stores it to entity+0x2c, and +0x2c is (a) the argument to both range
+        # tables above and (b) the field the material branches overwrite with the literal
+        # species ids 0x78-0x82. So the return is a creature species id. The body is NOT yet
+        # decoded -- what IS proven about it is its stream cost: an exhaustive rand-site
+        # census of all 5,775 bytes finds exactly ONE site (0x52a712), and the capture shows
+        # exactly one unrecorded draw after every one of the 324 live leader spawns.
+        "005290d0": {"name": "World_pickCreatureSpecies", "kind": "game", "verdict": "DEEP-RE"},
+        # Same field, same tables, called once per pack member at 0x51f8bd with the member's
+        # block position and the LEADER's species as the fourth argument. 11 rand sites; 0 or
+        # 1 spent per call (fired in 5 of 96 captured members). Body not yet decoded.
+        "0052bfa0": {"name": "World_pickPackMemberSpecies", "kind": "game",
+                     "verdict": "DEEP-RE"},
     }
     settled.update(DEEP_RE)
 

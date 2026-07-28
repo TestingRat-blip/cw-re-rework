@@ -1,5 +1,19 @@
 # `FUN_00524540` — creature spawn + behaviour-tree builder (type-1 decode)
 
+> ⚠ **Two corrections from 2026-07-27d** (`RE_zone_creatures.md`), before you use anything
+> below:
+>
+> * **`raw/spawn_capture.json` is 57 bytes and holds ZERO spawns.** A later run of
+>   `../tools/frida_spawn_capture.py` overwrote it with an empty result (`grid` 3,
+>   `spawns` 0). The 6,305 overworld spawns this file analyses are **gone from disk** —
+>   only the analysis survives. Re-run the rig if you need them.
+> * **The overworld creature SCATTER is not this function.** `0x51ed60`-`0x51f981` news up
+>   its own 0x10f0-byte entity with `operator_new` + `FUN_004e0f40` and **never calls
+>   `0x524540`** (asserted by a call census in `tools/gate_zone_creatures.py`). Its entity
+>   is a different class from the `Spawn` below — facing at `+0x54` not `+0x50`, species at
+>   `+0x2c`, level at `+0x34`, flags at `+0x7a`. `0x524540` is still heavily used elsewhere
+>   (17,488 calls from 21 sites in the town capture); it is just not the scatter's.
+
 Phase 1 of the worldgen plan. This is the **static** decode; the byte-exact rand gate needs a
 live `Server.exe` capture (follow-up). Identity is settled: it builds a creature `Spawn`
 entity with an AI behaviour tree — **not** the "castle-arc wall stamps" the old label claimed

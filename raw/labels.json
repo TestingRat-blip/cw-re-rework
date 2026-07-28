@@ -477,6 +477,16 @@
    "name": "Region_getChunkCell",
    "src": "ADJUDICATION.md"
   },
+  "0040efc0": {
+   "kind": "game",
+   "name": "species_groupRange",
+   "src": "ADJUDICATION.md"
+  },
+  "0040f0a0": {
+   "kind": "game",
+   "name": "species_levelRange",
+   "src": "ADJUDICATION.md"
+  },
   "00411090": {
    "kind": "game",
    "name": "monster_level_formula",
@@ -1062,6 +1072,11 @@
    "name": "item_gen_kinds_4_9",
    "src": "ADJUDICATION.md"
   },
+  "005290d0": {
+   "kind": "game",
+   "name": "World_pickCreatureSpecies",
+   "src": "ADJUDICATION.md"
+  },
   "0052a760": {
    "kind": "game",
    "name": "item_special_candidate",
@@ -1085,6 +1100,11 @@
   "0052bf40": {
    "kind": "game",
    "name": "rarityRoll",
+   "src": "ADJUDICATION.md"
+  },
+  "0052bfa0": {
+   "kind": "game",
+   "name": "World_pickPackMemberSpecies",
    "src": "ADJUDICATION.md"
   },
   "0052c160": {
