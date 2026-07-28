@@ -1,7 +1,9 @@
 # The town builder's ROLE-6 plot — the fenced yard (`0x4e503a`–`0x4e5b9e`)
 
-*RE'd and gated 2026-07-28 (07-28g). Gate: `tools/gate_town_yard.py`, **2,822 checks, 0
-FAIL** over the 92 towns in `raw/town_props_capture*.json` (seed 42069).*
+*RE'd, gated and **PORTED** 2026-07-28 (07-28g). Live gate: `tools/gate_town_yard.py`,
+**2,822 checks, 0 FAIL** over the 92 towns in `raw/town_props_capture*.json` (seed 42069).
+Port: `townYardPass` in `src/worldgen/cw/CwTown.h`; ab-initio gate
+**`rederive_townyard` 51/51**, cwgen_test hash `126A1A6F4853E2A4` -> **`2D6C3B72E99E055E`**.*
 
 **This is the single biggest stage in the town builder.** Fourteen rand sites,
 **113,353 draws over 50 role-6 plots — 49.6% of the 228,413 draws the rig records inside
@@ -172,21 +174,58 @@ records either container**, so:
 For the same reason the stage is named for its fences, which are proven, and not for its
 furniture, which is not.
 
-## 6. What still blocks a port
+## 6. The port
 
-The draw arithmetic is fully derived, but the **cell count is not**: `0x4e54e8` fires once
-per column whose top block class is 4, and `0x4e5880`/`0x4e5a89` need
-`class(col.top) != 0`. Those read the *finished* town terrain — the same input
-`RE_town_verdict.md` §6 already depends on, which cwgen produces bit-exact in the flat/dry
-majority and not everywhere. The port therefore inherits the verdict scan's terrain
-coverage exactly, and nothing more; it needs no new terrain work of its own.
+`townYardPass` in `src/worldgen/cw/CwTown.h`, gated by `rederive_townyard` (section 64,
+golden written by `tools/cw_rederive/make_townyard_golden.py`). It takes a draw source
+rather than an `MsvcrtRand&` for the same reason `townHousePass` does -- the stage is
+interleaved with the builder's other 137 un-RE'd rand sites.
 
-The `TownTerrain` interface in `src/worldgen/cw/CwTown.h` already exposes everything this
-stage reads (`column`, `recordClass`), and `townPlotOriginX/Z`, `townPlotIndex` and
-`townPlotSpan` are all present. **The port is a mechanical addition on top of the
-promotion pass; it is not blocked on RE.** It is left undone deliberately, so that this
-slice lands with its gate green and the `cwgen_test` hash untouched.
+The two terrain questions are behind a `TownYardGround` interface rather than
+`TownTerrain` directly, so a gate can drive the pass off a decision tape instead of a
+column store. `TownTerrainYardGround` is the column-store implementation the engine uses.
 
+**The port emits a per-draw SITE TAG** (`TownYardSite`), and that is what makes the gate
+worth having. Six of the fourteen sites cost exactly one draw each, so a branch that picks
+the wrong one of a pair -- the `%4` split between the two record containers, or the
+id-`0x19` no-angle special -- moves no count at all and is **invisible to a draw total**.
+The gate compares the port's tag sequence against the recorded one draw for draw:
+**17/17 towns, all 113,353 draws.**
+
+### 6.1 What the gate asserts, feeds and measures
+
+Stated explicitly because the distinction is the whole point (lesson 12):
+
+| | |
+|---|---|
+| **ASSERTED** | the PLOT SET (one segment per role-6 plot, in `r + n*c` order) — 17/17 towns |
+| **ASSERTED** | the SITE SEQUENCE, draw for draw — 17/17 towns, 113,353 draws |
+| **ASSERTED** | the FENCE PROPS: `type`, `x16`, `z16` of all 1,213, in stream order — 3,639 fields. Their slots are genuinely derived (a post's type draw follows its slot draw immediately, so the qualifying slots come off the stream) and the positions are then pure arithmetic on the plot origin |
+| **DERIVED, kind 3 only** | *which* footprint cells qualified. Kind 3's coin runs on every cell **ahead of** the terrain read, so the very next recorded draw is a CELL roll exactly when the cell qualified — the set comes off the stream cell by cell |
+| **FED** | for every other kind, the qualifying-cell COUNT and the centre flag. No capture records per-cell terrain and there is no marker in front of the read, so only the count is observable |
+| **FED** | the fence post's `y16` (`col[+0x10] + count`) — a column read, so it is handed to the port and is *not* one of the asserted fields |
+| **MEASURED** | the same role-6 plot set against cwgen's own derived plan: 1 of 2 replayable towns, 15 declined by the pre-chain — it inherits the verdict scan's terrain coverage exactly and adds no new terrain requirement |
+
+### 6.2 The fed tape has to place the CENTRE correctly, and the stream says where
+
+The first version handed the plot's qualifying cells out to the *first* `cells` positions
+in visit order. That is wrong in a way no count can see and every sequence can: live, the
+qualifying cells are scattered, so the centre cell at `(span/2, span/2)` is reached with
+only *some* of them spent, and the CENTRE draw lands in the middle of the CELL draws.
+Front-loading emits every CELL first and then the CENTRE, and the sequence desynchronises
+at the centre — 5 of 17 towns, all with `port 4 (CELL), live 3 (CENTRE)` as the first
+difference.
+
+The fix needed no extra golden field, because **the position of the CENTRE draw among the
+CELL draws is itself an observation**: a non-centre cell must decline while the next
+recorded draw is the centre's. That is the difference between feeding a count and feeding
+a shape, and only the count was ever fed.
+
+### 6.3 The centre cell is at `(span/2, span/2)` — measured, not inferred
+
+`[ebp-0x5cec]` was read as `span/2` off the join at `0x4e5b9e`. The kind-3 interleave
+settles it independently: counting the K3 coins ahead of each CENTRE draw puts the centre
+at cell index **1300 in all three kind-3 plots that have one**, and `1300 = 25*51 + 25`.
 ## 7. Falsification record
 
 | claim | how it was tested | result |
@@ -200,6 +239,9 @@ slice lands with its gate green and the `cwgen_test` hash untouched.
 | plot order r-outer/c-inner, `r + n*c` | origins recovered from fence rows vs plot table | 59/59 |
 | no fifteenth rand site in the span | census of `0x4e5000`–`0x4e5c00` | 14, exact |
 | the ids are market furniture | **NOT TESTED — see §5.** The container is unhooked | withdrawn |
+| the port reproduces the stage | `rederive_townyard`, site tag vs recorded, draw for draw | 17/17 towns, 113,353 draws |
+| the port reproduces the fence records | type/x16/z16 of every recorded post | 1,213/1,213 (3,639 fields) |
+| the centre cell is at `(span/2, span/2)` | K3-coin count ahead of each CENTRE draw | 1300 = 25*51+25, 3/3 plots |
 
 ## 8. What this leaves
 

@@ -475,7 +475,7 @@ captures already on disk.
 | the town builder's **PROMOTION** pass (`0x4e3095`-`0x4e39e9`) — the sort key, `site+0x79` and the ruin `desc+0x1c`, all from the seed — RE'd *and ported* | `RE_town_promotion.md` | `gate_town_promotion` **2,071** / 92 towns; **`rederive_townpromo` 140/140 ab initio** |
 | the town builder's **INHABITANT SCATTER** (`0x4eda0b`-`0x4edcbf`) — the 2x2 quadrant coin, the hardcoded species list, the kind-5 Entity — RE'd *and ported* | `RE_town_creatures.md` | `gate_town_creatures` **3,045**; **`rederive_towncreatures` 140/140** |
 | the town builder's **HOUSE PASS** (`0x4e6520`-`0x4e74a5`) — 13 rand sites, 23 module grids EXECUTED out of the binary, the door rule — RE'd *and ported* | `RE_town_house.md` | `gate_town_house` **1,446** / 435 houses; **`rederive_townhouse` 140/140** |
-| the town builder's **ROLE-6 PLOT** (`0x4e503a`-`0x4e5b9e`) — the fenced yard: 14 rand sites, **49.6% of every draw in the builder body**; fences proven field-by-field, the other two containers unhooked — ⚠ **RE only, NOT ported** | `RE_town_yard.md` | `gate_town_yard` **2,822** / 50 role-6 plots, 1,213 fence props |
+| the town builder's **ROLE-6 PLOT** (`0x4e503a`-`0x4e5b9e`) — the fenced yard: 14 rand sites, **49.6% of every draw in the builder body**; fences derived field-by-field, the other two containers unhooked — RE'd *and ported* | `RE_town_yard.md` | `gate_town_yard` **2,822**; **`rederive_townyard` 51/51**, site sequence exact draw-for-draw in 17/17 towns |
 
 Two structural facts worth carrying:
 
@@ -498,7 +498,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
-| 07-28g | ★ **the town builder's ROLE-6 PLOT RE'd and gated — the biggest single stage in the builder.** `0x4e54e8` (80,117 draws) was one table row; censusing the rand sites inside its SPAN found **fourteen** in one ~2.9 KB stage spending **113,353 draws over 50 plots = 49.6% of the body's 228,413**. Sixth slice running where reading the span first re-scoped the work. Two plot-loop free parameters got *pinned* rather than carried: the plot order is r-outer/c-inner indexed `r + n*c` (**59/59**, recovered from the fence rows' own origins), and `span`=51 falls straight out of `15,606 = 6 x 51²`. ⚠ **A semantic reading was written down and withdrawn**: the ids resolve through `prop_ids.json` to market furniture, but that is the `site+0xc` namespace and these go to `site+4` / `site+0x30`, which **no capture hooks** (lesson A1). Fences ARE proven — `0x34+rand()&3` = `fence01..04`, 1,213/1,213 records | `RE_town_yard.md` | **`gate_town_yard` 2,822, 0 FAIL** |
+| 07-28g | ★ **the town builder's ROLE-6 PLOT RE'd, gated and PORTED — the biggest single stage in the builder.** `0x4e54e8` (80,117 draws) was one table row; censusing the rand sites inside its SPAN found **fourteen** in one ~2.9 KB stage spending **113,353 draws over 50 plots = 49.6% of the body's 228,413**. Sixth slice running where reading the span first re-scoped the work. Two plot-loop free parameters got *pinned* rather than carried: the plot order is r-outer/c-inner indexed `r + n*c` (**59/59**, recovered from the fence rows' own origins), and `span`=51 falls straight out of `15,606 = 6 x 51²`. ★ The port emits a **per-draw SITE TAG** — six of the fourteen sites cost one draw each, so a wrong branch between a pair moves no count and is invisible to a draw total; the gate compares tag sequences **draw for draw, 17/17 towns**. ⚠ **A semantic reading was written down and withdrawn**: the ids resolve through `prop_ids.json` to market furniture, but that is the `site+0xc` namespace and these go to `site+4` / `site+0x30`, which **no capture hooks** (lesson A1). Fences ARE proven — `0x34+rand()&3` = `fence01..04`, 1,213/1,213 records | `RE_town_yard.md` | **`gate_town_yard` 2,822**; **`rederive_townyard` 51/51** |
 | 07-28f | ★ **the town builder's HOUSE PASS RE'd, gated and PORTED — one site turned into a whole closed stage.** `0x4e742e` (15,609 draws) is the module-orientation roll, and reading its SPAN found it is the last of **thirteen** rand sites in the same ~1 KB spending **17,947 draws over 435 houses**. Selector = `plot[+0x10]`, the field the PROMOTION slice decoded. The 23 module grids are **executed out of Server.exe** by `extract_house_layouts.py`, never typed — two MSVC habits (pushes hoisted above the variant branch; the store for call N emitted after call N+1's pushes) make a listing scrape silently wrong. ★ The tables predict **51 doors** and `435x36 - 15,609 = 51` | `RE_town_house.md` | **`gate_town_house` 1,446**; **`rederive_townhouse` 140/140** |
 | 07-28e | ★ **the town builder's INHABITANT SCATTER (`0x4eda58`) RE'd, gated and PORTED** — per plot with role != 2 and score > 0.2, the four QUADRANT CENTRES each take a `rand() & 7` and a zero spawns a **kind-5 Entity** (the overworld scatter's record class, not the camp's). Fourth slice running whose blocking input was **misfiled, not missing**: the species list is a **hardcoded five-entry literal** at the head of the builder, and `desc+0x28` is `cw_featuregen`'s `msub`. ⚠ It does NOT advance the stream — interleaved with the other 169 sites in 66 of 69 towns | `RE_town_creatures.md` | **`gate_town_creatures` 3,045**; **`rederive_towncreatures` 140/140** |
 | 07-28d | ★ **the town builder's PROMOTION pass RE'd, gated and PORTED** — and all three of its inputs were misfiled: `FUN_004e19f0` is `std::sort` (the key is `plot[+0x18]` ASCENDING, in the predicate), `site+0x79` is **not a faction** but the site-kind grid's CORNER RANK (which `cw_featuregen` already computed and threw away), and the RUIN's `desc+0x1c` — a third input the lead never named — is a no-draw climate branch on the region site. Corner tag **4 hands out no role at all**, closing `RE_town_props.md` open problem 2 | `RE_town_promotion.md` | **`gate_town_promotion` 2,071**; **`rederive_townpromo` 140/140** |
@@ -648,11 +648,13 @@ what is next; take item 1.
    Read `0x4ef600`-`0x4f0000` before budgeting. The **plot heights** stay
    region-cache-blocked.
 
-   ⚠ **The role-6 yard is RE'd and gated but NOT ported**, deliberately, so the slice
-   lands with the `cwgen_test` hash untouched. `RE_town_yard.md` §6: it is blocked on
-   nothing — `TownTerrain` already exposes `column` and `recordClass`, and
-   `townPlotOriginX/Z`, `townPlotIndex`, `townPlotSpan` are all in `CwTown.h`. It inherits
-   the verdict scan's terrain coverage exactly and needs no new terrain work.
+   ✅ **The role-6 yard is now PORTED too** (`townYardPass` in `CwTown.h`,
+   `rederive_townyard` 51/51). Read `RE_town_yard.md` §6 before writing the next port —
+   §6.1 is the ASSERTED / FED / MEASURED table this kind of stage needs, and §6.2 is the
+   trap: feeding a gate a terrain COUNT is fine, feeding it a terrain SHAPE is not. The
+   first tape front-loaded the qualifying cells and desynchronised 5 of 17 towns at the
+   centre cell; the fix needed no new golden field, because the CENTRE draw's position
+   among the CELL draws is itself an observation.
 
    ⚠ **Read the span before budgeting for it — SIX for six now**, and 07-28g beat
    07-28f's record: `0x4e54e8` was one line in a table and turned out to be one of
@@ -813,13 +815,17 @@ cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cm
 ```
 
 **Known-good as of 07-28g:** the `cw_decomp` gate suite is **fully green** (32 gates now —
-`gate_town_yard` is new), and **`cwgen_test` is fully green** (32 gates now —
-`rederive_townhouse` is new). Hash **`126A1A6F4853E2A4`** in both Debug and Release.
+`gate_town_yard` is new), and **`cwgen_test` is fully green** (33 gates now —
+`rederive_townyard` is new), and **`cwgen_test` is fully green** (32 gates now —
+`rederive_townhouse` is new). Hash **`2D6C3B72E99E055E`** in both Debug and Release.
 
 ⚠ **`cwgen_test` takes about 5 minutes per config** — the town scan reads all 65,536
 columns of every town zone it replays. That is the gate doing real work, not a hang.
 
-⚠ **Every hash change here is isolated before it is accepted.** 07-28f: moving *only*
+⚠ **Every hash change here is isolated before it is accepted.** 07-28g: moving *only*
+`rederive_townyard.bin` aside restores `126A1A6F4853E2A4` exactly — and this time the
+whole 134-line output was diffed, not just the hash: **every other gate's reported numbers
+are byte-identical**, which is the check the warning two paragraphs down asks for. 07-28f: moving *only*
 `rederive_townhouse.bin` aside restores `8BAE4DDD7C271C62` exactly. 07-28e: moving *only*
 `rederive_towncreatures.bin` aside restores `E2A65B45E448E9C6` exactly, so the whole delta
 is the new gate's own hashed spawn records. 07-28d: moving *only*
@@ -851,7 +857,8 @@ the header on disk. Without that the header is just another hand-typed table wit
 comment claiming otherwise (lesson 7c). Regenerate it with:
 `python tools/cw_decomp/tools/extract_house_layouts.py --cpp > src/worldgen/cw/CwTownHouseTables.h`
 
-**Superseded:** hash **`8BAE4DDD7C271C62`** was the 07-28e known-good,
+**Superseded:** hash **`126A1A6F4853E2A4`** was the 07-28f known-good,
+**`8BAE4DDD7C271C62`** the 07-28e one,
 **`E2A65B45E448E9C6`** the 07-28d one,
 **`F20252B941259929`** the 07-28c one and
 **`2D52E0BE1C55FFAB`** the 07-28b one. The whole chain was
