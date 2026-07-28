@@ -87,6 +87,45 @@ ALL_PUSH = list(SLOT) + list(CENTRE)
 MODULE_STRIDE_XZ = 13          # imul ..., 0xd throughout the span
 MODULE_STRIDE_Y = 7            # add [ebp-0x5c5c], 7 at 0x4ecebc
 
+# --- the module lattice (added 07-28j, with the cwgen port) --------------------------
+# The house's block origin is SEVEN blocks into its plot, and every record sits at
+#     plotOrigin + HOUSE_ORIGIN + 13 * module + (dx, dz)
+# ⚠ Read off the RECORDS, never off a listing: MSVC emits the pushes for call N+1 above
+# the store for call N here exactly as it does in the layout tree (RE_town_house.md §2),
+# so a scrape gives a site its neighbour's offset. Section 3d below re-derives the whole
+# table from the capture every run and diffs it against these literals (lesson 7c).
+# ⚠ The decomposition on its own does NOT pin the origin -- both 7 and 8 close, because
+# shifting the origin by one just shifts every offset by one. Section 2d is what breaks
+# the tie: the offsets are the span's own .rdata doubles and integer pushes, and only
+# origin 7 puts the records on them.
+HOUSE_ORIGIN = 7
+PLOT_BASES = [(i * 256) // 5 for i in range(5)]     # villages only: n = 5, span 51
+# push return address -> the offset from the MODULE origin, in blocks
+OFFSET = {
+    0xEB145: (1.5, 4.5), 0xEB2D5: (1.5, 9.5), 0xEB488: (12.5, 4.5),
+    0xEB618: (12.5, 9.5), 0xEB7B4: (4.5, 1.5), 0xEB966: (4.5, 12.5),
+    0xEBAF4: (9.5, 12.5),
+    0xEBCEE: (7.0, 7.0),
+    0xEBEC2: (3.5, 7.0), 0xEBFEF: (10.5, 7.0), 0xEC11C: (7.0, 3.5),
+    0xEC249: (7.0, 10.5),
+    0xEC40A: (7.0, 7.0), 0xEC5AE: (4.5, 7.0), 0xEC6DB: (9.5, 7.0),
+    0xEC808: (7.0, 4.5), 0xEC935: (7.0, 9.5),
+    0xECB14: (4.0, 4.0), 0xECC41: (10.0, 4.0), 0xECD6E: (4.0, 10.0),
+    0xECE9B: (10.0, 10.0),
+}
+
+
+def module_of(u, origin=HOUSE_ORIGIN):
+    """Decompose a zone-local block coordinate into (plotBase, module, offset).
+    The house spans origin .. origin+38 of a 51-block plot, so the three module
+    intervals tile without overlap and the decomposition is unique."""
+    for base in PLOT_BASES:
+        for m in range(3):
+            d = u - (base + origin + MODULE_STRIDE_XZ * m)
+            if 0.0 <= d < MODULE_STRIDE_XZ:
+                return base, m, d
+    return None, None, None
+
 BASE = 6346                    # world[0x800188] for seed 42069, the capture's world
 
 # --- the factory's own literals -----------------------------------------------------
@@ -250,6 +289,50 @@ def main():
         check(at(data, secs, va, 5) == bytes((0x25, 0x03, 0x00, 0x00, 0x80)),
               "%s is not `and eax, 0x80000003` (a facing roll)" % hex(va))
 
+    # --- 2b. cellAt3D is NOT a plain array index (added 07-28j) -----------------------
+    # FUN_004d1950 calls FUN_004d8f90 on its three indices BEFORE the bounds check, and
+    # that function rotates (a, b) by house[+4] & 3 and then mirrors b when house[+8] is
+    # set. Every consumer of the module grid after the house pass therefore sees a
+    # transformed grid, which is why the port cannot index kHouseLayouts directly.
+    rel = struct.unpack("<i", at(data, secs, 0x4D1964, 4))[0]
+    check(0x4D1963 + 5 + rel == 0x4D8F90,
+          "FUN_004d1950 does not call FUN_004d8f90 first (the index rotation)")
+    check(at(data, secs, 0x4D8F97, 8) == bytes((0x8B, 0x47, 0x04, 0x25, 0x03, 0x00, 0x00,
+                                                0x80)),
+          "0x4d8f97 does not read `house[+4] & 3` (the rotation selector)")
+    check(at(data, secs, 0x4D8FEF, 4) == bytes((0x80, 0x7F, 0x08, 0x00)),
+          "0x4d8fef does not test `house[+8]` (the mirror coin)")
+    # ...and the null record an out-of-range index returns is the ZEROED template.
+    check(at(data, secs, 0x4D19E2, 5) == bytes((0xB8, 0x58, 0x42, 0x58, 0x00)),
+          "0x4d19e2 does not return 0x584258 for an out-of-range cell")
+
+    # --- 2d. the offset table's own constants, out of .rdata (added 07-28j) -----------
+    # The lattice check below closes for origin 7 AND 8 -- the decomposition alone cannot
+    # tell them apart, because shifting the origin by one just shifts every offset by one.
+    # What breaks the tie is that the offsets are LITERALS: these eight doubles and the
+    # `push 7` / `push 0xa` / `push 4` integers are the whole of the offset table, so only
+    # origin 7 makes the records land on them. Reported, not glossed (lesson 5).
+    RDATA = {0x558820: 1.5, 0x573898: 3.5, 0x5738A0: 4.5, 0x5738B0: 9.5,
+             0x5738B8: 10.5, 0x5738C0: 12.5, 0x5586F0: 0.5, 0x5738A8: 5.3}
+    for va, want in sorted(RDATA.items()):
+        got = struct.unpack("<d", at(data, secs, va, 8))[0]
+        check(abs(got - want) < 1e-9,
+              "the double at %s is %r, expected %r" % (hex(va), got, want))
+    lit = set(RDATA.values()) | {7.0, 10.0, 4.0}
+    for ra, (ox, oz) in sorted(OFFSET.items()):
+        check(ox in lit and oz in lit,
+              "%s's offset (%s, %s) is not built from the span's own constants"
+              % (hex(ra), ox, oz))
+
+    # --- 2c. the type-0x10 jitter is SINGLE precision (added 07-28j) ------------------
+    # divss then mulss, not the double the rest of the position math uses. Doing it in
+    # double is off by one 16.16 unit in about 1 record in 5,000 -- which is exactly how
+    # it was found, and nothing else in this file would have caught it.
+    check(at(data, secs, 0x4F3155, 4) == bytes((0xF3, 0x0F, 0x5E, 0x05)),
+          "0x4f3155 is not a divss (the type-0x10 jitter would be double)")
+    check(at(data, secs, 0x4F315D, 4) == bytes((0xF3, 0x0F, 0x59, 0x05)),
+          "0x4f315d is not a mulss (the type-0x10 jitter would be double)")
+
     # --- the captures -----------------------------------------------------------------
     hits = []
     for p in sorted(glob.glob(os.path.join(RAW, "town_props_capture*.json"))):
@@ -265,6 +348,9 @@ def main():
     centreRecs = 0
     pushSeen = set()
     coinChecks = 0
+    latMods = set()
+    latRecs = 0
+    originFits = set()
 
     for h in hits:
         zx, zz = h["zone"]
@@ -320,6 +406,61 @@ def main():
                 if wantR is not None:
                     check(rot == wantR, "%s: %s centre rot %d, expected %d"
                           % (h["zone"], nm, rot, wantR))
+
+        # --- 3d. the MODULE LATTICE, re-derived from the records every run ------------
+        # Reduce every record to (plotBase, module, offset) and require the offset to be
+        # the table's. This regenerates the whole offset table from the capture rather
+        # than trusting the literals above (lesson 7c), and it is what pins the house
+        # origin at 7: `originFits` below re-runs the decomposition for every offset
+        # 0..12 and the report says how many close.
+        for p in pushes:
+            rec = bytes(p["rec"])
+            typ = struct.unpack_from("<i", rec, 0)[0]
+            x16, z16 = struct.unpack_from("<qq", rec, 8)
+            wx, wz = OFFSET[p["ra"]]
+            # undo the factory's nudge so the base offset is what is compared
+            if p["ra"] in SLOT:
+                facing = SLOT[p["ra"]][1]
+                if typ in NUDGE:
+                    d = NUDGE[typ] * NUDGE_SIGN[facing]
+                    if facing in (1, 3):
+                        wx += d
+                    else:
+                        wz += d
+            ux = x16 / 65536.0 - zx * 256
+            uz = z16 / 65536.0 - zz * 256
+            _bx, mx, dx = module_of(ux)
+            _bz, mz, dz = module_of(uz)
+            if p["ra"] in SLOT and typ == 0x10:
+                # the jitter is a rolled 0..1 block on the axis the facing names; the
+                # OTHER axis still has to be exact.
+                facing = SLOT[p["ra"]][1]
+                got, want_ = (dx, wx) if facing in (1, 3) else (dz, wz)
+                other, wother = (dz, wz) if facing in (1, 3) else (dx, wx)
+                lo, hi = sorted((want_, want_ + NUDGE_SIGN[facing]))
+                check(got is not None and lo - 1e-4 <= got <= hi + 1e-4,
+                      "%s: %s type 16 jitter %s outside [%s, %s]"
+                      % (h["zone"], hex(p["ra"]), got, lo, hi))
+                check(other is not None and abs(other - wother) < 1e-4,
+                      "%s: %s type 16 lattice offset %s, expected %s"
+                      % (h["zone"], hex(p["ra"]), other, wother))
+            else:
+                check(dx is not None and dz is not None
+                      and abs(dx - wx) < 1e-4 and abs(dz - wz) < 1e-4,
+                      "%s: %s lattice offset (%s, %s), expected (%s, %s)"
+                      % (h["zone"], hex(p["ra"]), dx, dz, wx, wz))
+            if mx is not None and mz is not None:
+                latMods.add((mx, mz))
+                latRecs += 1
+        # ...and the origin is 7 and nothing else: an offset that does not close leaves
+        # some record outside every module interval.
+        for o in range(0, MODULE_STRIDE_XZ):
+            if all(module_of(struct.unpack_from("<q", bytes(p["rec"]), 8)[0] / 65536.0
+                             - zx * 256, o)[1] is not None
+                   and module_of(struct.unpack_from("<q", bytes(p["rec"]), 16)[0] / 65536.0
+                                 - zz * 256, o)[1] is not None
+                   for p in pushes):
+                originFits.add(o)
 
         # --- 3b. the factory, from the town's own LCG ---------------------------------
         maxn = max(n for _r, _v, n in draws)
@@ -421,6 +562,13 @@ def main():
     print("     null baseline (types each gap ADMITS)    : %s"
           % dict(sorted(reach.items())))
     print("  kind-0 centre coin (rand() %% 5 == 0)        : %d towns" % coinChecks)
+    print("  ** the MODULE LATTICE re-derived from the records: %d records on"
+          % latRecs)
+    print("     plotOrigin + %d + 13 x module + offset, %d of the 9 modules seen;"
+          % (HOUSE_ORIGIN, len(latMods)))
+    print("     origin offsets the decomposition allows     : %s -- the tie is broken"
+          % sorted(originFits))
+    print("     by the offsets being the span's own literals, which only 7 lands on")
     for m in notes[:20]:
         print("    ! %s" % m)
     print("%d checks, %d ok, %d FAIL" % (ok + fail, ok, fail))

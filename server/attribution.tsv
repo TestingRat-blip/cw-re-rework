@@ -106,7 +106,7 @@ addr	name	kind	module	class	attributed_by	size
 00405610	FUN_00405610	gamemisc	world	Unsorted	logic:caller-vote	38
 00405640	CRefTime::Millisecs	lib	_library	sdk_classes	rtti-lib-ns	18
 00405660	FUN_00405660	gamemisc	world	Unsorted	logic:caller-vote	37
-00405690	FUN_00405690	gamemisc	world	Unsorted	logic:caller-vote	35
+00405690	fixed16_addInt	gamemisc	game_misc	Game	ledger	35
 004056c0	FUN_004056c0	gamemisc	ai	Helpers	caller-vote	129
 00405750	FUN_00405750	gamemisc	game_misc	Unsorted_000	none	37
 00405780	cube::CompanionBehavior::vfunction1	game	ai	CompanionBehavior	rtti	1888
@@ -2236,7 +2236,7 @@ addr	name	kind	module	class	attributed_by	size
 004ce220	FUN_004ce220	gamemisc	world	Unsorted	logic:caller-vote	41
 004ce250	mutator_4ce250	gamemisc	game_misc	_helpers_mutator	role:mutator	23
 004ce270	mutator_4ce270	gamemisc	game_misc	_helpers_mutator	role:mutator	23
-004ce290	FUN_004ce290	gamemisc	world	_helpers_wrapper	role:wrapper	56
+004ce290	fixed16_addDouble	gamemisc	game_misc	Game	ledger	56
 004ce2d0	FUN_004ce2d0	gamemisc	world	_helpers_wrapper	role:wrapper	64
 004ce310	fwd_0054a946_4ce310	gamemisc	game_misc	_helpers_thunk	role:thunk	54
 004ce350	FUN_004ce350	gamemisc	ai	Unsorted	logic:caller-vote	34
@@ -2326,7 +2326,7 @@ addr	name	kind	module	class	attributed_by	size
 004d8e30	vec2d_lengthSquared	gamemisc	render	Proven	ledger	39
 004d8e60	FUN_004d8e60	gamemisc	world	Helpers	caller-vote	265
 004d8f70	FUN_004d8f70	gamemisc	world	Helpers	caller-vote	31
-004d8f90	FUN_004d8f90	gamemisc	world	Helpers	caller-vote	115
+004d8f90	VoxelGrid_rotateIndices	gamemisc	world	Proven	ledger	115
 004d9010	lib_fn_4d9010	lib	_library	cw_lib	ledger	235
 004d9100	std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::vfunction7	lib	_library	stl	stl-ns	89
 004d9160	FUN_004d9160	gamemisc	game_misc	Unsorted_002	none	676

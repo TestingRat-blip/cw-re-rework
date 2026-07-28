@@ -442,6 +442,11 @@
    "name": "int_vector_at",
    "src": "ADJUDICATION.md"
   },
+  "00405690": {
+   "kind": "gamemisc",
+   "name": "fixed16_addInt",
+   "src": "ADJUDICATION.md"
+  },
   "00405f20": {
    "kind": "gamemisc",
    "name": "Column_getBlockChecked",
@@ -612,6 +617,11 @@
    "name": "int_to_fixed16_16",
    "src": "ADJUDICATION.md"
   },
+  "004ce290": {
+   "kind": "gamemisc",
+   "name": "fixed16_addDouble",
+   "src": "ADJUDICATION.md"
+  },
   "004ce8e0": {
    "kind": "gamemisc",
    "name": "PropVector_reserve",
@@ -705,6 +715,11 @@
   "004d8e30": {
    "kind": "gamemisc",
    "name": "vec2d_lengthSquared",
+   "src": "ADJUDICATION.md"
+  },
+  "004d8f90": {
+   "kind": "gamemisc",
+   "name": "VoxelGrid_rotateIndices",
    "src": "ADJUDICATION.md"
   },
   "004d9010": {

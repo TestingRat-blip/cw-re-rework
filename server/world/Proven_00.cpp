@@ -1,4 +1,4 @@
-// Proven_00 (world) -- server. 38 functions. Bodies = Ghidra pseudo-C.
+// Proven_00 (world) -- server. 39 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Proven_00.h"
 
@@ -21517,6 +21517,41 @@ undefined4 __fastcall FUN_004d8e00(int param_1)
 
 {
   return *(undefined4 *)(param_1 + 0x6c);
+}
+
+
+/* VoxelGrid_rotateIndices @ 004d8f90  kind=gamemisc  attributed-by=ledger  size=115 */
+
+void __thiscall FUN_004d8f90(void *this,int *param_1,int *param_2)
+
+{
+  int iVar1;
+  uint uVar2;
+  
+  uVar2 = *(uint *)((int)this + 4) & 0x80000003;
+  if ((int)uVar2 < 0) {
+    uVar2 = (uVar2 - 1 | 0xfffffffc) + 1;
+  }
+  if (uVar2 == 1) {
+    iVar1 = *param_1;
+    *param_1 = *param_2;
+    *param_2 = iVar1;
+    *param_1 = (*(int *)((int)this + 100) - *param_1) + -1;
+  }
+  else if (uVar2 == 2) {
+    *param_1 = (*(int *)((int)this + 100) - *param_1) + -1;
+    *param_2 = (*(int *)((int)this + 0x68) - *param_2) + -1;
+  }
+  else if (uVar2 == 3) {
+    iVar1 = *param_1;
+    *param_1 = *param_2;
+    *param_2 = iVar1;
+    *param_2 = (*(int *)((int)this + 0x68) - iVar1) + -1;
+  }
+  if (*(char *)((int)this + 8) != '\0') {
+    *param_2 = (*(int *)((int)this + 0x68) - *param_2) + -1;
+  }
+  return;
 }
 
 

@@ -1,9 +1,16 @@
 # The town builder's HOUSE FURNISHING pass (`0x4ead3a`–`0x4ecf20`)
 
-*RE'd and gated 2026-07-28 (07-28i). Live gate: `tools/gate_town_furnish.py`,
-**26,891 checks, 0 FAIL** over the 92 towns in `raw/town_props_capture*.json` (seed 42069).
-⚠ **Not yet ported to cwgen** — §7 says exactly what a port needs and what is already
-there for it.*
+*RE'd and gated 2026-07-28 (07-28i); **PORTED 2026-07-28 (07-28j)**. Live gate:
+`tools/gate_town_furnish.py`, **34,307 checks, 0 FAIL** over the 92 towns in
+`raw/town_props_capture*.json` (seed 42069). cwgen gate: **`rederive_townfurnish`
+1,004/1,004** — 323 houses whose whole draw stream, hidden factory draws included, is
+consumed exactly, and 6,759 records derived field by field (§8).*
+
+```
+python tools/gate_town_furnish.py                              # 34,307 checks
+python tools/cw_rederive/make_townfurnish_golden.py            # the cwgen golden
+build/cwgen_test.exe tools/cw_rederive/golden_rederive         # rederive_townfurnish
+```
 
 **Thirteen rand sites in the builder body spending 8,717 draws, 21 push sites, 6,759
 records** — and the interesting cost is somewhere the rig cannot see: every furniture
@@ -208,6 +215,84 @@ of `Server.exe`: across the 23 grids it is **1 at 24 cells, 2 at 9 and 3 at 3**,
 generator only emitted `type`. It now emits all three, and `gate_town_house.py` keeps
 them honest by regenerating and diffing (lesson 7i).
 
+## 5b. ★ What the PORT found that the RE had not (07-28j)
+
+Four things the 07-28i decode did not have, all of them needed before a record could be
+placed rather than merely typed, and all four now under a gate.
+
+### 5b.1 `cellAt3D` is not an array index — it ROTATES
+
+`FUN_004d1950` calls **`FUN_004d8f90` on its three indices before the bounds check**, and
+that function is a rigid transform of the module grid driven by two fields the house pass
+has already decided:
+
+```
+r = house[+4] & 3                                     0x4d8f97
+  r == 1:  a, b = 3 - b - 1, a                        0x4d8fdc
+  r == 2:  a, b = 3 - a - 1, 3 - b - 1                0x4d8fc7
+  r == 3:  a, b = b, 3 - a - 1                        0x4d8fb2
+if house[+8]:  b = 3 - b - 1                          0x4d8fef   the mirror COIN
+```
+
+So the same layout furnishes **eight** ways, and the layout tables are in RAW index space
+— `extract_house_layouts.py` is right to ignore this, because the house pass stores the
+rotation at `0x4e6f99` and the coin at `0x4e6fac`, *after* the tree that writes the grid.
+An out-of-range index does not fault: `0x4d19e2` returns the zeroed template at
+`0x584258`, so type, flag and kind all read 0 — which is what makes the `i±1` / `j±1` face
+tests work at the edges of the 3×3.
+
+This is invisible to a draw COUNT. A rigid transform preserves the number of
+(wall, non-wall neighbour) pairs, so the total is identical under any rotation; only the
+ORDER changes, and with it every record's position. Lesson 13 from the other side: the
+count could not have caught it, and the position gate does, in 323 of 323 houses.
+
+### 5b.2 The house sits SEVEN blocks into its plot
+
+Every record is at `plotOrigin + 7 + 13*module + offset`. Reducing all 6,759 live records
+modulo the module stride gives each of the 21 push sites **exactly one** offset, 653 to
+1,005 samples apiece:
+
+| | A | B | C | D | E | F | G | kind0 | kind1 | kind2 | kind3 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| dx | 1.5 | 1.5 | 12.5 | 12.5 | 4.5 | 4.5 | 9.5 | 7 | 4/10 | 4.5/7/9.5 | 3.5/7/10.5 |
+| dz | 4.5 | 9.5 | 4.5 | 9.5 | 1.5 | 12.5 | 12.5 | 7 | 4/10 | 4.5/7/9.5 | 3.5/7/10.5 |
+
+⚠ **The offsets were NOT read off a listing**, and a listing is exactly where this goes
+wrong: MSVC emits the pushes for call N+1 above the store for call N here the same way it
+does in the layout tree (`RE_town_house.md` §2), so a block-at-a-time scan hands a site
+its neighbour's offset — `push 0xa` sits after `kind1a`'s push and belongs to `kind1b`.
+
+⚠ **And the decomposition alone does not pin the 7**: origin 7 and origin 8 both close,
+because shifting the origin by one shifts every offset by one. What breaks the tie is that
+the offsets are the span's own **literals** — the eight `.rdata` doubles (1.5, 3.5, 4.5,
+0.5, 5.3, 9.5, 10.5, 12.5) and the `push 7` / `push 0xa` / `push 4` integers — and only
+origin 7 lands the records on them. The gate reports both halves rather than the
+conclusion (lesson 5). The binary corroborates independently: the house's own ground scan
+at `0x4e755b` walks a **15**-wide window from `plotBase + 6`, which is the 13-wide module
+row with one block of margin on each side.
+
+★ **This corrects `CwTown.h`.** `townHouseCentre2X` had the house anchored at the plot
+origin, with a comment asserting it was *not* centred — a claim, never a reading, and
+wrong by 6 blocks in the engine's own town rendering. `kTownHouseOrigin` is now 7 and the
+39-block house is centred in the 51-block village plot after all.
+
+### 5b.3 The type-`0x10` jitter is SINGLE precision
+
+`0x4f3148` and its three siblings compute the shift as
+`ftol2( (float)((float)rand() / 32767.0f) * 65536.0f )` — **`divss` then `mulss`**, not
+the doubles the rest of the position math uses. Doing it in double is off by one 16.16
+unit in about one record in 5,000; that is literally how it was found (one failing record
+out of 6,759, X off by 1). The gate now asserts both opcodes, because nothing about the
+decode reads differently when it is wrong.
+
+### 5b.4 The pass's first draw is the house's first recorded body draw
+
+The port is positioned with **no free parameter**. The golden gives it the contiguous LCG
+stream starting at the house's first recorded body draw, and the search over start offsets
+0..39 finds the pass begins exactly there in **323 of 323** houses — i.e. no `furnish()`
+call ever precedes the first coin, which slot E (the one with no coin) could in principle
+have caused.
+
 ## 6. Falsification record
 
 | claim | how it was tested | result |
@@ -224,29 +309,63 @@ them honest by regenerating and diffing (lesson 7i).
 | the kind-1 quartet is never rejected | its four facing rolls vs its four push counts | 35 / 35 towns |
 | the centre types / extents / fixed facings | every one of the 1,801 centre records | 1,801 |
 | the pass is villages-only | descriptor type vs which towns furnish | 35 villages, 0 ruins |
+| `cellAt3D` rotates before it indexes | the call to `FUN_004d8f90` + its two selectors, byte-checked | 4 byte checks |
+| the type-`0x10` jitter is f32 | the `divss` / `mulss` encodings, byte-checked | 2 byte checks |
+| the module lattice, re-derived from the records | every push reduced to `(plot, module, offset)` | **6,759**, 9 of 9 modules |
+| …and the offset table is the span's own literals | the eight `.rdata` doubles + the integer pushes | 29 |
 
-## 7. ⚠ Not ported — and what a port already has
+## 7. The port — `townFurnishHouse` in `CwTown.h`
 
-This slice is RE + gate only. What `townFurnishPass` would need, and where it is:
+Ported 07-28j. It takes a draw source (the stage is interleaved with the builder's other
+un-RE'd sites, like the yard's and the plaza's), the `TownHouse` the house pass produced,
+the plot origin, the house's base Y and a `TownFurnishGround` whose one method is the
+accept bit.
 
-* **the module grid** — `CwTownHouseTables.h`, and as of this slice it carries `kind`
-  and `flag` as well as `type`. `townHousePass` already selects the layout. *(Lesson 7h,
-  sixth slice running: the blocking input was already in a port.)*
-* **the house origin and extents** — `townHousePass` derives the plot and rotation; the
-  3×3×4 shape is fixed (`FUN_004e1f80(h, 3, 3, 4)`, `RE_town_house.md`).
-* **the factory** — §4, complete, with a 4,958-record proof.
+What each input is, and where it came from — five of the six were already in a port
+(lesson 7h, ninth slice running):
+
+* **the module grid** — `CwTownHouseTables.h`, carrying `kind` and `flag` since 07-28i.
+* **the layout / rotation / coin** — `townHouseOne`, split out of `townHousePass` for
+  this: the two passes run in the SAME plot-loop iteration, so their draws alternate
+  strictly per house in every captured stream, and a gate has to interleave them.
+* **the geometry** — §5b.2, pure arithmetic.
+* **the factory** — §4, `townFurnitureFactory`.
 * **the terrain read** — `World_getBlockFloat` + `Block_isSolid` at each record's own
-  16.16 position. This is the one genuinely new requirement: the plaza's
-  `TownPlazaGround` reads a column top, this reads a *specific voxel* of the finished
-  house, which the engine's store has but no capture records. A gate would have to FEED
-  the accept/reject bit — and unlike the plaza's fill count, that bit **is** observable
-  per record, because a rejected record leaves its factory draws in the stream and the
-  LCG recovery above finds them. Design the tape around that.
-* ⚠ **the `id 0xd` record at `0x4eaf3f` goes to `site+4`**, the container
-  `RE_town_yard.md` §5 records as **hooked by no capture**. It spends no draws, so it
-  costs the stream nothing, but its output cannot be checked today.
+  16.16 position, the one genuinely new requirement. It is FED, and the tape is keyed on
+  `(drawIndex, pushSite)`: a rejected record still leaves its factory draws in the stream,
+  so the draw index at which each live push happened is recorded, and the port derives the
+  same pair with no help. Only **40 of 6,799** candidates are rejected.
+* **the base Y** — region-cache-blocked. The port runs with `originY = 0` and the gate
+  requires `liveY - derivedY` to be ONE constant across the house, which is what puts the
+  `originY + 7k + 1` module stride under test. 323 of 323.
 
-## 8. What this leaves
+⚠ **the `id 0xd` record at `0x4eaf3f` goes to `site+4`**, the container
+`RE_town_yard.md` §5 records as **hooked by no capture**. It spends no draws, so it costs
+the stream nothing, but its output cannot be checked — so the port does not emit it, and
+says so at the call site rather than emitting something unfalsifiable.
+
+⚠ **No Python mirror**, deliberately, and this is the second stage in the tail without one
+(`cw_creatures.py` is the other). Nothing needs it: the golden is built straight out of
+the capture — the walk is not run to make it — so the C++ is checked against the game and
+not against a second implementation of the same guess (lesson 17). A throwaway Python
+prototype did drive the decode, and every finding in §5b came out of it.
+
+## 8. What the cwgen gate asserts — `rederive_townfurnish`, 1,004/1,004
+
+| claim | result |
+|---|---|
+| the SITE SEQUENCE over a whole house, draw for draw **including the gaps** | **323 / 323** |
+| …which is 8,717 recorded body draws plus **12,248 the rig never saw** | — |
+| every pushed record's type / extents×3 / facing / x16 / z16 | **6,759** records, 40,554 fields |
+| the base Y is one constant per house (the `+7k + 1` stride) | **323 / 323** |
+| the pass is villages-only | **35 / 35** |
+
+★ **The sequence check is what tests the factory.** The golden ships the CONTIGUOUS
+stream, so a body draw only lands back on its recorded index if every hidden factory draw
+in front of it was spent too. One draw too few or too many anywhere in a house
+desynchronises every later body draw in it.
+
+## 9. What this leaves
 
 Counted by the same span census as `RE_town_plaza.md` §9: **66 of the 176 firing rand
 sites now carry 203,887 of the 228,413 draws the rig records inside the builder body —

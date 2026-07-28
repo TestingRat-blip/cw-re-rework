@@ -108,6 +108,22 @@ Module types: **1** wall, **2** base, **3** roof, **5** door, 0 left unset by th
 Only **4 of the 23** grids contain a door, and all four are on the `v == 0` arm with the
 last coin odd.
 
+★ **These grids are in RAW index space, and that is not a detail — added 07-28j.**
+`VoxelGrid_cellAt3D` (`FUN_004d1950`) calls **`FUN_004d8f90` on its indices before the
+bounds check**, and that function rotates `(a, b)` by `house[+4] & 3` and then mirrors `b`
+when `house[+8]` is set. The interpreter is right to ignore it here only because this
+pass writes the grid **before** it stores either field (`0x4e6f99` / `0x4e6fac`); every
+LATER consumer — the interior marking sweep, the furnishing walk — sees the transformed
+grid, so a port must not index `kHouseLayouts` directly. `RE_town_furnish.md` §5b.1 has
+the transform and `townHouseCell` in `CwTown.h` implements it.
+
+★ **And the house sits SEVEN blocks into its plot**, not at the plot origin: 39 blocks
+centred in the 51-block village plot. Derived from the furnishing pass's 6,759 live
+records (`RE_town_furnish.md` §5b.2) and corroborated by this pass's own ground scan at
+`0x4e755b`, which walks a 15-wide window from `plotBase + 6`. `CwTown.h`'s
+`townHouseCentre2X` carried 0 until then, with a comment claiming the house was
+deliberately not centred — a sentence copied forward instead of read (lesson 7e).
+
 ---
 
 ## 3. What is gated

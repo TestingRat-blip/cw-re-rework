@@ -340,6 +340,21 @@ the body was the only way to settle these.
         "004d8dc0": {"name": "House_dimX", "kind": "gamemisc", "verdict": "DEEP-RE"},
         "004d8de0": {"name": "House_dimZ", "kind": "gamemisc", "verdict": "DEEP-RE"},
         "004d8e00": {"name": "House_dimY", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # ★ The reason VoxelGrid_cellAt3D (0x4d1950) is not an array index: it calls this
+        # on its three indices BEFORE the bounds check, and this rotates (a, b) by
+        # `house[+4] & 3` and then mirrors b when `house[+8]` is set. Every consumer of a
+        # module grid after the house pass therefore sees a TRANSFORMED grid; the grid
+        # tables themselves are raw, because the house pass writes them before it stores
+        # either field. Proven by the furnishing port: 6,759 record positions, 323 of 323
+        # houses (Docs/RE_town_furnish.md §5b.1).
+        "004d8f90": {"name": "VoxelGrid_rotateIndices", "kind": "gamemisc",
+                     "verdict": "DEEP-RE"},
+        # the two fixed-point accumulators the town prop builds chain. 0x405690 adds an
+        # INT (`shld/shl 0x10` then a 64-bit add); 0x4ce290 adds a DOUBLE, and does it as
+        # `fixed - ftol2(d * -65536.0)` -- the multiplier really is negative, so the
+        # truncation is taken on the negated product (lesson 16: ftol2 truncates).
+        "00405690": {"name": "fixed16_addInt", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        "004ce290": {"name": "fixed16_addDouble", "kind": "gamemisc", "verdict": "DEEP-RE"},
         # `vector::size()` for the site's 0x188-byte prop records -- the 0x5397829d
         # reciprocal and `sar 7` divide by 0x188. The house pass saves it at 0x4e6546 so
         # it knows where its own props begin. Proven by the divisor, not by its callers.

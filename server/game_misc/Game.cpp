@@ -1,4 +1,4 @@
-// Game (game_misc) -- server. 28 functions. Bodies = Ghidra pseudo-C.
+// Game (game_misc) -- server. 30 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Game.h"
 
@@ -17,6 +17,23 @@ int __thiscall FUN_00402bb0(void *this,int param_1)
 
 {
   return *(int *)this + param_1 * 4;
+}
+
+
+/* fixed16_addInt @ 00405690  kind=gamemisc  attributed-by=ledger  size=35 */
+
+void __thiscall FUN_00405690(void *this,int *param_1,uint param_2)
+
+{
+  uint uVar1;
+  int iVar2;
+  
+  uVar1 = *(uint *)this;
+  iVar2 = *(int *)((int)this + 4);
+  *param_1 = param_2 * 0x10000 + *(int *)this;
+  param_1[1] = (((int)param_2 >> 0x1f) << 0x10 | param_2 >> 0x10) + iVar2 +
+               (uint)CARRY4(param_2 * 0x10000,uVar1);
+  return;
 }
 
 
@@ -302,6 +319,24 @@ int * __thiscall FUN_004cde40(void *this,uint param_1)
   *(uint *)this = param_1 << 0x10;
   *(uint *)((int)this + 4) = ((int)param_1 >> 0x1f) << 0x10 | param_1 >> 0x10;
   return this;
+}
+
+
+/* fixed16_addDouble @ 004ce290  kind=gamemisc  attributed-by=ledger  size=56 */
+
+void __thiscall FUN_004ce290(void *this,int *param_1)
+
+{
+  uint uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  uVar3 = FUN_0054a946();
+  uVar1 = *(uint *)this;
+  iVar2 = *(int *)((int)this + 4);
+  *param_1 = uVar1 - (uint)uVar3;
+  param_1[1] = (iVar2 - (int)(uVar3 >> 0x20)) - (uint)(uVar1 < (uint)uVar3);
+  return;
 }
 
 
