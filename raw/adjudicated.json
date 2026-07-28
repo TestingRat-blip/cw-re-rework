@@ -127,6 +127,11 @@
    "name": "Region_getChunkCell",
    "verdict": "B"
   },
+  "00406380": {
+   "kind": "gamemisc",
+   "name": "vec3_i64_store",
+   "verdict": "DEEP-RE"
+  },
   "0040efc0": {
    "kind": "game",
    "name": "species_groupRange",
@@ -195,6 +200,11 @@
   "004c84b0": {
    "kind": "game",
    "name": "DungeonProp_ctor_0x188",
+   "verdict": "DEEP-RE"
+  },
+  "004cde40": {
+   "kind": "gamemisc",
+   "name": "int_to_fixed16_16",
    "verdict": "DEEP-RE"
   },
   "004ce8e0": {
@@ -566,6 +576,11 @@
    "kind": "lib",
    "name": "lib_fn_52d5d0",
    "verdict": "B"
+  },
+  "0052d860": {
+   "kind": "gamemisc",
+   "name": "field_at_0x14",
+   "verdict": "DEEP-RE"
   },
   "0052d870": {
    "kind": "lib",

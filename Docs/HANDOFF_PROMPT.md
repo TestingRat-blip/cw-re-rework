@@ -245,6 +245,18 @@ if you are about to trust a green gate, read group B. Every one of these cost re
    named at all (the ruin's `desc+0x1c`) fell to one byte scan. **Read the function
    before budgeting for what is inside it.**
 
+7h. **Four slices running, the blocking input was MISFILED rather than missing — and
+   twice it was a literal.** 7g recorded three instances in one afternoon; `0x4eda58`
+   made it four. That site was carried as "the first genuinely broad site, and the
+   first that is not nearly free" (2,968 draws, 69 towns) and is a self-contained
+   creature scatter: its **species list is five `push_back`s of an immediate** at the
+   head of the builder, seed- and climate-independent, and its one descriptor input
+   `desc+0x28` is the field `cw_featuregen` has produced as `msub` since the camp
+   descriptor was derived. Neither needed RE; both needed *looking*. The pattern is now
+   strong enough to act on: **before budgeting for a stage, disassemble its span and
+   grep the ports for its inputs under other names.** The cost of that check has been
+   ten minutes every time; the cost of skipping it has been a whole handoff item.
+
 ### B. What a green gate does NOT prove
 
 The single most expensive family in this project. Five separate instances of the same
@@ -446,6 +458,7 @@ captures already on disk.
 | `FUN_005290d0` = `World_pickCreatureSpecies` + `FUN_0052bfa0` = `World_pickPackMemberSpecies` | `RE_zone_creatures.md` | (folded into the two above) |
 | the town builder's **PLOT VERDICT** pass (`0x4e2a80`-`0x4e3093`) + its plot score + its rotation/nudge, from the seed — RE'd *and ported* | `RE_town_verdict.md` | `gate_town_verdict` **5,469** / 72 towns; **`rederive_townverdict` 641/641 ab initio**, 34/34 arrivals |
 | the town builder's **PROMOTION** pass (`0x4e3095`-`0x4e39e9`) — the sort key, `site+0x79` and the ruin `desc+0x1c`, all from the seed — RE'd *and ported* | `RE_town_promotion.md` | `gate_town_promotion` **2,071** / 92 towns; **`rederive_townpromo` 140/140 ab initio** |
+| the town builder's **INHABITANT SCATTER** (`0x4eda0b`-`0x4edcbf`) — the 2x2 quadrant coin, the hardcoded species list, the kind-5 Entity — RE'd *and ported* | `RE_town_creatures.md` | `gate_town_creatures` **3,045**; **`rederive_towncreatures` 140/140** |
 
 Two structural facts worth carrying:
 
@@ -468,6 +481,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
+| 07-28e | ★ **the town builder's INHABITANT SCATTER (`0x4eda58`) RE'd, gated and PORTED** — per plot with role != 2 and score > 0.2, the four QUADRANT CENTRES each take a `rand() & 7` and a zero spawns a **kind-5 Entity** (the overworld scatter's record class, not the camp's). Fourth slice running whose blocking input was **misfiled, not missing**: the species list is a **hardcoded five-entry literal** at the head of the builder, and `desc+0x28` is `cw_featuregen`'s `msub`. ⚠ It does NOT advance the stream — interleaved with the other 169 sites in 66 of 69 towns | `RE_town_creatures.md` | **`gate_town_creatures` 3,045**; **`rederive_towncreatures` 140/140** |
 | 07-28d | ★ **the town builder's PROMOTION pass RE'd, gated and PORTED** — and all three of its inputs were misfiled: `FUN_004e19f0` is `std::sort` (the key is `plot[+0x18]` ASCENDING, in the predicate), `site+0x79` is **not a faction** but the site-kind grid's CORNER RANK (which `cw_featuregen` already computed and threw away), and the RUIN's `desc+0x1c` — a third input the lead never named — is a no-draw climate branch on the region site. Corner tag **4 hands out no role at all**, closing `RE_town_props.md` open problem 2 | `RE_town_promotion.md` | **`gate_town_promotion` 2,071**; **`rederive_townpromo` 140/140** |
 | 07-28c | ★ **the TOWN BUILDER's scan pass PORTED, and towns become reachable**: the builder sits at the HEAD of the zone stream (entry index **0 in 23 of 71** towns, median 53), and a town zone's `Village` classification is **vacuous** — both its consumers are skipped at site kind 1/3/4. First ab-initio gate ever to enter a town zone | `RE_town_verdict.md` §6 | **`rederive_townverdict` 641/641**, arrival **34/34**, whole scan phase exact in **29/34**; `gate_town_verdict` 3,984 → **5,469** |
 | 07-28b | ✅ **`cwgen_test` GOES FULLY GREEN**: the bed pass's CARVE LEVEL is `FUN_004f9b70` in FULL — the type-1 village damp and the ocean-site repulsion live inside it, and all three ports used the *open* base height. `rederive_zoneac` 107/109 → **109/109** | `RE_zone_tail.md` | `gate_zone_bed` still 44/44; `rederive_river` regenerated (1 row of 3,005, `w` by 1 ULP) |
@@ -596,11 +610,22 @@ what is next; take item 1.
    so arriving was never the hard part; the rand sites *downstream* are, and there are now
    **172** of them left.
 
-   **The next one is `0x4eda58`** — 2,968 draws across 69 of the 92 towns, the first
-   genuinely broad site, and the first that is not nearly free. After it: `0x4e742e`
-   (15,609 / 70 towns), then the two per-column loops `0x4e54e8` / `0x4ef7c8` that carry
-   **36%** of everything this layer spends — both read terrain cwgen already produces. The
-   **plot heights** stay region-cache-blocked. `gate_town_props.py` is fixed and green.
+   ✅ **`0x4eda58` is CLOSED (07-28e)** — it was the town's INHABITANT SCATTER and it
+   needed nothing new (`RE_town_creatures.md`). With its three follower sites that is
+   **4,099 draws** accounted for and **169 firing sites left**.
+
+   **The next one is `0x4e742e`** — 15,609 draws across 70 of the 92 towns, and now the
+   broadest site left. After it `0x4e5136` (15,606 but only 5 towns), then the two
+   per-column loops `0x4e54e8` / `0x4ef7c8` that carry **36%** of everything this layer
+   spends — both read terrain cwgen already produces. The **plot heights** stay
+   region-cache-blocked. `gate_town_props.py` is fixed and green.
+
+   ⚠ **Read the span before budgeting for it — four for four now.** `0x4eda58` was filed
+   as "the first that is not nearly free" and turned out to be a self-contained scatter
+   RE'd, gated and ported in one pass. Its two inputs were a **hardcoded literal** and a
+   field a port had been computing under another name since the camp-descriptor slice.
+   The promotion slice said the same thing three times in one afternoon. **Before
+   budgeting for a stage, disassemble it and grep the ports for its inputs.**
 
    ⚠ **What the promotion slice teaches about scoping the rest** (and it happened three
    times in one afternoon): every input that slice was blocked on was *misfiled*, not
@@ -748,14 +773,16 @@ Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fail
 cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
 ```
 
-**Known-good as of 07-28d:** the `cw_decomp` gate suite is **fully green** (29 gates now —
-`gate_town_promotion` is new), and **`cwgen_test` is fully green** (30 gates now —
-`rederive_townpromo` is new). Hash **`E2A65B45E448E9C6`** in both Debug and Release.
+**Known-good as of 07-28e:** the `cw_decomp` gate suite is **fully green** (30 gates now —
+`gate_town_creatures` is new), and **`cwgen_test` is fully green** (31 gates now —
+`rederive_towncreatures` is new). Hash **`8BAE4DDD7C271C62`** in both Debug and Release.
 
 ⚠ **`cwgen_test` takes about 5 minutes per config** — the town scan reads all 65,536
 columns of every town zone it replays. That is the gate doing real work, not a hang.
 
-⚠ **Every hash change here is isolated before it is accepted.** 07-28d: moving *only*
+⚠ **Every hash change here is isolated before it is accepted.** 07-28e: moving *only*
+`rederive_towncreatures.bin` aside restores `E2A65B45E448E9C6` exactly, so the whole delta
+is the new gate's own hashed spawn records. 07-28d: moving *only*
 `rederive_townpromo.bin` aside restores `F20252B941259929` exactly, so the delta is the new
 gate's own hashed values — and that also proves the slice's `FeatureCell.subtype` change
 (village + ruin, previously unset) moved nothing else. 07-28c was the same check against
@@ -769,7 +796,16 @@ from 29/34 to **21/34** while both gates still said PASS, because that count is 
 and not asserted. The fix is a separate `rotFinal`. A measured number nobody diffs is a
 gate that cannot fail.
 
-**Superseded:** hash **`F20252B941259929`** was the 07-28c known-good and
+⚠ **Do the isolation run IN PLACE — a copied golden directory silently loses a gate.**
+`gateDungeonDecor` reads `<goldenDir>/../dungeonterr.bin`, a file OUTSIDE the golden dir,
+and reports a plain `[skip] rederive_dundecor (golden missing)` when it is absent. Running
+the 07-28e isolation against a scratch copy therefore produced a third hash that looked
+like a real regression and was purely the harness. Move the one file aside inside
+`tools/cw_rederive/golden_rederive` and put it back. (This is one concrete instance of the
+"`golden_rederive` has no manifest" problem still open in `CW_RE_MASTER_INDEX.md` §7.)
+
+**Superseded:** hash **`E2A65B45E448E9C6`** was the 07-28d known-good,
+**`F20252B941259929`** the 07-28c one and
 **`2D52E0BE1C55FFAB`** the 07-28b one. The whole chain was
 re-verified from the 07-27f baseline (`F5D7D16E92EE5C38`) before anything changed.
 

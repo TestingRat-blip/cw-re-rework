@@ -477,6 +477,11 @@
    "name": "Region_getChunkCell",
    "src": "ADJUDICATION.md"
   },
+  "00406380": {
+   "kind": "gamemisc",
+   "name": "vec3_i64_store",
+   "src": "ADJUDICATION.md"
+  },
   "0040efc0": {
    "kind": "game",
    "name": "species_groupRange",
@@ -588,9 +593,9 @@
    "src": "cw_callgraph.py"
   },
   "004cde40": {
-   "kind": "lib",
-   "name": "lib_fn_4cde40",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "kind": "gamemisc",
+   "name": "int_to_fixed16_16",
+   "src": "ADJUDICATION.md"
   },
   "004ce8e0": {
    "kind": "gamemisc",
@@ -1145,6 +1150,11 @@
   "0052d5d0": {
    "kind": "lib",
    "name": "lib_fn_52d5d0",
+   "src": "ADJUDICATION.md"
+  },
+  "0052d860": {
+   "kind": "gamemisc",
+   "name": "field_at_0x14",
    "src": "ADJUDICATION.md"
   },
   "0052d870": {

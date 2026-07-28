@@ -281,6 +281,21 @@ the body was the only way to settle these.
         # 0x4e164e/0x4e1696. This is the ONLY body that runs for a town -- plotCount is 16
         # or 25, so the introsort above never leaves its `count <= 0x20` arm.
         "004e15f0": {"name": "std_insertion_sort_4byte", "kind": "lib", "verdict": "DEEP-RE"},
+        # --- the town builder's INHABITANT SCATTER (Docs/RE_town_creatures.md) ---------
+        # Three one-liner helpers the scatter's position build goes through, all read
+        # rather than guessed. NOTE what each is NOT: 0x4cde40 does NOT add a half block
+        # (`cdq / shld edx,eax,0x10 / shl eax,0x10` and nothing else), unlike five of the
+        # six other 16.16 coordinate builds in this project -- lesson 14, port the
+        # arithmetic from the copy that runs.
+        "004cde40": {"name": "int_to_fixed16_16", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # writes six dwords from its stack args into `this` = three int64s = a vec3 of
+        # 16.16 coordinates. The town scatter builds (X, Z, Y) with it at 0x4edbc5.
+        "00406380": {"name": "vec3_i64_store", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # a bare `return this[0x14]` accessor, shared by several unrelated structs, so the
+        # NAME cannot say what the field means. On a column record it is the ground-walk
+        # start, and the whole column prologue has exactly one writer for it -- 0x519701,
+        # `col[+0x14] = col[+0x10] - 8`.
+        "0052d860": {"name": "field_at_0x14", "kind": "gamemisc", "verdict": "DEEP-RE"},
         # its MSVC alignment-NOP body split, pinned here because adjudicate_none.py stamped
         # the fragment with the parent's OLD name and must not be re-run on a structured tree
         "0051210a": {"name": "camp_populator__split_51210a", "kind": "game",

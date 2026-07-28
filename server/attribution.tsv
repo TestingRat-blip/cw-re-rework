@@ -125,7 +125,7 @@ addr	name	kind	module	class	attributed_by	size
 00406290	Region_getChunkCell	gamemisc	world	Proven	ledger	120
 00406310	FUN_00406310	gamemisc	world	_helpers_dtor-like	role:dtor-like	62
 00406350	FUN_00406350	gamemisc	game_misc	_helpers_wrapper	role:wrapper	47
-00406380	FUN_00406380	gamemisc	world	Unsorted	logic:caller-vote	44
+00406380	vec3_i64_store	gamemisc	render	Proven	ledger	44
 004063b0	fwd_00407be0_4063b0	gamemisc	game_misc	_helpers_thunk	role:thunk	31
 004063d0	FUN_004063d0	gamemisc	game_misc	_helpers_ctor-like	role:ctor-like	35
 00406400	cube::Creature::Creature	game	entity	Creature	rtti	1385
@@ -2225,7 +2225,7 @@ addr	name	kind	module	class	attributed_by	size
 004cd98a	cube::World::~World__split_4cd98a	gamemisc	world	_body_splits	role:body-split	16
 004cd99a	cube::World::~World__split_4cd99a	gamemisc	world	_body_splits	role:body-split	1140
 004cde20	FUN_004cde20	gamemisc	world	Helpers	caller-vote	22
-004cde40	lib_fn_4cde40	lib	_library	cw_lib	ledger	25
+004cde40	int_to_fixed16_16	gamemisc	game_misc	Game	ledger	25
 004cde60	FUN_004cde60	gamemisc	world	Helpers	caller-vote	130
 004cdef0	FUN_004cdef0	gamemisc	world	Helpers	caller-vote	257
 004ce000	FUN_004ce000	gamemisc	world	Helpers	caller-vote	219
@@ -2659,7 +2659,7 @@ addr	name	kind	module	class	attributed_by	size
 0052d5d0	lib_fn_52d5d0	lib	_library	cw_lib	ledger	581
 0052d820	FUN_0052d820	gamemisc	world	Unsorted	logic:caller-vote	25
 0052d840	FUN_0052d840	gamemisc	world	Unsorted	logic:caller-vote	25
-0052d860	get_0x14_52d860	gamemisc	game_misc	_helpers_accessor	role:accessor	4
+0052d860	field_at_0x14	gamemisc	world	Proven	ledger	4
 0052d870	lib_fn_52d870	lib	_library	cw_lib	ledger	276
 0052d990	World_computeClimateColor	game	world	Proven	ledger	498
 0052db90	lib_fn_52db90	lib	_library	cw_lib	ledger	584
