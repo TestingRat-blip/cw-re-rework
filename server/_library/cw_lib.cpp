@@ -1,4 +1,4 @@
-// cw_lib (_library) -- server. 54 functions. Bodies = Ghidra pseudo-C.
+// cw_lib (_library) -- server. 53 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "cw_lib.h"
 
@@ -2444,23 +2444,6 @@ LAB_004fbef6:
   *(void ***)(iVar3 + 0x46c) = ppvVar7;
   ExceptionList = local_10;
   return ppvVar7;
-}
-
-
-/* lib_fn_4fc140 @ 004fc140  kind=lib  attributed-by=ledger  size=50 */
-
-float10 __thiscall FUN_004fc140(void *param_1,uint param_2,uint param_3,int param_4)
-
-{
-  int iVar1;
-  float10 fVar2;
-  
-  iVar1 = FUN_00406100(param_1,param_2,param_3,param_4);
-  if (iVar1 != 0) {
-    return (float10)*(float *)(iVar1 + 8);
-  }
-  fVar2 = (float10)FUN_004f8b40(param_1,param_2,param_3);
-  return fVar2;
 }
 
 

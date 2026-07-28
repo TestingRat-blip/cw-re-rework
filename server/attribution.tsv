@@ -121,7 +121,7 @@ addr	name	kind	module	class	attributed_by	size
 00406210	FUN_00406210	gamemisc	world	Helpers	caller-vote	54
 00406250	get_0x1c_406250	gamemisc	game_misc	_helpers_accessor	role:accessor	4
 00406260	fwd_004056c0_406260	gamemisc	game_misc	_helpers_thunk	role:thunk	19
-00406280	compute_406280	gamemisc	game_misc	_helpers_computed	role:computed	10
+00406280	Block_class	gamemisc	game_misc	Game	ledger	10
 00406290	Region_getChunkCell	gamemisc	world	Proven	ledger	120
 00406310	FUN_00406310	gamemisc	world	_helpers_dtor-like	role:dtor-like	62
 00406350	FUN_00406350	gamemisc	game_misc	_helpers_wrapper	role:wrapper	47
@@ -2323,7 +2323,7 @@ addr	name	kind	module	class	attributed_by	size
 004d8de0	House_dimZ	gamemisc	world	Proven	ledger	25
 004d8e00	House_dimY	gamemisc	world	Proven	ledger	4
 004d8e10	FUN_004d8e10	gamemisc	game_misc	Unsorted_002	none	29
-004d8e30	FUN_004d8e30	gamemisc	world	Unsorted	logic:caller-vote	39
+004d8e30	vec2d_lengthSquared	gamemisc	render	Proven	ledger	39
 004d8e60	FUN_004d8e60	gamemisc	world	Helpers	caller-vote	265
 004d8f70	FUN_004d8f70	gamemisc	world	Helpers	caller-vote	31
 004d8f90	FUN_004d8f90	gamemisc	world	Helpers	caller-vote	115
@@ -2571,7 +2571,7 @@ addr	name	kind	module	class	attributed_by	size
 004fb480	lib_fn_4fb480	lib	_library	cw_lib	ledger	2867
 004fc060	FUN_004fc060	gamemisc	world	Unsorted	logic:caller-vote	155
 004fc100	FUN_004fc100	gamemisc	world	_helpers_wrapper	role:wrapper	50
-004fc140	lib_fn_4fc140	lib	_library	cw_lib	ledger	50
+004fc140	World_columnHumidity	gamemisc	world	Proven	ledger	50
 004fc180	lib_fn_4fc180	lib	_library	cw_lib	ledger	6033
 004fd920	lib_fn_4fd920	lib	_library	cw_lib	ledger	1083
 004fdd80	lib_fn_4fdd80	lib	_library	cw_lib	ledger	249

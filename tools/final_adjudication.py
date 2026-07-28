@@ -248,6 +248,24 @@ the body was the only way to settle these.
         # `lib_fn_5287b0` under `_library`; it is game code. Full disassembly plus 2,556
         # live before/after invariants (Docs/RE_zone_props.md).
         "005287b0": {"name": "Prop_settleOnTerrain", "kind": "game", "verdict": "DEEP-RE"},
+        # Was filed `lib_fn_4fc140` under `_library` and carried in HANDOFF_PROMPT.md as
+        # "probably misfiled -- two independent worldgen decisions threshold it at exactly
+        # 0.8". It is FIFTY BYTES and it is not a library function: it returns the resident
+        # column's own cached humidity (`col+8`), falling back to the blended climate
+        # FUN_004f8b40 when there is no column. The reason three separate decisions
+        # threshold it at 0.8 is that it IS the humidity -- the forest's `humid > 0.8`
+        # reaches the same number through FUN_004f8b40 directly. Read out of the binary in
+        # full, 2026-07-28 (Docs/RE_town_plaza.md section 4).
+        "004fc140": {"name": "World_columnHumidity", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # `movzx eax, byte [ecx+3]; and eax, 0x1f; ret` -- the block record's 5-bit MATERIAL
+        # CLASS, the value every `cls == 2 / == 0xb / == 4` test in the worldgen compares.
+        # Its sibling FUN_004061f0 (Block_isSolid) is the same read with `!= 0 && != 2`.
+        "00406280": {"name": "Block_class", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # x*x + z*z on a vec2<double> -- length SQUARED, not length. That is why the town
+        # plaza's two .rdata constants are 49 and 64 and its disc has radius 8
+        # (Docs/RE_town_plaza.md section 3.2); reading it as a length made the whole stage
+        # unreadable, because a +-8 box can never reach a distance of 49.
+        "004d8e30": {"name": "vec2d_lengthSquared", "kind": "gamemisc", "verdict": "DEEP-RE"},
         # vector<PropRecord>::_Reserve -- the body divides by the 0x188 record stride, and
         # its five callers are exactly the prop pushers. It is the census that actually
         # scopes the prop layer: an INLINED push_back skips FUN_004d6670 but still has to

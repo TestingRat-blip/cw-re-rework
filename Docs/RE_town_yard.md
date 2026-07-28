@@ -249,7 +249,15 @@ Counted mechanically rather than by adding up doc numbers: **39 of the 176 firin
 sites are now closed, carrying 138,935 of the 228,413 draws** the rig records inside the
 builder body (60.8%).
 
-The next target is **`0x4ef7c8`** (52,811 draws, 28 towns), which the same span-first
+✅ **`0x4ef7c8` was taken next and is CLOSED — see `RE_town_plaza.md` (07-28h).** The
+reading below was right about the shape and wrong about the sub-stage: `0x4ef938` /
+`0x4ef94e` are not downstream of a separate gate, they are the SAME site's tree, reached
+by ruins (which skip the disc entirely) as well as by villages. And `lib_fn_4fc140` is
+not a library function at all -- it is a 50-byte `World_columnHumidity`, which is exactly
+why three independent decisions threshold it at 0.8. Kept as written so the correction
+is visible.
+
+The next target was **`0x4ef7c8`** (52,811 draws, 28 towns), which the same span-first
 census shows is *not* a scatter at all but a **per-voxel column paint** — a three-deep
 `x / z / y` nest whose innermost draw is a `0.75 + rand()*0.1/32767` shade jitter, gated on
 a loop-invariant `double >= 49.0` at `[ebp-0x5cc8]`. Its neighbours `0x4ef938`/`0x4ef94e`

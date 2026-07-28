@@ -476,6 +476,7 @@ captures already on disk.
 | the town builder's **INHABITANT SCATTER** (`0x4eda0b`-`0x4edcbf`) — the 2x2 quadrant coin, the hardcoded species list, the kind-5 Entity — RE'd *and ported* | `RE_town_creatures.md` | `gate_town_creatures` **3,045**; **`rederive_towncreatures` 140/140** |
 | the town builder's **HOUSE PASS** (`0x4e6520`-`0x4e74a5`) — 13 rand sites, 23 module grids EXECUTED out of the binary, the door rule — RE'd *and ported* | `RE_town_house.md` | `gate_town_house` **1,446** / 435 houses; **`rederive_townhouse` 140/140** |
 | the town builder's **ROLE-6 PLOT** (`0x4e503a`-`0x4e5b9e`) — the fenced yard: 14 rand sites, **49.6% of every draw in the builder body**; fences derived field-by-field, the other two containers unhooked — RE'd *and ported* | `RE_town_yard.md` | `gate_town_yard` **2,822**; **`rederive_townyard` 51/51**, site sequence exact draw-for-draw in 17/17 towns |
+| the town builder's **ROLE-0/7 PLOT** (`0x4ef248`-`0x4f0046`) — the sand plaza: 7 rand sites, 24.6% of the body; `0x4ef7c8` is one draw per RING VOXEL of a radius-8 disc, not a scatter; the RUIN site set derived from the seed alone — RE'd *and ported* | `RE_town_plaza.md` | `gate_town_plaza` **11,877**; **`rederive_townplaza` 169/169**, falloff gate 430/430 ab initio |
 
 Two structural facts worth carrying:
 
@@ -498,6 +499,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
+| 07-28h | ★ **the town builder's ROLE-0/7 PLOT RE'd, gated and PORTED — and the census re-scoped it DOWNWARDS.** `0x4ef7c8` (52,811 draws, 23% of the builder) reads as a monster and is a **shade jitter on a voxel**: the stage paints a radius-8 disc at each of the four QUADRANT CENTRES of every role-0/7 plot, one draw per voxel in the 7..8 annulus. **The whole thing pins on one number** — 208 disc cells, 52 ring cells, so flat ground costs exactly `2 x 52 = 104` draws, and over 430 captured discs the minimum run is **104, never lower, 178 of them exactly**. That single count fixes the box, both radii, the half-block offsets and the per-column formula at once. ★ **Every input was already in a port**, three under another name (lesson 7h, fifth slice running) — and the sixth closed a standing open thread: **`lib_fn_4fc140` is not a library function**, it is a 50-byte `World_columnHumidity` (`col+8`, else `FUN_004f8b40`), which is why three independent decisions threshold it at exactly 0.8. ★ The **RUIN** half needs no terrain at all: role + `falloffSquared >= 0.72` predicts the tree-site count in **32 of 32** dry ruins, and the 3 misses are all coastal, which the gate bounds instead of tuning. ⚠ Also settled: `FUN_004d8e30` is length **SQUARED** (that is why 49/64 are r=7/r=8), and `0x4e310a`/`0x4eaa7a`/`0x4ee3aa` are **alignment NOPs**, not functions — the builder really is one 65,033-byte body | `RE_town_plaza.md` | **`gate_town_plaza` 11,877**; **`rederive_townplaza` 169/169** |
 | 07-28g | ★ **the town builder's ROLE-6 PLOT RE'd, gated and PORTED — the biggest single stage in the builder.** `0x4e54e8` (80,117 draws) was one table row; censusing the rand sites inside its SPAN found **fourteen** in one ~2.9 KB stage spending **113,353 draws over 50 plots = 49.6% of the body's 228,413**. Sixth slice running where reading the span first re-scoped the work. Two plot-loop free parameters got *pinned* rather than carried: the plot order is r-outer/c-inner indexed `r + n*c` (**59/59**, recovered from the fence rows' own origins), and `span`=51 falls straight out of `15,606 = 6 x 51²`. ★ The port emits a **per-draw SITE TAG** — six of the fourteen sites cost one draw each, so a wrong branch between a pair moves no count and is invisible to a draw total; the gate compares tag sequences **draw for draw, 17/17 towns**. ⚠ **A semantic reading was written down and withdrawn**: the ids resolve through `prop_ids.json` to market furniture, but that is the `site+0xc` namespace and these go to `site+4` / `site+0x30`, which **no capture hooks** (lesson A1). Fences ARE proven — `0x34+rand()&3` = `fence01..04`, 1,213/1,213 records | `RE_town_yard.md` | **`gate_town_yard` 2,822**; **`rederive_townyard` 51/51** |
 | 07-28f | ★ **the town builder's HOUSE PASS RE'd, gated and PORTED — one site turned into a whole closed stage.** `0x4e742e` (15,609 draws) is the module-orientation roll, and reading its SPAN found it is the last of **thirteen** rand sites in the same ~1 KB spending **17,947 draws over 435 houses**. Selector = `plot[+0x10]`, the field the PROMOTION slice decoded. The 23 module grids are **executed out of Server.exe** by `extract_house_layouts.py`, never typed — two MSVC habits (pushes hoisted above the variant branch; the store for call N emitted after call N+1's pushes) make a listing scrape silently wrong. ★ The tables predict **51 doors** and `435x36 - 15,609 = 51` | `RE_town_house.md` | **`gate_town_house` 1,446**; **`rederive_townhouse` 140/140** |
 | 07-28e | ★ **the town builder's INHABITANT SCATTER (`0x4eda58`) RE'd, gated and PORTED** — per plot with role != 2 and score > 0.2, the four QUADRANT CENTRES each take a `rand() & 7` and a zero spawns a **kind-5 Entity** (the overworld scatter's record class, not the camp's). Fourth slice running whose blocking input was **misfiled, not missing**: the species list is a **hardcoded five-entry literal** at the head of the builder, and `desc+0x28` is `cw_featuregen`'s `msub`. ⚠ It does NOT advance the stream — interleaved with the other 169 sites in 66 of 69 towns | `RE_town_creatures.md` | **`gate_town_creatures` 3,045**; **`rederive_towncreatures` 140/140** |
@@ -573,6 +575,9 @@ records, so the cost is a subtraction and not an estimate):
   sites**; the scan phase accounts for at most ~50 of them. The two hottest --
   `0x4e54e8` (a `rand()%10` scatter gate) and `0x4ef7c8` -- are per-column loops over the
   town's own finished terrain and carry 36% of everything the layer spends.
+  ✅ **Both are now CLOSED** (`RE_town_yard.md` 07-28g, `RE_town_plaza.md` 07-28h), and
+  neither needed the whole builder: each was one stage whose span, read first, held all
+  of it.
 
 So **emitter C needs essentially the whole 64 KB builder ported**, not a per-plot formula,
 and the plot heights are not the binding constraint -- the size of the thing is. That is a
@@ -629,24 +634,31 @@ what is next; take item 1.
    so arriving was never the hard part; the rand sites *downstream* are, and there are now
    **172** of them left.
 
-   ✅ **`0x4eda58` (07-28e), the HOUSE PASS (07-28f) and the ROLE-6 YARD (07-28g) are
-   CLOSED.** Counted mechanically rather than by adding up doc numbers: **39 of the 176
-   firing sites are closed, carrying 138,935 of the 228,413 draws the rig records inside
-   the body** (60.8%; 373,375 including callees — the rig's filter is the difference,
-   lesson 18). The guess that `0x4e5136`/`0x4e54fe` "sit in the same neighbourhood as
+   ✅ **`0x4eda58` (07-28e), the HOUSE PASS (07-28f), the ROLE-6 YARD (07-28g) and the
+   ROLE-0/7 PLAZA (07-28h) are CLOSED.** Counted mechanically by span census (the method
+   is written down in `RE_town_plaza.md` §9 so the next recount is reproducible): **50 of
+   the 176 firing sites are closed, carrying 194,039 of the 228,413 draws the rig records
+   inside the body** (85.0%; 373,375 including callees — the rig's filter is the
+   difference, lesson 18). ⚠ That does not line up with the 07-28g figure of 39 / 138,935:
+   the same census *without* the plaza gives 43 / 137,858, so the gap is bookkeeping and
+   not work. The guess that `0x4e5136`/`0x4e54fe` "sit in the same neighbourhood as
    `0x4e54e8` and may well fall with it" was right, and understated: **all fourteen** sites
    in `0x4e5000`-`0x4e5c00` fell together as one stage.
 
-   **The next target is `0x4ef7c8`** — 52,811 draws over 28 towns, 58% of what is still
-   unaccounted for. `RE_town_yard.md` §8 records what one disassembly of it already
-   settles, and it changes the scoping: it is **not a scatter** but a per-voxel column
-   paint (an `x`/`z`/`y` nest whose inner draw is a `0.75 + rand()*0.1/32767` shade
-   jitter), gated on a **loop-invariant** `double >= 49.0`. Its neighbours `0x4ef938` /
-   `0x4ef94e` fire in **59** towns to its 28, so they are NOT downstream of that gate and
-   are a separate sub-stage (a `lib_fn_513760` call whose type comes from `lib_fn_4fc140`
-   thresholded at exactly **0.8** — the third independent consumer to threshold it there).
-   Read `0x4ef600`-`0x4f0000` before budgeting. The **plot heights** stay
-   region-cache-blocked.
+   ✅ **`0x4ef7c8` is CLOSED too (07-28h)** — and the 07-28g note on it was right about
+   the shape and wrong about the sub-stage: `0x4ef938`/`0x4ef94e` are **not** a separate
+   stage, they are the same site's tree, reached by ruins (which skip the disc) as well as
+   villages. `RE_town_plaza.md` has it all. The **plot heights** stay region-cache-blocked
+   and are still not the binding constraint.
+
+   **The next target is the `0x4eafd2` cluster** — `0x4eafd2` / `0x4eb162` / `0x4eb315` /
+   `0x4eb4a5` / `0x4eb7f3` / `0x4eb981` / `0x4ebb42`, seven sites that all fire in exactly
+   **35** towns for 976-1,260 draws each and each of which has a matching `push_back` in
+   `frida_town_props.py`'s capture (653-1,005 records). One span, ~7,200 draws, and the
+   records are hooked — read `0x4eaf00`-`0x4ebd00` before budgeting for it. There is no
+   third monster left: the two that carried "36% of everything the layer spends" were
+   `0x4e54e8` and `0x4ef7c8` and both are closed, so **the rest of the town chain is a
+   long tail** — 126 sites, 34,374 draws, none over 1,700.
 
    ✅ **The role-6 yard is now PORTED too** (`townYardPass` in `CwTown.h`,
    `rederive_townyard` 51/51). Read `RE_town_yard.md` §6 before writing the next port —
@@ -656,8 +668,10 @@ what is next; take item 1.
    centre cell; the fix needed no new golden field, because the CENTRE draw's position
    among the CELL draws is itself an observation.
 
-   ⚠ **Read the span before budgeting for it — SIX for six now**, and 07-28g beat
-   07-28f's record: `0x4e54e8` was one line in a table and turned out to be one of
+   ⚠ **Read the span before budgeting for it — SEVEN for seven now**, and 07-28h is the
+   first one where the census re-scoped the work **downwards**: `0x4ef7c8` is 23% of the
+   whole builder's draws and turned out to be a shade jitter on a voxel, with every input
+   already in a port. 07-28g beat 07-28f's record: `0x4e54e8` was one line in a table and turned out to be one of
    **fourteen** sites in a single ~2.9 KB stage worth **half of everything the builder
    spends**, which then closed in an afternoon *because* the span was read first.
    07-28f was the previous best: `0x4e742e` was one line in a table and turned out to be
@@ -783,10 +797,14 @@ still never came up in 99 firings.
 
 ### Smaller open threads, if you want a short task
 
-- **`lib_fn_4fc140` is probably misfiled under `_library`.** Two independent worldgen
-  decisions threshold it at exactly 0.8 — emitter C's street-light variant and the forest tree
-  builder's type pick. That is a lead, not proof; the label is deliberately untouched until
-  the body is read.
+- ~~**`lib_fn_4fc140` is probably misfiled under `_library`.**~~ ✅ **CLOSED 07-28h, and the
+  lead was right.** It is **fifty bytes**: `World_columnHumidity` — the resident column's own
+  cached humidity (`col+8`), falling back to the blended climate `FUN_004f8b40` when there is
+  no column. The reason three independent decisions threshold it at exactly 0.8 is that **it
+  IS the humidity**; the forest's `humid > 0.8` reaches the same number through
+  `FUN_004f8b40` directly. `RE_town_plaza.md` §4. Lesson 7g again: read the function before
+  budgeting for what is inside it — this cost ten minutes and had been carried for a
+  handoff.
 - **Prop slots 6, 14 and 70 are null** in the client's array. `sandstone-table.cub` is loaded
   into the model DB and never bound, so a type-`0x0e` prop renders nothing in the shipped
   game — the engine deliberately diverges and draws it anyway.
@@ -814,15 +832,17 @@ Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fail
 cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
 ```
 
-**Known-good as of 07-28g:** the `cw_decomp` gate suite is **fully green** (32 gates now —
-`gate_town_yard` is new), and **`cwgen_test` is fully green** (33 gates now —
-`rederive_townyard` is new), and **`cwgen_test` is fully green** (32 gates now —
-`rederive_townhouse` is new). Hash **`2D6C3B72E99E055E`** in both Debug and Release.
+**Known-good as of 07-28h:** the `cw_decomp` gate suite is **fully green** (33 gates now —
+`gate_town_plaza` is new), and **`cwgen_test` is fully green** (34 gates now —
+`rederive_townplaza` is new). Hash **`CE700304401BFC57`** in both Debug and Release.
 
 ⚠ **`cwgen_test` takes about 5 minutes per config** — the town scan reads all 65,536
 columns of every town zone it replays. That is the gate doing real work, not a hang.
 
-⚠ **Every hash change here is isolated before it is accepted.** 07-28g: moving *only*
+⚠ **Every hash change here is isolated before it is accepted.** 07-28h: moving *only*
+`rederive_townplaza.bin` aside restores `2D6C3B72E99E055E` exactly, and the whole 136-line
+output was diffed: every other gate's reported numbers are byte-identical, and Debug and
+Release agree byte for byte. 07-28g: moving *only*
 `rederive_townyard.bin` aside restores `126A1A6F4853E2A4` exactly — and this time the
 whole 134-line output was diffed, not just the hash: **every other gate's reported numbers
 are byte-identical**, which is the check the warning two paragraphs down asks for. 07-28f: moving *only*
@@ -857,7 +877,8 @@ the header on disk. Without that the header is just another hand-typed table wit
 comment claiming otherwise (lesson 7c). Regenerate it with:
 `python tools/cw_decomp/tools/extract_house_layouts.py --cpp > src/worldgen/cw/CwTownHouseTables.h`
 
-**Superseded:** hash **`126A1A6F4853E2A4`** was the 07-28f known-good,
+**Superseded:** hash **`2D6C3B72E99E055E`** was the 07-28g known-good,
+**`126A1A6F4853E2A4`** the 07-28f one,
 **`8BAE4DDD7C271C62`** the 07-28e one,
 **`E2A65B45E448E9C6`** the 07-28d one,
 **`F20252B941259929`** the 07-28c one and

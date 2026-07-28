@@ -472,6 +472,11 @@
    "name": "Block_isSolid",
    "src": "ADJUDICATION.md"
   },
+  "00406280": {
+   "kind": "gamemisc",
+   "name": "Block_class",
+   "src": "ADJUDICATION.md"
+  },
   "00406290": {
    "kind": "gamemisc",
    "name": "Region_getChunkCell",
@@ -692,6 +697,11 @@
    "name": "House_dimY",
    "src": "ADJUDICATION.md"
   },
+  "004d8e30": {
+   "kind": "gamemisc",
+   "name": "vec2d_lengthSquared",
+   "src": "ADJUDICATION.md"
+  },
   "004d9010": {
    "kind": "lib",
    "name": "lib_fn_4d9010",
@@ -873,9 +883,9 @@
    "src": "CW_CONFIDENCE_XREF.md"
   },
   "004fc140": {
-   "kind": "lib",
-   "name": "lib_fn_4fc140",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "kind": "gamemisc",
+   "name": "World_columnHumidity",
+   "src": "ADJUDICATION.md"
   },
   "004fc180": {
    "kind": "lib",

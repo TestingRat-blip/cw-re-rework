@@ -1,4 +1,4 @@
-// Proven_00 (world) -- server. 37 functions. Bodies = Ghidra pseudo-C.
+// Proven_00 (world) -- server. 38 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Proven_00.h"
 
@@ -31574,6 +31574,23 @@ LAB_004fa7b3:
   }
   __security_check_cookie(local_44 ^ (uint)&local_174);
   return;
+}
+
+
+/* World_columnHumidity @ 004fc140  kind=gamemisc  attributed-by=ledger  size=50 */
+
+float10 __thiscall FUN_004fc140(void *param_1,uint param_2,uint param_3,int param_4)
+
+{
+  int iVar1;
+  float10 fVar2;
+  
+  iVar1 = FUN_00406100(param_1,param_2,param_3,param_4);
+  if (iVar1 != 0) {
+    return (float10)*(float *)(iVar1 + 8);
+  }
+  fVar2 = (float10)FUN_004f8b40(param_1,param_2,param_3);
+  return fVar2;
 }
 
 

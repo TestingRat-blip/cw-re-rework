@@ -122,6 +122,11 @@
    "name": "Block_isSolid",
    "verdict": "DEEP-RE"
   },
+  "00406280": {
+   "kind": "gamemisc",
+   "name": "Block_class",
+   "verdict": "DEEP-RE"
+  },
   "00406290": {
    "kind": "gamemisc",
    "name": "Region_getChunkCell",
@@ -267,6 +272,11 @@
    "name": "House_dimY",
    "verdict": "DEEP-RE"
   },
+  "004d8e30": {
+   "kind": "gamemisc",
+   "name": "vec2d_lengthSquared",
+   "verdict": "DEEP-RE"
+  },
   "004e0740": {
    "kind": "game",
    "name": "zone_prop_emitter",
@@ -361,6 +371,11 @@
    "kind": "lib",
    "name": "lib_fn_4fae90",
    "verdict": "B"
+  },
+  "004fc140": {
+   "kind": "gamemisc",
+   "name": "World_columnHumidity",
+   "verdict": "DEEP-RE"
   },
   "004fc180": {
    "kind": "lib",
