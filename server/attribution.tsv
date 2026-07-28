@@ -437,7 +437,7 @@ addr	name	kind	module	class	attributed_by	size
 0041cac0	cube::RandomInteractionBehavior::vfunction2	game	ai	RandomInteractionBehavior	rtti	31
 0041cae0	get_0x80015c_41cae0	gamemisc	game_misc	_helpers_accessor	role:accessor	7
 0041caf0	FUN_0041caf0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	67
-0041cb40	compute_41cb40	gamemisc	game_misc	_helpers_computed	role:computed	23
+0041cb40	propvec_size	gamemisc	world	Proven	ledger	23
 0041cb60	std::pair<unsigned___int64,unsigned___int64>::operator=<std::pair<unsigned___int64,unsigned___int64>,0>	lib	_library	stl	stl-ns	34
 0041cb90	cube::RandomWalkBehavior::RandomWalkBehavior	game	ai	RandomWalkBehavior	rtti	16
 0041cba0	identity_41cba0	gamemisc	game_misc	_helpers_identity	role:identity	3
@@ -2319,9 +2319,9 @@ addr	name	kind	module	class	attributed_by	size
 004d89a0	std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::vfunction11	lib	_library	stl	stl-ns	449
 004d8b70	std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::vfunction12	lib	_library	stl	stl-ns	287
 004d8c90	FUN_004d8c90	gamemisc	game_misc	Unsorted_002	none	294
-004d8dc0	FUN_004d8dc0	gamemisc	world	Unsorted	logic:caller-vote	25
-004d8de0	FUN_004d8de0	gamemisc	world	Unsorted	logic:caller-vote	25
-004d8e00	get_0x6c_4d8e00	gamemisc	game_misc	_helpers_accessor	role:accessor	4
+004d8dc0	House_dimX	gamemisc	world	Proven	ledger	25
+004d8de0	House_dimZ	gamemisc	world	Proven	ledger	25
+004d8e00	House_dimY	gamemisc	world	Proven	ledger	4
 004d8e10	FUN_004d8e10	gamemisc	game_misc	Unsorted_002	none	29
 004d8e30	FUN_004d8e30	gamemisc	world	Unsorted	logic:caller-vote	39
 004d8e60	FUN_004d8e60	gamemisc	world	Helpers	caller-vote	265

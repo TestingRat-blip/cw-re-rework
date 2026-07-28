@@ -1,4 +1,4 @@
-// helpers_accessor (game_misc) -- server. 5 functions. Bodies = Ghidra pseudo-C.
+// helpers_accessor (game_misc) -- server. 4 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_accessor.h"
 
@@ -35,15 +35,6 @@ undefined4 __fastcall FUN_004ce1f0(undefined4 *param_1)
 
 {
   return *param_1;
-}
-
-
-/* get_0x6c_4d8e00 @ 004d8e00  kind=gamemisc  attributed-by=role:accessor  size=4 */
-
-undefined4 __fastcall FUN_004d8e00(int param_1)
-
-{
-  return *(undefined4 *)(param_1 + 0x6c);
 }
 
 

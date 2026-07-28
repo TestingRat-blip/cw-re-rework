@@ -296,6 +296,19 @@ the body was the only way to settle these.
         # start, and the whole column prologue has exactly one writer for it -- 0x519701,
         # `col[+0x14] = col[+0x10] - 8`.
         "0052d860": {"name": "field_at_0x14", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # --- the town builder's HOUSE PASS (Docs/RE_town_house.md) ---------------------
+        # The house's module-grid extents, and the reason the port can hardcode 3x3x4:
+        # the two HORIZONTAL accessors are mirrors of each other over `house[+4] % 2`
+        # (the plot rotation), so an odd rotation swaps them -- inert here only because
+        # the single ctor call site is FUN_004e1f80(h, 3, 3, 4) and the two counts are
+        # both 3. The vertical one is an unconditional `house[+0x6c]`.
+        "004d8dc0": {"name": "House_dimX", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        "004d8de0": {"name": "House_dimZ", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        "004d8e00": {"name": "House_dimY", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # `vector::size()` for the site's 0x188-byte prop records -- the 0x5397829d
+        # reciprocal and `sar 7` divide by 0x188. The house pass saves it at 0x4e6546 so
+        # it knows where its own props begin. Proven by the divisor, not by its callers.
+        "0041cb40": {"name": "propvec_size", "kind": "gamemisc", "verdict": "DEEP-RE"},
         # its MSVC alignment-NOP body split, pinned here because adjudicate_none.py stamped
         # the fragment with the parent's OLD name and must not be re-run on a structured tree
         "0051210a": {"name": "camp_populator__split_51210a", "kind": "game",

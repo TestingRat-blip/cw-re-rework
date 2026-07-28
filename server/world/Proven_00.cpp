@@ -1,4 +1,4 @@
-// Proven_00 (world) -- server. 33 functions. Bodies = Ghidra pseudo-C.
+// Proven_00 (world) -- server. 37 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Proven_00.h"
 
@@ -171,6 +171,15 @@ undefined4 __thiscall FUN_00406290(void *this,uint param_1,uint param_2)
     }
   }
   return 0;
+}
+
+
+/* propvec_size @ 0041cb40  kind=gamemisc  attributed-by=ledger  size=23 */
+
+int __fastcall FUN_0041cb40(int *param_1)
+
+{
+  return (param_1[1] - *param_1) / 0x188;
 }
 
 
@@ -21459,6 +21468,55 @@ void __thiscall FUN_004d7c50(void *this,int param_1,int param_2)
   ExceptionList = local_10;
   __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
   return;
+}
+
+
+/* House_dimX @ 004d8dc0  kind=gamemisc  attributed-by=ledger  size=25 */
+
+undefined4 __fastcall FUN_004d8dc0(int param_1)
+
+{
+  uint uVar1;
+  bool bVar2;
+  
+  uVar1 = *(uint *)(param_1 + 4) & 0x80000001;
+  bVar2 = uVar1 == 0;
+  if ((int)uVar1 < 0) {
+    bVar2 = (uVar1 - 1 | 0xfffffffe) == 0xffffffff;
+  }
+  if (!bVar2) {
+    return *(undefined4 *)(param_1 + 0x68);
+  }
+  return *(undefined4 *)(param_1 + 100);
+}
+
+
+/* House_dimZ @ 004d8de0  kind=gamemisc  attributed-by=ledger  size=25 */
+
+undefined4 __fastcall FUN_004d8de0(int param_1)
+
+{
+  uint uVar1;
+  bool bVar2;
+  
+  uVar1 = *(uint *)(param_1 + 4) & 0x80000001;
+  bVar2 = uVar1 == 0;
+  if ((int)uVar1 < 0) {
+    bVar2 = (uVar1 - 1 | 0xfffffffe) == 0xffffffff;
+  }
+  if (!bVar2) {
+    return *(undefined4 *)(param_1 + 100);
+  }
+  return *(undefined4 *)(param_1 + 0x68);
+}
+
+
+/* House_dimY @ 004d8e00  kind=gamemisc  attributed-by=ledger  size=4 */
+
+undefined4 __fastcall FUN_004d8e00(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x6c);
 }
 
 

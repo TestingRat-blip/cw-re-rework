@@ -512,6 +512,11 @@
    "name": "ItemData_copy (0x118)",
    "src": "ADJUDICATION.md"
   },
+  "0041cb40": {
+   "kind": "gamemisc",
+   "name": "propvec_size",
+   "src": "ADJUDICATION.md"
+  },
   "0041fe60": {
    "kind": "gamemisc",
    "name": "VoxelColumn_setBlock",
@@ -671,6 +676,21 @@
    "kind": "game",
    "name": "seedInit",
    "src": "CUBEWORLD_ALPHA_SOURCE.md"
+  },
+  "004d8dc0": {
+   "kind": "gamemisc",
+   "name": "House_dimX",
+   "src": "ADJUDICATION.md"
+  },
+  "004d8de0": {
+   "kind": "gamemisc",
+   "name": "House_dimZ",
+   "src": "ADJUDICATION.md"
+  },
+  "004d8e00": {
+   "kind": "gamemisc",
+   "name": "House_dimY",
+   "src": "ADJUDICATION.md"
   },
   "004d9010": {
    "kind": "lib",

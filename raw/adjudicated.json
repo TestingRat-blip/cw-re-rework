@@ -157,6 +157,11 @@
    "name": "ItemData_copy (0x118)",
    "verdict": "COMPATIBLE"
   },
+  "0041cb40": {
+   "kind": "gamemisc",
+   "name": "propvec_size",
+   "verdict": "DEEP-RE"
+  },
   "0041fe60": {
    "kind": "gamemisc",
    "name": "VoxelColumn_setBlock",
@@ -246,6 +251,21 @@
    "kind": "game",
    "name": "region_tier",
    "verdict": "A"
+  },
+  "004d8dc0": {
+   "kind": "gamemisc",
+   "name": "House_dimX",
+   "verdict": "DEEP-RE"
+  },
+  "004d8de0": {
+   "kind": "gamemisc",
+   "name": "House_dimZ",
+   "verdict": "DEEP-RE"
+  },
+  "004d8e00": {
+   "kind": "gamemisc",
+   "name": "House_dimY",
+   "verdict": "DEEP-RE"
   },
   "004e0740": {
    "kind": "game",
