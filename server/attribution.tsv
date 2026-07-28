@@ -116,7 +116,7 @@ addr	name	kind	module	class	attributed_by	size
 00406050	World_getBlockFloat	gamemisc	world	Proven	ledger	175
 00406100	Chunk_getColumnAt	gamemisc	world	Proven	ledger	208
 004061d0	get_field_0x10	lib	_library	cw_lib	ledger	4
-004061e0	compute_4061e0	gamemisc	game_misc	_helpers_computed	role:computed	11
+004061e0	Block_isInterior	gamemisc	game_misc	Game	ledger	11
 004061f0	Block_isSolid	gamemisc	game_misc	Game	ledger	22
 00406210	FUN_00406210	gamemisc	world	Helpers	caller-vote	54
 00406250	get_0x1c_406250	gamemisc	game_misc	_helpers_accessor	role:accessor	4
@@ -2446,7 +2446,7 @@ addr	name	kind	module	class	attributed_by	size
 004f2be0	std_vector_push_back_int	lib	_library	cw_lib	ledger	101
 004f2c50	std_vector_push_back (32B elem)	lib	_library	cw_lib	ledger	117
 004f2cd0	lib_fn_4f2cd0	lib	_library	cw_lib	ledger	498
-004f2ee0	house_furniture_placer	game	world	Proven	ledger	1359
+004f2ee0	town_furniture_factory	game	world	Proven	ledger	1359
 004f3490	lib_fn_4f3490	lib	_library	cw_lib	ledger	397
 004f3630	TownProp_make_0x15	game	world	Proven	ledger	186
 004f36f0	lib_fn_4f36f0	lib	_library	cw_lib	ledger	275

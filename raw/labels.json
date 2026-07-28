@@ -467,6 +467,11 @@
    "name": "get_field_0x10",
    "src": "CW_CONFIDENCE_XREF.md"
   },
+  "004061e0": {
+   "kind": "gamemisc",
+   "name": "Block_isInterior",
+   "src": "ADJUDICATION.md"
+  },
   "004061f0": {
    "kind": "gamemisc",
    "name": "Block_isSolid",
@@ -789,8 +794,8 @@
   },
   "004f2ee0": {
    "kind": "game",
-   "name": "house_furniture_placer",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "name": "town_furniture_factory",
+   "src": "ADJUDICATION.md"
   },
   "004f3490": {
    "kind": "lib",

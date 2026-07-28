@@ -117,6 +117,11 @@
    "name": "Chunk_getColumnAt",
    "verdict": "B"
   },
+  "004061e0": {
+   "kind": "gamemisc",
+   "name": "Block_isInterior",
+   "verdict": "DEEP-RE"
+  },
   "004061f0": {
    "kind": "gamemisc",
    "name": "Block_isSolid",
@@ -316,6 +321,11 @@
    "kind": "lib",
    "name": "std_vector_push_back (32B elem)",
    "verdict": "NEITHER"
+  },
+  "004f2ee0": {
+   "kind": "game",
+   "name": "town_furniture_factory",
+   "verdict": "DEEP-RE"
   },
   "004f3630": {
    "kind": "game",

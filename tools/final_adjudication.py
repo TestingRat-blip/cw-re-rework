@@ -266,6 +266,23 @@ the body was the only way to settle these.
         # (Docs/RE_town_plaza.md section 3.2); reading it as a length made the whole stage
         # unreadable, because a +-8 box can never reach a distance of 49.
         "004d8e30": {"name": "vec2d_lengthSquared", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # The town HOUSE FURNITURE factory (Docs/RE_town_furnish.md section 4). 1,359 bytes,
+        # EIGHT rand sites, called as (out, &pos, facing, kind) -- note the last two are
+        # pushed further up the frame than the caller's own `add esp, 8` suggests. It picks
+        # the record type (0xa / 0x10 / 0x12 / 0x14 / 0x1d / 0x1e / 0x20..0x22 / 0x38..0x40),
+        # its extents, and a per-facing position nudge, spending 1-3 draws. Every one of
+        # those draws is INVISIBLE to frida_town_props.py (its filter is the builder body),
+        # so the decode was checked by recovering them out of each town's own LCG:
+        # 4,958 of 4,958 live records reproduced, type and extents.
+        "004f2ee0": {"name": "town_furniture_factory", "kind": "game", "verdict": "DEEP-RE"},
+        # (0x4d1950 keeps its adjudicated name `VoxelGrid_cellAt3D` -- the body really is a
+        # generic bounds-checked 3D index and narrowing it to "module" would be wrong. What
+        # 2026-07-28 adds is the CALL SITES: the house builder, the interior marking sweep
+        # and the furnishing walk all index the 3x3x4 module records through it, and
+        # tools/extract_house_layouts.py interprets those sites to recover the grids.)
+        # `movzx eax, byte [ecx+3]; shr eax, 6; and eax, 1` -- bit 6 of the block record's
+        # class byte, the INTERIOR flag the town builder's marking sweep sets at 0x4eab29.
+        "004061e0": {"name": "Block_isInterior", "kind": "gamemisc", "verdict": "DEEP-RE"},
         # vector<PropRecord>::_Reserve -- the body divides by the 0x188 record stride, and
         # its five callers are exactly the prop pushers. It is the census that actually
         # scopes the prop layer: an INLINED push_back skips FUN_004d6670 but still has to

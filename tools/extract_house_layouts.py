@@ -322,15 +322,24 @@ def main():
         print("")
         print("namespace vx::cw {")
         print("")
-        print("// One module grid: 3 x 3 x 4 type bytes, index a*12 + b*4 + c. 0 = unset")
-        print("// (the ctor leaves it), 1 wall, 2 base, 3 roof, 5 door.")
-        print("struct HouseLayout { uint8_t type[36]; uint8_t nDoors; };")
+        print("// One module grid: 3 x 3 x 4 records, index a*12 + b*4 + c.")
+        print("//   type (+0): 0 = unset (the ctor leaves it), 1 wall, 2 base, 3 roof, 5 door")
+        print("//   kind (+8): the FURNISHING pass's centre-piece selector -- 0 default,")
+        print("//              1 a four-record quartet, 2 a table plus four stools, 3 a")
+        print("//              four-record quartet of its own (Docs/RE_town_furnish.md)")
+        print("//   flag (+3): the furnishing pass requires the module ABOVE to have this 0")
+        print("// The +2 field is never written by any of the 23 grids.")
+        print("struct HouseLayout { uint8_t type[36]; uint8_t kind[36]; uint8_t flag[36]; uint8_t nDoors; };")
         print("")
         print("constexpr HouseLayout kHouseLayouts[%d] = {" % len(layouts))
         for i, L in enumerate(layouts):
             g = {(a, b, c): v for a, b, c, v in L["types"]}
-            flat = [g.get((a, b, c), 0) for a in range(3) for b in range(3) for c in range(4)]
-            print("    {{%s}, %d},   // %2d" % (",".join(str(v) for v in flat), L["nType5"], i))
+            ex = {(a, b, c, f): v for a, b, c, f, v in L["extra"]}
+            def flatf(f, src):
+                return ",".join(str(src.get((a, b, c) if f is None else (a, b, c, f), 0))
+                                for a in range(3) for b in range(3) for c in range(4))
+            print("    {{%s}, {%s}, {%s}, %d},   // %2d"
+                  % (flatf(None, g), flatf(8, ex), flatf(3, ex), L["nType5"], i))
         print("};")
         print("")
         print("// The selector, keyed as described above.")

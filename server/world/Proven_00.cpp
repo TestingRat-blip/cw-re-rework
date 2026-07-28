@@ -30623,7 +30623,7 @@ LAB_004f2af6:
 }
 
 
-/* house_furniture_placer @ 004f2ee0  kind=game  attributed-by=ledger  size=1359 */
+/* town_furniture_factory @ 004f2ee0  kind=game  attributed-by=ledger  size=1359 */
 
 void __cdecl FUN_004f2ee0(void *param_1,uint *param_2,undefined4 param_3,int param_4)
 

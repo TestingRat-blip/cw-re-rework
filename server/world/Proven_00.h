@@ -93,7 +93,7 @@ House * __thiscall House(House * this, int param_1, int param_2, int param_3);
 /* 004e28e0  game  [ledger]  ~town_builder */
 undefined FUN_004e28e0(void);
 
-/* 004f2ee0  game  [ledger]  ~house_furniture_placer */
+/* 004f2ee0  game  [ledger]  ~town_furniture_factory */
 undefined __cdecl FUN_004f2ee0(void * param_1, uint * param_2, undefined4 param_3, int param_4);
 
 /* 004f3630  game  [ledger]  ~TownProp_make_0x15 */
