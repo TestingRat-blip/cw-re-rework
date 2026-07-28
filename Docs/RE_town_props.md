@@ -1,5 +1,15 @@
 # The town builder's prop layer — mapped and put under contract
 
+> **2026-07-27f — read `RE_town_verdict.md` first.** Three things in this file moved:
+>
+> | was | is |
+> |---|---|
+> | open problem 1, "Phase 3's verdict, in full" — "155 plots with a small height span are still culled for other reasons" | **CLOSED.** The four reasons are `water`, `not near`, `sand → 7`, and a `rand()/32767` roll against `score + 0.25`; the score is `World_falloffSquared` at the plot centre and is derivable from the seed (1,485/1,485). `gate_town_verdict.py` |
+> | "only villages emit props", 67 for 67 | **one-directional only.** 21 villages of the 25-zone block capture emit nothing; the claim that survives both captures is props ⇒ village, 92/92 |
+> | the twenty perimeter sites also "sit on the 13-block building lattice" | **they do not.** Their perpendicular axis is `7 ± 1` in from one plot edge or the other; the two-value residue sets below were read off the 67-town capture alone. Genuine 13-lattice sites: **33**, not 46 |
+>
+> `gate_town_props.py` now PASSES on both captures (it had been the suite's one failure).
+
 `RE_zone_props.md` closed its census with "the town builder's three emitters
 (`004e310a` / `004eaa7a` / `004ee3aa`), the other half of the census". **None of those
 three is an emitter, and none is a function.** Each is an `8d 9b 00 00 00 00` MSVC
@@ -290,11 +300,12 @@ creatures; only 25 emitted props. Nothing here decodes that split.
 
 ## Open
 
-1. **Phase 3's verdict, in full.** The promotion pass is decoded and the height-span cull
-   is exact, but the rest of what makes a plot a 2 rather than a 0 is not — 155 plots with
-   a small height span are still culled for other reasons. And the plot heights themselves
-   are region-cache-blocked (`CW_REGIONCACHE_SCHEDULER.md`), so that rule can be *stated*
-   but not reproduced from the seed alone.
+1. ~~**Phase 3's verdict, in full.**~~ — **CLOSED, `RE_town_verdict.md`.** A plot is a 2
+   iff it is not water, has a column scoring above 0.1, is not sand, and passes
+   `score + 0.25 > rand()/32767` — then the `maxH - minH > 16` cull. The score is
+   `World_falloffSquared(cell, plotOrigin + span/2)` and is derived from the seed. What
+   is still blocked is only the three terrain booleans and the heights themselves
+   (`CW_REGIONCACHE_SCHEDULER.md`).
 2. **`site+0x79` = 4**, whose special-role set no town in the sample revealed.
 3. ~~**The 25-of-67 split**~~ — **it is feature type 1 vs 5**, 67 for 67. Villages emit
    props; ruins emit none.

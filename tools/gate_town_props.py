@@ -120,6 +120,22 @@ PERIMETER = {
     0xE4DBA: ("y", 22), 0xE4E88: ("y", 28),
     0xE4F4E: ("y", 22), 0xE5014: ("y", 28),
 }
+# ...and the PERPENDICULAR axis of each of those twenty is `7 +/- 1` in from one edge or
+# the other -- 6..8, or (span-7) +/- 1 = 43..45 at span 51.  It is NOT on the 13-block
+# building lattice: the earlier revision listed these sites in LATTICE with a two-value
+# residue set read off the 67-town capture alone, and the 25-zone capture immediately
+# produced the third value (0xE3FAF's y residue 7).  Lesson 3 -- a set read off one
+# sample.  The jitter axis is checked here instead, over both captures.
+PERIMETER_EDGE = {
+    0xE3FAF: "near", 0xE410F: "near", 0xE427A: "near",
+    0xE439A: "far", 0xE445C: "far", 0xE4528: "far",
+    0xE45F6: "far", 0xE46B8: "far", 0xE4786: "far",
+    0xE484C: "near", 0xE4906: "near", 0xE49CC: "near",
+    0xE4A90: "near", 0xE4B54: "near",
+    0xE4C20: "far", 0xE4CEC: "far",
+    0xE4DBA: "far", 0xE4E88: "far",
+    0xE4F4E: "near", 0xE5014: "near",
+}
 
 
 # THE BUILDING SUB-LATTICE (0x4e6fe3-0x4e7217).  Inside each plot the builder walks a
@@ -133,12 +149,8 @@ PERIMETER = {
 # footprint.  This is what the earlier "27-block window" reading got wrong: reporting
 # min..max hid that the offsets take only three or four values, not twenty-seven.
 LATTICE_STEP = 13
+# (the twenty PERIMETER sites are deliberately absent -- see PERIMETER_EDGE above)
 LATTICE = {
-    0xE3FAF: ((5,), (6, 8)), 0xE410F: ((12,), (6, 8)), 0xE427A: ((6,), (6, 7)),
-    0xE445C: ((12,), (4, 6)), 0xE4786: ((6,), (6,)), 0xE484C: ((7, 8), (5,)),
-    0xE4906: ((7, 8), (12,)), 0xE49CC: ((6, 7), (6,)), 0xE4A90: ((9,), (6, 8)),
-    0xE4B54: ((2,), (6, 7)), 0xE4C20: ((9,), (4, 6)), 0xE4CEC: ((2,), (4, 6)),
-    0xE4DBA: ((5, 6), (9,)),
     0xEB145: ((8, 9), (11,)), 0xEB2D5: ((8, 9), (3,)), 0xEB488: ((5, 6), (11,)),
     0xEB618: ((5, 6), (3,)), 0xEB7B4: ((11,), (8, 9)), 0xEB966: ((11,), (5, 6)),
     0xEBAF4: ((3,), (5, 6)), 0xEBCEE: ((1,), (1,)),
@@ -350,9 +362,14 @@ def lattice(h, g, spread):
     n = grid_n(ft)
     g.eq("the plot array is n*n with n from the feature type",
          h.get("plotCount"), n * n, w)
-    # the prop layer is village-only: type 5 (ruins) builds a town and emits no props
-    g.eq("only villages emit props",
-         any(in_town(p["ra"]) for p in h["pushes"]), ft == 1, w)
+    # The prop layer is village-only: type 5 (ruins) builds a town -- houses included --
+    # and emits no props at all.  ONE-DIRECTIONAL: a village need not emit.  The earlier
+    # revision asserted the biconditional, which held only because every town of the
+    # 67-town capture is its town's ANCHOR zone; the 25-zone block capture reaches the
+    # town's edge zones, where 21 villages emit nothing (lesson 9 -- a gate proven in one
+    # class of world has not been proven in the class it never ran in).
+    if any(in_town(p["ra"]) for p in h["pushes"]):
+        g.eq("props are emitted only by villages", ft, 1, w)
     zx, zz = h["zone"]
     for p in h["pushes"]:
         if not in_town(p["ra"]):
@@ -380,9 +397,11 @@ def lattice(h, g, spread):
             axis, val = PERIMETER[p["ra"]]
             g.eq("perimeter site %#x is fixed on %s" % (p["ra"], axis),
                  ox if axis == "x" else oy, val, w)
-            g.true("and sits within 8 blocks of a plot edge",
-                   min(oy, 256 // n - oy) <= 8 if axis == "x"
-                   else min(ox, 256 // n - ox) <= 8, w)
+            span = 256 // n
+            jitter = oy if axis == "x" else ox
+            base = 7 if PERIMETER_EDGE[p["ra"]] == "near" else span - 7
+            g.true("perimeter site %#x jitters 7 +/- 1 in from its edge" % p["ra"],
+                   abs(jitter - base) <= 1, w)
 
 
 def house_pass(h, g, tally):

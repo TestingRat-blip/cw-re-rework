@@ -389,6 +389,7 @@ session; every open question left is reachable from the captures already on disk
 | **EMITTER A** (the runestone circle) — RE'd *and ported*, reached from the seed | `RE_zone_emitters_ac.md` | `gate_zone_ac` 1,232 / 112 zones; **`rederive_zoneac` 107/109 ab initio** |
 | the **OVERWORLD CREATURE SCATTER** (`0x51ed60`-`0x51f981`) — 3x3 grid, species tree, pack ring; RE'd *and ported* | `RE_zone_creatures.md` | `gate_zone_creatures` **217/217**; **`rederive_creatures` 1043/1043 ab initio**, 18 zones |
 | `FUN_005290d0` = `World_pickCreatureSpecies` + `FUN_0052bfa0` = `World_pickPackMemberSpecies` | `RE_zone_creatures.md` | (folded into the two above) |
+| the town builder's **PLOT VERDICT** pass (`0x4e2a80`-`0x4e3093`) + its plot score, from the seed | `RE_town_verdict.md` | `gate_town_verdict` 3,984 / 72 towns |
 
 Two structural facts worth carrying:
 
@@ -407,6 +408,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
+| 07-27f | the town builder's **plot verdict** decoded in full + the town-builder draw cost MEASURED (17-19,576); `gate_town_props` fixed and green | `RE_town_verdict.md` | `gate_town_verdict` 3,984 |
 | 07-27e | **the scatter PORTED ab initio** + both species pickers decoded; the port's hand-typed tables were wrong | `RE_zone_creatures.md` | `rederive_creatures` 1043/1043 |
 | 07-27d | **the OVERWORLD CREATURE SCATTER** RE'd + gated — and the emitter-C gap is the TREE PASS, not this | `RE_zone_creatures.md` | `gate_zone_creatures` 217/217 |
 | 07-27c | **EMITTER A ported ab initio**, and `0x51cd79` — the mat-38 loop's site-kind guard **no port had** | `RE_zone_emitters_ac.md`, `RE_zone_tail.md` | `rederive_zoneac` 107/109 |
@@ -460,16 +462,29 @@ everything downstream still runs; the camp path's own entry points stop at `NotF
 **What is left between there and emitter C is the TOWN BUILDER, and nothing else.**
 Emitter C only fires in kind-1 (town) zones, and a town zone's descriptor is type 1, which
 is exactly the type that gates `FUN_004e28e0` in at `0x51d43e` -- upstream of the tree
-pass. So the order of work is:
+pass.
 
-1. **Read `FUN_004e28e0`'s loop structure.** Its three rand sites are `0x4e2d83` (`%4`, a
-   rotation), `0x4e2e3b` (`/32767`, a 0..1 roll) and `0x4e3039` (`&1`, a coin), and on a
-   static read each is spent **unconditionally per plot**, with the region-cache-blocked
-   plot HEIGHT only read *after* the draw (`0x4e304d`). The plot lattice is already
-   derived (`rederive_townlattice` 16228/16228). If the spend really is per-plot and
-   height-independent, the town builder's draw COST is derivable even though its plot
-   heights are not -- ⚠ still **a lead from three call sites, not a finding**.
-2. **Then emitter C** (`0x51fa10`), with the whole tail already reachable.
+⚠ **2026-07-27f: the "three rand sites" lead is SETTLED, and it does not open emitter C.**
+The previous handoff carried `0x4e2d83` / `0x4e2e3b` / `0x4e3039` as "each spent
+unconditionally per plot", from which the builder's draw COST would follow. Measured
+against the 92 towns already on disk (`randN1 - randN0`, which `frida_town_props.py`
+records, so the cost is a subtraction and not an estimate):
+
+* only `0x4e2d83` is unconditional -- exactly `plotCount` draws in **92 of 92** towns.
+  `0x4e2e3b` fires 0-25 times and `0x4e3039` 0-14, and `0x4e3039` never fires in a ruin.
+* the builder spends **17 to 19,576** draws (median 1,820) across **176 firing rand
+  sites**; the scan phase accounts for at most ~50 of them. The two hottest --
+  `0x4e54e8` (a `rand()%10` scatter gate) and `0x4ef7c8` -- are per-column loops over the
+  town's own finished terrain and carry 36% of everything the layer spends.
+
+So **emitter C needs essentially the whole 64 KB builder ported**, not a per-plot formula,
+and the plot heights are not the binding constraint -- the size of the thing is. That is a
+real result and it is why emitter C is no longer the next task. What the slice *did* close
+is the **plot verdict** (`RE_town_verdict.md`, `gate_town_verdict` 3,984 checks): a plot is
+a 2 iff it is not water, has a column scoring above 0.1, is not sand (sand -> role 7), and
+passes `score + 0.25 > rand()/32767` -- then the `maxH - minH > 16` cull; and the score is
+`World_falloffSquared(cell, plotOrigin + span/2)`, **derived from the seed**, 1,485/1,485.
+Role 6 is a later villages-only coin pass. Read that file before touching the builder.
 
 ⚠ Two things that will bite at emitter C, both already paid for elsewhere:
 * it gates on the per-zone **site-kind** byte, which cwgen derives
@@ -499,10 +514,17 @@ it. Read the span before assuming where the emitter begins.
 
 ### Then, in order
 
-1. **The rest of the town chain** (beyond the draw-cost question above). Its **plot
-   heights are region-cache-blocked**, so the verdict rule is statable but not
-   seed-reproducible — port what is derivable and stop there. `gate_town_props.py`
-   currently FAILS and wants triage first (see the short tasks).
+⚠ **The recommended next slice is now open problem 0**, not the town chain. Both of its
+items are concrete, bounded, reachable from captures already on disk, and the second one
+(the type-10 centre drift) is a *terrain* bug whose fix also feeds the town verdict's two
+blocked booleans (`water`, `sand` are column-class reads). Fixing it turns
+`rederive_zoneac` green for the right reason.
+
+1. **The rest of the town chain.** Now correctly sized: 176 rand sites, up to 19,576 draws
+   a town, and the only route to emitter C. The **verdict** pass is done
+   (`RE_town_verdict.md`); the **plot heights** stay region-cache-blocked, so port what is
+   derivable and say where it stops. `gate_town_props.py` is **fixed and green** as of
+   07-27f — two lesson-9 corrections, both recorded in `RE_town_verdict.md` §4.
 2. **The dungeon mob pass + boss spawn + light sources** into `cw_rederive`/`cwgen`. All
    gated; all pure functions of the finished dungeon voxel stamp, which the port already
    produces bit-exact — no captured booleans, no order state. Then the engine half of
@@ -597,11 +619,10 @@ still never came up in 99 firings.
   into the model DB and never bound, so a type-`0x0e` prop renders nothing in the shipped
   game — the engine deliberately diverges and draws it anyway.
 - The three **gate-suite problems** in `RatForge/docs/CW_RE_MASTER_INDEX.md` §7 (split
-  goldens, 23 probably-stale failures, `golden_rederive` has no manifest) are still untriaged.
-  One of them is concrete and reproducible today: **`tools/gate_town_props.py` FAILS**
-  — "every record lands in a plot of the derived lattice: 19 of 4579". It imports none
-  of the zone-scatter modules, so it is independent of the 2026-07-26 work; it wants
-  its own triage against the `CwTown` lattice rebuild (RatForge `14ab5f5`).
+  goldens, 23 probably-stale failures, `golden_rederive` has no manifest) are still
+  untriaged. ~~`tools/gate_town_props.py` FAILS~~ — **fixed 07-27f**: the failure was two
+  over-claims of its own, not a `CwTown` drift (`RE_town_verdict.md` §4). The **whole
+  `cw_decomp` gate suite is now green.**
 
 ## Before you start, and before you finish
 
@@ -621,9 +642,10 @@ Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fail
 cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
 ```
 
-**Known-good as of 07-27e:** the `cw_decomp` gate suite is green except
-`gate_town_props.py`; `cwgen_test` is green except **`rederive_zoneac` 107/109**, hash
-**`F5D7D16E92EE5C38`** in both Debug and Release.
+**Known-good as of 07-27f:** the `cw_decomp` gate suite is **fully green** (28 gates —
+`gate_town_props.py` was fixed this pass, and `gate_town_verdict.py` is new);
+`cwgen_test` is green except **`rederive_zoneac` 107/109**, hash **`F5D7D16E92EE5C38`**
+in both Debug and Release. Both were re-verified at the start of 07-27f.
 
 ⚠ **The hash CHANGED at 07-27e** (was `F06E7FAF50277143`) because the creature scatter's
 records now feed it. That was deliberate: this stage is the only place in cwgen that runs
