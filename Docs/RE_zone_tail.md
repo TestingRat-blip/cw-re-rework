@@ -67,7 +67,7 @@ port's own site comments; **positional** = ordering + per-zone counts only, i.e.
 | **`0x51dc5d`-`0x51e5c7`** | **12 sites** | **the 14x14 TREE loop + `lib_fn_513760`** | **proven here + `rederive_zonepropsb`** | **65,796 + builder** |
 | `0x51e5c7` | 3 | **emitter B**, the even-parity statue | proven here | 84 |
 | `0x51e839`-`0x51eac7` | — | camp candidate grid + `camp_populator` | proven (`RE_zone_grid.md`, `RE_5104e0_camp.md`) | — |
-| **`0x51ed60`-`0x51f981`** | **18 sites** | **the OVERWORLD CREATURE SCATTER** — a 3x3 grid of creature packs | **proven** (`RE_zone_creatures.md`, `gate_zone_creatures` 211/211) | **3,263** |
+| **`0x51ed60`-`0x51f981`** | **18 sites** | **the OVERWORLD CREATURE SCATTER** — a 3x3 grid of creature packs; **RE'd + PORTED** | **proven** (`RE_zone_creatures.md`, `gate_zone_creatures` 217/217, `rederive_creatures` 1043/1043) | **3,263** |
 | `0x51fa10` | — | emitter C, the village street light | proven (`RE_zone_emitters_ac.md`) | — |
 | `0x51fdb1`-`0x52162b` | ~20 sites | **identity not established.** The tail's biggest spender by far | positional | 750,000+ |
 

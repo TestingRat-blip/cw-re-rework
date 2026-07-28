@@ -1,11 +1,12 @@
 # The OVERWORLD CREATURE-SPAWN SCATTER — `0x51ed60`-`0x51f981`
 
 ```
-python tools/gate_zone_creatures.py     # 211 checks, 56 zones, no server needed
+python tools/gate_zone_creatures.py          # 217 checks, 56 zones, no server needed
+build/cwgen_test.exe tools/cw_rederive/golden_rederive     # rederive_creatures 1043/1043
 ```
 
-**Status: RE'd, byte-checked and gated. Not ported.** The last unmodelled stage of the
-zone builder's tail, and the last one upstream of emitter C.
+**Status: RE'd, gated, and PORTED ab initio.** The last unmodelled stage of the zone
+builder's tail, and the last one upstream of emitter C.
 
 A **3x3 grid** — 85-block spacing, `+0x18 + rand()%10` jitter, same shape as the type-6
 knoll grid at `0x51aa57` — that news up a **0x10f0-byte creature entity** per surviving
@@ -86,10 +87,10 @@ for i in 0..2:                                              # 0x51ed60
         d = 1 - World_objectFalloffWeight(desc, X<<16, Z<<16)
         if d > 0 and d*d > 0.3: continue                    # 0x51ee58
 
-    temp  = column(X,Z) ? col[+8] : FUN_004f8b40(X,Z)
-    if temp  < 0.2 and rand()%4 == 0: continue              # 0x51eec0
-    humid = column(X,Z) ? col[+4] : FUN_004f8570(X,Z)
-    if humid < 0.2 and rand()%4 == 0: continue              # 0x51ef2d
+    humid = column(X,Z) ? col[+8] : FUN_004f8b40(X,Z)     # +8 is HUMIDITY
+    if humid < 0.2 and rand()%4 == 0: continue              # 0x51eec0
+    temp  = column(X,Z) ? col[+4] : FUN_004f8570(X,Z)     # +4 is TEMPERATURE
+    if temp  < 0.2 and rand()%4 == 0: continue              # 0x51ef2d
 
     for e in siteList([ebp-0x1378]):                        # 0x51ef90
         dx = (X<<16) - e[+0x08] ; dz = (Z<<16) - e[+0x10]   # int64, 16.16
@@ -123,8 +124,8 @@ picked by material is **solo**: no rare roll, no level roll, no pack.
 |---|---|---|---|
 | **12** | — | `rand()&1` | `0x82`, or `0x7e` when odd — **NEVER FIRED LIVE** |
 | **10** | `rand()%4 != 0` -> default path | `rand()&3` | `{0:0x79, 1:0x7b, 2:0x7d, 3:0x7a}`, `+0xf58 = 25.0f` |
-| **4, 5, 9** | `rand()%3 != 0` **and** `temp > 0.8` **and** `humid < 0.1` | `rand()&1` | `{0:0x7c, 1:0x80}` — the desert pair, no `+0xf58` |
-| **4** (not desert) | `rand()%3 != 0` **and** `humid > 0.1` | `rand()&3` | `{0:0x78, 1:0x7b, 2:0x7f, 3:0x7d}`, `+0xf58 = 25.0f` |
+| **4, 5, 9** | `rand()%3 != 0` **and** `humid > 0.8` **and** `temp < 0.1` | `rand()&1` | `{0:0x7c, 1:0x80}` — the wet pair, no `+0xf58` |
+| **4** (not the wet branch) | `rand()%3 != 0` **and** `temp > 0.1` | `rand()&3` | `{0:0x78, 1:0x7b, 2:0x7f, 3:0x7d}`, `+0xf58 = 25.0f` |
 | anything else | — | — | keeps `FUN_005290d0`'s pick and falls to the tail |
 
 `y < 0` short-circuits to the default path before any of this (`0x51f2c8`), so only mat 12
@@ -192,8 +193,8 @@ stage. Rather than guess at the gap, **census every callee**:
 
 | callee | rand sites in its whole body | observed |
 |---|---|---|
-| `FUN_004f8b40` temperature | 0 | — |
-| `FUN_004f8570` humidity | 0 | — |
+| `FUN_004f8b40` humidity | 0 | — |
+| `FUN_004f8570` temperature | 0 | — |
 | `FUN_004d19f0` road field | 0 | — |
 | `FUN_0052d990` water field | 0 | — |
 | `FUN_004286f0` region tile | 0 | — |
@@ -231,8 +232,9 @@ python tools/gate_zone_creatures.py
 | all 56 zones parse as exactly 9 grid cells, with a legal token order throughout | 57 |
 | the site histogram agrees with the parse (pairing, unconditionality, totals) | 6 |
 | every unrecorded draw is attributed to a censused callee, one draw per run | 4 |
+| the PORT's three literal tables, diffed entry-by-entry against `Server.exe` | 6 |
 
-**211/211**, over 504 grid cells and 324 spawned leaders.
+**217/217**, over 504 grid cells and 324 spawned leaders.
 
 The 57 zone-parse checks are the sharp ones, because each is a whole zone's token stream
 run through the decoded branch structure as a grammar — a mis-read branch shows up as an
@@ -259,35 +261,161 @@ species from the material branches: 0x78 x28, 0x7a x1, 0x7b x35, 0x7c x5,
 
 ---
 
+## The two species pickers
+
+Both were decoded in the same pass as the port (2026-07-27e). Neither needed a capture.
+
+### `FUN_0052bfa0` = `World_pickPackMemberSpecies` — a random sibling
+
+311 bytes, `__stdcall(x, z, y, leaderSpecies)`, and **its three position arguments are
+dead**: the body reads only `[ebp+0x14]`. It is one jump table:
+
+```
+if ((unsigned)leaderSpecies > 0x54) return leaderSpecies;      # 0x52bfa6, no draw
+switch (byte[0x52c108 + leaderSpecies]) {                      # -> jump table 0x52c0d8
+    case 11: return leaderSpecies;                             # no family, NO DRAW
+    default: return rand() % mod + base;
+}
+```
+
+| case | rule | the species that route to it |
+|---|---|---|
+| 0..8 | `rand()%2 + {0,2,4,7,9,11,13,15,22}` | the pair `{base, base+1}` |
+| 9 | `rand()%4 + 37` | `{37,38,39,40}` |
+| 10 | `rand()%2 + 83` | `{83,84}` |
+| 11 | unchanged, **no draw** | 62 species with no family |
+
+★ **The decode checks itself**: each case's OUTPUT SET is exactly the set of species that
+route to that case. So the function is "give the member a uniformly random species from
+the leader's own family, or the leader's if it has none" — and that is why it spends a
+draw for only 5 of the 96 captured members.
+
+### `FUN_005290d0` = `World_pickCreatureSpecies` — a climate candidate list
+
+5,775 bytes, 9 callees, and exactly **one** rand site in the whole body (`0x52a712`). It
+builds a `std::vector<int>` of candidate species and returns one:
+
+```
+if (list.empty()) return 0x3c;                                 # no draw
+return list[(unsigned)rand() % list.size()];                   # 0x52a70c, UNSIGNED div
+```
+
+No reachable path leaves the list empty — every branch pushes at least one entry, which
+is why the live capture shows the draw spent by all 324 leaders.
+
+Four inputs, all already ported: `humid` = `FUN_004f8b40`, `temp` = `FUN_004f8570`,
+`wet` = `FUN_00522e20` (`cw_gate.wetness`), `lm` = `FUN_00523d80` (the land mask).
+
+```
+if y < 0:                       list = [0x91,0x92,0x93,0x96,0x98,0x99,0x9b,0x9a]
+elif flag != 0:                 list = [0x02,0x04,0x07,0x09,0x0b,0x0f,0x33,0x30,0x4c]
+elif wet > 0.1:                 list = [0x49,0x52,0x55,0x70,0x67,0x3e,0x6e]      # aquatic
+else:
+    list = [0x15, 0x2e]  +  ([0x2f] if lm > 0.3 else [])
+    if y <= 3:  list += [0x6a,0x39,0x56,0x19]
+    else:       list += <the climate class below>
+```
+
+| class | condition | n |
+|---|---|---|
+| ARID | `humid < 0.2` | 10 |
+| TEMPERATE | `0.2 <= humid < 0.8` | 36 |
+| COLD-WET | `humid >= 0.8` and `temp < 0.2` | 14 |
+| WARM-WET | `humid >= 0.8` and `temp >= 0.6` | 22 |
+| (middle band) | `humid >= 0.8` and `0.2 <= temp < 0.6` | **0 — nothing appended** |
+
+★ **HUMIDITY is the primary axis, and temperature only splits the wet end.** This reads
+backwards if you pair the functions the other way round, and it is easy to: the scatter
+reads `column+8` before `column+4`, so the first field it touches looks like temperature.
+It is not. `FUN_004f8570` is temperature (site field 3) and `FUN_004f8b40` is humidity
+(site field 4), **proven 40/40 bit-exact by the direct-call climate probe** — an earlier
+revision of this doc had them swapped throughout, and the port inherited it until the
+existing climate port was checked.
+
+The push ORDER inside each list is load-bearing (the result is `list[r % n]`) and is
+recorded verbatim in `CwZoneCreatures.cpp`. 113 logical pushes in total; note that
+scanning the instruction immediates DOUBLE COUNTS every one of them, because MSVC's
+inlined `push_back` spills the value once for its realloc-aliasing guard and stores it
+again on the normal path.
+
+---
+
+## Ported — `src/worldgen/cw/CwZoneCreatures.cpp`
+
+```
+build/cwgen_test.exe tools/cw_rederive/golden_rederive     # rederive_creatures 1043/1043
+```
+
+`zoneCreatureScatter(zx, zz, ...)` replays a zone from its seed through the pre-chain, the
+dense-forest tree pass, emitter B, the camp lattice and `FUN_005104e0`, and then runs this
+stage. Two pieces of plumbing were needed and are worth knowing about:
+
+* **`ZoneTailState::sites()`** — the builder's site list (`[ebp-0x1378]`) was a local
+  inside `CwForest`'s replay. The tree loop walks it internally, but `0x51ef3f` walks it
+  too, so a tail pass has to be able to see it.
+* **`CwZoneCamp::zoneAfterCamp`** — the camp path bails at `NotFiring`, but the game does
+  not: `0x51e804` sends descriptor types 0/1/5/0xa/0xe to `0x51eb11`, skipping the lattice
+  and the populator, spending **no** draws, and everything downstream still runs. Reaching
+  past the camp needs a route that runs the camp stages *conditionally*.
+
+### What `rederive_creatures` proves
+
+The golden (`make_creatures_golden.py`, section 59) is the live DRAW STREAM: for every
+zone of `zone_props2_capture.json`, the ordered list of (rand call site, value) the server
+spent — with the two callee draws filled in from the zone's own LCG, since msvcrt's rand
+is a plain LCG and locating the recorded run pins the absolute index of every draw,
+recorded or not.
+
+The port is then run **ab initio** — nothing is fed to it — and has to
+
+1. arrive at the stage on the same draw index (`stageStart`), then
+2. request the same number of draws, at the same call sites, reading the same values.
+
+**18 zones replayed ab initio, 37 skipped as not tail-exact, 1,007 draws matched
+site-for-site: 1043/1043.** A control-flow error reaches a different SITE; an arithmetic
+error reads a different VALUE at the right one; the gate prints which, so the two stay
+distinguishable.
+
+Because the site sequence includes the group roll and the member rolls, this validates the
+whole species chain end to end without ever comparing a species id: the pack SIZE is
+`roll % groupRange(species)`, so an error anywhere in `0x5290d0`'s candidate lists changes
+how many member draws follow, and the stream stops matching.
+
+★ **That is exactly how the port's first bug was caught.** `kGroupRange` and `kLevelRange`
+were transcribed BY HAND instead of pasted from the extractor, and were wrong in 17 and
+109 entries. One zone's pack came out 1 member instead of 2 — species `0x46`, group range
+(1,5) in the source against (1,3) in the image. `gate_zone_creatures.py` now re-reads all
+three tables out of `Server.exe` and diffs them against the literals in
+`CwZoneCreatures.cpp` on every run, so a hand-edit cannot drift again.
+
+★ **DURABLE: a literal table copied out of an image needs a machine to keep it honest.**
+Nothing about 109 wrong level ranges was visible in any output — no gate compares a level
+— and the group table only surfaced through a second-order consequence, one pack being a
+member short.
+
+### Determinism
+
+The scatter's records now feed `cwgen_test`'s output hash, because this is the only place
+in cwgen that runs `sin`/`cos` through the `cvtpd2ps`/`cvtps2pd` round and then `ftol2`.
+Debug and Release agree: **`F5D7D16E92EE5C38`** (it was `F06E7FAF50277143` before this
+stage contributed to the hash).
+
+---
+
 ## Not covered
 
 * **`0x51f285`, the mat-12 branch** — byte-checked only; no captured zone has a mat-12
   column at a scatter cell. The gate asserts the negative so it cannot drift.
-* **`0 too dry`** — no captured cell reaches the mat-4 branch with `humid <= 0.1`, so that
-  fall-through is decoded but unexercised. It implies all 14 desert cells are mat 5 or 9,
-  which is a prediction, not a measurement.
+* **`0 too dry`** — no captured cell reaches the mat-4 branch with `temp <= 0.1`, so that
+  fall-through is decoded but unexercised. It implies all 14 wet-branch cells are mat 5 or
+  9, which is a prediction, not a measurement.
 * **Positions.** Nothing in this capture records where a creature landed — only draws. The
   85-spacing, the `+0x18`, the half-block and the ring radius are **byte-proven, not
   live-proven**. A rig that reads the `[ebp-0x1308]+0x18` vector the way
   `frida_zone_props2.py` reads the prop vector would close that, and it is the one thing
   here that would want a capture session.
-* **`FUN_005290d0` itself** (5,775 bytes, 9 callees, 1 rand site) and **`FUN_0052bfa0`**
-  (311 bytes, 11 rand sites) are un-decoded. They are what a port needs next.
-
-## Porting — what it needs
-
-Everything upstream is already in cwgen: the pre-chain, the tree pass and emitter B are
-reached ab initio by `CwForest::zoneReplayTail`, the site list and its 16.16 test are
-ported, `World_objectFalloffWeight` and the climate fields are ported, and the finished
-zone voxel state the column scan reads is what `zoneReplayTail` already builds.
-
-What is missing is exactly two functions:
-
-1. **`FUN_005290d0`** — draw-free apart from one `rand()`, so its stream cost is known;
-   but its RESULT selects the group range and therefore the member draw count, so a
-   stream-exact port cannot stub it.
-2. **`FUN_0052bfa0`** — 11 rand sites, 0 or 1 spent per call; only reached when a pack has
-   members.
-
-Neither needs a capture session. Both are pure functions of position and climate, and the
-gate above will measure a port the moment one exists.
+* **The 37 zones the port skips** are the ones cwgen cannot replay tail-exactly — the
+  same population every tail gate skips, not a creature-scatter limitation.
+* **The Python mirror is not written.** `cw_rederive` has no `cw_creatures.py`; the C++ is
+  the only port. Nothing needs it today (the golden is capture-derived, not
+  Python-derived), but every other stage in this tail has both.

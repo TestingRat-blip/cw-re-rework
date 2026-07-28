@@ -182,6 +182,15 @@ if you are about to trust a green gate, read group B. Every one of these cost re
    **3,837**. Both cost nothing to check and both changed the plan. **`ls` the capture,
    and bucket the stream, before scoping work around either.**
 
+7c. **A literal table copied out of an image needs a machine to keep it honest.**
+   `CwZoneCreatures.cpp`'s species group/level tables were typed by hand instead of pasted
+   from the extractor that had just printed them, and were wrong in **17 and 109 entries**.
+   Nothing showed it: no gate compares a level, and the group table only surfaced through a
+   second-order consequence -- one zone's pack came out a member short, because pack size
+   is `roll % groupRange(species)`. **If you transcribe data out of a binary, add the diff
+   against the binary to a gate in the same commit** (`gate_zone_creatures.py` now re-reads
+   all three tables and diffs them against the source literals every run).
+
 ### B. What a green gate does NOT prove
 
 The single most expensive family in this project. Five separate instances of the same
@@ -378,7 +387,8 @@ session; every open question left is reachable from the captures already on disk
 | the site list's **16.16 proximity test** (`0x51cf20` / `0x51ded7`) — the entry carries a half block | `RE_zone_site_loop.md` | `rederive_campgrid` 15990/15990, 13 zones |
 | the **CAMP POPULATOR** `FUN_005104e0` end to end — every prop and every `Spawn` record | `RE_5104e0_camp.md` | 1,598 record checks / 99 zones; `rederive_camppop` 3111/3111 |
 | **EMITTER A** (the runestone circle) — RE'd *and ported*, reached from the seed | `RE_zone_emitters_ac.md` | `gate_zone_ac` 1,232 / 112 zones; **`rederive_zoneac` 107/109 ab initio** |
-| the **OVERWORLD CREATURE SCATTER** (`0x51ed60`-`0x51f981`) — 3x3 grid, species tree, pack ring; draw cost closed | `RE_zone_creatures.md` | `gate_zone_creatures` **211/211**, 504 cells / 324 leaders / 56 zones |
+| the **OVERWORLD CREATURE SCATTER** (`0x51ed60`-`0x51f981`) — 3x3 grid, species tree, pack ring; RE'd *and ported* | `RE_zone_creatures.md` | `gate_zone_creatures` **217/217**; **`rederive_creatures` 1043/1043 ab initio**, 18 zones |
+| `FUN_005290d0` = `World_pickCreatureSpecies` + `FUN_0052bfa0` = `World_pickPackMemberSpecies` | `RE_zone_creatures.md` | (folded into the two above) |
 
 Two structural facts worth carrying:
 
@@ -397,7 +407,8 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
-| 07-27d | **the OVERWORLD CREATURE SCATTER** RE'd + gated — and the emitter-C gap is the TREE PASS, not this | `RE_zone_creatures.md` | `gate_zone_creatures` 211/211 |
+| 07-27e | **the scatter PORTED ab initio** + both species pickers decoded; the port's hand-typed tables were wrong | `RE_zone_creatures.md` | `rederive_creatures` 1043/1043 |
+| 07-27d | **the OVERWORLD CREATURE SCATTER** RE'd + gated — and the emitter-C gap is the TREE PASS, not this | `RE_zone_creatures.md` | `gate_zone_creatures` 217/217 |
 | 07-27c | **EMITTER A ported ab initio**, and `0x51cd79` — the mat-38 loop's site-kind guard **no port had** | `RE_zone_emitters_ac.md`, `RE_zone_tail.md` | `rederive_zoneac` 107/109 |
 | 07-27b | the camp's **RENDERING** half — `columnCampProps`, wired into `VegScatter`, cached per zone | `RE_5104e0_camp.md` §Rendering | `--proptest` 5/5 |
 | 07-27 | **`FUN_005104e0` end to end** — every prop and every `Spawn` field, from the seed | `RE_5104e0_camp.md` | `gate_zone_camp` 4,340; `rederive_camppop` 3111/3111 |
@@ -428,79 +439,70 @@ to a numbered lesson above:
 
 ## YOUR TASK
 
-### The next slice: PORT the creature scatter — which needs two functions decoded
+### The next slice: EMITTER C — and it is now genuinely close
 
-**The creature scatter is RE'd and gated** (07-27d, `gate_zone_creatures` 211/211,
-`RE_zone_creatures.md`). It is **not ported**, and porting it is the next slice.
+**The creature scatter is RE'd, gated and PORTED ab initio** (07-27e,
+`gate_zone_creatures` 217/217, `rederive_creatures` 1043/1043, `RE_zone_creatures.md`).
+Both species pickers are decoded: `FUN_005290d0` = `World_pickCreatureSpecies` (a climate
+candidate list, one draw) and `FUN_0052bfa0` = `World_pickPackMemberSpecies` (a random
+sibling from the leader's species family, 0 or 1 draw).
 
-⚠ **Read `RE_zone_creatures.md`'s correction box first — the previous handoff mis-scoped
-this stage three ways, and the corrections change what to do next.** Measured, not argued:
+So the tail is now walkable from a seed all the way to `0x51f981`:
 
-* **The stage is SMALL.** Median **58** draws/zone. The previous handoff called it "nearly
-  all of the median 2,646-draw gap" to emitter C. Bucketing all 56 zones of
-  `raw/zone_props2_capture.json` by stage puts the **tree pass at 3,837 draws/zone** and
-  this at 58 — the gap to emitter C *is* the tree pass, which is already bit-exact and
-  already walked ab initio by `CwForest::zoneReplayTail`. So the two unported things
-  between cwgen and a street lamp are **this stage** and **the town builder**, nothing else.
-* **It never calls `creature_spawn_builder` (`0x524540`)** — a call census of the span
-  asserts the negative. It runs `operator_new(0x10f0)` + `FUN_004e0f40` inline, and the
-  entity is not a `cube::Spawn` (different layout). `RE_524540_creature_spawn.md` is about
-  a *different* creature path.
-* **`raw/spawn_capture.json` is 57 bytes and EMPTY.** A later `frida_spawn_capture.py` run
-  overwrote it; the 6,305 spawns it is cited for are gone. Nothing needed them — this span
-  is inside `frida_zone_props2.py`'s filter, so the 56-zone capture covers it.
-  ★ Same family as "a stale golden agrees by accident": **a capture cited by a doc is not
-  a capture that is still on disk.** Check the file before planning around it.
+```
+pre-chain -> tree pass -> emitter B -> camp lattice -> FUN_005104e0 -> creature scatter
+```
 
-**The stage's draw cost is closed**: 18 in-span sites + **1 per leader** + **0..1 per
-member**, every unrecorded draw attributed by censusing each callee's whole body. So the
-port is blocked on exactly two functions, and neither needs a capture session:
+and `CwZoneCamp::zoneAfterCamp` is the route (it runs the camp stages *conditionally* --
+`0x51e804` sends descriptor types 0/1/5/0xa/0xe past them spending no draws, and
+everything downstream still runs; the camp path's own entry points stop at `NotFiring`).
 
-1. **`FUN_005290d0` = `World_pickCreatureSpecies`** (5,775 bytes, 9 callees). Exactly ONE
-   rand site in the whole body (`0x52a712`), fired on all 324 live leaders — so its stream
-   cost is already known. But it **cannot be stubbed**: its return selects the species,
-   which selects the group range, which sets how many member draws follow. Body starts by
-   reading the temperature and humidity fields, so it is a climate decision tree.
-2. **`FUN_0052bfa0` = `World_pickPackMemberSpecies`** (311 bytes, 11 rand sites, 0 or 1
-   spent per call — fired in 5 of 96 captured members). Takes the member's block position
-   plus the leader's species.
+**What is left between there and emitter C is the TOWN BUILDER, and nothing else.**
+Emitter C only fires in kind-1 (town) zones, and a town zone's descriptor is type 1, which
+is exactly the type that gates `FUN_004e28e0` in at `0x51d43e` -- upstream of the tree
+pass. So the order of work is:
 
-Everything else the port needs is already in cwgen: the pre-chain, tree pass and emitter B
-(reached ab initio), the site list and its 16.16 test, `World_objectFalloffWeight`, the
-climate fields, and the finished zone voxel state the column scan reads.
+1. **Read `FUN_004e28e0`'s loop structure.** Its three rand sites are `0x4e2d83` (`%4`, a
+   rotation), `0x4e2e3b` (`/32767`, a 0..1 roll) and `0x4e3039` (`&1`, a coin), and on a
+   static read each is spent **unconditionally per plot**, with the region-cache-blocked
+   plot HEIGHT only read *after* the draw (`0x4e304d`). The plot lattice is already
+   derived (`rederive_townlattice` 16228/16228). If the spend really is per-plot and
+   height-independent, the town builder's draw COST is derivable even though its plot
+   heights are not -- ⚠ still **a lead from three call sites, not a finding**.
+2. **Then emitter C** (`0x51fa10`), with the whole tail already reachable.
 
-⚠ Three traps in the stage itself, all byte-proven and all already paid for elsewhere:
-* the pack angle is **double, rounded ONCE to f32, then widened back** (`cvtpd2ps` at
-  `0x51f6eb`, `cvtps2pd` at `0x51f6fa`) — the `cw-forest-re` trap;
-* `ftol2` **truncates**, and the ring offsets are 16.16, so no draw-counting gate can see
-  an error there;
-* the site-proximity test is the **sixth** copy of the 16.16 test — threshold 400, strict.
-  Port the arithmetic from a copy that runs.
-
-⚠ Two things that will bite when you then reach emitter C, both already paid for elsewhere:
-* emitter C gates on the per-zone **site-kind** byte, which cwgen derives
-  (`rederive_sitekind` 116/116) — do not re-derive it from the feature-cell type.
+⚠ Two things that will bite at emitter C, both already paid for elsewhere:
+* it gates on the per-zone **site-kind** byte, which cwgen derives
+  (`rederive_sitekind` 116/116) -- do not re-derive it from the feature-cell type.
 * `lib_fn_4fc140` is thresholded at exactly 0.8 by emitter C's street-light variant *and*
-  by the forest tree builder's type pick. See the open thread below — read the body before
+  by the forest tree builder's type pick. See the open thread below -- read the body before
   labelling it.
 
-⚠ **The town builder is probably not the blocker it was assumed to be.** It runs in every
-emitter-C zone, but its three rand sites each look spent *unconditionally per plot*, with
-the region-cache-blocked plot height only read *after* the draw — and the plot lattice is
-already derived (`rederive_townlattice` 16228/16228). Read the loop structure before
-relying on that; it is a lead from three call sites, not a finding. `RE_zone_tail.md`.
+⚠ **`0x51fa10` is not the whole of emitter C.** The tail table names it as the emitter, but
+`0x51f9f2` starts a 256-column nest and `0x51fa10` is a `mov [ebp-0x141c], 0x1d6` inside
+it. Read the span before assuming where the emitter begins.
 
-**The one thing here that would want a capture session** (and only one): nothing records
-where a creature LANDED — the capture holds draws only. The 85-block spacing, the `+0x18`,
-the half-block on X/Z and the ring radius 8 are byte-proven, not live-proven. A rig reading
-the `[ebp-0x1308]+0x18` vector the way `frida_zone_props2.py` reads the prop vector would
-close that. Do the port first; the gate will measure it without one.
+### Left undone in the creature slice, deliberately
+
+* **No Python mirror.** `cw_rederive` has no `cw_creatures.py`; the C++ is the only port.
+  The golden is capture-derived rather than Python-derived so nothing needs it today, but
+  every other stage in this tail has both.
+* **Positions are byte-proven, not live-proven.** No capture records where a creature
+  LANDED -- only draws. The 85-block spacing, the `+0x18`, the half-block on X/Z and the
+  ring radius 8 all come from the disassembly. A rig reading the `[ebp-0x1308]+0x18`
+  vector the way `frida_zone_props2.py` reads the prop vector would close it; it is the
+  one thing in this slice that would want a capture session.
+* **Zone (33020,32660)** is the one capture zone whose LCG origin `make_creatures_golden.py`
+  cannot find, so it is absent from the golden. It is also the only kind-3 zone of the 56.
+  Not chased.
+* **`0x51f285`** (the mat-12 species branch) has still never fired in any capture.
 
 ### Then, in order
 
-1. **The town chain.** Its **plot heights are region-cache-blocked**, so the verdict rule
-   is statable but not seed-reproducible — port what is derivable and stop there.
-   `gate_town_props.py` currently FAILS and wants triage first (see the short tasks).
+1. **The rest of the town chain** (beyond the draw-cost question above). Its **plot
+   heights are region-cache-blocked**, so the verdict rule is statable but not
+   seed-reproducible — port what is derivable and stop there. `gate_town_props.py`
+   currently FAILS and wants triage first (see the short tasks).
 2. **The dungeon mob pass + boss spawn + light sources** into `cw_rederive`/`cwgen`. All
    gated; all pure functions of the finished dungeon voxel stamp, which the port already
    produces bit-exact — no captured booleans, no order state. Then the engine half of
@@ -619,10 +621,15 @@ Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fail
 cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
 ```
 
-**Known-good as of 07-27d:** the `cw_decomp` gate suite is green except
+**Known-good as of 07-27e:** the `cw_decomp` gate suite is green except
 `gate_town_props.py`; `cwgen_test` is green except **`rederive_zoneac` 107/109**, hash
-**`F06E7FAF50277143`** in both Debug and Release. (Re-verified 07-27d after the creature
-slice, which touched no cwgen code.)
+**`F5D7D16E92EE5C38`** in both Debug and Release.
+
+⚠ **The hash CHANGED at 07-27e** (was `F06E7FAF50277143`) because the creature scatter's
+records now feed it. That was deliberate: this stage is the only place in cwgen that runs
+`sin`/`cos` through the `cvtpd2ps`/`cvtps2pd` round and then `ftol2`, so Debug-vs-Release
+agreement on it is worth more than a stable constant. Nothing else moved -- every other
+gate's counts are unchanged.
 
 ⚠ **Grepping the suite for "FAIL" gives two false alarms.** `gate_zone_bed.py` ends with
 `44 ok, 0 FAIL`, and six gates (`gate_dungeon_counter`, `gate_zone_landform`,

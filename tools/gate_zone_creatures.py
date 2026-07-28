@@ -39,6 +39,7 @@ Docs/RE_zone_creatures.md.
 """
 import json
 import os
+import re
 import struct
 import sys
 
@@ -61,8 +62,8 @@ SCAN_LO, SCAN_HI = 0x51ED60, 0x51FA00
 S_CELL      = 0x51ED7E   # (rand() & 3) == 0  -> skip the cell
 S_JITX      = 0x51ED92   # rand() % 10, the X jitter
 S_JITZ      = 0x51EDBA   # rand() % 10, the Z jitter
-S_COLD      = 0x51EEC0   # only when temperature  < 0.2; (rand()&3)==0 -> skip
-S_DRY       = 0x51EF2D   # only when humidity     < 0.2; (rand()&3)==0 -> skip
+S_COLD      = 0x51EEC0   # only when HUMIDITY    < 0.2; (rand()&3)==0 -> skip
+S_DRY       = 0x51EF2D   # only when TEMPERATURE < 0.2; (rand()&3)==0 -> skip
 S_FACING    = 0x51F227   # the entity exists: facing = rand()*360/32767
 S_MAT12     = 0x51F285   # mat 12: (rand()&1) ? 0x7e : 0x82        -- NEVER OBSERVED
 S_M10GATE   = 0x51F2F8   # mat 10: (rand()&3) != 0 -> fall to the tail
@@ -118,12 +119,12 @@ BYTES = [
     (0x51EE58, "0f87170b0000",      "ja 0x51f975                    -- d*d > 0.3 skips"),
 
     # -- the two climate gates, each a 1-in-4 rejection
-    (0x51EE7D, "f30f104008",        "movss xmm0, [eax + 8]          -- column temperature"),
-    (0x51EEB8, "7618",              "jbe 0x51eed2                   -- 0.2 <= temp: no draw"),
-    (0x51EECC, "0f84af0a0000",      "je 0x51f981                    -- cold + 1-in-4: skip"),
-    (0x51EEEA, "f30f104004",        "movss xmm0, [eax + 4]          -- column humidity"),
-    (0x51EF25, "7618",              "jbe 0x51ef3f                   -- 0.2 <= humid: no draw"),
-    (0x51EF39, "0f84420a0000",      "je 0x51f981                    -- dry + 1-in-4: skip"),
+    (0x51EE7D, "f30f104008",        "movss xmm0, [eax + 8]          -- column HUMIDITY (4f8b40)"),
+    (0x51EEB8, "7618",              "jbe 0x51eed2                   -- 0.2 <= humid: no draw"),
+    (0x51EECC, "0f84af0a0000",      "je 0x51f981                    -- dry + 1-in-4: skip"),
+    (0x51EEEA, "f30f104004",        "movss xmm0, [eax + 4]          -- column TEMPERATURE (4f8570)"),
+    (0x51EF25, "7618",              "jbe 0x51ef3f                   -- 0.2 <= temp: no draw"),
+    (0x51EF39, "0f84420a0000",      "je 0x51f981                    -- cold + 1-in-4: skip"),
 
     # -- the site-list proximity test, in 16.16 against the entity's own fraction
     (0x51EF3F, "8b8588ecffff",      "mov eax, [ebp - 0x1378]        -- the builder's site list"),
@@ -174,13 +175,13 @@ BYTES = [
     (0x51F351, "c7472c7d000000",    "mov [edi + 0x2c], 0x7d"),
     (0x51F367, "c7472c7b000000",    "mov [edi + 0x2c], 0x7b"),
     (0x51F384, "b903000000",        "mov ecx, 3                     -- desert gate rand()%3"),
-    (0x51F397, "0f2f05d8865500",    "comiss xmm0, [0x5586d8]        -- temperature vs 0.8"),
-    (0x51F3A8, "0f2f8524edffff",    "comiss xmm0, [ebp - 0x12dc]    -- 0.1 vs humidity"),
+    (0x51F397, "0f2f05d8865500",    "comiss xmm0, [0x5586d8]        -- HUMIDITY vs 0.8"),
+    (0x51F3A8, "0f2f8524edffff",    "comiss xmm0, [ebp - 0x12dc]    -- 0.1 vs TEMPERATURE"),
     (0x51F3CF, "c7472c80000000",    "mov [edi + 0x2c], 0x80"),
     (0x51F3DB, "c7472c7c000000",    "mov [edi + 0x2c], 0x7c"),
     (0x51F3E7, "83bd10edffff04",    "cmp [ebp - 0x12f0], 4          -- only mat 4 continues"),
     (0x51F3FB, "b903000000",        "mov ecx, 3                     -- mat-4 gate rand()%3"),
-    (0x51F450, "0f2f05bc865500",    "comiss xmm0, [0x5586bc]        -- humidity vs 0.1"),
+    (0x51F450, "0f2f05bc865500",    "comiss xmm0, [0x5586bc]        -- TEMPERATURE vs 0.1"),
     (0x51F47E, "c7402c78000000",    "mov [eax + 0x2c], 0x78"),
     (0x51F487, "c7402c7d000000",    "mov [eax + 0x2c], 0x7d"),
     (0x51F496, "c7402c7f000000",    "mov [eax + 0x2c], 0x7f"),
@@ -225,10 +226,10 @@ BYTES = [
 # The floats the decode names, and what they must be.
 CONSTS = [
     (0x5586CC, 0.3,     "the falloff-squared cutoff"),
-    (0x5586C4, 0.2,     "the cold / dry threshold"),
+    (0x5586C4, 0.2,     "the humidity / temperature coin threshold"),
     (0x5586DC, 1.0,     "one"),
-    (0x5586D8, 0.8,     "the desert temperature"),
-    (0x5586BC, 0.1,     "the desert / mat-4 humidity"),
+    (0x5586D8, 0.8,     "the wet-branch humidity"),
+    (0x5586BC, 0.1,     "the wet-branch / mat-4 temperature"),
     (0x5588F0, 400.0,   "the site proximity radius squared"),
     (0x558780, 360.0,   "degrees"),
     (0x558834, 32767.0, "RAND_MAX"),
@@ -378,9 +379,9 @@ def parse_species(toks, stats):
     if site == S_DESGATE:
         (_, v, _), toks = take(toks, S_DESGATE, "mat 4/5/9 gate")
         if v % 3 != 0:
-            # temp > 0.8 and humid < 0.1 -- if it held, the desert pick is next
+            # humid > 0.8 and temp < 0.1 -- if it held, the wet-branch pick is next
             if toks and toks[0][0] == S_DESPICK:
-                (_, v2, _), toks = take(toks, S_DESPICK, "desert pick")
+                (_, v2, _), toks = take(toks, S_DESPICK, "wet-branch pick")
                 stats["desert"] += 1
                 stats["species"][PICK_DES[v2 % 2]] += 1
                 return toks, True
@@ -581,6 +582,58 @@ def main():
     chk(all(lvl_tab[s] == (2, 4) for s in range(0x78, 0x84)),
         "the material-branch species all level 2-4")
 
+    # 4b. THE PORT'S TRANSCRIPTION of those tables.
+    #
+    # CwZoneCreatures.cpp carries kGroupRange / kLevelRange / kMemberFamily as literal
+    # arrays. They were hand-written once and were wrong in 17 and 109 entries -- caught
+    # only because rederive_creatures predicts a pack SIZE from the group range and one
+    # zone's pack came out short. A literal table copied out of an image needs a machine
+    # to keep it honest, so diff every entry against the image on every run.
+    cpp = os.path.join(ROOT, "..", "..", "src", "worldgen", "cw", "CwZoneCreatures.cpp")
+    if os.path.exists(cpp):
+        src = open(cpp, encoding="utf-8").read()
+
+        def cpp_table(decl):
+            m = re.search(re.escape(decl) + r" = \{(.*?)\n\};", src, re.S)
+            if not m:
+                return None
+            return [(int(a), int(b)) for a, b in re.findall(r"\{(\d+),(\d+)\}", m.group(1))]
+
+        fam_tab = img.read(0x52C108, 0x55)
+        jt = [struct.unpack("<I", img.read(0x52C0D8 + 4 * i, 4))[0] for i in range(12)]
+
+        def case(t):
+            b = img.read(t, 26)
+            if b[0] == 0x8B:
+                return (0, 0)
+            mod = (struct.unpack("<I", b[7:11])[0] & 0x7FFFFFFF) + 1
+            for off in range(11, 24):
+                if b[off] == 0x83 and b[off + 1] == 0xC0:
+                    return (mod, b[off + 2])
+                if b[off] == 0x5D:
+                    return (mod, 0)
+            return None
+
+        cases = [case(t) for t in jt]
+        want_tables = [
+            ("constexpr SpeciesRange kGroupRange[kSpeciesMax]", grp_tab),
+            ("constexpr SpeciesRange kLevelRange[kSpeciesMax]", lvl_tab),
+            ("constexpr Family kMemberFamily[kFamilyMax]",
+             {s: cases[fam_tab[s]] for s in range(0x55)}),
+        ]
+        for decl, want in want_tables:
+            got = cpp_table(decl)
+            chk(got is not None, "CwZoneCreatures.cpp has %s" % decl)
+            if got is None:
+                continue
+            bad = [i for i in range(len(got)) if got[i] != want[i]]
+            chk(not bad, "%s: %d of %d entries differ from Server.exe%s"
+                % (decl.split()[-1], len(bad), len(got),
+                   "".join("\n           0x%02x: source %s, image %s" % (i, got[i], want[i])
+                           for i in bad[:6])))
+    else:
+        print("   (CwZoneCreatures.cpp not found -- the port's tables are NOT checked)")
+
     # 5. the live stream, as a grammar
     cap = json.load(open(os.path.join(RAW, "zone_props2_capture.json")))
     stats = {k: 0 for k in ("skip_coin", "cold", "dry", "skip_cold", "skip_dry",
@@ -662,12 +715,13 @@ def main():
     print("gate_zone_creatures -- the overworld creature scatter, 0x51ed60-0x51f981")
     print("   %d rand sites in 0x%06x-0x%06x, census exhaustive" % (len(sites), SCAN_LO, SCAN_HI))
     print("   %d zones, %d grid cells (9 per zone)" % (zones, cells))
-    print("   cells skipped: %d coin, %d cold, %d dry, %d by a draw-free gate"
+    print("   cells skipped: %d coin, %d dry, %d cold, %d by a draw-free gate"
           % (stats["skip_coin"], stats["skip_cold"], stats["skip_dry"], stats["skip_silent"]))
-    print("   climate coins spent: %d cold, %d dry" % (stats["cold"], stats["dry"]))
+    print("   climate coins spent: %d low-humidity, %d low-temperature"
+          % (stats["cold"], stats["dry"]))
     print("   %d leaders spawned: %d solo (material branch), %d with a pack roll"
           % (stats["spawn"], stats["solo"], stats["packs"]))
-    print("   material branches: mat10 %d kept / %d fell through, desert %d, "
+    print("   material branches: mat10 %d kept / %d fell through, wet-branch %d, "
           "mat4 %d kept / %d rolled out / %d too dry, mat5|9 %d, mat12 %d"
           % (stats["m10_pick"], stats["m10_reject"], stats["desert"], stats["m4_pick"],
              stats["m4_reject"], stats["m4_dry"], stats["mat59"], stats["mat12"]))
