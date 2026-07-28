@@ -11,8 +11,15 @@
 > rule itself, which *is* now decoded in full and gated.
 
 ```
-python tools/gate_town_verdict.py      # 3,984 checks over 72 towns
+python tools/gate_town_verdict.py      # 5,469 checks over 72 towns
+build/cwgen_test.exe tools/cw_rederive/golden_rederive   # rederive_townverdict 641/641
 ```
+
+> **2026-07-28b — the pass is now PORTED, and the reachability question it was really
+> about is answered.** §6 has the whole of it. Two headline numbers: the town builder is
+> entered at zone-stream index **0 in 23 of 71 towns** (median 53), and cwgen arrives at
+> it at the exactly right index in **34 of 34** towns it can replay, with the entire scan
+> phase — every rotation, nudge and verdict — exact in **29 of those 34**.
 
 ---
 
@@ -134,11 +141,13 @@ Note the asymmetry with the scan phase: the cull there is `> 16`, here it is `>=
 
 ---
 
-## 3. What is gated — `tools/gate_town_verdict.py`, 3,984 checks over 72 towns
+## 3. What is gated — `tools/gate_town_verdict.py`, 5,469 checks over 72 towns
 
 | claim | result |
 |---|---|
 | `0x4e2d83` fires exactly `plotCount` times — one rotation draw per plot, unconditional | **72 / 72** |
+| every plot's FINAL rotation `== nudge(rand() % 4)` in scan order — the nudge rule *and* the scan order, added 07-28b | **1,485 / 1,485**, 72 towns |
+| the same with the scan order transposed (reported, never asserted) | 816 / 1,485 |
 | `plot[+0x18] == World_falloffSquared(cell, plotOrigin + span/2)`, **from the seed** | **1,485 / 1,485** |
 | no verdict-2 plot has `maxH - minH > 16` | 1,485 / 1,485 |
 | `0x4e3039` fires once per verdict-0/6 plot with span < 16, and never in a ruin | **72 / 72** |
@@ -204,7 +213,100 @@ What is actually new, and why the slice was still worth running:
   where the map is forced;
 * the two `gate_town_props.py` corrections in §4.
 
-## 6. Still open
+## 6. The PORT, and the reachability result (2026-07-28b)
+
+`cwgen`: `src/worldgen/cw/CwTown.h` (`townScanPass`, `townNudgeRotation`, pure) +
+`CwForest.cpp` (`zoneTownPlan`, the pre-chain replay). Golden:
+`tools/cw_rederive/make_townverdict_golden.py` → `rederive_townverdict.bin` (section 60).
+
+### 6.1 The town builder sits at the HEAD of the zone stream
+
+This is the finding that reframed the slice, and it cost one script. §1 established that
+the builder is too big to port whole. That was taken to mean the town chain was a long
+way from emitter C. It measured the wrong end: what matters for reachability is not what
+the builder *spends*, it is where the builder *starts*.
+
+Recovering every captured town's absolute entry index — LCG-stepping from the zone seed
+the way `make_zoneac_golden.py` does for emitter A, accepting an origin only when every
+recorded `(n, value)` of the zone matches — locates **92 of 92 towns**, and puts the
+entry index at:
+
+| | |
+|---|---|
+| **0** | in **23 of 71** towns |
+| median | **53** |
+| max | 16,714 |
+
+Zero, because a site-kind-1 zone skips both the gen-scatter (`0x51b05a`) and the mat-38
+loop (`0x51cd79`) — the same guard that puts 41 of 112 kind-4 zones at index 0. So
+*arriving* at `FUN_004e28e0` is a pre-chain question cwgen already answers, and only
+*leaving* it correctly needs the 64 KB.
+
+### 6.2 A zone class no ab-initio gate had ever entered
+
+Every other zone gate in this project structurally excludes towns: `rederive_zoneac` is
+site-kind 4, `rederive_zonepropsb` is the even-parity tail, `rederive_campgrid` needs a
+camp descriptor and a town's type-1/5 descriptor is one of the five the camp path
+declines. Lesson 9 from its least visible side — not a branch that never ran, but a whole
+**zone class** no gate had entered.
+
+Entering it needed one correction. A town zone classifies as `Village`, and `zoneRunestone`
+and friends decline `Village`. That classification is **vacuous for a town**: `village`
+exists for exactly two consumers — the gen-scatter keep-gate and the mat-38 rejection —
+and a site-kind 1/3/4 zone jumps clear of both, so the un-RE'd `FUN_004d19f0` never runs.
+Declining them was costing the port every town zone for nothing. `zoneTownPlan` admits
+`Village` when the site kind is one of those three; `Landform` and `Feature` are still
+declined, because their streams really are perturbed.
+
+### 6.3 What the gate asserts, and what it only measures
+
+Pass criterion — deliberately only the two things that are pure functions of the seed:
+
+| claim | result |
+|---|---|
+| the ARRIVAL INDEX at the builder gate (`0x51d435`), per town | **34 / 34** |
+| the plot SCORE, `World_falloffSquared(cell, plotOrigin + span/2)`, per plot | **607 / 607** |
+
+Everything below is **reported every run and never asserted**, because it reads the
+finished zone's column block classes and heights — the region-cache-blocked half
+(`RatForge/docs/CW_REGIONCACHE_SCHEDULER.md`). Asserting them would be asserting cwgen's
+terrain against a server that is not self-consistent about it.
+
+| measured | of |
+|---|---|
+| the whole **SCAN PHASE** exact — every `rotRaw`, every nudged `rot`, every verdict | **29 / 34 towns** |
+| roll-count / coin-count agreement | 29 / 34 towns each |
+| per plot: `rotRaw` 529, `rot` 521, verdict 537, span-cull 588 | 607 plots |
+| terrain: `minH` 598, `maxH` 548, both 547; `interior` 529 of those 547 | 607 plots |
+
+38 of the 72 towns are `Landform`/`Feature` and are skipped, counted and named rather
+than guessed at.
+
+**Read the 29/34 as the headline, not the per-plot numbers.** The scan interleaves a
+*conditional* roll between successive rotation draws, so one wrong `water` or `sand` flag
+early in a town shifts every later draw in it — the per-plot counts are one town's error
+repeated, not 78 independent ones.
+
+### 6.4 Two things settled in passing
+
+* **The within-plot `i`/`j` orientation is not an untested free parameter — it is
+  unobservable.** Every accumulator in the column loop is order-free except `interior`,
+  which keeps the last qualifying column; its window is the symmetric square
+  `i, j ∈ [8, span-9]`, so both orders end on the same corner `(span-9, span-9)` and
+  write the same value. A closed door rather than a carried risk (lessons 6 and 13).
+  The **plot** order, by contrast, *is* observable — the per-plot rotation draw pins it —
+  and is now proven: r-outer 72/72, transpose 0/72.
+
+* ⚠ **`cubeworld_re/cw_town.py` is NOT transposed, and must not be "fixed".** It maps
+  X from `k // N`; this repo maps X from `k % N`. Each is validated in its own frame and
+  each fails in the other's: 25/25 vs 5/25 against `town_terr2_capture.json`, 1485/1485 vs
+  331/1485 against `town_props_capture*.json`. So the disagreement is in how the two
+  **rigs name their axes**, not in either port's arithmetic, and flipping either breaks
+  the one that was flipped. cwgen follows this repo's frame and is pinned to it
+  independently by the 607/607 ab-initio score check. A note to that effect is now in
+  `cw_town.py` itself, because the obvious "correction" is a regression.
+
+## 7. Still open
 
 1. **The three terrain booleans** (`water`, `near`, `sand`) are read off the finished
    zone's columns. `near` is pure (`World_falloffSquared > 0.1`); `water` and `sand` need
@@ -212,7 +314,34 @@ What is actually new, and why the slice was still worth running:
    not where the region-cache scheduler perturbs the landform
    (`RatForge/docs/CW_REGIONCACHE_SCHEDULER.md`). Deriving them is what would make the
    verdict fully seed-reproducible, and it is a *terrain* question, not a town question.
+   **Now measured, not estimated:** they are already right in **29 of the 34** towns
+   cwgen can replay (§6.3), so this is a 5-town residual and each of those towns names
+   its own disagreeing column.
 2. **`minH`/`maxH`/`plot[+8]`** — same standing as always: the arithmetic is exact, the
-   values are region-cache-blocked.
-3. **The 173 rand sites downstream of the scan.** Untouched. Two of them
+   values are region-cache-blocked. Measured agreement: `minH` 598/607, `maxH` 548/607.
+3. **The 173 rand sites downstream of the scan.** Untouched, and still the reason nothing
+   downstream of the builder may be believed in a type-1/5 zone. Two of them
    (`0x4e54e8`, `0x4ef7c8`) carry 36% of all the draws this layer spends.
+
+   **But the next stage after the scan is nearly free, and that is the lead.** The
+   PROMOTION pass (`0x4e31c7`-`0x4e37aa`, the sort-and-pop that assigns special roles)
+   spends a **median of 1 draw per town** — min 0, max 10, 252 draws across all 92 towns,
+   and it fires in only 56 of them. So the stage after the one just ported costs about as
+   much as a single plot does. The order to work in, measured rather than guessed:
+
+   | site | draws | towns | |
+   |---|---|---|---|
+   | promotion (`0x4e33c8`/`0x4e35c5`/`0x4e3646`/`0x4e3766`) | 252 | 56 | the faction role pops — **next** |
+   | `0x4eda58` | 2,968 | 69 | the first genuinely broad site |
+   | `0x4e742e` | 15,609 | 70 | |
+   | `0x4e54e8`, `0x4ef7c8` | 132,928 | 15 / 28 | per-column loops, 36% of the layer |
+
+   What the promotion pass still needs is not draw budget but two inputs:
+   `FUN_004e19f0`'s **sort key** (cw_town.py has carried it as TODO since 2026-07-07) and
+   whether **`site+0x79`**, the faction that selects the role set, is derivable from the
+   seed at all. Both are small, self-contained questions — and the captures on disk carry
+   `faction` next to every town, so the second is checkable without a server.
+4. **The 38 of 72 towns cwgen declines** as `Landform`/`Feature`. Unlike the `Village`
+   admission in §6.2 these are genuine — but nobody has checked whether they are genuine
+   *for a town zone specifically*, given how much of the pre-chain a site-kind-1 zone
+   skips. Worth one measurement before it is assumed.

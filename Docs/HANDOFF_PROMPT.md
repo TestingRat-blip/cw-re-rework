@@ -218,6 +218,21 @@ if you are about to trust a green gate, read group B. Every one of these cost re
    against the binary to a gate in the same commit** (`gate_zone_creatures.py` now re-reads
    all three tables and diffs them against the source literals every run).
 
+7f. **A stage sized by what it SPENDS is not sized by where it STARTS — and a
+   conservative classification can be vacuous for the consumer you are about to run.**
+   Both halves landed in one slice, and together they turned "the town chain needs the
+   whole 64 KB builder" into a gate in an afternoon. The 07-27f measurement was right and
+   its conclusion did not follow: `FUN_004e28e0` really does spend 17-19,576 draws across
+   176 rand sites, but **reaching** it is a different question, and one script answers it
+   — LCG-recovering every captured town's absolute entry index puts the builder at stream
+   index **0 in 23 of 71 towns**, median 53. Then the port still declined every town zone,
+   because a town classifies as `Village` — a flag that exists for exactly two consumers,
+   the gen-scatter keep-gate and the mat-38 rejection, **both of which a site-kind 1/3/4
+   zone skips**. The classification had been correct when it was written and was now
+   guarding nothing. **Before scoping work around a stage's cost, measure its ENTRY; and
+   before accepting a "not replayable" verdict, check whether the thing that motivated it
+   still runs.**
+
 ### B. What a green gate does NOT prove
 
 The single most expensive family in this project. Five separate instances of the same
@@ -386,10 +401,11 @@ Objective: **finish "populated worldgen"**. The deterministic geometry was alrea
 this year's work has been the **entity / prop layer**.
 
 ⚠ **Read this table as "the RE is done and gated *in this repo*" — not "the port is done".**
-Those are two different ledgers and they are not in step: emitters A and C have a green RE
-gate here and **no cwgen port at all**, which is why porting C is the next task. Where a
-cwgen gate exists it is named in the last column. Nothing below needs another capture
-session; every open question left is reachable from the captures already on disk.
+Those are two different ledgers and they are not in step. Emitter A and the town builder's
+verdict scan have since been ported (07-27c, 07-28c); **emitter C still has a green RE gate
+here and no cwgen port at all**. Where a cwgen gate exists it is named in the last column.
+Nothing below needs another capture session; every open question left is reachable from the
+captures already on disk.
 
 | layer (RE + gate in THIS repo) | doc | gate coverage |
 |---|---|---|
@@ -416,7 +432,7 @@ session; every open question left is reachable from the captures already on disk
 | **EMITTER A** (the runestone circle) — RE'd *and ported*, reached from the seed; its Z settle probes `(cx+3, cz+3)` | `RE_zone_emitters_ac.md` | `gate_zone_ac` 1,232 / 112 zones; **`rederive_zoneac` 109/109 ab initio**, record Y included |
 | the **OVERWORLD CREATURE SCATTER** (`0x51ed60`-`0x51f981`) — 3x3 grid, species tree, pack ring; RE'd *and ported* | `RE_zone_creatures.md` | `gate_zone_creatures` **217/217**; **`rederive_creatures` 1043/1043 ab initio**, 18 zones |
 | `FUN_005290d0` = `World_pickCreatureSpecies` + `FUN_0052bfa0` = `World_pickPackMemberSpecies` | `RE_zone_creatures.md` | (folded into the two above) |
-| the town builder's **PLOT VERDICT** pass (`0x4e2a80`-`0x4e3093`) + its plot score, from the seed | `RE_town_verdict.md` | `gate_town_verdict` 3,984 / 72 towns |
+| the town builder's **PLOT VERDICT** pass (`0x4e2a80`-`0x4e3093`) + its plot score + its rotation/nudge, from the seed — RE'd *and ported* | `RE_town_verdict.md` | `gate_town_verdict` **5,469** / 72 towns; **`rederive_townverdict` 641/641 ab initio**, 34/34 arrivals |
 
 Two structural facts worth carrying:
 
@@ -435,6 +451,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
+| 07-28c | ★ **the TOWN BUILDER's scan pass PORTED, and towns become reachable**: the builder sits at the HEAD of the zone stream (entry index **0 in 23 of 71** towns, median 53), and a town zone's `Village` classification is **vacuous** — both its consumers are skipped at site kind 1/3/4. First ab-initio gate ever to enter a town zone | `RE_town_verdict.md` §6 | **`rederive_townverdict` 641/641**, arrival **34/34**, whole scan phase exact in **29/34**; `gate_town_verdict` 3,984 → **5,469** |
 | 07-28b | ✅ **`cwgen_test` GOES FULLY GREEN**: the bed pass's CARVE LEVEL is `FUN_004f9b70` in FULL — the type-1 village damp and the ocean-site repulsion live inside it, and all three ports used the *open* base height. `rederive_zoneac` 107/109 → **109/109** | `RE_zone_tail.md` | `gate_zone_bed` still 44/44; `rederive_river` regenerated (1 row of 3,005, `w` by 1 ULP) |
 | 07-28 | ★ **the "type-10 terrain drift" RETRACTED** — it was emitter A settling on the zone centre instead of `(cx+3, cz+3)`; Y went 73/109 → **109/109**, terrain untouched. Plus three prologue findings, one of them an open gap (the land mask's village-road cube) | `RE_zone_emitters_ac.md`, `RE_zone_landform.md` | `rederive_zoneac` Y **109/109**, now in the pass criterion |
 | 07-27f | the town builder's **plot verdict** decoded in full + the town-builder draw cost MEASURED (17-19,576); `gate_town_props` fixed and green | `RE_town_verdict.md` | `gate_town_verdict` 3,984 |
@@ -552,11 +569,22 @@ it. Read the span before assuming where the emitter begins.
 — all gates pass, both configs, hash `2D52E0BE1C55FFAB`. So the list below is the whole of
 what is next; take item 1.
 
-1. **The rest of the town chain.** Now correctly sized: 176 rand sites, up to 19,576 draws
-   a town, and the only route to emitter C. The **verdict** pass is done
-   (`RE_town_verdict.md`); the **plot heights** stay region-cache-blocked, so port what is
-   derivable and say where it stops. `gate_town_props.py` is **fixed and green** as of
-   07-27f — two lesson-9 corrections, both recorded in `RE_town_verdict.md` §4.
+1. **The rest of the town chain.** ⚠ **Re-scoped 07-28c — read `RE_town_verdict.md` §6
+   before planning it.** The verdict SCAN pass is now RE'd *and ported*
+   (`rederive_townverdict`, arrival 34/34, whole scan phase exact in 29/34), and the thing
+   that slice found changes the shape of the rest: **the builder is entered at zone-stream
+   index 0 in 23 of 71 towns, median 53.** Arriving was never the hard part; the 173 rand
+   sites *downstream of the scan* are, and they are what still stands between here and
+   emitter C. **Start with the PROMOTION pass** (`0x4e31c7`-`0x4e37aa`) — the very next
+   stage after the ported scan, and it is nearly free: a **median of 1 draw per town**,
+   252 in all 92 towns, firing in 56 of them. What it needs is not budget but two small
+   self-contained inputs — `FUN_004e19f0`'s **sort key** (`cw_town.py` has carried it as
+   TODO since 2026-07-07) and whether **`site+0x79`**, the faction that picks the role
+   set, is derivable from the seed; the captures carry `faction` next to every town, so
+   that is checkable with no server. Only after that do the expensive sites bite
+   (`0x4eda58` 2,968 draws / 69 towns, then `0x4e54e8` / `0x4ef7c8` per-column loops at
+   36% of the layer — both of which read terrain cwgen already produces). The **plot
+   heights** stay region-cache-blocked. `gate_town_props.py` is **fixed and green** (07-27f).
 2. **The dungeon mob pass + boss spawn + light sources** into `cw_rederive`/`cwgen`. All
    gated; all pure functions of the finished dungeon voxel stamp, which the port already
    produces bit-exact — no captured booleans, no order state. Then the engine half of
@@ -695,9 +723,19 @@ Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fail
 cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
 ```
 
-**Known-good as of 07-28b:** the `cw_decomp` gate suite is **fully green** (28 gates), and
-**`cwgen_test` is fully green too — for the first time** (`rederive_zoneac` was deliberately
-red for a day). Hash **`2D52E0BE1C55FFAB`** in both Debug and Release. The whole chain was
+**Known-good as of 07-28c:** the `cw_decomp` gate suite is **fully green** (28 gates), and
+**`cwgen_test` is fully green** (29 gates now — `rederive_townverdict` is new). Hash
+**`F20252B941259929`** in both Debug and Release.
+
+⚠ **`cwgen_test` now takes about 5 minutes per config** — the town scan reads all 65,536
+columns of every town zone it replays. That is the gate doing real work, not a hang.
+
+⚠ **The 07-28c hash change was isolated before it was accepted**: moving *only*
+`rederive_townverdict.bin` aside restores `2D52E0BE1C55FFAB` exactly, so the delta is the
+new gate's own hashed values and nothing else moved. Do that check on any new gate — it
+costs one run and turns "I think nothing else changed" into a measurement (lesson 17).
+
+**Superseded:** hash **`2D52E0BE1C55FFAB`** was the 07-28b known-good. The whole chain was
 re-verified from the 07-27f baseline (`F5D7D16E92EE5C38`) before anything changed.
 
 ⚠ **The hash changed TWICE on 07-28**, both deliberately and both because a real bug was

@@ -16,12 +16,23 @@ of `raw/town_props_capture*.json` (rig: `frida_town_props.py`, seed 42069).
            verdict = 2 if score + 0.25 > r else 0                      0x4e2e5e
       if maxH - minH > 16             -> 0   0x4e2e7f
 
+    then the ROTATION-NUDGE pass, no draws:                            0x4e2eff
+      while the neighbour the rotation names (0 -> -Z, 1 -> -X, 2 -> +Z, 3 -> +X) is
+      off-grid OR is itself a verdict-2 plot:  rot += 1   -- at most three times
+
     then, VILLAGES ONLY (cell type 1), in RECORD-INDEX order:          0x4e2fdf
       for each plot with verdict 0 and maxH - minH < 16:
           if (rand() & 1) == 0 and score > 0.0:  verdict = 6           0x4e3039
 
 The two rand sites downstream of the rotation are CONDITIONAL, which is the correction
 this gate exists to keep: the handoff carried them as "spent unconditionally per plot".
+
+⚠ 2026-07-28: the ROTATION was decoded in RE_town_verdict.md but never checked -- this
+gate counted the rotation DRAWS and never compared a rotation VALUE, so both the nudge
+rule and the scan ORDER were carried on a read of the disassembly alone. Both are now
+checked, and the order check is the one that matters: `rot` is the only per-plot
+observable that can see it, so without this the scan order was exactly the untested free
+parameter lesson 13 warns about. r-outer passes 72/72 and the transpose 0/72.
 
     python tools/gate_town_verdict.py
 """
@@ -68,6 +79,21 @@ def falloff_squared(desc, x, z):
     return F32(onemw * onemw) if onemw > 0.0 else 0.0
 
 
+def nudge(rot, r, c, n, is_two):
+    """The rotation-nudge pass, 0x4e2eff-0x4e2fd9 -- no draws. While the neighbour the
+    rotation names is off-grid or is itself a verdict-2 plot, increment and look again,
+    up to three times. (r drives X, c drives Z; record index = r + n*c.)"""
+    dirs = {0: (0, -1), 1: (-1, 0), 2: (0, 1), 3: (1, 0)}
+    for _ in range(3):
+        dr, dc = dirs[rot % 4]
+        rr, cc = r + dr, c + dc
+        if not (0 <= rr < n and 0 <= cc < n) or is_two[rr + n * cc]:
+            rot += 1
+        else:
+            break
+    return rot
+
+
 def main():
     hits = []
     for name in CAPTURES:
@@ -104,6 +130,35 @@ def main():
             ok["rot draws == plotCount"] += 1
         else:
             fail.append("%s rot draws %d != plotCount %d" % (tag, got, h["plotCount"]))
+
+        # ---- 1b. the ROTATION: the raw draw, the nudge, and the scan ORDER ----------
+        # `order` maps the k-th rotation draw to its plot. It is the ONLY place the scan
+        # order is observable -- every flag and every count is order-free -- so this is
+        # also the falsification of the transpose, which is what the other corpus's
+        # cw_town.py has (RE_town_verdict.md §5).
+        rots = [p["rot"] for p in ps]
+        is_two = [p["v"] == 2 for p in ps]
+        rot_draws = draws[RA_ROT]
+        if len(rot_draws) == h["plotCount"]:
+            for tag, order in (
+                ("rot == nudge(rand()%4), scan order r-outer",
+                 [r + n * c for r in range(n) for c in range(n)]),
+                ("_transpose", [r + n * c for c in range(n) for r in range(n)]),
+            ):
+                raw = {}
+                for k, i in enumerate(order):
+                    raw[i] = rot_draws[k] % 4
+                hit = sum(1 for i in range(len(rots))
+                          if nudge(raw[i], i % n, i // n, n, is_two) == rots[i])
+                if tag == "_transpose":
+                    # reported, never asserted: it MUST be worse, and saying by how much
+                    # is what makes "the order is proven" a measurement (lesson 5).
+                    ok["(the transposed scan order agrees on)"] += hit
+                elif hit == len(rots):
+                    ok[tag] += hit
+                    ok["towns whose every rotation is derived"] += 1
+                else:
+                    fail.append("%s: %d of %d rotations" % (tag, hit, len(rots)))
 
         # ---- 2. the score, ab initio from the seed ---------------------------------
         for i, p in enumerate(ps):
