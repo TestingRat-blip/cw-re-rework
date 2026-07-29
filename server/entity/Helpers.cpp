@@ -1,4 +1,4 @@
-// Helpers (entity) -- server. 28 functions. Bodies = Ghidra pseudo-C.
+// Helpers (entity) -- server. 29 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Helpers.h"
 
@@ -1614,6 +1614,52 @@ int __cdecl FUN_00469fc0(int *param_1,int param_2)
   }
   FUN_00474fe0(param_1);
   return iVar2;
+}
+
+
+/* FUN_004f59f0 @ 004f59f0  kind=gamemisc  attributed-by=caller-vote  size=202 */
+
+undefined1 * __cdecl FUN_004f59f0(undefined4 *param_1,undefined4 *param_2,undefined1 *param_3)
+
+{
+  undefined4 *puVar1;
+  undefined1 *puVar2;
+  undefined1 *puVar3;
+  int iVar4;
+  undefined4 *puVar5;
+  
+  if (param_1 != param_2) {
+    puVar5 = param_1 + 1;
+    do {
+      *param_3 = *(undefined1 *)(puVar5 + -1);
+      param_3[1] = *(undefined1 *)((int)puVar5 + -3);
+      *(undefined4 *)(param_3 + 4) = *puVar5;
+      *(undefined4 *)(param_3 + 8) = puVar5[1];
+      param_3[0xc] = *(undefined1 *)(puVar5 + 2);
+      param_3[0xd] = *(undefined1 *)((int)puVar5 + 9);
+      param_3[0xe] = *(undefined1 *)((int)puVar5 + 10);
+      *(undefined2 *)(param_3 + 0x10) = *(undefined2 *)(puVar5 + 3);
+      puVar3 = (undefined1 *)((int)puVar5 + 0x13);
+      puVar2 = param_3 + 0x15;
+      iVar4 = 0x20;
+      do {
+        puVar2[-1] = puVar3[-3];
+        *puVar2 = puVar2[(int)puVar5 + (-4 - (int)param_3)];
+        puVar2[1] = puVar3[-1];
+        puVar2[2] = *puVar3;
+        *(undefined4 *)(puVar2 + 3) = *(undefined4 *)(puVar3 + 1);
+        puVar3 = puVar3 + 8;
+        puVar2 = puVar2 + 8;
+        iVar4 = iVar4 + -1;
+      } while (iVar4 != 0);
+      *(undefined4 *)(param_3 + 0x114) = puVar5[0x44];
+      puVar1 = puVar5 + 0x45;
+      param_3 = param_3 + 0x118;
+      puVar5 = puVar5 + 0x46;
+    } while (puVar1 != param_2);
+    return param_3;
+  }
+  return param_3;
 }
 
 

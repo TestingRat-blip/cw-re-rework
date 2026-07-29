@@ -754,8 +754,8 @@
   },
   "004e0f40": {
    "kind": "game",
-   "name": "spawn_ctor",
-   "src": "cw_callgraph.py"
+   "name": "npc_spawn_ctor",
+   "src": "ADJUDICATION.md"
   },
   "004e1200": {
    "kind": "gamemisc",
@@ -778,9 +778,9 @@
    "src": "cw_callgraph.py"
   },
   "004e20d0": {
-   "kind": "lib",
-   "name": "lib_fn_4e20d0",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "kind": "game",
+   "name": "npc_schedule_waypoint",
+   "src": "ADJUDICATION.md"
   },
   "004e25e0": {
    "kind": "lib",
@@ -928,13 +928,13 @@
    "src": "ADJUDICATION.md"
   },
   "004fc180": {
-   "kind": "lib",
-   "name": "lib_fn_4fc180",
+   "kind": "game",
+   "name": "npc_occupant_kind4_init",
    "src": "ADJUDICATION.md"
   },
   "004fd920": {
-   "kind": "lib",
-   "name": "lib_fn_4fd920",
+   "kind": "game",
+   "name": "npc_occupant_kind2_init",
    "src": "ADJUDICATION.md"
   },
   "004fdd80": {
@@ -943,8 +943,8 @@
    "src": "CW_CONFIDENCE_XREF.md"
   },
   "004fde90": {
-   "kind": "lib",
-   "name": "lib_fn_4fde90",
+   "kind": "game",
+   "name": "npc_occupant_kind35_init",
    "src": "ADJUDICATION.md"
   },
   "004febd0": {

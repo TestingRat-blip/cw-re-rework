@@ -285,9 +285,6 @@ undefined __cdecl FUN_004f5170(float * param_1, float * param_2, float * param_3
 /* 004f5940  gamemisc  [none] */
 undefined __cdecl FUN_004f5940(undefined4 * param_1, undefined4 * param_2, undefined4 * param_3);
 
-/* 004f59f0  gamemisc  [none] */
-undefined1 * __cdecl FUN_004f59f0(undefined4 * param_1, undefined4 * param_2, undefined1 * param_3);
-
 /* 004f5ac0  gamemisc  [none] */
 undefined __cdecl FUN_004f5ac0(int param_1, int param_2, int param_3, float * param_4);
 
@@ -452,4 +449,7 @@ undefined8 __stdcall __aulldvrm(uint param_1, uint param_2, uint param_3, uint p
 
 /* 0054b160  gamemisc  [none] */
 undefined8 __stdcall __aullrem(uint param_1, uint param_2, uint param_3, uint param_4);
+
+/* 0054b2e6  gamemisc  [none] */
+int __stdcall ___tmainCRTStartup(void);
 

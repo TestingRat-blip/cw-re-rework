@@ -286,6 +286,31 @@ the body was the only way to settle these.
         # live records (tools/gate_town_surround.py). Sibling of 0x4f2ee0, not the same
         # function: different table, different arity, different namespace.
         "004f2cd0": {"name": "town_surround_prop_factory", "kind": "game", "verdict": "DEEP-RE"},
+        # --- the town builder's NPC / DAILY-ROUTINE pass (Docs/RE_town_npcs.md) ----------
+        # FUN_004e0f40 -- the 0x10f0-byte NPC record ctor every one of the builder's seven
+        # `operator_new(0x10f0)` sites calls. The NPC pass fills +0x10 position, +0x28 = 3,
+        # +0x2c = 2 + rand()%2, +0x30 entity type, +0x34 level, +0x5c behaviour id, +0x109c
+        # the behaviour tree and +0x10a0 the daily-schedule vector (32-byte elements).
+        "004e0f40": {"name": "npc_spawn_ctor", "kind": "game", "verdict": "DEEP-RE"},
+        # FUN_004e20d0 -- the schedule-waypoint ctor, called as (out, &pos, timeMs). Its
+        # 0x20-byte record carries the time at +0x18, which the pass reads back off the
+        # vector's last element to chain the next stop. `0xea60` = 60000 ms = one minute:
+        # decoded against the live draw values the chain puts every villager's first
+        # waypoint at 07:00-09:59 and the last at 10:17-20:45, 440 of 440 inside a day.
+        "004e20d0": {"name": "npc_schedule_waypoint", "kind": "game", "verdict": "DEEP-RE"},
+        # ⚠ NOT library functions, whatever the `lib_fn_` names say (lesson 25). All three
+        # are called ONLY from the town builder's named-occupant arms, and all three spend
+        # rand() outside the builder body where frida_town_props.py cannot list them --
+        # their cost is measured from the rig's global draw index instead:
+        #   0x4fd920  kind-2 occupant, 669-1038 draws; calls monster_level_formula on
+        #             level/30.0f, so it is a stock/level generator.
+        #   0x4fc180  kind-4 occupant, 3322-3335 draws.
+        #   0x4fde90  kinds 3 AND 5, 2010-2018 draws over 11 priced gaps.
+        # Bodies not decoded; what is settled is that they are game code in the NPC layer
+        # and what each costs (tools/gate_town_npcs.py).
+        "004fd920": {"name": "npc_occupant_kind2_init", "kind": "game", "verdict": "DEEP-RE"},
+        "004fc180": {"name": "npc_occupant_kind4_init", "kind": "game", "verdict": "DEEP-RE"},
+        "004fde90": {"name": "npc_occupant_kind35_init", "kind": "game", "verdict": "DEEP-RE"},
         # FUN_004e0700 / FUN_004ce290 -- the two 16.16 +/- double helpers the surround pass
         # builds its face offsets with. Both are `*out = *this -/+ (int64)ftol(d * 65536)`;
         # 0x4e0700 multiplies by +65536 and subtracts, 0x4ce290 by -65536 and so ADDS.

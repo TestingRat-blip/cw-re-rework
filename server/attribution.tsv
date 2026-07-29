@@ -2387,7 +2387,7 @@ addr	name	kind	module	class	attributed_by	size
 004dde90	FUN_004dde90	gamemisc	ai	Unsorted	logic:caller-vote	10330
 004e0700	fixed16_subDouble	gamemisc	game_misc	Game	ledger	56
 004e0740	zone_prop_emitter	game	world	Proven	ledger	2035
-004e0f40	spawn_ctor	game	world	Proven	ledger	380
+004e0f40	npc_spawn_ctor	game	world	Proven	ledger	380
 004e10c0	cube::Spawn::~Spawn	game	world	Spawn	rtti	259
 004e11d0	cube::Spawn::scalar_deleting_destructor	game	world	Spawn	rtti	33
 004e1200	vec4_f32_to_i32	gamemisc	render	Proven	ledger	39
@@ -2417,7 +2417,7 @@ addr	name	kind	module	class	attributed_by	size
 004e1ed0	FUN_004e1ed0	gamemisc	world	_helpers_ctor-like	role:ctor-like	156
 004e1f6c	Catch_All@004e1f6c	lib	_library	eh_funclets	eh	17
 004e1f80	house_ctor	game	world	Proven	ledger	329
-004e20d0	lib_fn_4e20d0	lib	_library	cw_lib	ledger	52
+004e20d0	npc_schedule_waypoint	game	entity	Proven	ledger	52
 004e2110	FUN_004e2110	gamemisc	world	_helpers_wrapper	role:wrapper	119
 004e2190	FUN_004e2190	gamemisc	world	_helpers_ctor-like	role:ctor-like	185
 004e2250	cube::House::~House	game	world	House	rtti	207
@@ -2489,7 +2489,7 @@ addr	name	kind	module	class	attributed_by	size
 004f5500	FUN_004f5500	gamemisc	world	Unsorted	logic:caller-vote	167
 004f55b0	FUN_004f55b0	gamemisc	world	Helpers	caller-vote	899
 004f5940	FUN_004f5940	gamemisc	game_misc	Unsorted_002	none	167
-004f59f0	FUN_004f59f0	gamemisc	game_misc	Unsorted_002	none	202
+004f59f0	FUN_004f59f0	gamemisc	entity	Helpers	caller-vote	202
 004f5ac0	FUN_004f5ac0	gamemisc	game_misc	Unsorted_002	none	117
 004f5b40	FUN_004f5b40	gamemisc	world	Unsorted	logic:caller-vote	114
 004f5bc0	FUN_004f5bc0	gamemisc	world	Helpers	caller-vote	113
@@ -2572,10 +2572,10 @@ addr	name	kind	module	class	attributed_by	size
 004fc060	FUN_004fc060	gamemisc	world	Unsorted	logic:caller-vote	155
 004fc100	FUN_004fc100	gamemisc	world	_helpers_wrapper	role:wrapper	50
 004fc140	World_columnHumidity	gamemisc	world	Proven	ledger	50
-004fc180	lib_fn_4fc180	lib	_library	cw_lib	ledger	6033
-004fd920	lib_fn_4fd920	lib	_library	cw_lib	ledger	1083
+004fc180	npc_occupant_kind4_init	game	entity	Proven	ledger	6033
+004fd920	npc_occupant_kind2_init	game	entity	Proven	ledger	1083
 004fdd80	lib_fn_4fdd80	lib	_library	cw_lib	ledger	249
-004fde90	lib_fn_4fde90	lib	_library	cw_lib	ledger	3381
+004fde90	npc_occupant_kind35_init	game	entity	Proven	ledger	3381
 004febd0	World_findNearestFeatureCell	gamemisc	world	Proven	ledger	749
 004feec0	FUN_004feec0	gamemisc	game_misc	Unsorted_002	none	721
 004ff1a0	FUN_004ff1a0	gamemisc	world	Unsorted	logic:caller-vote	409
@@ -2900,7 +2900,7 @@ addr	name	kind	module	class	attributed_by	size
 0054b1d6	MSVCR110.DLL::libm_sse2_acos_precise	lib	_library	imports	import-ns	6
 0054b1dc	MSVCR110.DLL::libm_sse2_exp_precise	lib	_library	imports	import-ns	6
 0054b29b	FUN_0054b29b	gamemisc	game_misc	_indirect_dispatch-target	role:dispatch-target	75
-0054b2e6	___tmainCRTStartup	gamemisc	game_misc	Unsorted_003	none	330
+0054b2e6	___tmainCRTStartup	gamemisc	game_misc	Unsorted_002	none	330
 0054b44b	entry	gamemisc	game_misc	_helpers_wrapper	role:wrapper	10
 0054b456	MSVCR110.DLL::_lock	lib	_library	imports	import-ns	6
 0054b45c	MSVCR110.DLL::_unlock	lib	_library	imports	import-ns	6

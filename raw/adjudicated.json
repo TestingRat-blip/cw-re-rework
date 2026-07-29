@@ -322,6 +322,11 @@
    "name": "zone_prop_emitter",
    "verdict": "DEEP-RE"
   },
+  "004e0f40": {
+   "kind": "game",
+   "name": "npc_spawn_ctor",
+   "verdict": "DEEP-RE"
+  },
   "004e1200": {
    "kind": "gamemisc",
    "name": "vec4_f32_to_i32",
@@ -335,6 +340,11 @@
   "004e19f0": {
    "kind": "lib",
    "name": "std_sort_4byte",
+   "verdict": "DEEP-RE"
+  },
+  "004e20d0": {
+   "kind": "game",
+   "name": "npc_schedule_waypoint",
    "verdict": "DEEP-RE"
   },
   "004e28d0": {
@@ -428,19 +438,19 @@
    "verdict": "DEEP-RE"
   },
   "004fc180": {
-   "kind": "lib",
-   "name": "lib_fn_4fc180",
-   "verdict": "B"
+   "kind": "game",
+   "name": "npc_occupant_kind4_init",
+   "verdict": "DEEP-RE"
   },
   "004fd920": {
-   "kind": "lib",
-   "name": "lib_fn_4fd920",
-   "verdict": "B"
+   "kind": "game",
+   "name": "npc_occupant_kind2_init",
+   "verdict": "DEEP-RE"
   },
   "004fde90": {
-   "kind": "lib",
-   "name": "lib_fn_4fde90",
-   "verdict": "B"
+   "kind": "game",
+   "name": "npc_occupant_kind35_init",
+   "verdict": "DEEP-RE"
   },
   "004ff340": {
    "kind": "game",

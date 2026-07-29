@@ -7425,52 +7425,6 @@ void __cdecl FUN_004f5940(undefined4 *param_1,undefined4 *param_2,undefined4 *pa
 }
 
 
-/* FUN_004f59f0 @ 004f59f0  kind=gamemisc  attributed-by=none  size=202 */
-
-undefined1 * __cdecl FUN_004f59f0(undefined4 *param_1,undefined4 *param_2,undefined1 *param_3)
-
-{
-  undefined4 *puVar1;
-  undefined1 *puVar2;
-  undefined1 *puVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  
-  if (param_1 != param_2) {
-    puVar5 = param_1 + 1;
-    do {
-      *param_3 = *(undefined1 *)(puVar5 + -1);
-      param_3[1] = *(undefined1 *)((int)puVar5 + -3);
-      *(undefined4 *)(param_3 + 4) = *puVar5;
-      *(undefined4 *)(param_3 + 8) = puVar5[1];
-      param_3[0xc] = *(undefined1 *)(puVar5 + 2);
-      param_3[0xd] = *(undefined1 *)((int)puVar5 + 9);
-      param_3[0xe] = *(undefined1 *)((int)puVar5 + 10);
-      *(undefined2 *)(param_3 + 0x10) = *(undefined2 *)(puVar5 + 3);
-      puVar3 = (undefined1 *)((int)puVar5 + 0x13);
-      puVar2 = param_3 + 0x15;
-      iVar4 = 0x20;
-      do {
-        puVar2[-1] = puVar3[-3];
-        *puVar2 = puVar2[(int)puVar5 + (-4 - (int)param_3)];
-        puVar2[1] = puVar3[-1];
-        puVar2[2] = *puVar3;
-        *(undefined4 *)(puVar2 + 3) = *(undefined4 *)(puVar3 + 1);
-        puVar3 = puVar3 + 8;
-        puVar2 = puVar2 + 8;
-        iVar4 = iVar4 + -1;
-      } while (iVar4 != 0);
-      *(undefined4 *)(param_3 + 0x114) = puVar5[0x44];
-      puVar1 = puVar5 + 0x45;
-      param_3 = param_3 + 0x118;
-      puVar5 = puVar5 + 0x46;
-    } while (puVar1 != param_2);
-    return param_3;
-  }
-  return param_3;
-}
-
-
 /* FUN_004f5ac0 @ 004f5ac0  kind=gamemisc  attributed-by=none  size=117 */
 
 void __cdecl FUN_004f5ac0(int param_1,int param_2,int param_3,float *param_4)
@@ -20514,6 +20468,79 @@ undefined8 __aullrem(uint param_1,uint param_2,uint param_3,uint param_4)
     iVar7 = -(uint)(uVar4 - param_1 != 0) - ((uVar10 - param_2) - (uint)(uVar4 < param_1));
   }
   return CONCAT44(iVar7,iVar6);
+}
+
+
+/* ___tmainCRTStartup @ 0054b2e6  kind=gamemisc  attributed-by=none  size=330 */
+
+/* WARNING: Function: __SEH_prolog4 replaced with injection: SEH_prolog4 */
+/* WARNING: Function: __SEH_epilog4 replaced with injection: EH_epilog3 */
+/* Library Function - Single Match
+    ___tmainCRTStartup
+   
+   Library: Visual Studio 2012 Release */
+
+int ___tmainCRTStartup(void)
+
+{
+  bool bVar1;
+  void *pvVar2;
+  void *pvVar3;
+  int iVar4;
+  BOOL BVar5;
+  
+  bVar1 = false;
+  do {
+    pvVar3 = (void *)0x0;
+    LOCK();
+    pvVar2 = StackBase;
+    if (DAT_00584684 != (void *)0x0) {
+      pvVar3 = DAT_00584684;
+      pvVar2 = DAT_00584684;
+    }
+    DAT_00584684 = pvVar2;
+    UNLOCK();
+    if (pvVar3 == (void *)0x0) goto LAB_0054b321;
+  } while (pvVar3 != StackBase);
+  bVar1 = true;
+LAB_0054b321:
+  if (DAT_00584688 == 1) {
+    _amsg_exit(0x1f);
+  }
+  else if (DAT_00584688 == 0) {
+    DAT_00584688 = 1;
+    iVar4 = initterm_e(&DAT_0055854c,&DAT_00558560);
+    if (iVar4 != 0) {
+      return 0xff;
+    }
+  }
+  else {
+    DAT_00584624 = 1;
+  }
+  if (DAT_00584688 == 1) {
+    initterm(&DAT_00558408,&DAT_00558548);
+    DAT_00584688 = 2;
+  }
+  if (!bVar1) {
+    LOCK();
+    DAT_00584684 = (void *)0x0;
+    UNLOCK();
+  }
+  if ((DAT_0058468c != (code *)0x0) &&
+     (BVar5 = __IsNonwritableInCurrentImage((PBYTE)&DAT_0058468c), BVar5 != 0)) {
+    (*DAT_0058468c)(0,2,0);
+  }
+  pvVar3 = DAT_00584630;
+  *(void **)__initenv_exref = DAT_00584630;
+  DAT_00584620 = FUN_00549c50(pvVar3);
+  if (DAT_00584638 != 0) {
+    if (DAT_00584624 == 0) {
+      _cexit();
+    }
+    return DAT_00584620;
+  }
+                    /* WARNING: Subroutine does not return */
+  exit(DAT_00584620);
 }
 
 

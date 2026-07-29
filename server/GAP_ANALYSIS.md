@@ -36,6 +36,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `005054fa` | 6960 | 0 | 35 | orphan |  |
 | `004cfd50` | 6604 | 4 | 29 |  | list<T> too long |
 | `00500300` | 6267 | 1 | 10 |  |  |
+| `004fc180` | 6033 | 1 | 9 |  |  |
 | `0051b26a` | 5776 | 0 | 17 | orphan |  |
 | `005290d0` | 5775 | 2 | 9 |  |  |
 | `004240ea` | 5015 | 0 | 58 | orphan | vector<T> too long |
@@ -47,6 +48,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `004738d0` | 4528 | 1 | 39 |  | Expression tree is too large (maximum de |
 | `004d6730` | 4391 | 2 | 5 |  |  |
 | `00532cfa` | 3472 | 0 | 50 | orphan |  |
+| `004fde90` | 3381 | 1 | 9 |  |  |
 | `0050c550` | 3330 | 1 | 17 |  | list<T> too long, vector<T> too long |
 | `004272d0` | 3290 | 1 | 27 |  | list<T> too long |
 | `004254a0` | 2935 | 1 | 28 |  |  joined., Client version: , Connection failed. |
@@ -99,6 +101,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `00522840` | 1137 | 2 | 4 |  |  |
 | `0053778c` | 1110 | 0 | 20 | orphan |  |
 | `004f9010` | 1085 | 1 | 3 |  |  |
+| `004fd920` | 1083 | 1 | 8 |  |  |
 | `005287b0` | 1077 | 6 | 6 |  |  |
 | `00415dd0` | 1074 | 1 | 12 |  |  |
 | `004dd9da` | 1061 | 0 | 3 | orphan |  |
@@ -409,8 +412,5 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `004189b0` | 241 | 1 | 3 |  |  |
 | `0041de30` | 240 | 2 | 1 |  |  |
 | `0041f770` | 240 | 3 | 3 |  |  |
-| `00422b10` | 240 | 1 | 1 |  |  |
-| `0042af50` | 239 | 1 | 8 |  | bad cast |
-| `0042e9a0` | 239 | 2 | 8 |  | bad cast |
 
-**Total unnamed non-library functions: 1651** (116 of the listed 400 are orphans)
+**Total unnamed non-library functions: 1655** (116 of the listed 400 are orphans)

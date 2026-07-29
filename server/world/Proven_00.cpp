@@ -21911,7 +21911,7 @@ LAB_004e0f1e:
 }
 
 
-/* spawn_ctor @ 004e0f40  kind=game  attributed-by=ledger  size=380 */
+/* npc_spawn_ctor @ 004e0f40  kind=game  attributed-by=ledger  size=380 */
 
 Spawn * __thiscall cube::Spawn::Spawn(Spawn *this)
 
