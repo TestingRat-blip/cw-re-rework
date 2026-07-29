@@ -628,11 +628,18 @@ Objective: **finish "populated worldgen"**. The deterministic geometry was alrea
 this year's work has been the **entity / prop layer**.
 
 ⚠ **Read this table as "the RE is done and gated *in this repo*" — not "the port is done".**
-Those are two different ledgers and they are not in step. Emitter A and the town builder's
-verdict scan have since been ported (07-27c, 07-28c); **emitter C still has a green RE gate
-here and no cwgen port at all**. Where a cwgen gate exists it is named in the last column.
+Those are two different ledgers and they are **further out of step than they have ever
+been**. As of 07-29c the **town builder's RE is complete** (176/176 rand sites, 100.00% of
+its recorded draws) while **seven layers here have a green RE gate and no cwgen port at
+all**: emitter C, and six town stages — house entity, house surround, village NPC, ruin
+occupants, market, antique buildings. Closing that gap is "YOUR TASK". Where a cwgen gate
+does exist it is named in the last column.
+
 Nothing below needs another capture session; every open question left is reachable from the
-captures already on disk.
+captures already on disk. ⚠ One caveat worth carrying: a *fresh* town capture would be
+worth taking before the ports, because `frida_town_props.py`'s draw filter was 1,116 bytes
+short until 07-29 and **every `town_props_capture*.json` on disk predates the fix** — seven
+rand sites are priced off the draw index rather than recorded (`RE_town_ruin.md` §2).
 
 | layer (RE + gate in THIS repo) | doc | gate coverage |
 |---|---|---|
@@ -743,7 +750,50 @@ to a numbered lesson above:
 
 ## YOUR TASK
 
-### The next slice: EMITTER C — and it is now genuinely close
+### The next slice: PORT the town builder. The RE side of it is finished.
+
+**As of 07-29c the town builder is CLOSED on the RE side** — 176 of 176 firing rand sites,
+228,413 of 228,413 recorded draws, 100.00%, nothing open (`RE_town_antique.md` §5, where
+the census is re-run over every corrected span). There is no decoding work left in
+`FUN_004e28e0`.
+
+**What is left is the PORT, and it is now the largest single thing in the programme.**
+Eight of the builder's stages are in `cwgen`; **six are RE'd and gated with no port at
+all**. Each names what it would have to be FED in its own file, and the tables are much
+smaller than the stages' draw counts suggest.
+
+Take them in this order — it is dependency order, not size order:
+
+| # | stage | doc | what a port needs |
+|---|---|---|---|
+| 1 | **MARKET** (role 9) | `RE_town_market.md` §8 | **nothing FED.** Plot roles, the lattice, the 20 perimeter literals and both factories are all derived. Only the prop's final Z needs terrain |
+| 2 | **ANTIQUE BUILDINGS** (roles 0x14/0x12) | `RE_town_antique.md` §6 | **one table.** The model `w`,`h` are `.cub` dims for four ids — take them from `cw_rederive/model_id_map.json`. X/Y need no terrain at all |
+| 3 | **HOUSE SURROUND** | `RE_town_surround.md` §9 | its own §9 says it *could* be ported today: only the base **Y** is FED, region-cache-blocked exactly as the yard's `y16` is |
+| 4 | **RUIN OCCUPANTS** | `RE_town_ruin.md` §9 | the building list `site+0x88` and each building's vector **SIZES** (the picks are `rand() % size`, so only the size advances the stream) |
+| 5 | **VILLAGE NPC** | `RE_town_npcs.md` §8 | the same building list, three vector sizes per building, and five per-town bits. **No positions at all** |
+| 6 | **HOUSE ENTITY** | `RE_town_entities.md` §9 | the hardest: a per-emit-site model anchor that lives in the server's model DB and nothing in `cwgen` reads |
+
+⚠ **4 and 5 share one blocker and it is the only real one: the BUILDING LIST.** Both walk
+`site+0x88`, which the house/plot chain produces and `CwTown` does not have. Deriving it
+once unblocks both, and `RE_town_market.md` §3 has already identified one of its consumers
+(flag B is the market-stall list). Items 1-3 do **not** need it — start there.
+
+⚠ **Every one of these WILL move the hash**, unlike the last five slices. So the
+isolation-run discipline at the end of this file stops being optional: move only the new
+golden aside, confirm the old hash returns exactly, and **diff the whole output**, not just
+the hash — a measured number nobody diffs is a gate that cannot fail.
+
+★ **Read `RE_town_yard.md` §6.1 and §6.2 before writing the first port.** §6.1 is the
+ASSERTED / FED / MEASURED table this kind of stage needs; §6.2 is the trap that cost a day
+(feeding a gate a terrain COUNT is fine, feeding it a terrain SHAPE is not). And
+`RE_town_furnish.md` §5b/§7 is the one to read for technique: the golden ships the
+**contiguous LCG stream**, hidden callee draws included, so a body draw only lands on its
+recorded index if every unrecorded draw in front of it was spent too — that is how a
+factory the rig cannot see gets its draw counts under test.
+
+### Reference: EMITTER C, and why it is not the task
+
+Kept because the analysis is still true and still the reason the town chain was done first.
 
 **The creature scatter is RE'd, gated and PORTED ab initio** (07-27e,
 `gate_zone_creatures` 217/217, `rederive_creatures` 1043/1043, `RE_zone_creatures.md`).
@@ -824,11 +874,16 @@ it. Read the span before assuming where the emitter begins.
 
 ### Then, in order
 
-✅ **Open problem 0 is fully closed (07-28) and `cwgen_test` is GREEN for the first time**
-— all gates pass, both configs, hash `2D52E0BE1C55FFAB`. So the list below is the whole of
-what is next; take item 1.
+✅ **Open problem 0 is fully closed (07-28) and `cwgen_test` has been GREEN since** — all
+gates pass, both configs; the current hash is **`0FA08D5CB7998A34`** (`2D52E0BE1C55FFAB`
+was the 07-28b one). The list below is what follows the PORT work at the top of this
+section.
 
-1. **The rest of the town chain.** ⚠ **Re-scoped again 07-28d — read
+1. ✅ **The rest of the town chain — the RE half is DONE (07-29c), 176/176 sites, 100.00%.**
+   What survives of this item is the PORT, which is promoted to the top of this section.
+   The history below is kept because its *method* is the transferable part — every one of
+   these stages was re-scoped by reading its span first.
+   ⚠ **Re-scoped again 07-28d — read
    `RE_town_promotion.md` §5 and `RE_town_verdict.md` §6 before planning it.** Two of the
    builder's stages are now RE'd *and ported*: the verdict SCAN (`rederive_townverdict`,
    arrival 34/34, whole scan exact in 29/34) and the PROMOTION pass
@@ -840,15 +895,16 @@ what is next; take item 1.
    ✅ **`0x4eda58` (07-28e), the HOUSE PASS (07-28f), the ROLE-6 YARD (07-28g), the
    ROLE-0/7 PLAZA (07-28h), the HOUSE FURNISHING pass (07-28i/j), the HOUSE ENTITY
    pass (07-28k), the HOUSE SURROUND pass (07-28l), the NPC / DAILY-ROUTINE pass
-   (07-28m), the RUIN OCCUPANT pass (07-29) and the MARKET (07-29b) are CLOSED.**
-   Counted mechanically
+   (07-28m), the RUIN OCCUPANT pass (07-29), the MARKET (07-29b) and the ANTIQUE
+   BUILDINGS (07-29c) are CLOSED.** Counted mechanically
    by span census (the method is written down in `RE_town_plaza.md` §9 so the next recount
-   is reproducible): **174 of the 176 firing sites are closed, carrying 228,368 of the
-   228,413 draws the rig records inside the body** (99.98%; the count including callees is
+   is reproducible): **all 176 firing sites are closed, carrying all 228,413 of the
+   draws the rig records inside the body** (100.00%; the count including callees is
    much larger — the rig's filter is the difference, lesson 18, and 07-28i is the
    slice that finally measured through it, 07-28m the one that priced a whole stage's
    callees off the global draw index, and 07-29 the one that found the filter was also
-   **cutting off the end of the builder itself**, lesson 7o). ⚠ The 07-28m figure of
+   **cutting off the end of the builder itself**, lesson 7o). ⚠ The 07-29b figure of
+   174 / 228,368 / 99.98%, the 07-29 figure of 134 / 228,150 / 99.88%, the 07-28m figure of
    123 / 225,278 / 98.6%, the 07-28l figure of 85 / 217,892 / 95.4%, the
    07-28k figure of 77 / 211,484 / 92.6%,
    the 07-28j figure of 66 / 203,887 / 89.3%
@@ -951,9 +1007,9 @@ what is next; take item 1.
    1,116 bytes early, and which the rig then inherited. **When you merge a split body, check
    its `ret` too.**
 
-   There is no monster left: the two that carried "36% of everything the layer spends"
-   were `0x4e54e8` and `0x4ef7c8` and both are closed, so **the rest of the town chain is
-   one small band** — after 07-29, **42 sites and 218 recorded draws**, none over 31.
+   There is no monster left, and after 07-29c there is nothing left at all: the two that
+   carried "36% of everything the layer spends" were `0x4e54e8` and `0x4ef7c8`, both closed,
+   and the tail closed behind them one band at a time. **The whole builder is decoded.**
 
    ✅ **The role-6 yard is now PORTED too** (`townYardPass` in `CwTown.h`,
    `rederive_townyard` 51/51). Read `RE_town_yard.md` §6 before writing the next port —
@@ -1103,17 +1159,24 @@ still never came up in 99 firings.
   budgeting for what is inside it — this cost ten minutes and had been carried for a
   handoff.
 - ⚠ **A `lib_fn_*` name in this tree means "no evidence yet", not "library" — and the town
-  builder's neighbourhood has now produced FIVE.** 07-28h found `lib_fn_4fc140` was fifty
+  builder's neighbourhood has now produced SEVEN.** 07-28h found `lib_fn_4fc140` was fifty
   bytes of `World_columnHumidity`; 07-28l found `lib_fn_4f2cd0` was 498 bytes of the
   house-surround **prop factory**; 07-28m found `lib_fn_4fd920` / `lib_fn_4fc180` /
   `lib_fn_4fde90` are the NPC pass's three named-occupant initialisers, called from
-  nowhere else and spending 669-1038 / 3322-3335 / 2010-2018 `rand()` draws apiece. All
-  five sat in `_library/cw_lib.cpp` and all five were read in minutes. **If a stage you
+  nowhere else and spending 669-1038 / 3322-3335 / 2010-2018 `rand()` draws apiece; and
+  07-29b added two more — `lib_fn_4f3490` is the market's **goods factory** (`0x18 +
+  rand()%4`, a 4-arm jump table) and `lib_fn_513400` is game code in the structure-building
+  layer, called from the town builder AND five sites inside the dungeon assembler. All
+  seven sat in `_library/cw_lib.cpp` and all seven were read in minutes. **If a stage you
   are scoping calls a `lib_fn_*`, disassemble it before budgeting around it**
   (lessons 7g, 25). ★ **And note how 07-28m priced its three without decoding them**: the
   rig's draw index is global, so the gap after the call IS the callee's cost — you can
-  budget a callee you have not read. The sweep is still worth finishing: how many other
-  `lib_fn_*` in `server/_library/` are called from `world/`?
+  budget a callee you have not read. ⚠ **`lib_fn_513400` is the first one this sweep has
+  named that it could not DECODE**: the town builder's only call to it is in the role-8
+  section, which is dead code (`RE_town_market.md` §2), so it has never been observed
+  running from there. Its five dungeon-assembler callers are where to look. The sweep is
+  still worth finishing: how many other `lib_fn_*` in `server/_library/` are called from
+  `world/`?
 - **Prop slots 6, 14 and 70 are null** in the client's array. `sandstone-table.cub` is loaded
   into the model DB and never bound, so a type-`0x0e` prop renders nothing in the shipped
   game — the engine deliberately diverges and draws it anyway.
