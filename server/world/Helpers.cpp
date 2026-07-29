@@ -1,4 +1,4 @@
-// Helpers (world) -- server. 174 functions. Bodies = Ghidra pseudo-C.
+// Helpers (world) -- server. 171 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Helpers.h"
 
@@ -201,33 +201,6 @@ int * __thiscall FUN_00401a40(void *this,int *param_1,uint param_2)
   }
   *(undefined1 *)(*(int *)this + param_2) = 0;
   return this;
-}
-
-
-/* FUN_00402150 @ 00402150  kind=gamemisc  attributed-by=caller-vote  size=4 */
-
-undefined4 __fastcall FUN_00402150(int param_1)
-
-{
-  return *(undefined4 *)(param_1 + 0x44);
-}
-
-
-/* FUN_00402160 @ 00402160  kind=gamemisc  attributed-by=caller-vote  size=4 */
-
-undefined4 __fastcall FUN_00402160(int param_1)
-
-{
-  return *(undefined4 *)(param_1 + 0x48);
-}
-
-
-/* FUN_00402170 @ 00402170  kind=gamemisc  attributed-by=caller-vote  size=4 */
-
-undefined4 __fastcall FUN_00402170(int param_1)
-
-{
-  return *(undefined4 *)(param_1 + 0x4c);
 }
 
 

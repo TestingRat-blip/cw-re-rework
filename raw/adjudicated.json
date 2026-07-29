@@ -87,6 +87,21 @@
    "name": "std_vector_int_at",
    "verdict": "B"
   },
+  "00402150": {
+   "kind": "gamemisc",
+   "name": "model_field_0x44",
+   "verdict": "DEEP-RE"
+  },
+  "00402160": {
+   "kind": "gamemisc",
+   "name": "model_field_0x48",
+   "verdict": "DEEP-RE"
+  },
+  "00402170": {
+   "kind": "gamemisc",
+   "name": "model_field_0x4c",
+   "verdict": "DEEP-RE"
+  },
   "00402990": {
    "kind": "gamemisc",
    "name": "vec3_store",

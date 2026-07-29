@@ -340,6 +340,18 @@ the body was the only way to settle these.
         "004d8dc0": {"name": "House_dimX", "kind": "gamemisc", "verdict": "DEEP-RE"},
         "004d8de0": {"name": "House_dimZ", "kind": "gamemisc", "verdict": "DEEP-RE"},
         "004d8e00": {"name": "House_dimY", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # --- the town builder's HOUSE ENTITY pass (Docs/RE_town_entities.md) -----------
+        # Three one-instruction accessors on the model record the entity pass centres its
+        # records with. They take NO argument -- `mov eax, [ecx+N]; ret`, no `ret n` -- so
+        # the `push eax` that precedes each of them belongs to the vec3_store three lines
+        # later, and reading them as one-argument calls mis-assigns every coordinate.
+        # The names say the FIELD, not its meaning: the pass subtracts field/2 from X and
+        # Z and the whole field from Y, and the value is not always positive, so calling
+        # them extents would be a claim. Proven by the lattice: one residual class per
+        # emit site in 2,176 single-model houses (gate_town_entities, 46,344 checks).
+        "00402150": {"name": "model_field_0x44", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        "00402160": {"name": "model_field_0x48", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        "00402170": {"name": "model_field_0x4c", "kind": "gamemisc", "verdict": "DEEP-RE"},
         # ★ The reason VoxelGrid_cellAt3D (0x4d1950) is not an array index: it calls this
         # on its three indices BEFORE the bounds check, and this rotates (a, b) by
         # `house[+4] & 3` and then mirrors b when `house[+8]` is set. Every consumer of a

@@ -50,9 +50,9 @@ addr	name	kind	module	class	attributed_by	size
 00401f50	FUN_00401f50	gamemisc	game_misc	_helpers_wrapper	role:wrapper	96
 00401fb0	FUN_00401fb0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	122
 00402030	FUN_00402030	gamemisc	game_misc	Unsorted_000	none	278
-00402150	FUN_00402150	gamemisc	world	Helpers	caller-vote	4
-00402160	FUN_00402160	gamemisc	world	Helpers	caller-vote	4
-00402170	FUN_00402170	gamemisc	world	Helpers	caller-vote	4
+00402150	model_field_0x44	gamemisc	world	Proven	ledger	4
+00402160	model_field_0x48	gamemisc	world	Proven	ledger	4
+00402170	model_field_0x4c	gamemisc	world	Proven	ledger	4
 00402180	FUN_00402180	gamemisc	game_misc	Unsorted_000	none	37
 004021b0	FUN_004021b0	gamemisc	game_misc	Unsorted_000	none	50
 004021f0	FUN_004021f0	gamemisc	game_misc	Unsorted_000	none	231
