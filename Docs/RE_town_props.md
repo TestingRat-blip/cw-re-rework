@@ -304,6 +304,12 @@ The 67 towns made **17,488** `creature_spawn_builder` calls from 21 sites, which
 4,325 prop records out of line and another 860 inline. Sixty of the 67 towns spawned
 creatures; only 25 emitted props. Nothing here decodes that split.
 
+★ **2026-07-28k: sixteen of those 21 sites are now decoded** — `RE_town_entities.md`, the
+house entity pass. ⚠ And the sentence above is the reason it took nine slices: the count
+was printed here and by `gate_town_props.py` every run, but the `spawncalls` array's
+per-record fields — **position, orientation and type** — had never been read. A count is
+not a reading (`HANDOFF_PROMPT.md` lesson 7k).
+
 ## Open
 
 1. ~~**Phase 3's verdict, in full.**~~ — **CLOSED, `RE_town_verdict.md`.** A plot is a 2
