@@ -443,6 +443,15 @@ the body was the only way to settle these.
         # Z and the whole field from Y, and the value is not always positive, so calling
         # them extents would be a claim. Proven by the lattice: one residual class per
         # emit site in 2,176 single-model houses (gate_town_entities, 46,344 checks).
+        # 2026-07-29c ADDS EVIDENCE for two of the three, and the names still stand.
+        # The antique-building placements (Docs/RE_town_antique.md) centre a model with
+        # `pos -= field/2` on BOTH axes, so the live positions measure the fields directly:
+        # they come out 32 for ids 0x84c/0x84d and 24 for 0x84e/0x84f, which is exactly what
+        # model_id_map.json reads for `dims[0]`/`dims[1]` out of the decoded .cub files.
+        # So on a MODEL object +0x44 and +0x48 are its X and Y extents, from two independent
+        # sources over four ids. Left named by field anyway: that is 4 models out of 2,550,
+        # and it does not touch 07-28k's observation that the entity pass sees values a
+        # .cub dimension could not take -- which is the thing to resolve before renaming.
         "00402150": {"name": "model_field_0x44", "kind": "gamemisc", "verdict": "DEEP-RE"},
         "00402160": {"name": "model_field_0x48", "kind": "gamemisc", "verdict": "DEEP-RE"},
         "00402170": {"name": "model_field_0x4c", "kind": "gamemisc", "verdict": "DEEP-RE"},

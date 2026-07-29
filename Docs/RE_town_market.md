@@ -213,12 +213,11 @@ Everything the *draw stream* needs is derived. Only the prop's final Z needs ter
 |---|---|---|---|
 | … all previously closed stages … | 134 | 228,150 | closed |
 | **this pass** `0x4e3a3f`-`0x4e5023` | **40** | **218** | closed |
-| `0x4eee4f`, `0x4ef03e` | 2 | 45 | **open** |
+| `0x4eee3e`-`0x4ef248` | 2 | 45 | ✅ closed 07-29c, `RE_town_antique.md` |
 
-**174 of the 176 firing sites, 228,368 of 228,413 recorded draws — 99.98%.**
-
-What is left is two rand sites spending **45 draws**: `0x4eee4f` (31) and `0x4ef03e` (14),
-which `RE_town_plaza.md` §9 named as the role-`0x14` / role-`0x12` spawns and which
-`RE_town_ruin.md` §6 corroborated from the other end (the corpus holds exactly 31
-role-`0x14` plots). They sit inside the role-`0x14` and role-`0x12` sections at `0x4eee3e`
-and `0x4ef02d` in the dispatch table above.
+**174 of the 176 firing sites, 228,368 of 228,413 recorded draws — 99.98%** *as this file
+was written*. ⚠ **Superseded the same day**: `RE_town_antique.md` §5 closed the last two
+sites, so the census is now **176 / 176 and 228,413 / 228,413 — 100.00%, nothing open.**
+Those two are the role-`0x14` / role-`0x12` sections at `0x4eee3e` and `0x4ef02d` in the
+dispatch table above, and they place `antique-building1..4` — not the "town NPC spawns"
+`RE_town_plaza.md` §9 called them.

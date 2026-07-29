@@ -428,6 +428,23 @@ if you are about to trust a green gate, read group B. Every one of these cost re
    again. Corroboration is cheap too — the extents are `.rdata` literals and a market stall
    comes out 3.5 x 2.0 x 3.0 blocks.
 
+7u. **A callee's NAME is evidence about the CALLEE, not about what the caller is doing
+   with it.** `0x4eee4f` and `0x4ef03e` were carried for three handoffs as "the role-0x14
+   and role-0x12 plots' **town NPC** spawns", and `RE_town_plaza.md` §9's decode next to
+   that phrase was already correct (`rand() % K + 0x84c` into the model DB). The word "NPC"
+   came from the callee's label — `creature_spawn_builder` — and `FUN_00524540` is the
+   *generic* entity builder. Read its arguments instead and it is placing
+   **`antique-building1..4.cub`** with a constant `type` of 0, on the two plot roles that
+   occur **only in ruins**. This is 7s from the other side: there a name contradicted the
+   comment beside it, here a name inherited a claim from a function it merely calls.
+   ★ The check that settled it cost nothing and is worth copying: **the position is the
+   plot centre minus half the model's own footprint, so the live positions MEASURE the
+   model's dimensions** — and `model_id_map.json` already had those dimensions, read out of
+   the decoded `.cub` files by a completely separate effort. Two sources, same numbers
+   (−16 for the 32-wide models, −12 for the 24-wide), and then all 45 positions predict
+   exactly. **When a stage places something by id, look for a second source that knows that
+   id's geometry, and make the agreement the gate.**
+
 ### B. What a green gate does NOT prove
 
 The single most expensive family in this project. Five separate instances of the same
@@ -651,6 +668,7 @@ captures already on disk.
 | the town builder's **HOUSE ENTITY** pass (`0x4e74a5`-`0x4ea988`) — the four face walks, the roof walk, the wall/roof walk (`0x4ea254`) and the four-neighbour walk: 11 rand sites, 34 emit sites, 16 spawn tails, **19,352 `creature_spawn_builder` records checked field by field**; ⚠ **RE + gate only, NOT ported** | `RE_town_entities.md` | `gate_town_entities` **46,344** / 435 houses |
 | the town builder's **HOUSE SURROUND** pass (`0x4ecfb5`-`0x4ed9ea`) — the clutter against the outside walls: 8 rand sites, 4 faces × 2 slots, **1,059 prop records checked field by field**; `FUN_004f2cd0` the PROP FACTORY, whose hidden draws are LCG-recovered; it also pins `kTownHouseOrigin = 7` by a **sweep** | `RE_town_surround.md` | `gate_town_surround` **6,639** |
 | the town builder's **NPC / DAILY-ROUTINE** pass (`0x4f0046`-`0x4f16b6`) — the last stage in the builder: five named-occupant arms + `1 + rand()%2` villagers per building, each with a behaviour tree and a **daily schedule**; 38 rand sites, **7,386 recorded + 47,230 hidden draws**; five per-town bits predict every draw in order; ⚠ **RE + gate only, NOT ported** | `RE_town_npcs.md` | `gate_town_npcs` **16,117** / 35 towns, 440 villagers |
+| the town builder's **ANTIQUE BUILDINGS** (`0x4eee3e`-`0x4ef248`, roles 0x14/0x12) — the LAST two rand sites: one `antique-building1..4` model per ruin plot, centred by half its own `.cub` footprint; 45/45 positions predicted exactly, and it CORRECTS "town NPC spawns"; ⚠ **RE + gate only, NOT ported** | `RE_town_antique.md` | `gate_town_antique` **290** / 45 placements |
 | the town builder's **MARKET** (`0x4e3a3f`-`0x4e5023`, role 9) — 20 perimeter slots, 12 stalls + 8 goods, both factories' hidden `rand()` LCG-recovered so TYPE and EXTENTS are **derived**, not just counted; it also names the NPC pass's flag-B list; ⚠ the role-8 half of the band is **dead code** (role 8 is never assigned); ⚠ **RE + gate only, NOT ported** | `RE_town_market.md` | `gate_town_market` **445** / 6 markets, 90 records |
 | the town builder's **RUIN OCCUPANT** pass (`0x4f16bb`-`0x4f2b45`) — the ELSE of `desc[0x18]==1`, and the ruin's mirror of the NPC pass: a species table by `desc[0x1c]`, a plot guard, a `rand()%5` quadrant loner, 2-4-creature packs on a semicircle, and a patrol; **18 rand sites, 7 of them past the rig's filter and priced off the global draw index**; `ents-ents0` exact 35/35; ⚠ **RE + gate only, NOT ported** | `RE_town_ruin.md` | `gate_town_ruin` **3,041** / 35 ruins, 677 entities |
 | the town builder's **HOUSE FURNISHING** pass (`0x4ead3a`-`0x4ecf20`) — 13 rand sites, 21 push sites, 6,759 records; `FUN_004f2ee0` the FURNITURE FACTORY, whose 8 rand sites the rig cannot see; `cellAt3D` ROTATES the module grid; the house sits `plotOrigin + 7` — RE'd *and ported* | `RE_town_furnish.md` | `gate_town_furnish` **34,307**; the factory **4,958/4,958** from LCG-recovered hidden draws; **`rederive_townfurnish` 1,004/1,004**, 323 houses draw-for-draw |
@@ -676,6 +694,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
+| 07-29c | ★★ **THE TOWN BUILDER IS CLOSED: 176 of 176 firing rand sites, 228,413 of 228,413 recorded draws — 100.00%.** The last two sites, `0x4eee4f` (31 draws) and `0x4ef03e` (14), are two structurally identical plot-role sections differing in one mask: `role == 0x14` takes `0x84c + rand()%2` and `role == 0x12` takes `0x84c + rand()%4`, and each places ONE model from the world model DB at the centre of its plot, dropped to the ground. ★ **A CORRECTION: they are not "town NPC spawns"** as `RE_town_plaza.md` §9 and three handoffs have called them. Ids `0x84c`-`0x84f` are **`antique-building1..4.cub`**, the call's `type` argument is a constant **0**, and roles `0x12`/`0x14` occur **in ruins and in no village** (14 and 31 plots, 0 elsewhere) — so these two sites place **the ruined buildings a ruin is made of**. The old name came from the callee's LABEL (`creature_spawn_builder`) rather than its ARGUMENTS; `FUN_00524540` is the generic entity builder. ★★ **And the geometry closes against a second, independent source.** The position is the plot centre minus **half the model's own footprint**, so the live spawn positions MEASURE the model dims — offsets group to exactly (−16,−16) for coins 0/1 and (−12,−12) for 2/3 — and `model_id_map.json`, which knows nothing about this pass, says `0x84c`/`0x84d` are 32 wide and `0x84e`/`0x84f` are 24. Two sources, same numbers; with the map's dims fed in, **all 45 positions are predicted exactly** off the seed-derived plot lattice, and the recorded `orient` equals `plot[+0x14]` 45/45. ⚠ Null baseline stated: role 0x14's `%2` is **unobservable** (both its models are 32×32), role 0x12's `%4` resolves only 2-way, and the w/h swap is invisible because all four models are square. ⚠ **NOT PORTED** | `RE_town_antique.md` | **`gate_town_antique` 290** |
 | 07-29b | ★ **the LAST open band is the town builder's MARKET — RE'd and gated, and the town builder is now 99.98% closed.** `0x4e39ea`-`0x4e4fb3` was queued as "40 sites / 218 draws … but 20 `prop_push` and 20 settle sites hang off it, so unlike the last four stages it *is* checkable field by field". Right, and it undersold it. ★ **It is TWO plot-role sections**: `role == 8` at `0x4e3ac0` and `role == 9` at `0x4e3e15`. The role-9 half is a **MARKET** — 20 slots round one plot's perimeter, each `Chunk_getColumnAt` → landmark push → `rand()%5 != 0` → `rand()%3` jitter along the edge → a prop → settle → `site+0xc`. ★★ **THE SEMANTIC READING LANDS, and this time in the namespace that resolves**: `FUN_004f3630` gives `0x15 + rand()%3` and `FUN_004f3490` `0x18 + rand()%4`, which through `prop_ids.json` are **market-stand1/2/3** and **barrel/crate/open-crate/sack** — 12 stalls and 8 crates of goods. ⚠ `RE_town_yard.md` had to *withdraw* the same kind of reading because its ids go to `site+4`/`site+0x30`, which nothing hooks; **these go to `site+0xc`, which is exactly what `prop_ids.json` covers**, and the gate asserts the push target out of the binary so the distinction cannot be lost. ★★ **AND IT NAMES AN INPUT THE NPC PASS COULD NOT**: `RE_town_npcs.md` §8 lists flag B as "pushed at `0x4e3ea2`, in the not-yet-RE'd band" — `0x4e3ea2` is this pass's landmark push, so **flag B is the market-stall list**, `B ⟺ D` is explained, and the villagers' 1-3 hour schedule stop at `0x4f0fc0` is **a trip to the market**. ★★ **The hidden factory draws are DERIVED, not just priced**: both factories sit outside the builder body, LCG-recovered they reproduce the **TYPE 90/90 and all three EXTENTS 270/270**, and the measured gap (2 or 3, never anything else) predicts one-or-two hidden draws **93/93**. ★ **Role 8 has a code section, a rand site and a prop push, and is NEVER ASSIGNED** — the builder's complete set of role stores is `{0,2,3,5,6,7,9..20}`, so roles 4 and 8 are dead code, and both of role 8's emitters are empty in 92 towns. ⚠ **The band was 20 blocks, not 19**: the ledger ended it at `0x4e4fb3`, its last RAND site, which cut the 20th block's settle and push into the gap before the yard — the same mistake as 07-29's, one scale down. ⚠ **NOT PORTED**; §8's FED table is nearly empty — everything the draw stream needs is derived | `RE_town_market.md` | **`gate_town_market` 445** |
 | 07-29 | ★ **the `0x4f16bb` REGION is the town builder's RUIN OCCUPANT pass — RE'd and gated — and the slice's real find is that THE BUILDER'S BODY IS 1,116 BYTES LONGER THAN THIS REPO HAS CARRIED.** The queue had it as "the ELSE branch of `desc[0x18] == 1`, so the same NPC pass for the other site classes". The partition was right and the conclusion was wrong twice over. ★ **`desc[0x18]` is 1 or 5 and nothing else** — 50 villages, 42 ruins, exactly the split `RE_town_verdict.md` already reports — so the else arm is the **RUIN's** half of the fork, and it does the opposite thing: an abandoned town repopulated with **hostile creatures** drawn from a species table, `Sequential[Combat(20.0f), WalkPath(2.0f)]`, no `LookAtPlayer`, no interaction, no schedule. The gate censuses the behaviour ctors in BOTH spans and contrasts them (village 7 kinds, ruin 3, strict subset) rather than asserting a negative from one side. ★★ **AND THE SPAN WAS WRONG: `0x4f26e9` is not the end of the builder.** The `ret 8` is at **`0x4f2b42`** — the body is `0x4e28e0`-`0x4f2b45` = **66,149 bytes**. `RE_town_plaza.md` §0 took 65,033 off Ghidra's boundary and **`frida_town_props.py`'s `inTB` has the same bound**, so **seven rand sites and one `spawn_ctor` in `0x4f26f0`-`0x4f2a5b` have never been recorded in any capture** (lesson 18 from a new direction — the filter cutting off the FUNCTION, not a callee; and two of the seven are `call edi`, which a memory-form census also misses). They are priced anyway off the global draw index: the gap after `0x4f26b3` is **8 in 35 firings and 1 in 42, never anything else, and WHICH it is, is predicted by that draw's own recorded value % 2 — 77/77.** ★★ **The species tables cross-check against a container decoded a year ago**: interpreted (never typed — the region shares tails through `0x4f1b93`) out of the binary, the `desc[0x1c]>4` and `desc[0x1c]=4` arms are **byte-identical to the DUNGEON assembler's default and style-1/2 species containers** (`RE_dungeon_species.md`, gated 6/6 live), same three `L2` ids in the same order — two functions, two methods, one table. The ruin reads `desc[0x20]%3` where the dungeon spends a `rand()`. ★★ **And `ents` CLOSES EXACTLY**, which `RE_town_npcs.md` §7 had written off: a ruin runs only 2 of the 13 `spawn_ctor` sites, so `ents-ents0` = guard+quadrant+pack+patrol+inhabitant-scatter is an identity, **35/35, residual zero, 842 entities** — every term ablated (dropping one gives 0-5/35) and the coin's modulus swept (`%5` 35/35 vs 2-7/35 for its neighbours). It is the **only** evidence the invisible block spawns anything. ⚠ **NOT PORTED**; §9 is the FED table and the ask is small — vector SIZES per building, plus the plot table. ⚠ Arm 0 pushes `0x60` into the flat list **twice** (byte-checked): a port must reproduce it or the pick becomes `%3` instead of `%4` | `RE_town_ruin.md` | **`gate_town_ruin` 3,041** |
 | 07-28m | ★ **the `0x4f0396`-`0x4f147f` REGION is one stage — the town builder's NPC / DAILY-ROUTINE pass — RE'd and gated, and it is the LAST stage in the builder.** The queue's "34 sites, 59% of everything left" is `0x4f0046`-`0x4f16b6`: after the plot loop finishes, the builder walks the town's BUILDING list (`site+0x88`) and gives each building its inhabitants. Five kinds get one **named occupant** each (`cmp ecx, K` chain, kinds 1/2/4/3/5, entity types 0x84/0x80/0x82/0x81/0x83); every other building gets `1 + rand()%2` **villagers** of type 0x88, each with a behaviour tree and a **daily schedule** of (position, time) waypoints. **38 rand sites / 7,386 recorded draws / 440 villagers.** ★ **THE FIND: five bits per town predict every draw in the stage, in order.** The villager body is eight blocks guarded by five list-empty flags computed once per building — and the four tests that look data-dependent come back non-empty in **396 of 396** observations, so there is **no free parameter per villager at all**: 440 of 440 sequences exact draw-for-draw. Three of the five bits are pinned independently (C ⟺ the kind-1 arm fired, D ⟺ the kind-2/3/4/5 arms fired, B ⟺ D), which is what stops it being read off its own answer sheet (lesson 12). ★ **THE SEMANTIC CHECK IS THE CLOCK.** `0xea60` = 60000 ms = one minute and `0x1a4` = 420 = 07:00; decoded out of the recorded draw values the chain puts every villager's first waypoint at **07:00-09:58** and the last at **10:17-20:45**, monotone 440/440, **0 past midnight** — where the arithmetic *allows* 26 hours. ★ **And the hidden draws are priced with no new rig**: 7,328 of 7,351 transitions are index+1, so the villager path spends nothing off-body; the 23 that are not are exactly the four arms calling `lib_fn_4fd920` / `lib_fn_4fc180` / `lib_fn_4fde90`, priced at 669-1038 / 3322-3335 / 2010-2018 — **the two arms sharing `0x4fde90` agree to within 8, which is a check on the attribution and not an assumption**. ⚠ **This stage emits NOTHING the rig hooks** — 0 pushes, 0 settles, 0 `creature_spawn_builder` calls in the whole span — so it is a draw-structure gate, not a geometry gate, and `ents` cannot serve either (§7: six other `spawn_ctor` sites push into the same `site+0x18`). ⚠ **NOT PORTED**; §8 is the FED table, and it is small — a port needs three vector SIZES per building and the five bits, no positions | `RE_town_npcs.md` | **`gate_town_npcs` 16,117** |
@@ -890,19 +909,30 @@ what is next; take item 1.
    `RE_town_market.md`, `gate_town_market` 445, and its span is `0x4e3a3f`-`0x4e5023`
    (the ledger's `-0x4e4fb3` was the band's last RAND site and cut off its 20th block).
 
-   **Next: the town builder is DONE bar two rand sites spending 45 draws.** By the same
-   span census (method in `RE_town_plaza.md` §9, re-run 07-29b over both captures with the
-   corrected spans): **174 of the 176 firing sites are closed, carrying 228,368 of the
-   228,413 recorded draws — 99.98%.** ⚠ The 07-29 figure of 134 / 228,150 / 99.88%, the
-   07-28m figure of 123 / 225,278 / 98.6% and the 07-28l one are all superseded.
-   What is left, and it is the whole of it:
+   ✅ **The last two sites are CLOSED too (07-29c)** — `0x4eee4f` / `0x4ef03e` are the
+   **ANTIQUE-BUILDING** placements on ruin plots, `RE_town_antique.md`,
+   `gate_town_antique` 290.
 
-   * `0x4eee4f` (31 draws) and `0x4ef03e` (14) — the two `RE_town_plaza.md` §9 named as
-     the role-0x14 / role-0x12 NPC spawns. ★ `RE_town_ruin.md` §6 confirms the 31 from the
-     other end: the corpus holds exactly **31 role-0x14 plots**, and the ruin pass spends
-     one draw pair on each. `gate_town_market.py` prints the builder's whole plot-role
-     dispatch, which puts them inside the role-`0x14` section at `0x4eee3e` and the
-     role-`0x12` section at `0x4ef02d`.
+   ★★ **THE TOWN BUILDER IS CLOSED.** By the same span census (method in
+   `RE_town_plaza.md` §9, re-run 07-29c over both captures with every corrected span):
+   **176 of 176 firing rand sites, 228,413 of 228,413 recorded draws — 100.00%, nothing
+   open.** ⚠ The 07-29b figure of 174 / 228,368 / 99.98%, the 07-29 figure of
+   134 / 228,150 / 99.88%, the 07-28m figure of 123 / 225,278 / 98.6% and the 07-28l one
+   are all superseded.
+
+   ⚠ **Two things that "100%" does NOT mean.** (1) It is a statement about the **recorded**
+   stream: the furnishing, surround and market factories, the NPC pass's three occupant
+   initialisers and the seven sites past the old body bound all spend draws that are not in
+   the 228,413 — each is priced or derived in its own file, none is counted here.
+   (2) **RE-closed is not PORT-closed** — see the next item.
+
+   ▶ **So the town work that is LEFT is the PORT, and it is now the largest single thing in
+   the programme.** Five stages are RE'd and gated with no cwgen port at all: the HOUSE
+   ENTITY pass (`RE_town_entities.md`), the HOUSE SURROUND pass (`RE_town_surround.md`),
+   the village NPC pass (`RE_town_npcs.md`), the RUIN OCCUPANT pass (`RE_town_ruin.md`) and
+   the MARKET (`RE_town_market.md`), plus the two-site antique placement. Each names what a
+   port would have to be FED in its own §8/§9, and those tables are small — the market's
+   and the antique one's are nearly empty.
 
    ⚠ **And two of the dispatch's sections are DEAD**: roles **4 and 8** have code and are
    never assigned — the builder's complete set of stores to a plot's `+0xc` is
@@ -1111,16 +1141,17 @@ Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fail
 cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
 ```
 
-**Known-good as of 07-29b:** the `cw_decomp` gate suite is **fully green** (39 gates —
-`gate_town_ruin` and `gate_town_market` are new), and **`cwgen_test` is fully green** (35 gates). Hash
+**Known-good as of 07-29c:** the `cw_decomp` gate suite is **fully green** (40 gates —
+`gate_town_ruin`, `gate_town_market` and `gate_town_antique` are new), and **`cwgen_test` is fully green** (35 gates). Hash
 **`0FA08D5CB7998A34`**, re-verified in Debug at the start of 07-29 before anything changed
 and again after. The 07-28m baseline was verified in **both** Debug and Release with the
 two 141-line outputs diffed byte-for-byte against each other.
 
-⚠ **Neither 07-29 slice changed a hash or touched a golden**, because both are RE + gate
+⚠ **None of the three 07-29 slices changed a hash or touched a golden**, because both are RE + gate
 only: they add `tools/gate_town_ruin.py` + `Docs/RE_town_ruin.md` + six `DEEP_RE` entries,
-and `tools/gate_town_market.py` + `Docs/RE_town_market.md` + four more, and nothing in
-`cwgen`. (07-28m, 07-28l and 07-28k were the same shape.) If a later port of any of the five
+`tools/gate_town_market.py` + `Docs/RE_town_market.md` + four more, and
+`tools/gate_town_antique.py` + `Docs/RE_town_antique.md` with no new DEEP_RE at all, and
+nothing in `cwgen`. (07-28m, 07-28l and 07-28k were the same shape.) If a later port of any of the five
 lands, the isolation run below applies to it.
 
 ⚠ **07-29b RENAMED a `DEEP_RE` entry rather than adding one**, and the reason is worth
@@ -1214,11 +1245,11 @@ moved with the C++. Of the 13 goldens that script writes, only that one changed,
 3,005 and only in `w`, by 1 ULP — diff the directory before and after, as here, so the blast
 radius is a measurement and not a hope (lesson 17).
 
-⚠ **Grepping the suite for "FAIL" gives six false alarms.** `gate_zone_bed.py` ends with
+⚠ **Grepping the suite for "FAIL" gives seven false alarms.** `gate_zone_bed.py` ends with
 `44 ok, 0 FAIL`, `gate_town_surround.py` with `6639 ok, 0 FAIL`, `gate_town_npcs.py`
 with `16117 ok, 0 FAIL`, `gate_town_ruin.py` with `3041 ok, 0 FAIL` and
-`gate_town_market.py` with `445 ok, 0 FAIL` (the last two then print `RESULT: PASS`),
-and six gates
+`gate_town_market.py` with `445 ok, 0 FAIL` and `gate_town_antique.py` with
+`290 ok, 0 FAIL` (the last three then print `RESULT: PASS`), and six gates
 (`gate_dungeon_counter`, `gate_zone_landform`,
 `gate_zone_landform_order`, `gate_zone_prechain`, `gate_zone_siteloop`, `gate_zone_tail`)
 print their own verdict format with no PASS/FAIL token at all. Read the tail of each.

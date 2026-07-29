@@ -332,6 +332,14 @@ sites, ~7,200 draws, one span — read `0x4eaf00`–`0x4ebd00` before budgeting 
 Two smaller things the plaza slice did **not** close, both adjacent and both cheap:
 `0x4eee4f` (31 draws, `rand() % 2 + 0x84c` into `world[+0x1c]`, then
 `creature_spawn_builder`) and `0x4ef03e` (14 draws, `rand() % 4 + 0x84c`, the same shape).
-They are the role-`0x14` and role-`0x12` plots' **town NPC** spawns — the two roles the
+They are the role-`0x14` and role-`0x12` plots' spawns — the two roles the
 promotion pass hands out at `0x4e36d8` and `0x4e3921` — and `FUN_00524540` is already
 RE'd and gated (`RE_524540_creature_spawn.md`, 6,442 live spawns).
+
+✅ **CLOSED 2026-07-29c, and this paragraph's decode was right while its NAME was wrong.**
+`rand() % K + 0x84c` is exactly what the binary does; calling the results "**town NPC**
+spawns" is not. Ids `0x84c`-`0x84f` are `antique-building1..4.cub`, the call's `type`
+argument is a constant 0, and roles `0x12`/`0x14` occur **only in ruins** — these two sites
+place the ruined buildings a ruin is made of. `RE_town_antique.md`, `gate_town_antique` 290.
+The name came from the callee's label rather than from its arguments; `FUN_00524540` is the
+generic entity builder, not a creature-only one.
