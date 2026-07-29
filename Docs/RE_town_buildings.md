@@ -197,7 +197,7 @@ grid rather than a measurement.
 | stage | doc | what is left |
 |---|---|---|
 | **RUIN OCCUPANTS** | `RE_town_ruin.md` | ✅ **PORTED 07-29e** — `rederive_townruin` 140/140 |
-| **VILLAGE NPC** | `RE_town_npcs.md` | the list itself is now derived; §8's remaining asks are the five per-town bits and flag A's 8×8 region-site sweep |
+| **VILLAGE NPC** | `RE_town_npcs.md` | ✅ **PORTED 07-29f** — `rederive_townnpcs` 231/231. The building list carried three of the five per-town bits outright (C, D and, through the plot table, B) |
 | **HOUSE ENTITY** | `RE_town_entities.md` | unaffected — its blocker is the per-emit-site model anchor in the server's model DB |
 
 ## 9. Numbers

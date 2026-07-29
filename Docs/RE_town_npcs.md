@@ -3,7 +3,12 @@
 *Gate:* `tools/gate_town_npcs.py` — **16,117 checks, 0 FAIL**, 35 towns / 286 buildings /
 440 villagers, every draw of the stage predicted in order.
 *Source data:* `raw/town_props_capture*.json` (`tools/frida_town_props.py`, seed 42069).
-*Status:* **RE + gate only. NOT ported** — §8 says what a port would have to be fed.
+*Status:* ✅ **PORTED 2026-07-29f.** `townNpcPass` in `CwTown.h`;
+`rederive_townnpcs` **231/231** — 35 villages, 323 buildings DERIVED, the site
+sequence draw for draw in **35 of 35** towns over 7,386 recorded draws, 440 villagers
+and 37 named occupants. ★ **And it derives the five bits this file's own gate reads
+off the recorded stream** (§2, lesson 12): four of the five come out of the plot table
+and the building list with nothing fed at all.
 
 ---
 
@@ -158,12 +163,19 @@ them (lesson 33). Across the stage, **7,328 of 7,351 transitions are exactly +1*
 whole villager path spends nothing off-body. The 23 that are not are exactly the four
 special arms that call out:
 
-| arm | callee | hidden draws | gaps priced |
-|---|---|---|---|
-| kind 2 (`0x4f058e`) | `lib_fn_4fd920` | 669-1038 | 6 of 6 |
-| kind 4 (`0x4f076a`) | `lib_fn_4fc180` | 3322-3335 | 6 of 6 |
-| kind 3 (`0x4f0946`) | `lib_fn_4fde90` | 2010-2014 | 6 of 6 |
-| kind 5 (`0x4f0b22`) | `lib_fn_4fde90` | 2012-2018 | 5 of 6 |
+| arm | callee | gap | **hidden draws** | gaps priced |
+|---|---|---|---|---|
+| kind 2 (`0x4f058e`) | `lib_fn_4fd920` | 669-1038 | **668-1037** | 6 of 6 |
+| kind 4 (`0x4f076a`) | `lib_fn_4fc180` | 3322-3335 | **3321-3334** | 6 of 6 |
+| kind 3 (`0x4f0946`) | `lib_fn_4fde90` | 2010-2014 | **2009-2013** | 6 of 6 |
+| kind 5 (`0x4f0b22`) | `lib_fn_4fde90` | 2012-2018 | **2011-2017** | 5 of 6 |
+
+⚠ **CORRECTED 07-29f: the original table's numbers are GAPS, not hidden draws.** The gap
+between two recorded indices counts the successor draw itself, so the callee's own cost is
+one less — `RE_town_ruin.md` §3 states the same arithmetic correctly (*"gap 8 ⇔ 7 hidden
++ 1"*) and this one's column heading and its arithmetic disagreed. Nothing downstream was
+wrong (the numbers are only ever used as a range), and `rederive_townnpcs` asserts the
+corrected column, 23 of 23.
 
 (a gap needs a *following* recorded draw, so the one kind-5 occupant that is the last thing
 its town does is not priced — 23 gaps over 24 firings of the four callee arms.)
@@ -236,19 +248,29 @@ there are **thirteen**, the extra one being `0x4f2786` in the ruin pass's phase 
 |---|---|
 | the building list `site+0x88`, and each building's `+0x60` kind | ✅ **DERIVED 07-29e** — `RE_town_buildings.md`. One producer (`0x4e76db`), and it pushes the house `operator_new(0x74)` + `FUN_004e1f80(h,3,3,4)` made, so the list is one entry per role-2 plot in plot order; `0x4e6567` copies `plot[+0x10]` into `+0x60`, which `rederive_townpromo` derives. `cwgen`'s `townBuildingList` |
 | `B->cells24`, `B->cells3c`, `B->+0x30` (their sizes only) | ✅ **DERIVED 07-29e** — all three are filled by the no-draw interior-marking sweep `0x4ea988`-`0x4ead3a` out of the module grid, and the counts are rotation/mirror invariant. ★ And they explain §2's live observation: `\|cells30\|` is **1** for every house in all 23 layouts, which is why the building's own `+0x30` came back non-empty 440 of 440; `\|cells3c\|` is 1 in exactly `kHouseFixed`/`kHouseSub1`, the three layouts a sub-role 1..5 plot gets, so a named occupant always has a cell |
-| flag E's list `[ebp-0x5d64]` | **derivable** — pushed at `0x4efff8` in the plaza pass, which is ported (`rederive_townplaza`) |
+| flag E's list `[ebp-0x5d64]` | ✅ **DERIVED 07-29f, one terrain read deep.** The push at `0x4efff8` is per role-0/7 PLOT and guarded by a byte set at `0x4ef8f9`, which a village reaches only through falloff ≥ 0.72 + a surface + class `0xb` (SAND) below it — i.e. exactly the quadrants the plaza pass turns into SITES. `E = the plaza pass produced a site`, **32/32 against a 28/32 null baseline**. The sand read is terrain and is FED, the same tape `rederive_townplaza` already carries |
 | flag B's list `[ebp-0x5d80]` | ✅ **derived 07-29** — `0x4e3ea2` is the MARKET pass's landmark push, one per perimeter slot with a column, so **flag B is the market-stall list** (`RE_town_market.md` §3). It also explains `B ⟺ D`, and it makes the schedule stop at `0x4f0fc0` a **trip to the market** |
-| flag A's list `[ebp-0x40]` | the 8×8 region-site sweep at `0x4f01b0` |
-| flags C and D | fall out of the building list's kinds |
+| flag A's list `[ebp-0x40]` | ✅ **DERIVED 07-29f** — the 8×8 sweep at `0x4f01b0` walks the region's 64 feature cells (`region + 0x14018`, stride `0x68`) and pushes a landmark for every one whose type is **not** 0, 1 (a village) or 0xa (a portal); a type-0 cell takes an extra world test. `cw_featuregen` produces all 64 types bit-exact, so `A = any cell with type ∉ {0, 1, 0xa}`. ⚠ **UNFALSIFIABLE in this corpus**: A is TRUE in 32 of 32 observations, so the agreement is a consistency check and not a discrimination (lesson 9) |
+| flags C and D | ✅ **DERIVED 07-29f** — they do fall out of the kinds: C = any building with kind 1 (10/32 true), D = any with kind 2..5 (6/32). And **B = any role-9 plot** (6/32), since `0x4e3ea2` pushes ONE market landmark per market |
 | `desc[0x18]`, `desc[0x24]` | the site descriptor, already in `cw_featuregen` |
 
 To advance the LCG correctly a port needs only the **sizes** of three vectors per building
 and the five booleans — not a single position.
 
-✅ **Two of the five rows above closed 07-29e** and the stage is no longer blocked on the
-building list. What is left for a port is flag A's 8×8 region-site sweep at `0x4f01b0` and
-the five per-town bits (three of which §2 pins independently). The RUIN half of the same
-fork is already ported — `rederive_townruin` 140/140 — and it runs on the same list. That is a much smaller ask than the stage's
+✅ **ALL OF IT CLOSED — 07-29e derived the building list and 07-29f the five bits.**
+`rederive_townnpcs` 231/231. What a port is still FED is the plot table, `desc[+0x24]`,
+the recorded draw VALUES (the stream cannot be made contiguous — see §4) and flag E's
+one terrain read.
+
+★ **The thing this port is FOR is §2's own caveat.** This file establishes that five bits
+predict every draw and then reads those bits off the recorded stream, which is lesson 12
+exactly. Deriving them is what turns "440 of 440 villagers match" into a statement about
+the generator rather than about the replay — and the null baselines say it is not
+vacuous: B, C, D and E are true in 6, 10, 6 and 28 of 32 towns.
+
+⚠ **A is the exception and it is stated rather than hidden**: true in 32 of 32, so no
+town in this corpus can tell the derivation from `A = true`. A region with no feature
+cell outside {0, 1, 0xa} would, and none of the 35 is one (lesson 9). That is a much smaller ask than the stage's
 57k draws suggest, and it is the reason this is worth porting before the geometry of the
 building list is understood.
 
