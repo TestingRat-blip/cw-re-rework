@@ -234,8 +234,8 @@ there are **thirteen**, the extra one being `0x4f2786` in the ruin pass's phase 
 
 | input | status |
 |---|---|
-| the building list `site+0x88`, and each building's `+0x60` kind | **not derived** — produced by the house/plot chain; `CwTown` has the plots but not this list |
-| `B->cells24`, `B->cells3c`, `B->+0x30` (their sizes only) | **not derived** — the villager position is `rand() % size`, so only the SIZE is needed to advance the stream |
+| the building list `site+0x88`, and each building's `+0x60` kind | ✅ **DERIVED 07-29e** — `RE_town_buildings.md`. One producer (`0x4e76db`), and it pushes the house `operator_new(0x74)` + `FUN_004e1f80(h,3,3,4)` made, so the list is one entry per role-2 plot in plot order; `0x4e6567` copies `plot[+0x10]` into `+0x60`, which `rederive_townpromo` derives. `cwgen`'s `townBuildingList` |
+| `B->cells24`, `B->cells3c`, `B->+0x30` (their sizes only) | ✅ **DERIVED 07-29e** — all three are filled by the no-draw interior-marking sweep `0x4ea988`-`0x4ead3a` out of the module grid, and the counts are rotation/mirror invariant. ★ And they explain §2's live observation: `\|cells30\|` is **1** for every house in all 23 layouts, which is why the building's own `+0x30` came back non-empty 440 of 440; `\|cells3c\|` is 1 in exactly `kHouseFixed`/`kHouseSub1`, the three layouts a sub-role 1..5 plot gets, so a named occupant always has a cell |
 | flag E's list `[ebp-0x5d64]` | **derivable** — pushed at `0x4efff8` in the plaza pass, which is ported (`rederive_townplaza`) |
 | flag B's list `[ebp-0x5d80]` | ✅ **derived 07-29** — `0x4e3ea2` is the MARKET pass's landmark push, one per perimeter slot with a column, so **flag B is the market-stall list** (`RE_town_market.md` §3). It also explains `B ⟺ D`, and it makes the schedule stop at `0x4f0fc0` a **trip to the market** |
 | flag A's list `[ebp-0x40]` | the 8×8 region-site sweep at `0x4f01b0` |
@@ -243,7 +243,12 @@ there are **thirteen**, the extra one being `0x4f2786` in the ruin pass's phase 
 | `desc[0x18]`, `desc[0x24]` | the site descriptor, already in `cw_featuregen` |
 
 To advance the LCG correctly a port needs only the **sizes** of three vectors per building
-and the five booleans — not a single position. That is a much smaller ask than the stage's
+and the five booleans — not a single position.
+
+✅ **Two of the five rows above closed 07-29e** and the stage is no longer blocked on the
+building list. What is left for a port is flag A's 8×8 region-site sweep at `0x4f01b0` and
+the five per-town bits (three of which §2 pins independently). The RUIN half of the same
+fork is already ported — `rederive_townruin` 140/140 — and it runs on the same list. That is a much smaller ask than the stage's
 57k draws suggest, and it is the reason this is worth porting before the geometry of the
 building list is understood.
 

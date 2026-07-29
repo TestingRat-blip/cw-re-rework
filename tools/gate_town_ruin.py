@@ -56,6 +56,7 @@ is ablated below and the coin's modulus is swept against its neighbours (lesson 
     python tools/gate_town_ruin.py
 """
 import collections
+import io
 import glob
 import json
 import os
@@ -414,6 +415,10 @@ def simulate(h, dr):
     return len(dr)
 
 
+ROWS_FOR_HEADER = [(0, None), (1, None), (2, None), (3, None),
+                   (4, 0), (4, 1), (4, 2), ("default", None)]
+
+
 def main():
     ok = fail = 0
     notes = []
@@ -664,6 +669,27 @@ def main():
     print("    the group's SECOND vector (list1) is never read by this stage: it is the"
           " dungeon")
     print("    companion list, and here it is dead data")
+    # -- [12] the GENERATED header, regenerated and diffed --------------------
+    # CwTownRuinTables.h is written by tools/extract_ruin_species.py, which formats the
+    # species_tables() above.  A generated file with no regeneration check is a hand-typed
+    # one (lessons 7c, 7i), so re-run the generator and diff it against what is on disk.
+    import subprocess
+    hdr = os.path.normpath(os.path.join(HERE, "..", "..", "..", "src", "worldgen", "cw",
+                                        "CwTownRuinTables.h"))
+    r = subprocess.run([sys.executable, os.path.join(HERE, "extract_ruin_species.py"),
+                        "--cpp"], capture_output=True, text=True, encoding="utf-8")
+    if r.returncode:
+        check(False, "extract_ruin_species.py failed: %s" % r.stderr[-400:])
+    elif not os.path.exists(hdr):
+        check(False, "CwTownRuinTables.h is missing -- regenerate it")
+    else:
+        on_disk = io.open(hdr, encoding="utf-8").read()
+        check(on_disk.replace("\r\n", "\n").strip() ==
+              r.stdout.replace("\r\n", "\n").strip(),
+              "CwTownRuinTables.h differs from extract_ruin_species.py --cpp")
+        print("    [12] CwTownRuinTables.h regenerated and diffed -- %d arms, the same"
+              " interpreter this gate proves above" % len(ROWS_FOR_HEADER))
+
     print("  %d ok, %d FAIL" % (ok, fail))
     for m in notes:
         print("    !", m)

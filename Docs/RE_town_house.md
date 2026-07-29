@@ -226,3 +226,33 @@ is why the two differ; lesson 18). Remaining, in the measured order from
 
 **151 firing sites left**, and the two per-column loops are now 58% of everything
 still unaccounted for. The plot heights stay region-cache-blocked.
+
+
+---
+
+## ⚠ CORRECTION 2026-07-29e: `0x4e7321`'s modulus
+
+`CwTown.h`'s `townHouseOne` modelled the `0x4e7321` pick as `rand() %` *the number of
+type-1 modules in the whole 3×3×4 grid*. It is not. The candidate loop at `0x4e7240`
+walks `(i, j)` at **`k == 1` only** and applies three further tests:
+
+```
+if cellAt3D(i,j,1).type != 1: continue          0x4e7261
+if cellAt3D(i,j,2)[+3]  != 0: continue          0x4e7276   the module ABOVE
+if cellAt3D(i,j,1)[+4]  != maxTop: continue     0x4e7292   TERRAIN
+if cellAt3D(i,j,1)[+8]  == 3: continue          0x4e72a7
+```
+
+**Seven candidates against two in layout 0**, too large by up to 5 across the tables. The
+draw is spent either way, so `gate_town_house.py`'s 1,446 checks and `rederive_townhouse`'s
+140/140 were all correct and all blind to it — and nothing consumed the value until the
+BUILDING LIST needed to know which module the pass stamps `cell[+2] = 1` on
+(`RE_town_buildings.md` §5). Lesson 7y from the port side: a stage's shape is not its
+census, and a draw nobody reads is a free parameter.
+
+⚠ The third test is a terrain comparison, so *which* module is picked stays
+region-cache-blocked. The correction is to the **candidate count**, which is derived;
+`cwgen` now carries `TownHouse::wallCandidates` and hashes that instead of `wallPick`, so
+the suite's identity holds only derived quantities. Over the live corpus: **1,564
+candidates across 435 houses, 0 with none** — so the draw is always spent, which is what
+keeps the house pass's own draw counts unchanged.
