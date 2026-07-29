@@ -447,6 +447,16 @@
    "name": "model_field_0x4c",
    "src": "ADJUDICATION.md"
   },
+  "004024a0": {
+   "kind": "gamemisc",
+   "name": "cosf_precise",
+   "src": "ADJUDICATION.md"
+  },
+  "004024c0": {
+   "kind": "gamemisc",
+   "name": "sinf_precise",
+   "src": "ADJUDICATION.md"
+  },
   "00402990": {
    "kind": "gamemisc",
    "name": "vec3_store",
@@ -847,6 +857,11 @@
    "name": "lib_fn_4f36f0",
    "src": "CW_CONFIDENCE_XREF.md"
   },
+  "004f3820": {
+   "kind": "gamemisc",
+   "name": "SpeciesGroupVector_size",
+   "src": "ADJUDICATION.md"
+  },
   "004f5cc0": {
    "kind": "gamemisc",
    "name": "sort_routine_4f5cc0",
@@ -865,6 +880,16 @@
   "004f7540": {
    "kind": "gamemisc",
    "name": "SpeciesGroup_ctor",
+   "src": "ADJUDICATION.md"
+  },
+  "004f77a0": {
+   "kind": "gamemisc",
+   "name": "SpeciesGroup_dtor",
+   "src": "ADJUDICATION.md"
+  },
+  "004f79b0": {
+   "kind": "gamemisc",
+   "name": "SpeciesGroupVector_at",
    "src": "ADJUDICATION.md"
   },
   "004f79f0": {

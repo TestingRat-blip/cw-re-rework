@@ -1,4 +1,4 @@
-// helpers_wrapper (world) -- server. 25 functions. Bodies = Ghidra pseudo-C.
+// helpers_wrapper (world) -- server. 23 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_wrapper.h"
 
@@ -35,32 +35,6 @@ void __thiscall FUN_00401530(void *this,int *param_1)
   *param_1 = (uint)uVar3 + *(int *)this;
   param_1[1] = (int)(uVar3 >> 0x20) + iVar2 + (uint)CARRY4((uint)uVar3,uVar1);
   return;
-}
-
-
-/* FUN_004024a0 @ 004024a0  kind=gamemisc  attributed-by=role:wrapper  size=30 */
-
-float10 __cdecl FUN_004024a0(float param_1)
-
-{
-  double dVar1;
-  
-  dVar1 = (double)param_1;
-  libm_sse2_cos_precise();
-  return (float10)(float)dVar1;
-}
-
-
-/* FUN_004024c0 @ 004024c0  kind=gamemisc  attributed-by=role:wrapper  size=30 */
-
-float10 __cdecl FUN_004024c0(float param_1)
-
-{
-  double dVar1;
-  
-  dVar1 = (double)param_1;
-  libm_sse2_sin_precise();
-  return (float10)(float)dVar1;
 }
 
 

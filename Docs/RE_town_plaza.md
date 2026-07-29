@@ -24,9 +24,18 @@ single input the stage needs was already in a port, three of them under another 
 "functions" at `0x4e310a`, `0x4eaa7a` and `0x4ee3aa`. All three begin
 `8d 9b 00 00 00 00` (`lea ebx, [ebx]`) and are jumped over by an `eb 06` two instructions
 earlier: **MSVC alignment NOPs inside one body**, lesson 20's exact shape. The builder is
-one function, `0x4e28e0`–`0x4f26e9` = 65,033 bytes — the "64 KB builder" the handoff names
-— and `0x4ef7c8` is at offset 0xCEE8 inside it. Check the entry bytes before believing a
-boundary; `tools/nop_split_audit.py` exists for this.
+one function — the "64 KB builder" the handoff names — and `0x4ef7c8` is at offset 0xCEE8
+inside it. Check the entry bytes before believing a boundary; `tools/nop_split_audit.py`
+exists for this.
+
+⚠ **CORRECTED 2026-07-29 — this section had the END wrong too, and for a different reason.**
+It read `0x4e28e0`–`0x4f26e9` = 65,033 bytes off Ghidra's function boundary. The body's
+`ret 8` is at **`0x4f2b42`**, so it is `0x4e28e0`–`0x4f2b45` = **66,149 bytes**, 1,116 more.
+Lesson 20 was applied to the three interior splits and not to the boundary at the far end:
+merging NOP-split fragments fixes where Ghidra cut a body in two, and says nothing about
+where Ghidra decided the body stopped. `RE_town_ruin.md` §2 — the last stage in the builder
+branches straight over the old end, and `frida_town_props.py` inherits the same wrong bound,
+so seven rand sites there have never been recorded.
 
 ## 1. Where it sits
 

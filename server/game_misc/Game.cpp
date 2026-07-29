@@ -1,4 +1,4 @@
-// Game (game_misc) -- server. 31 functions. Bodies = Ghidra pseudo-C.
+// Game (game_misc) -- server. 36 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Game.h"
 
@@ -8,6 +8,32 @@ int __thiscall FUN_004013d0(void *this,int param_1)
 
 {
   return (int)(void *)((int)this + param_1 * 4);
+}
+
+
+/* cosf_precise @ 004024a0  kind=gamemisc  attributed-by=ledger  size=30 */
+
+float10 __cdecl FUN_004024a0(float param_1)
+
+{
+  double dVar1;
+  
+  dVar1 = (double)param_1;
+  libm_sse2_cos_precise();
+  return (float10)(float)dVar1;
+}
+
+
+/* sinf_precise @ 004024c0  kind=gamemisc  attributed-by=ledger  size=30 */
+
+float10 __cdecl FUN_004024c0(float param_1)
+
+{
+  double dVar1;
+  
+  dVar1 = (double)param_1;
+  libm_sse2_sin_precise();
+  return (float10)(float)dVar1;
 }
 
 
@@ -720,6 +746,15 @@ bool __fastcall FUN_004e28d0(int *param_1)
 }
 
 
+/* SpeciesGroupVector_size @ 004f3820  kind=gamemisc  attributed-by=ledger  size=23 */
+
+int __fastcall FUN_004f3820(int *param_1)
+
+{
+  return (param_1[1] - *param_1) / 0x18;
+}
+
+
 /* sort_routine_4f5cc0 @ 004f5cc0  kind=gamemisc  attributed-by=ledger  size=310 */
 
 void __cdecl FUN_004f5cc0(float *param_1,float *param_2,int param_3,undefined4 param_4)
@@ -807,6 +842,36 @@ undefined4 * __fastcall FUN_004f7540(undefined4 *param_1)
   param_1[4] = 0;
   param_1[5] = 0;
   return param_1;
+}
+
+
+/* SpeciesGroup_dtor @ 004f77a0  kind=gamemisc  attributed-by=ledger  size=77 */
+
+void __fastcall FUN_004f77a0(undefined4 *param_1)
+
+{
+  if ((void *)param_1[3] != (void *)0x0) {
+    operator_delete((void *)param_1[3]);
+    param_1[3] = 0;
+    param_1[4] = 0;
+    param_1[5] = 0;
+  }
+  if ((void *)*param_1 != (void *)0x0) {
+    operator_delete((void *)*param_1);
+    *param_1 = 0;
+    param_1[1] = 0;
+    param_1[2] = 0;
+  }
+  return;
+}
+
+
+/* SpeciesGroupVector_at @ 004f79b0  kind=gamemisc  attributed-by=ledger  size=18 */
+
+int __thiscall FUN_004f79b0(void *this,int param_1)
+
+{
+  return *(int *)this + param_1 * 0x18;
 }
 
 

@@ -1,4 +1,4 @@
-// helpers_computed (game_misc) -- server. 41 functions. Bodies = Ghidra pseudo-C.
+// helpers_computed (game_misc) -- server. 39 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "helpers_computed.h"
 
@@ -258,30 +258,12 @@ int __fastcall FUN_004e2830(int param_1)
 }
 
 
-/* compute_4f3820 @ 004f3820  kind=gamemisc  attributed-by=role:computed  size=23 */
-
-int __fastcall FUN_004f3820(int *param_1)
-
-{
-  return (param_1[1] - *param_1) / 0x18;
-}
-
-
 /* compute_4f3840 @ 004f3840  kind=gamemisc  attributed-by=role:computed  size=9 */
 
 int __fastcall FUN_004f3840(int *param_1)
 
 {
   return param_1[1] - *param_1 >> 3;
-}
-
-
-/* compute_4f79b0 @ 004f79b0  kind=gamemisc  attributed-by=role:computed  size=18 */
-
-int __thiscall FUN_004f79b0(void *this,int param_1)
-
-{
-  return *(int *)this + param_1 * 0x18;
 }
 
 

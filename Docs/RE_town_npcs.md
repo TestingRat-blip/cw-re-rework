@@ -49,7 +49,10 @@ for each building B in site+0x88:
 ```
 
 `desc[0x18] == 1` partitions the corpus perfectly: of 92 captured towns, **35 run this
-pass, 35 run the `0x4f16bb`-`0x4f26e9` branch, 0 run both**, 22 run neither.
+pass, 35 run the `0x4f16bb`-`0x4f2b45` branch, 0 run both**, 22 run neither. `desc[0x18]`
+is **1 (village) or 5 (ruin)** and nothing else, so the else arm is the ruin's pass, not a
+generic one — `RE_town_ruin.md`. The 22 that run neither are 15 villages and 7 ruins with
+no qualifying building.
 
 ### The named occupants
 
@@ -195,10 +198,14 @@ the sweep.
 * **The stage emits nothing the rig hooks.** 0 records in `pushes`, `settles` and
   `spawncalls` across the whole span, asserted every run. Do not go looking for a geometry
   observable here; there is not one, and `ents` cannot serve either (§7).
-* **`0x4f16bb`-`0x4f26e9` is the ELSE branch of `desc[0x18] == 1`, not a sibling stage that
-  also runs.** 35 towns / 35 towns / 0 both. The next queued region (`0x4f1d7d`-`0x4f26b3`,
-  11 sites, 2,872 draws, three more `spawn_ctor` sites) is the same pass for the other
-  site classes.
+* **`0x4f16bb`-… is the ELSE branch of `desc[0x18] == 1`, not a sibling stage that
+  also runs.** 35 towns / 35 towns / 0 both.
+  ⚠ **CORRECTED 2026-07-29 on both halves.** (a) The span is `0x4f16bb`-**`0x4f2b45`**, not
+  `-0x4f26e9`: the builder's `ret 8` is at `0x4f2b42` and seven further rand sites live past
+  the bound this file used. (b) It is **not** "the same pass for the other site classes".
+  `desc[0x18]` is 1 or 5 and nothing else — 50 villages, 42 ruins — so the else arm is the
+  **RUIN's** half of the fork, and it builds hostile creatures from a species table with no
+  schedule and no `LookAtPlayer`. `RE_town_ruin.md`.
 
 ## 7. What `ents` does NOT give you
 
@@ -211,6 +218,17 @@ never enter this stage still finish with 6-44 entities. Byte-scanning the builde
 `call spawn_ctor` is what settles that in one command; the count is a sum over stages, and
 it will only become a gate when the other six are decoded too. Recorded here so the next
 slice does not re-derive the disappointment.
+
+⚠ **AND THE NEXT SLICE CLOSED IT ANYWAY, because this is a statement about VILLAGES.**
+A ruin runs only two of the thirteen `spawn_ctor` sites, so for the ruin arm
+`ents - ents0` is an **exact** identity — 35 of 35, residual zero (`RE_town_ruin.md` §5),
+and it is the only evidence that the block past the rig's filter spawns anything. The
+sentence above is right about this stage and wrong as a general rule: **"`ents` is a sum
+over stages" makes it useless only when more than one of those stages is undecoded.** Ask
+which stages the town's own CLASS runs before writing a total off.
+
+⚠ Also: the scan that produced the "six other sites" ran to `0x4f26e9`. Over the real body
+there are **thirteen**, the extra one being `0x4f2786` in the ruin pass's phase 4.
 
 ## 8. What a port would have to be FED
 
@@ -248,23 +266,23 @@ over **both** capture files:
 | inhabitants `0x4eda0b`-`0x4edcbf` | 4 | 4,099 | closed |
 | plaza `0x4ef248`-`0x4f0046` | 7 | 56,181 | closed |
 | **this pass** `0x4f0046`-`0x4f16b6` | **38** | **7,386** | closed |
-| **`0x4f16bb`-`0x4f26e9`** | **11** | **2,872** | open |
+| **`0x4f16bb`-`0x4f2b45`** | **11** | **2,872** | ✅ closed 07-29, `RE_town_ruin.md` |
 | `0x4eee4f`, `0x4ef03e` | 2 | 45 | open |
 
-**123 of the 176 firing sites, 225,278 of 228,413 draws — 98.6%.** (The 07-28l handoff's
-85 / 217,892 / 95.4% is superseded.)
+**123 of the 176 firing sites, 225,278 of 228,413 draws — 98.6%** *as this file was
+written*. ⚠ **Superseded 2026-07-29:** the ruin pass closed the `0x4f16bb` row, so the
+count is **134 / 176 sites, 228,150 / 228,413 draws — 99.88%**, leaving **42 sites and 218
+recorded draws** (`RE_town_ruin.md` §10, where the census is re-run over the corrected body
+end). Note also that this table's upper bound `0x4f26e9` was wrong: seven more rand sites
+exist past it and no capture on disk records them.
 
-Only **53 sites and 3,135 draws** are left in the whole builder, and the two open spans are
-both smaller than they look:
+What is left:
 
-* `0x4f16bb`-`0x4f26e9` holds the largest single remaining site (`0x4f1f4b`, 1,176 draws,
-  35 towns) and is **the ELSE branch of this pass's own `desc[0x18] == 1`** — the same NPC
-  pass for the other site classes. Three more `spawn_ctor` sites (`0x4f1d14`, `0x4f2090`,
-  `0x4f23c7`). Read this file before starting it.
 * `0x4e39ea`-`0x4e4fb3` is 40 sites spending 218 draws in 6 towns — but it has **20
   `prop_push` and 20 settle sites** hanging off it, so unlike this pass it can be gated
   field by field. It is also where the kind-2/3/4/5 buildings and flag B's list come from,
   so closing it closes two of this stage's five inputs.
+* `0x4eee4f` (31) and `0x4ef03e` (14), the role-0x14 / role-0x12 spawns.
 
 ## 10. Numbers
 

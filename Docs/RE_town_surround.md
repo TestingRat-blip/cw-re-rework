@@ -230,9 +230,12 @@ carry 217,892 of the 228,413 draws the rig records inside the builder body — 9
 
 ⚠ **A correction to the last handoff.** It records the largest remaining site,
 `0x4f1f4b` (1,176 draws, 35 towns), as being "in a CALLEE, not the builder body". It is in
-the body: the builder is one 65,033-byte function `0x4e28e0`–`0x4f26e9`
+the body: the builder is one function `0x4e28e0`–`0x4f2b45`
 (`RE_town_plaza.md` §0, where `0x4ee3aa` is proven to be an alignment NOP and not a
 boundary), and `0x4f1f4b` is at offset 0xF66B inside it.
+
+⚠ The 65,033-byte / `0x4f26e9` figure this paragraph originally carried is **superseded**:
+the `ret 8` is at `0x4f2b42`, so the body is 66,149 bytes (`RE_town_ruin.md` §2).
 
 **The tail now has exactly three clusters**, and each is contiguous:
 

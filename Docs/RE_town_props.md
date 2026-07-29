@@ -34,7 +34,10 @@ the 7,788 town-builder records is placed on one of them.
 
 ## The real surface
 
-Inside `0x4e28e0`-`0x4f26e9`:
+Inside `0x4e28e0`-`0x4f26e9` — ⚠ **that upper bound is 1,116 bytes short**; the builder's
+`ret 8` is at `0x4f2b42` (`RE_town_ruin.md` §2), so this census, like the rig's filter,
+misses the tail. One more `spawn_ctor` lives past it; the prop/settle counts are unaffected
+because phase 4 pushes no prop.
 
 | | |
 |---|---|

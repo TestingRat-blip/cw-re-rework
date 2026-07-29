@@ -5,7 +5,7 @@ The prop census in `RE_zone_props.md` listed the town builder as three emit site
 `004e310a`, `004eaa7a`, `004ee3aa`.  Those are not emit sites and not functions: each is
 an `8d 9b 00 00 00 00` MSVC alignment NOP that an `eb 06` hops over, i.e. one of the three
 points where Ghidra split the builder's ~64 KB body.  The real surface inside
-`0x4e28e0`-`0x4f26e9` is
+`0x4e28e0`-`0x4f2b45` (Ghidra also ends the body 1,116 bytes early -- see `TB` below) is
 
     56  FUN_004d6670   prop push_back        32  FUN_005287b0  Prop_settleOnTerrain
     12  FUN_004c84b0   prop record ctor      16  FUN_00524540  creature_spawn_builder
@@ -83,8 +83,15 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "raw", NAME
 JS = r"""
 const b = Process.mainModule.base;
 let world = null, genTid = -1, cap = false, randN = 0;
-// FUN_004e28e0 and its three NOP-split fragments are one body
-const TB = [0xe28e0, 0xf26f0];
+// FUN_004e28e0 and its three NOP-split fragments are one body.
+// CORRECTED 2026-07-29: the upper bound was 0xf26f0, taken from Ghidra's function
+// boundary at 0x4f26e9.  The body's `ret 8` is at 0x4f2b42, so it runs 1,116 bytes
+// further, and SEVEN rand sites plus one spawn_ctor sat in the part this filter threw
+// away -- the whole of the ruin pass's phase 4 (Docs/RE_town_ruin.md sec.2).
+// >> Every raw/town_props_capture*.json on disk was taken with the OLD bound. <<
+// They are still correct as far as they go; gate_town_ruin.py recovers the missing
+// draws from the process-global index instead.  A fresh capture will record them.
+const TB = [0xe28e0, 0xf2b45];
 let cur = null, collecting = false;
 
 function ra(ctx){ try { return ctx.returnAddress.sub(b).toUInt32(); } catch(e){ return -1; } }

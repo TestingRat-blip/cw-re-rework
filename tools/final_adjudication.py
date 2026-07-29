@@ -311,6 +311,31 @@ the body was the only way to settle these.
         "004fd920": {"name": "npc_occupant_kind2_init", "kind": "game", "verdict": "DEEP-RE"},
         "004fc180": {"name": "npc_occupant_kind4_init", "kind": "game", "verdict": "DEEP-RE"},
         "004fde90": {"name": "npc_occupant_kind35_init", "kind": "game", "verdict": "DEEP-RE"},
+        # The SpeciesGroup container, shared by the ruin-occupant pass (0x4f16bb-0x4f2b45)
+        # and the dungeon assembler's prologue (Docs/RE_dungeon_species.md). A SpeciesGroup
+        # is 0x18 bytes = two `vector<int>`: list0 (the identity pool) and list1 (the
+        # dungeon's companion pool, dead in a ruin). Proven from the bodies themselves --
+        # 0x4f7540 zeroes exactly six dwords, 0x4f3820 divides the byte span by 24 and
+        # 0x4f79b0 is `begin + idx*24`, so the element size is read three independent ways.
+        # tools/gate_town_ruin.py interprets the table region using all four.
+        # (0x4dafd0 -- `[ecx+4] = [ecx]`, std::vector::clear without freeing -- belongs in
+        # this list and is NOT here on purpose: Ghidra never created a function there, so it
+        # is absent from raw/Server.exe.meta.jsonl and a DEEP_RE row would be a no-op. It is
+        # six real bytes between `int3` fillers, not an alignment NOP inside a body, i.e.
+        # lesson 20's inverse -- a MISSING boundary rather than a spurious one. The ruin's
+        # species table calls it to REUSE the temp group between two push_backs, so a reader
+        # who takes it for a destructor loses the second group of three arms.)
+        "004f7540": {"name": "SpeciesGroup_ctor", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        "004f77a0": {"name": "SpeciesGroup_dtor", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        "004f3820": {"name": "SpeciesGroupVector_size", "kind": "gamemisc",
+                     "verdict": "DEEP-RE"},
+        "004f79b0": {"name": "SpeciesGroupVector_at", "kind": "gamemisc",
+                     "verdict": "DEEP-RE"},
+        # FUN_004024c0 / FUN_004024a0 -- sinf / cosf through __libm_sse2_{sin,cos}_precise,
+        # the /fp:precise imports (they are wrappers, not the CRT routines themselves). The
+        # ruin pack ring is `2 * cos/sin(i * PI / n)`.
+        "004024c0": {"name": "sinf_precise", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        "004024a0": {"name": "cosf_precise", "kind": "gamemisc", "verdict": "DEEP-RE"},
         # FUN_004e0700 / FUN_004ce290 -- the two 16.16 +/- double helpers the surround pass
         # builds its face offsets with. Both are `*out = *this -/+ (int64)ftol(d * 65536)`;
         # 0x4e0700 multiplies by +65536 and subtracts, 0x4ce290 by -65536 and so ADDS.

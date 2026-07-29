@@ -59,8 +59,8 @@ addr	name	kind	module	class	attributed_by	size
 004022e0	FUN_004022e0	gamemisc	game_misc	Unsorted_000	none	203
 004023b0	FUN_004023b0	gamemisc	game_misc	Unsorted_000	none	201
 00402480	FUN_00402480	gamemisc	game_misc	_helpers_wrapper	role:wrapper	30
-004024a0	FUN_004024a0	gamemisc	world	_helpers_wrapper	role:wrapper	30
-004024c0	FUN_004024c0	gamemisc	world	_helpers_wrapper	role:wrapper	30
+004024a0	cosf_precise	gamemisc	game_misc	Game	ledger	30
+004024c0	sinf_precise	gamemisc	game_misc	Game	ledger	30
 004024e0	FUN_004024e0	gamemisc	game_misc	_helpers_wrapper	role:wrapper	40
 00402510	FUN_00402510	gamemisc	game_misc	Unsorted_000	none	64
 00402550	FUN_00402550	gamemisc	ai	Helpers	caller-vote	96
@@ -2451,7 +2451,7 @@ addr	name	kind	module	class	attributed_by	size
 004f3630	TownProp_make_0x15	game	world	Proven	ledger	186
 004f36f0	lib_fn_4f36f0	lib	_library	cw_lib	ledger	275
 004f3803	Catch_All@004f3803	lib	_library	eh_funclets	eh	17
-004f3820	compute_4f3820	gamemisc	game_misc	_helpers_computed	role:computed	23
+004f3820	SpeciesGroupVector_size	gamemisc	game_misc	Game	ledger	23
 004f3840	compute_4f3840	gamemisc	game_misc	_helpers_computed	role:computed	9
 004f3850	FUN_004f3850	gamemisc	world	Unsorted	logic:caller-vote	45
 004f3880	FUN_004f3880	gamemisc	world	Unsorted	logic:caller-vote	31
@@ -2530,11 +2530,11 @@ addr	name	kind	module	class	attributed_by	size
 004f7710	FUN_004f7710	gamemisc	world	_helpers_wrapper	role:wrapper	36
 004f7740	FUN_004f7740	gamemisc	world	_helpers_wrapper	role:wrapper	66
 004f7790	cube::Dungeon::~Dungeon	game	world	Dungeon	rtti	16
-004f77a0	FUN_004f77a0	gamemisc	world	Helpers	caller-vote	77
+004f77a0	SpeciesGroup_dtor	gamemisc	game_misc	Game	ledger	77
 004f77f0	cube::Region::~Region	game	world	Region	rtti	159
 004f7890	FUN_004f7890	gamemisc	world	Unsorted	logic:caller-vote	120
 004f7910	FUN_004f7910	gamemisc	world	Unsorted	logic:caller-vote	146
-004f79b0	compute_4f79b0	gamemisc	game_misc	_helpers_computed	role:computed	18
+004f79b0	SpeciesGroupVector_at	gamemisc	game_misc	Game	ledger	18
 004f79d0	FUN_004f79d0	gamemisc	world	Unsorted	logic:caller-vote	19
 004f79f0	int128_sub	lib	_library	cw_lib	ledger	61
 004f7a30	FUN_004f7a30	gamemisc	game_misc	_helpers_wrapper	role:wrapper	51
