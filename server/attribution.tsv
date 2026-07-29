@@ -11,7 +11,7 @@ addr	name	kind	module	class	attributed_by	size
 004013a0	FUN_004013a0	gamemisc	world	Helpers	caller-vote	38
 004013d0	getElemPtr4	gamemisc	game_misc	Game	ledger	13
 004013e0	compute_4013e0	gamemisc	game_misc	_helpers_computed	role:computed	12
-004013f0	std_vector_int_at	lib	_library	cw_lib	ledger	38
+004013f0	vector4_at_or_null	gamemisc	game_misc	Game	ledger	38
 00401420	FUN_00401420	gamemisc	game_misc	Unsorted_000	none	40
 00401450	FUN_00401450	gamemisc	game_misc	Unsorted_000	none	55
 00401490	FUN_00401490	gamemisc	game_misc	Unsorted_000	none	28

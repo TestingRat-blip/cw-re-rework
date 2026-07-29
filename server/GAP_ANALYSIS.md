@@ -413,4 +413,4 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `00467f70` | 242 | 0 | 7 | orphan |  |
 | `004189b0` | 241 | 1 | 3 |  |  |
 
-**Total unnamed non-library functions: 1657** (116 of the listed 400 are orphans)
+**Total unnamed non-library functions: 1658** (116 of the listed 400 are orphans)

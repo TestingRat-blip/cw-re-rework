@@ -1,9 +1,14 @@
 # The town builder's MARKET pass (role 9) — `0x4e3a3f`-`0x4e5023`
 
-*Gate:* `tools/gate_town_market.py` — **445 checks, 0 FAIL**, 6 markets / 20 slots / 90 prop
+*Gate:* `tools/gate_town_market.py` — **450 checks, 0 FAIL**, 6 markets / 20 slots / 90 prop
 records checked field by field.
 *Source data:* `raw/town_props_capture*.json` (`tools/frida_town_props.py`, seed 42069).
-*Status:* **RE + gate only. NOT ported** — §8 says what a port would have to be fed.
+*Status:* ✅ **PORTED 2026-07-29d** — `townMarketPass` in `CwTown.h`, ab-initio gate
+`rederive_townmarket` **18/18**: 6/6 site sequences draw for draw over 334 draws (116 of
+them inside the two factories) and **98/98 records, 686 fields**. §8 is now a record of what
+the port needed, and the answer was: nothing but the plot roles.
+
+⚠ **Two things this file said that the port had to correct — see §0 and §5.**
 
 This is the **last open band in the town builder**. With it closed, 174 of the 176 firing
 rand sites are accounted for.
@@ -28,17 +33,35 @@ It is **two plot-role sections**, not one:
 and the market is one plot ringed with market stalls:
 
 ```
+col = Chunk_getColumnAt(plotCentre)                    0x4e3e84 -- ONCE, at the centre
+if col: push (x, y, col.base + col.count) into [ebp-0x5d80]   <- the NPC pass's flag-B list
 for each of 20 perimeter slots:
-    col = Chunk_getColumnAt(x, y)
-    if col: push (x, y, col.top) into [ebp-0x5d80]      <- the NPC pass's flag-B list
     if rand() % 5 != 0:                                    ~80% of slots are used
-        jitter = rand() % 3                                along the plot edge
+        jitter = rand() % 3                                on the slot's EDGE coordinate
         record = <factory>(pos)                            a HIDDEN rand() picks the model
         if Prop_settleOnTerrain(record, site, 1):
             push record into site+0xc
 ```
 
 **12 slots take stalls and 8 take goods**, from two different factories.
+
+⚠ **CORRECTED 2026-07-29d, by the port.** This block first read `for each of 20 perimeter
+slots: col = Chunk_getColumnAt(x, y); if col: push …`, i.e. the column read and the landmark
+push inside the slot loop, once per slot — and `gate_town_market.py`'s docstring said the
+same. Censusing the role-9 section by call target finds **exactly one `Chunk_getColumnAt`
+(`0x4e3e84`) and exactly one landmark push (`0x4e3ea2`)**, against 20 settles, 20
+`push_back`s and 40 rand sites; and the coordinates they are handed are `plotOrigin +
+span/2` on **both** axes, built at `0x4e3e5f`-`0x4e3e62` — the PLOT CENTRE, not a slot's.
+
+Nothing downstream changes in substance: flag B is still the market-stall list and is still
+non-empty exactly when the town has a market whose centre column exists (§3). What changes
+is the count — **one landmark per market, not up to twenty** — and, for a port, that the
+draw stream needs no terrain at all. `gate_town_market.py` [9] now asserts both calls' arity
+out of the binary so the claim cannot drift back.
+
+This is the same shape as the errors this project keeps finding: a plausible loop structure
+written from the stage's *shape* rather than read from its call census. The cheapest check —
+counting calls by target — takes one command and was never run until a port needed it.
 
 ## 1. ★ The semantic reading — and this time it is in the namespace that resolves
 
@@ -155,15 +178,55 @@ Once the jitter is removed, each slot's offset from the reference slot is **iden
 6 towns, on both axes — 40 of 40**. So the ring is 20 fixed literals plus one 3-value jitter
 each, and the whole geometry is derivable from the plot lattice alone.
 
-⚠ **The SIGN is disassembled; the AXIS is fitted, one bit per block.** A symbolic walk of
-each block recovers the jitter's sign for 17 of the 20 (and agrees with the data on all 17),
-but not reliably *which* of the two coordinates it lands on: MSVC emits a block's two
-coordinates through two different shapes — some call `int_to_fixed16_16`, some inline the
-widening as `cdq / shld r2, r1, 16 / shl r1, 16` through whatever register pair is free —
-and the walker resolves only one of the pair. The bit is therefore taken from the capture,
-and the gate **reports its null baseline**: of the six `(axis, coefficient)` options, exactly
-the two the model names survive in **20 of 20** blocks (the right coefficient on the jitter
-axis, and 0 on the other). A wrong axis does not survive 6 towns.
+✅ **UPGRADED 2026-07-29d: the AXIS is now DERIVED, and the whole ring with it.**
+
+This section used to read *"the SIGN is disassembled; the AXIS is fitted, one bit per
+block"*, and gave the reason: a symbolic walk recovers the sign for 17 of 20 but not
+reliably *which* coordinate it lands on, because MSVC emits a block's two coordinates
+through two different shapes — some call `int_to_fixed16_16`, some inline the widening as
+`cdq / shld r2, r1, 16 / shl r1, 16` — and the walker resolved only one of the pair.
+
+The diagnosis was right and the conclusion did not follow. That walker followed **registers**
+through the 16.16 widening. Following the four **frame slots** the section reads its geometry
+out of instead —
+
+```
+[ebp-0x5c8c] plotOriginX   [ebp-0x5c9c] plotOriginZ   [ebp-0x5c90] span/2   [ebp-0x5ce4] span
+```
+
+— resolves all twenty, because the jitter term simply lands inside whichever origin's
+expression it belongs to, whatever shape the widening downstream of it takes.
+`tools/extract_market_slots.py` is that interpreter, and the ring comes out as
+
+| | |
+|---|---|
+| edge coordinate | `origin + edgeSpan*span + edgeConst + jitterSign*(rand()%3)` |
+| along coordinate | `origin + span/2 + K`,  `K ∈ {−7, 0, +7}` (stalls) or `{−3, +3}` (goods) |
+
+with `edgeConst = ±6` — so the ring is four edges of five slots, three stalls on the plot's
+half-way line at ∓7 and two crates of goods at ∓3. **Nothing is typed**, and cwgen carries
+the result as a GENERATED header (`CwTownMarketTables.h`) that `gate_town_market.py` [10]
+regenerates and diffs every run (lesson 7c/7i, the `extract_house_layouts.py` pattern).
+
+★ **The capture is now a cross-check rather than the evidence**, which is the strongest form
+available here (lesson 7q): the disassembly knows nothing about the capture and the capture
+knows nothing about the disassembly, and the interpreted ring predicts **98 of 98**
+(block, town) offsets — every settle record in all 6 markets.
+
+⚠ **One honest wrinkle, and it is what the first draft of the interpreter got wrong.** Four
+blocks (1, 4, 7, 10) emit *no* `add` for their along-offset, because MSVC does not encode
+`add reg, 0`. Running the interpreter cumulatively across blocks "fixes" that by letting the
+previous block's `−7` leak in, which produces a **complete, plausible and wrong** table. The
+window is therefore per-block and an absent constant is reported as an absence; that those
+four are exactly the `K = 0` blocks is confirmed by the capture, not assumed. The old
+null-baseline check (of the six `(axis, coefficient)` options exactly two survive in 20 of 20
+blocks) is retained in the gate — it is now a check on the interpreter rather than the
+evidence the axis rests on.
+
+⚠ Note also that the jitter runs **perpendicular** to the edge, not "along" it as an earlier
+draft of this section said: it moves the slot in and out of the plot boundary, which is why
+its sign flips from side to side. The table above already had the right axes; only the word
+was wrong.
 
 ⚠ And the reference slot's **own** jitter has to be removed before comparing, or every other
 slot inherits a 3-value spread on the reference's axis and nothing looks constant. That is
@@ -192,20 +255,49 @@ the whole function). **A span bounded by its own contents is a hypothesis.**
 | hidden draws | **108** (93 factory calls, 15 of them a second draw) |
 | slots | 20 per market — 12 stalls, 8 goods |
 | records | 98 settles, **90 pushed** (8 rejected by the settle) |
-| gate | `gate_town_market.py`, **445 ok / 0 FAIL** |
+| gate | `gate_town_market.py`, **450 ok / 0 FAIL** (445 before 07-29d added [9] and [10]) |
+| port | `townMarketPass` in `CwTown.h`, `rederive_townmarket` **18/18** — §8 |
 
-## 8. What a port would have to be FED
+## 8. The PORT — what it needed, and what the gate asserts
+
+✅ **Ported 2026-07-29d** as `townMarketPass` in `src/worldgen/cw/CwTown.h`; ab-initio gate
+`gateRederiveTownMarket` (section 67), golden built by
+`tools/cw_rederive/make_townmarket_golden.py`.
 
 | input | status |
 |---|---|
-| the plot table's roles | **derived** — `rederive_townpromo` |
+| the plot table's roles | **FED** — the scan's region-cache-blocked terrain booleans (lesson 12); which plot is the market is the promotion pass's business |
 | the plot lattice and `span` | **derived** — `rederive_townlattice` |
-| the 20 perimeter offsets | **derived** — town-independent literals, §5 |
-| both factories | **derived** — §4, moduli and extents read out of their bodies |
-| the terrain column at each slot | needed for the landmark push and the settle verdict; the DRAW stream needs only whether the column exists (true at all 120 slots observed) |
-| the settle verdict | not derived — 8 of 98 rejected; `Prop_settleOnTerrain` is ported (`0x5287b0`, 07-26e), so this is reachable, just not done here |
+| the 20 perimeter offsets | **derived** — interpreted out of the binary, §5 |
+| both factories, type and extents | **derived** — §4, from the LCG-recovered hidden draws |
+| the terrain column | **not needed at all** — see the §0 correction: the one column read is at the plot centre and spends no draw |
+| the settle verdict | **neither fed nor asserted** — the port keeps every record and the gate compares the 98 the live settle was *called* on, in order. 8 of those the live settle rejected, which moves no draw and no X/Z |
+| `y16` | **not checked** — the settle's output, region-cache-blocked as the yard's is |
 
-Everything the *draw stream* needs is derived. Only the prop's final Z needs terrain.
+`rederive_townmarket` **18/18**:
+
+| | |
+|---|---|
+| SITE SEQUENCE, draw for draw *including the 116 hidden factory draws* | **6 / 6** markets |
+| records: slot / type / extents ×3 / x16 / z16 | **98 / 98**, 686 fields |
+| exactly one role-9 plot per town | **6 / 6** |
+
+★ The golden ships the **contiguous LCG stream**, hidden draws included
+(`RE_town_furnish.md` §5b's technique), so a recorded body draw only lands back on its own
+index if every unrecorded draw in front of it was spent too — that is what puts the two
+factories' hidden draw *counts* under test although nothing records them.
+
+⚠ **Null baseline, because the run is small**: 6 of 92 towns have a market. And the LAST kept
+slot of each market has no following recorded draw, so its factory's hidden-draw count is
+derived rather than pinned by alignment — 6 of the 98.
+
+★ **A structural find from the port**: this stage's goods factory `FUN_004f3490` and the
+HOUSE SURROUND pass's prop factory `FUN_004f2cd0` have the **same first four arms** — same
+types, same extents, same single-precision chain — decoded a day apart from different stages.
+cwgen shares one implementation (`townPropFactoryArm`), and both gates assert the agreement
+so either decode drifting breaks the other (lesson 7q). ⚠ They are *not* byte-identical: MSVC
+places the `pop edi` differently, so the claim is about the arms' results, which is exactly
+what a shared implementation has to be right about.
 
 ## 9. What this leaves in the town builder
 

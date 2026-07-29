@@ -1,4 +1,4 @@
-// Game (game_misc) -- server. 36 functions. Bodies = Ghidra pseudo-C.
+// Game (game_misc) -- server. 37 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Game.h"
 
@@ -8,6 +8,18 @@ int __thiscall FUN_004013d0(void *this,int param_1)
 
 {
   return (int)(void *)((int)this + param_1 * 4);
+}
+
+
+/* vector4_at_or_null @ 004013f0  kind=gamemisc  attributed-by=ledger  size=38 */
+
+undefined4 __thiscall FUN_004013f0(void *this,int param_1)
+
+{
+  if ((-1 < param_1) && (param_1 < *(int *)((int)this + 8) - *(int *)((int)this + 4) >> 2)) {
+    return *(undefined4 *)(*(int *)((int)this + 4) + param_1 * 4);
+  }
+  return 0;
 }
 
 

@@ -65,6 +65,8 @@ applied). They are copies — **never mutate `RatForge\tools\ghidra_proj\CubeAud
 | `IndirectRefs.java` | resolves the **indirect** call graph (vtables, dispatch tables, callbacks) |
 | `RecoverStructs.java` | struct layouts from usage (`dry`/`apply`) |
 | `ApplyPdb.java` / `DumpCrtFuncs.java` | apply CRT PDBs / dump their symbols |
+| `extract_market_slots.py` | INTERPRET the market's 20 perimeter slots out of `Server.exe`; `--cpp` writes `CwTownMarketTables.h` |
+| `extract_surround_slots.py` | INTERPRET the house surround's 8 emit slots; `--cpp` writes `CwTownSurroundTables.h` |
 | `harvest_labels.py` | consolidate proven identities → `raw/labels.json` |
 | `structure.py` | emit the trees + `attribution.tsv` |
 | `flirt_islands.py` | carve static SQLite/FreeType by linker block |
@@ -445,6 +447,59 @@ if you are about to trust a green gate, read group B. Every one of these cost re
    exactly. **When a stage places something by id, look for a second source that knows that
    id's geometry, and make the agreement the gate.**
 
+7v. **"The disassembly cannot resolve this" is a claim about the WALKER, not about the
+   binary — and the fix is usually to follow a different thing.** `RE_town_market.md` §5
+   spent a paragraph establishing that the market ring's jitter AXIS could not be
+   disassembled and had to be one fitted bit per block, *and its diagnosis was correct*:
+   MSVC emits a slot's two coordinates through two different shapes, one via
+   `int_to_fixed16_16` and one inlining the widening as `cdq / shld / shl`, so a walk that
+   follows REGISTERS resolves only one of the pair. The conclusion did not follow. The
+   section reads its geometry out of four FRAME SLOTS (`plotOriginX`, `plotOriginZ`,
+   `span/2`, `span`), and following those instead derives all twenty axes, because the
+   jitter term lands inside whichever origin's expression owns it whatever the widening
+   downstream does. Twenty minutes turned a fitted bit into a generated table the gate
+   regenerates. ★ The general form: **when a decode records that something is unresolvable,
+   the note almost always names the thing the resolver was tracking — read that sentence as
+   a hypothesis about the tool, not a property of the code.** (Same family as 7g "read the
+   function before budgeting for what is inside it", pointed at your own analysis.)
+
+7w. **An interpreter run CUMULATIVELY fills its own gaps with the previous item's value,
+   and the result is complete, plausible and wrong.** Four of the market's twenty slots emit
+   no `add` for their along-offset, because MSVC does not encode `add reg, 0`. Running the
+   slot interpreter per-block leaves those four blank — obviously incomplete, obviously in
+   need of a second source. Running it cumulatively across the section "fixes" them by
+   letting the previous block's `−7` leak in, and produces a full twenty-row table with no
+   gaps and no warning. Nothing about the output looks wrong. ★ **An absent encoding is an
+   ABSENCE, not a default — report it as one and let a second source fill it.** Here the
+   capture confirmed all four are the `K = 0` blocks; the interpreter states the inference
+   rather than hiding it. This is 7i's shape one level up: 7i says stop reading and start
+   executing, and this says **check what your executor does when the binary says nothing.**
+
+7x. **A WINDOW is a guess; a measured GAP is a check — and a window's failures are sized to
+   look like nothing.** The house-surround golden first assigned prop records to houses with
+   an index window round each house's coin group, and produced 1,035 records against the
+   1,059 the capture holds. That is a 2.3% shortfall spread over 14 towns — small enough to
+   read as a rounding detail, big enough to have made the port's own gate quietly weaker.
+   What replaced it cost one command: over the whole capture the settle sits **exactly 2
+   draws after its coin 771 times and 3 times 288**, and its emit slot matches in all 1,059,
+   so each zero coin pairs with the *next* settle and the generator **asserts the gap and
+   the slot**. Those same two numbers are the factory's cost split arrived at from the other
+   direction (`RE_town_surround.md` §5), which is the tell that the pairing is right.
+   ★ **Before writing a proximity rule into a gate, measure the proximity.**
+
+7y. **A stage's SHAPE is not its call census, and the census costs one command.** Two
+   documents and a gate all described the market as "for each of 20 perimeter slots:
+   `Chunk_getColumnAt(x, y)`; if it exists push into the flag-B list; …". Counting the calls
+   in the role-9 section by TARGET gives 20 settles, 20 `push_back`s, 40 `rand`s — and
+   **one** `Chunk_getColumnAt` and **one** landmark push, both handed `plotOrigin + span/2`
+   on both axes. The pseudocode had been written from what the stage plausibly does rather
+   than from what it calls, and nobody had run the count because no draw depends on it: the
+   column read spends nothing, so every draw-count gate in nine slices passed over it. It
+   mattered the moment someone needed the stage's TERRAIN dependency, which is exactly what
+   a port needs. ★ **`collections.Counter` over the call targets of a span, before writing
+   its pseudocode.** (7k's shape — a number nobody computed — with the number being a
+   count of calls.)
+
 ### B. What a green gate does NOT prove
 
 The single most expensive family in this project. Five separate instances of the same
@@ -628,12 +683,13 @@ Objective: **finish "populated worldgen"**. The deterministic geometry was alrea
 this year's work has been the **entity / prop layer**.
 
 ⚠ **Read this table as "the RE is done and gated *in this repo*" — not "the port is done".**
-Those are two different ledgers and they are **further out of step than they have ever
-been**. As of 07-29c the **town builder's RE is complete** (176/176 rand sites, 100.00% of
-its recorded draws) while **seven layers here have a green RE gate and no cwgen port at
-all**: emitter C, and six town stages — house entity, house surround, village NPC, ruin
-occupants, market, antique buildings. Closing that gap is "YOUR TASK". Where a cwgen gate
-does exist it is named in the last column.
+Those are two different ledgers. As of 07-29c the **town builder's RE is complete**
+(176/176 rand sites, 100.00% of its recorded draws); as of **07-29d three of the six unported
+town stages are ported** — the MARKET, the ANTIQUE BUILDINGS and the HOUSE SURROUND pass —
+so **four layers still have a green RE gate and no cwgen port**: emitter C, the HOUSE ENTITY
+pass, the village NPC pass and the RUIN OCCUPANT pass. Closing that gap is "YOUR TASK", and
+the two NPC/ruin items share one blocker (the building list). Where a cwgen gate exists it is
+named in the last column.
 
 Nothing below needs another capture session; every open question left is reachable from the
 captures already on disk. ⚠ One caveat worth carrying: a *fresh* town capture would be
@@ -673,10 +729,10 @@ rand sites are priced off the draw index rather than recorded (`RE_town_ruin.md`
 | the town builder's **ROLE-6 PLOT** (`0x4e503a`-`0x4e5b9e`) — the fenced yard: 14 rand sites, **49.6% of every draw in the builder body**; fences derived field-by-field, the other two containers unhooked — RE'd *and ported* | `RE_town_yard.md` | `gate_town_yard` **2,822**; **`rederive_townyard` 51/51**, site sequence exact draw-for-draw in 17/17 towns |
 | the town builder's **ROLE-0/7 PLOT** (`0x4ef248`-`0x4f0046`) — the sand plaza: 7 rand sites, 24.6% of the body; `0x4ef7c8` is one draw per RING VOXEL of a radius-8 disc, not a scatter; the RUIN site set derived from the seed alone — RE'd *and ported* | `RE_town_plaza.md` | `gate_town_plaza` **11,877**; **`rederive_townplaza` 169/169**, falloff gate 430/430 ab initio |
 | the town builder's **HOUSE ENTITY** pass (`0x4e74a5`-`0x4ea988`) — the four face walks, the roof walk, the wall/roof walk (`0x4ea254`) and the four-neighbour walk: 11 rand sites, 34 emit sites, 16 spawn tails, **19,352 `creature_spawn_builder` records checked field by field**; ⚠ **RE + gate only, NOT ported** | `RE_town_entities.md` | `gate_town_entities` **46,344** / 435 houses |
-| the town builder's **HOUSE SURROUND** pass (`0x4ecfb5`-`0x4ed9ea`) — the clutter against the outside walls: 8 rand sites, 4 faces × 2 slots, **1,059 prop records checked field by field**; `FUN_004f2cd0` the PROP FACTORY, whose hidden draws are LCG-recovered; it also pins `kTownHouseOrigin = 7` by a **sweep** | `RE_town_surround.md` | `gate_town_surround` **6,639** |
+| the town builder's **HOUSE SURROUND** pass (`0x4ecfb5`-`0x4ed9ea`) — the clutter against the outside walls: 8 rand sites, 4 faces × 2 slots, **1,059 prop records checked field by field**; `FUN_004f2cd0` the PROP FACTORY, whose hidden draws are LCG-recovered; it also pins `kTownHouseOrigin = 7` by a **sweep** — RE'd *and ported* | `RE_town_surround.md` | `gate_town_surround` **6,643**; **`rederive_townsurround` 1004/1004**, 323/323 site sequences draw-for-draw |
 | the town builder's **NPC / DAILY-ROUTINE** pass (`0x4f0046`-`0x4f16b6`) — the last stage in the builder: five named-occupant arms + `1 + rand()%2` villagers per building, each with a behaviour tree and a **daily schedule**; 38 rand sites, **7,386 recorded + 47,230 hidden draws**; five per-town bits predict every draw in order; ⚠ **RE + gate only, NOT ported** | `RE_town_npcs.md` | `gate_town_npcs` **16,117** / 35 towns, 440 villagers |
-| the town builder's **ANTIQUE BUILDINGS** (`0x4eee3e`-`0x4ef248`, roles 0x14/0x12) — the LAST two rand sites: one `antique-building1..4` model per ruin plot, centred by half its own `.cub` footprint; 45/45 positions predicted exactly, and it CORRECTS "town NPC spawns"; ⚠ **RE + gate only, NOT ported** | `RE_town_antique.md` | `gate_town_antique` **290** / 45 placements |
-| the town builder's **MARKET** (`0x4e3a3f`-`0x4e5023`, role 9) — 20 perimeter slots, 12 stalls + 8 goods, both factories' hidden `rand()` LCG-recovered so TYPE and EXTENTS are **derived**, not just counted; it also names the NPC pass's flag-B list; ⚠ the role-8 half of the band is **dead code** (role 8 is never assigned); ⚠ **RE + gate only, NOT ported** | `RE_town_market.md` | `gate_town_market` **445** / 6 markets, 90 records |
+| the town builder's **ANTIQUE BUILDINGS** (`0x4eee3e`-`0x4ef248`, roles 0x14/0x12) — the LAST two rand sites: one `antique-building1..4` model per ruin plot, centred by half its own `.cub` footprint; 45/45 positions predicted exactly, and it CORRECTS "town NPC spawns" — RE'd *and ported* | `RE_town_antique.md` | `gate_town_antique` **290**; **`rederive_townantique` 62/62**, 45/45 placements with NO terrain |
+| the town builder's **MARKET** (`0x4e3a3f`-`0x4e5023`, role 9) — 20 perimeter slots, 12 stalls + 8 goods, both factories' hidden `rand()` LCG-recovered so TYPE and EXTENTS are **derived**, not just counted; the 20-slot ring is now INTERPRETED out of the binary too; it also names the NPC pass's flag-B list; ⚠ the role-8 half of the band is **dead code** (role 8 is never assigned) — RE'd *and ported* | `RE_town_market.md` | `gate_town_market` **450**; **`rederive_townmarket` 18/18**, 98/98 records, 6/6 streams draw-for-draw |
 | the town builder's **RUIN OCCUPANT** pass (`0x4f16bb`-`0x4f2b45`) — the ELSE of `desc[0x18]==1`, and the ruin's mirror of the NPC pass: a species table by `desc[0x1c]`, a plot guard, a `rand()%5` quadrant loner, 2-4-creature packs on a semicircle, and a patrol; **18 rand sites, 7 of them past the rig's filter and priced off the global draw index**; `ents-ents0` exact 35/35; ⚠ **RE + gate only, NOT ported** | `RE_town_ruin.md` | `gate_town_ruin` **3,041** / 35 ruins, 677 entities |
 | the town builder's **HOUSE FURNISHING** pass (`0x4ead3a`-`0x4ecf20`) — 13 rand sites, 21 push sites, 6,759 records; `FUN_004f2ee0` the FURNITURE FACTORY, whose 8 rand sites the rig cannot see; `cellAt3D` ROTATES the module grid; the house sits `plotOrigin + 7` — RE'd *and ported* | `RE_town_furnish.md` | `gate_town_furnish` **34,307**; the factory **4,958/4,958** from LCG-recovered hidden draws; **`rederive_townfurnish` 1,004/1,004**, 323 houses draw-for-draw |
 
@@ -701,6 +757,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
+| 07-29d | ★★ **THE FIRST THREE TOWN PORTS LAND: the MARKET, the ANTIQUE BUILDINGS and the HOUSE SURROUND pass are now in cwgen**, taking the unported-town-stage count from six to three (and the whole unported list from seven to four). All three were gated ab initio and all three isolation-run clean. ★ **The market needs NOTHING fed but the plot roles** — 6/6 site sequences draw for draw over 334 draws (116 of them inside the two factories) and **98/98 records, 686 fields**, geometry with no terrain at all. ★ **And porting it CORRECTED the decode twice.** (1) `RE_town_market.md` §0 and `gate_town_market.py`'s own docstring both put the `Chunk_getColumnAt` and the flag-B landmark push **inside** the 20-slot loop; censusing the role-9 section by call target finds **exactly one of each**, at the PLOT CENTRE, against 20 settles and 20 pushes. Flag B's meaning is unchanged, its count is one per market rather than twenty — and the draw stream needs no terrain. (2) §5's *"the SIGN is disassembled; the AXIS is fitted, one bit per block"* is **withdrawn**: that walker followed REGISTERS through the 16.16 widening, which MSVC emits two ways; following the four FRAME SLOTS instead derives all twenty, and `extract_market_slots.py` now writes a GENERATED `CwTownMarketTables.h` the gate regenerates and diffs. The capture became a cross-check (**98/98** offsets) instead of the evidence. ★ **The surround port is the strongest of the three**: 323/323 per-house site sequences draw for draw over 7,755 draws (**1,347 of them inside the prop factory the rig cannot see**) and **1,059/1,059 records, 8,472 fields** — and the house's layout, rotation and mirror coin are DERIVED, because the golden ships the house pass's own draws and the port runs `townHouseOne` for real. ★ **A cross-stage find**: the surround's factory `FUN_004f2cd0` and the market's goods factory `FUN_004f3490` have the **same first four arms** — two functions decoded a day apart from different stages. cwgen shares one implementation and both gates assert the agreement (lesson 7q). ⚠ Not byte-identical (the `pop edi` moves), so the claim is about the arms' RESULTS. ⚠ **The surround golden's first draft silently lost 24 of 1,059 records** to an index window; the fix was the measured gap (settle sits exactly 2 or 3 draws after its coin, 771/288, slot matching 1,059/1,059). Hash `0FA08D5CB7998A34` → **`CB8B2AB38BD28130`**, isolated one golden at a time | `RE_town_market.md`, `RE_town_antique.md`, `RE_town_surround.md` | **`rederive_townmarket` 18/18**, **`rederive_townantique` 62/62**, **`rederive_townsurround` 1004/1004** |
 | 07-29c | ★★ **THE TOWN BUILDER IS CLOSED: 176 of 176 firing rand sites, 228,413 of 228,413 recorded draws — 100.00%.** The last two sites, `0x4eee4f` (31 draws) and `0x4ef03e` (14), are two structurally identical plot-role sections differing in one mask: `role == 0x14` takes `0x84c + rand()%2` and `role == 0x12` takes `0x84c + rand()%4`, and each places ONE model from the world model DB at the centre of its plot, dropped to the ground. ★ **A CORRECTION: they are not "town NPC spawns"** as `RE_town_plaza.md` §9 and three handoffs have called them. Ids `0x84c`-`0x84f` are **`antique-building1..4.cub`**, the call's `type` argument is a constant **0**, and roles `0x12`/`0x14` occur **in ruins and in no village** (14 and 31 plots, 0 elsewhere) — so these two sites place **the ruined buildings a ruin is made of**. The old name came from the callee's LABEL (`creature_spawn_builder`) rather than its ARGUMENTS; `FUN_00524540` is the generic entity builder. ★★ **And the geometry closes against a second, independent source.** The position is the plot centre minus **half the model's own footprint**, so the live spawn positions MEASURE the model dims — offsets group to exactly (−16,−16) for coins 0/1 and (−12,−12) for 2/3 — and `model_id_map.json`, which knows nothing about this pass, says `0x84c`/`0x84d` are 32 wide and `0x84e`/`0x84f` are 24. Two sources, same numbers; with the map's dims fed in, **all 45 positions are predicted exactly** off the seed-derived plot lattice, and the recorded `orient` equals `plot[+0x14]` 45/45. ⚠ Null baseline stated: role 0x14's `%2` is **unobservable** (both its models are 32×32), role 0x12's `%4` resolves only 2-way, and the w/h swap is invisible because all four models are square. ⚠ **NOT PORTED** | `RE_town_antique.md` | **`gate_town_antique` 290** |
 | 07-29b | ★ **the LAST open band is the town builder's MARKET — RE'd and gated, and the town builder is now 99.98% closed.** `0x4e39ea`-`0x4e4fb3` was queued as "40 sites / 218 draws … but 20 `prop_push` and 20 settle sites hang off it, so unlike the last four stages it *is* checkable field by field". Right, and it undersold it. ★ **It is TWO plot-role sections**: `role == 8` at `0x4e3ac0` and `role == 9` at `0x4e3e15`. The role-9 half is a **MARKET** — 20 slots round one plot's perimeter, each `Chunk_getColumnAt` → landmark push → `rand()%5 != 0` → `rand()%3` jitter along the edge → a prop → settle → `site+0xc`. ★★ **THE SEMANTIC READING LANDS, and this time in the namespace that resolves**: `FUN_004f3630` gives `0x15 + rand()%3` and `FUN_004f3490` `0x18 + rand()%4`, which through `prop_ids.json` are **market-stand1/2/3** and **barrel/crate/open-crate/sack** — 12 stalls and 8 crates of goods. ⚠ `RE_town_yard.md` had to *withdraw* the same kind of reading because its ids go to `site+4`/`site+0x30`, which nothing hooks; **these go to `site+0xc`, which is exactly what `prop_ids.json` covers**, and the gate asserts the push target out of the binary so the distinction cannot be lost. ★★ **AND IT NAMES AN INPUT THE NPC PASS COULD NOT**: `RE_town_npcs.md` §8 lists flag B as "pushed at `0x4e3ea2`, in the not-yet-RE'd band" — `0x4e3ea2` is this pass's landmark push, so **flag B is the market-stall list**, `B ⟺ D` is explained, and the villagers' 1-3 hour schedule stop at `0x4f0fc0` is **a trip to the market**. ★★ **The hidden factory draws are DERIVED, not just priced**: both factories sit outside the builder body, LCG-recovered they reproduce the **TYPE 90/90 and all three EXTENTS 270/270**, and the measured gap (2 or 3, never anything else) predicts one-or-two hidden draws **93/93**. ★ **Role 8 has a code section, a rand site and a prop push, and is NEVER ASSIGNED** — the builder's complete set of role stores is `{0,2,3,5,6,7,9..20}`, so roles 4 and 8 are dead code, and both of role 8's emitters are empty in 92 towns. ⚠ **The band was 20 blocks, not 19**: the ledger ended it at `0x4e4fb3`, its last RAND site, which cut the 20th block's settle and push into the gap before the yard — the same mistake as 07-29's, one scale down. ⚠ **NOT PORTED**; §8's FED table is nearly empty — everything the draw stream needs is derived | `RE_town_market.md` | **`gate_town_market` 445** |
 | 07-29 | ★ **the `0x4f16bb` REGION is the town builder's RUIN OCCUPANT pass — RE'd and gated — and the slice's real find is that THE BUILDER'S BODY IS 1,116 BYTES LONGER THAN THIS REPO HAS CARRIED.** The queue had it as "the ELSE branch of `desc[0x18] == 1`, so the same NPC pass for the other site classes". The partition was right and the conclusion was wrong twice over. ★ **`desc[0x18]` is 1 or 5 and nothing else** — 50 villages, 42 ruins, exactly the split `RE_town_verdict.md` already reports — so the else arm is the **RUIN's** half of the fork, and it does the opposite thing: an abandoned town repopulated with **hostile creatures** drawn from a species table, `Sequential[Combat(20.0f), WalkPath(2.0f)]`, no `LookAtPlayer`, no interaction, no schedule. The gate censuses the behaviour ctors in BOTH spans and contrasts them (village 7 kinds, ruin 3, strict subset) rather than asserting a negative from one side. ★★ **AND THE SPAN WAS WRONG: `0x4f26e9` is not the end of the builder.** The `ret 8` is at **`0x4f2b42`** — the body is `0x4e28e0`-`0x4f2b45` = **66,149 bytes**. `RE_town_plaza.md` §0 took 65,033 off Ghidra's boundary and **`frida_town_props.py`'s `inTB` has the same bound**, so **seven rand sites and one `spawn_ctor` in `0x4f26f0`-`0x4f2a5b` have never been recorded in any capture** (lesson 18 from a new direction — the filter cutting off the FUNCTION, not a callee; and two of the seven are `call edi`, which a memory-form census also misses). They are priced anyway off the global draw index: the gap after `0x4f26b3` is **8 in 35 firings and 1 in 42, never anything else, and WHICH it is, is predicted by that draw's own recorded value % 2 — 77/77.** ★★ **The species tables cross-check against a container decoded a year ago**: interpreted (never typed — the region shares tails through `0x4f1b93`) out of the binary, the `desc[0x1c]>4` and `desc[0x1c]=4` arms are **byte-identical to the DUNGEON assembler's default and style-1/2 species containers** (`RE_dungeon_species.md`, gated 6/6 live), same three `L2` ids in the same order — two functions, two methods, one table. The ruin reads `desc[0x20]%3` where the dungeon spends a `rand()`. ★★ **And `ents` CLOSES EXACTLY**, which `RE_town_npcs.md` §7 had written off: a ruin runs only 2 of the 13 `spawn_ctor` sites, so `ents-ents0` = guard+quadrant+pack+patrol+inhabitant-scatter is an identity, **35/35, residual zero, 842 entities** — every term ablated (dropping one gives 0-5/35) and the coin's modulus swept (`%5` 35/35 vs 2-7/35 for its neighbours). It is the **only** evidence the invisible block spawns anything. ⚠ **NOT PORTED**; §9 is the FED table and the ask is small — vector SIZES per building, plus the plot table. ⚠ Arm 0 pushes `0x60` into the flat list **twice** (byte-checked): a port must reproduce it or the pick becomes `%3` instead of `%4` | `RE_town_ruin.md` | **`gate_town_ruin` 3,041** |
@@ -757,18 +814,23 @@ to a numbered lesson above:
 the census is re-run over every corrected span). There is no decoding work left in
 `FUN_004e28e0`.
 
-**What is left is the PORT, and it is now the largest single thing in the programme.**
-Eight of the builder's stages are in `cwgen`; **six are RE'd and gated with no port at
-all**. Each names what it would have to be FED in its own file, and the tables are much
-smaller than the stages' draw counts suggest.
+**What is left is the PORT.** Eleven of the builder's stages are now in `cwgen`; **three are
+RE'd and gated with no port at all**. Each names what it would have to be FED in its own
+file, and the tables are much smaller than the stages' draw counts suggest.
 
-Take them in this order — it is dependency order, not size order:
+✅ **Items 1-3 are DONE (07-29d)** and are kept here because their entries were accurate and
+the method transferred:
+
+| # | stage | doc | outcome |
+|---|---|---|---|
+| ✅ 1 | **MARKET** (role 9) | `RE_town_market.md` §8 | "**nothing FED**" was right — and it was *more* right than written: the one column read is at the plot centre, so the geometry needs no terrain at all. `rederive_townmarket` 18/18 |
+| ✅ 2 | **ANTIQUE BUILDINGS** (roles 0x14/0x12) | `RE_town_antique.md` §6 | "**one table**" was right — the four `.cub` dims out of `model_id_map.json`. `rederive_townantique` 62/62, 45/45 positions |
+| ✅ 3 | **HOUSE SURROUND** | `RE_town_surround.md` §9 | "*could* be ported today, only the base **Y** is FED" was right. `rederive_townsurround` 1004/1004, 1,059/1,059 records |
+
+**These three are what is left, in this order:**
 
 | # | stage | doc | what a port needs |
 |---|---|---|---|
-| 1 | **MARKET** (role 9) | `RE_town_market.md` §8 | **nothing FED.** Plot roles, the lattice, the 20 perimeter literals and both factories are all derived. Only the prop's final Z needs terrain |
-| 2 | **ANTIQUE BUILDINGS** (roles 0x14/0x12) | `RE_town_antique.md` §6 | **one table.** The model `w`,`h` are `.cub` dims for four ids — take them from `cw_rederive/model_id_map.json`. X/Y need no terrain at all |
-| 3 | **HOUSE SURROUND** | `RE_town_surround.md` §9 | its own §9 says it *could* be ported today: only the base **Y** is FED, region-cache-blocked exactly as the yard's `y16` is |
 | 4 | **RUIN OCCUPANTS** | `RE_town_ruin.md` §9 | the building list `site+0x88` and each building's vector **SIZES** (the picks are `rand() % size`, so only the size advances the stream) |
 | 5 | **VILLAGE NPC** | `RE_town_npcs.md` §8 | the same building list, three vector sizes per building, and five per-town bits. **No positions at all** |
 | 6 | **HOUSE ENTITY** | `RE_town_entities.md` §9 | the hardest: a per-emit-site model anchor that lives in the server's model DB and nothing in `cwgen` reads |
@@ -776,12 +838,58 @@ Take them in this order — it is dependency order, not size order:
 ⚠ **4 and 5 share one blocker and it is the only real one: the BUILDING LIST.** Both walk
 `site+0x88`, which the house/plot chain produces and `CwTown` does not have. Deriving it
 once unblocks both, and `RE_town_market.md` §3 has already identified one of its consumers
-(flag B is the market-stall list). Items 1-3 do **not** need it — start there.
+(flag B is the market-stall list, pushed once per market at the plot centre — see the
+07-29d correction).
 
-⚠ **Every one of these WILL move the hash**, unlike the last five slices. So the
-isolation-run discipline at the end of this file stops being optional: move only the new
-golden aside, confirm the old hash returns exactly, and **diff the whole output**, not just
-the hash — a measured number nobody diffs is a gate that cannot fail.
+★ **START HERE — 07-29d censused it, and the answer reorders this queue.** Every
+`lea ecx, [reg + 0x88]` in the whole builder body (`0x4e28e0`-`0x4f2b45`) is:
+
+```
+4E76DB  -> 0x4F2BE0   the ONE write        (in the HOUSE ENTITY pass, item 6's span)
+4F0065  -> 0x530550 |
+4F02D9  -> 0x530550 |  the village NPC pass's reads
+4F02EB  -> 0x4D3DE0 |
+4F168F  -> 0x4D3DE0 |
+4F21F9  -> 0x530550 |  the ruin occupant pass's reads
+4F220B  -> 0x4D3DE0 |
+```
+
+and the census is **exhaustive for the other address forms too** — no direct
+`mov [reg+0x88], …`, no `add reg, 0x88`, and no indexed `[reg + reg*s + 0x88]` anywhere in
+the body (lesson 7o's "census the register form too", applied up front this time). So the
+list has exactly **one producer and six consumers**, and `0x4f2be0` is
+`std::vector<T*>::push_back` (element size
+4; it range-checks the argument against its own storage, grows through `0x426eb0`, then
+copies — so a vector of POINTERS). That single push sits at `0x4e76db`, inside
+`0x4e74a5`-`0x4ea988` — the per-house entity pass — which means:
+
+* **the building list is one entry per HOUSE, in house order**, and `townHousePass` already
+  produces exactly that sequence. The "blocker" for 4 and 5 is largely a *plumbing* problem,
+  not a derivation one;
+* but it lives **inside item 6's span**, so 6 is no longer clearly last — read `0x4e76db`'s
+  neighbourhood before choosing between 4/5 and 6.
+
+⚠ **What this census does NOT establish**, and it is the next thing to pin: whether the
+pushed object is the same `house` the house pass builds (the pointer comes from a frame slot
+set further up, not from the visible instructions), and the **three vector SIZES per
+building** that `RE_town_npcs.md` §8 asks for. The write site is byte-censused and certain;
+"one per house" follows from where it sits and is strong; the object identity and the sizes
+are neither. A plausible cross-check to run first: buildings ≈ houses, and both passes report
+**35 towns** against the surround's **35 towns / 323 houses**.
+
+⚠ **Every one of these WILL move the hash.** So the isolation-run discipline at the end of
+this file is not optional: move only the new golden aside, confirm the old hash returns
+exactly, and **diff the whole output**, not just the hash — a measured number nobody diffs
+is a gate that cannot fail. All three 07-29d ports were isolated this way, one at a time,
+and each restored the previous hash exactly with every other gate's numbers byte-identical.
+
+★ **What the three finished ports teach about the three left** (and it is the same thing
+four earlier slices found from the RE side): **porting a stage re-reads it, and the re-read
+corrects it.** The market's decode was wrong about *where its column read sits* and about
+*whether its jitter axis was derivable* — neither error moved a single draw count, so nine
+gates and three handoffs passed over both. Budget the port of 4/5/6 as a re-read of the
+decode, not as transcription; and when a doc says a thing "cannot be resolved from the
+disassembly", check what the resolver was tracking before believing it (lesson 7v below).
 
 ★ **Read `RE_town_yard.md` §6.1 and §6.2 before writing the first port.** §6.1 is the
 ASSERTED / FED / MEASURED table this kind of stage needs; §6.2 is the trap that cost a day
@@ -982,13 +1090,14 @@ section.
    the 228,413 — each is priced or derived in its own file, none is counted here.
    (2) **RE-closed is not PORT-closed** — see the next item.
 
-   ▶ **So the town work that is LEFT is the PORT, and it is now the largest single thing in
-   the programme.** Five stages are RE'd and gated with no cwgen port at all: the HOUSE
-   ENTITY pass (`RE_town_entities.md`), the HOUSE SURROUND pass (`RE_town_surround.md`),
-   the village NPC pass (`RE_town_npcs.md`), the RUIN OCCUPANT pass (`RE_town_ruin.md`) and
-   the MARKET (`RE_town_market.md`), plus the two-site antique placement. Each names what a
-   port would have to be FED in its own §8/§9, and those tables are small — the market's
-   and the antique one's are nearly empty.
+   ▶ **So the town work that is LEFT is the PORT** — and as of 07-29d it is half done.
+   The MARKET, the ANTIQUE BUILDINGS and the HOUSE SURROUND pass are **in cwgen and gated
+   ab initio**; **three stages** are still RE'd and gated with no port: the HOUSE ENTITY
+   pass (`RE_town_entities.md`), the village NPC pass (`RE_town_npcs.md`) and the RUIN
+   OCCUPANT pass (`RE_town_ruin.md`). Each names what a port would have to be FED in its own
+   §8/§9. The three that landed confirmed those tables were accurate — and in the market's
+   case optimistic in the right direction, since the stage turned out to need no terrain at
+   all.
 
    ⚠ **And two of the dispatch's sections are DEAD**: roles **4 and 8** have code and are
    never assigned — the builder's complete set of stores to a plot's `+0xc` is
@@ -1204,18 +1313,46 @@ Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fail
 cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
 ```
 
-**Known-good as of 07-29c:** the `cw_decomp` gate suite is **fully green** (40 gates —
-`gate_town_ruin`, `gate_town_market` and `gate_town_antique` are new), and **`cwgen_test` is fully green** (35 gates). Hash
-**`0FA08D5CB7998A34`**, re-verified in Debug at the start of 07-29 before anything changed
-and again after. The 07-28m baseline was verified in **both** Debug and Release with the
-two 141-line outputs diffed byte-for-byte against each other.
+**Known-good as of 07-29d:** the `cw_decomp` gate suite is **fully green** (40 gates), and
+**`cwgen_test` is fully green**. Hash **`CB8B2AB38BD28130`**, verified in **both** Debug and
+Release with the two 158-line outputs diffed byte-for-byte against each other — identical.
+The 07-29c baseline `0FA08D5CB7998A34` was re-verified in Debug before anything changed.
 
-⚠ **None of the three 07-29 slices changed a hash or touched a golden**, because both are RE + gate
-only: they add `tools/gate_town_ruin.py` + `Docs/RE_town_ruin.md` + six `DEEP_RE` entries,
-`tools/gate_town_market.py` + `Docs/RE_town_market.md` + four more, and
-`tools/gate_town_antique.py` + `Docs/RE_town_antique.md` with no new DEEP_RE at all, and
-nothing in `cwgen`. (07-28m, 07-28l and 07-28k were the same shape.) If a later port of any of the five
-lands, the isolation run below applies to it.
+⚠ **A COUNT CORRECTION, and it is this file's own.** Every entry above says `cwgen_test` has
+**35 gates**; the number has been copied forward for at least eight slices and it is wrong.
+Counted off the run: the 07-29c baseline reports **56 `[PASS]` and 27 `[skip]`**, and with
+07-29d's three it is **59 `[PASS]` and 27 `[skip]`**. (The isolation runs confirm the
+arithmetic: 56 → 57 with the market golden → 58 with the antique → 59 with the surround.)
+Do not re-copy the 35 — count the `[PASS]` lines. A number nobody recomputes is exactly the
+lesson this file already carries about measured numbers nobody diffs.
+
+⚠ **07-29d is the first slice in this run to move the hash**, because it is the first to be
+a PORT rather than RE + gate. The chain, each step isolated in place and the WHOLE output
+diffed, not just the hash:
+
+```
+0FA08D5CB7998A34   the 07-29c baseline
+183F01AC8AE28963   + rederive_townmarket      (isolated: removing only its golden restores the line above, every other gate byte-identical)
+AB6C3F09F789C1F9   + rederive_townantique     (isolated the same way)
+CB8B2AB38BD28130   + rederive_townsurround    (isolated the same way)
+```
+
+Each isolation diff came back as exactly the new gate's own lines plus the hash — no other
+gate's reported numbers moved. That is the check `A measured number nobody diffs is a gate
+that cannot fail` asks for, and it is cheap: one extra run per golden.
+
+⚠ **07-29d also adds two GENERATED headers**, and both follow the `CwTownHouseTables.h`
+rule — the generator is the source of truth and the gate re-runs it:
+
+```
+python tools/cw_decomp/tools/extract_market_slots.py   --cpp > src/worldgen/cw/CwTownMarketTables.h
+python tools/cw_decomp/tools/extract_surround_slots.py --cpp > src/worldgen/cw/CwTownSurroundTables.h
+```
+
+`gate_town_market.py` [10] and `gate_town_surround.py` regenerate and diff them every run,
+so a hand edit fails rather than survives (lesson 7c/7i). Both extractors also cross-check
+themselves against the live capture — the market ring predicts 98/98 recorded offsets, which
+is the whole reason §5's fitted bit could be retired.
 
 ⚠ **07-29b RENAMED a `DEEP_RE` entry rather than adding one**, and the reason is worth
 keeping: `0x4f3630` was `TownProp_make_0x15`, and the comment directly above it already
@@ -1287,7 +1424,8 @@ the header on disk. Without that the header is just another hand-typed table wit
 comment claiming otherwise (lesson 7c). Regenerate it with:
 `python tools/cw_decomp/tools/extract_house_layouts.py --cpp > src/worldgen/cw/CwTownHouseTables.h`
 
-**Superseded:** hash **`CE700304401BFC57`** was the 07-28i known-good,
+**Superseded:** hash **`0FA08D5CB7998A34`** was the 07-29c known-good,
+**`CE700304401BFC57`** the 07-28i one,
 **`2D6C3B72E99E055E`** the 07-28g one,
 **`126A1A6F4853E2A4`** the 07-28f one,
 **`8BAE4DDD7C271C62`** the 07-28e one,
@@ -1309,9 +1447,9 @@ moved with the C++. Of the 13 goldens that script writes, only that one changed,
 radius is a measurement and not a hope (lesson 17).
 
 ⚠ **Grepping the suite for "FAIL" gives seven false alarms.** `gate_zone_bed.py` ends with
-`44 ok, 0 FAIL`, `gate_town_surround.py` with `6639 ok, 0 FAIL`, `gate_town_npcs.py`
+`44 ok, 0 FAIL`, `gate_town_surround.py` with `6643 ok, 0 FAIL`, `gate_town_npcs.py`
 with `16117 ok, 0 FAIL`, `gate_town_ruin.py` with `3041 ok, 0 FAIL` and
-`gate_town_market.py` with `445 ok, 0 FAIL` and `gate_town_antique.py` with
+`gate_town_market.py` with `450 ok, 0 FAIL` and `gate_town_antique.py` with
 `290 ok, 0 FAIL` (the last three then print `RESULT: PASS`), and six gates
 (`gate_dungeon_counter`, `gate_zone_landform`,
 `gate_zone_landform_order`, `gate_zone_prechain`, `gate_zone_siteloop`, `gate_zone_tail`)

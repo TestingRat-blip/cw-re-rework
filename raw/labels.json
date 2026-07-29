@@ -428,8 +428,8 @@
    "src": "ADJUDICATION.md"
   },
   "004013f0": {
-   "kind": "lib",
-   "name": "std_vector_int_at",
+   "kind": "gamemisc",
+   "name": "vector4_at_or_null",
    "src": "ADJUDICATION.md"
   },
   "00402150": {

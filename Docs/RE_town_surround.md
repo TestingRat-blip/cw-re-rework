@@ -1,8 +1,13 @@
 # The town builder's HOUSE SURROUND pass (`0x4ecfb5`–`0x4ed9ea`)
 
-*RE'd and gated 2026-07-28 (07-28l). Live gate: `tools/gate_town_surround.py`, **6,639
+*RE'd and gated 2026-07-28 (07-28l). Live gate: `tools/gate_town_surround.py`, **6,643
 checks, 0 FAIL** over the 92 towns in `raw/town_props_capture*.json` (seed 42069) — 35 of
 which reach this stage, 323 houses, **1,059 prop records**.*
+
+*✅ **PORTED 2026-07-29d** — `townSurroundHouse` in `CwTown.h`, ab-initio gate
+`rederive_townsurround` **1004/1004**: **323/323** per-house site sequences draw for draw
+over 7,755 draws (1,347 of them inside the prop factory) and **1,059/1,059 records, 8,472
+fields**. §9's "it could be ported today" is now discharged; see §9 for what it took.*
 
 ```
 python tools/gate_town_surround.py
@@ -195,7 +200,10 @@ all 598 pushes, not just of one.
 | the house ANCHOR is `plotOrigin + 7` | swept over a whole 13-block stride | **1,059 at +7, 0 at 0..6 and 8..12** |
 | the base Y is one integer per house | per house | 312 |
 
-Total: **6,639 checks, 0 FAIL.**
+Total: **6,639 checks, 0 FAIL** — **6,643 as of 07-29d**, which adds the interpreted slot
+ring vs this file's literals, the interpreted coin sites vs §3's, the generated
+`CwTownSurroundTables.h` vs a fresh extraction, and the cross-factory equality with the
+market's goods factory (§9).
 
 ## 7. The null baselines — what the data does *not* pin
 
@@ -254,11 +262,53 @@ The same-count tell has now identified a single stage four times running
 
 ## 9. Not done, deliberately
 
-* **No port.** Unlike the entity pass this one *could* be ported today — every input is
-  already derived (the module grid and its rotation from `RE_town_house.md`, the anchor
-  from §4, the four literals from the span, the factory from §5) and the only FED value
-  would be the base **Y**, which is region-cache-blocked exactly as the yard's `y16` is
-  (`RE_town_yard.md` §6.1). Write the ASSERTED / FED table first.
+* ~~**No port.**~~ ✅ **DONE 2026-07-29d**, and this entry's prediction held: every input was
+  already derived and the only FED value is the base **Y**. `townSurroundHouse` in
+  `src/worldgen/cw/CwTown.h`, gate `gateRederiveTownSurround` (section 69), golden
+  `tools/cw_rederive/make_townsurround_golden.py`.
+
+  | input | status |
+  |---|---|
+  | the module grid, its rotation and mirror coin | **derived** — the golden ships the HOUSE PASS's own draws and the port runs `townHouseOne` for real |
+  | the anchor `plotOrigin + 7` and the 13 stride | **derived** — §4, and the position check re-tests the sweep |
+  | the eight slots' four literals each | **derived** — now INTERPRETED, see below |
+  | the factory's type and extents | **derived** — §5, from the LCG-recovered hidden draws |
+  | the plot table (role / sub / rotFinal) | **FED** — region-cache-blocked terrain booleans |
+  | the base **Y** | **FED** — recovered from the records and handed back; what is asserted is the FORM (`(baseY + 1) << 16`, one constant per house), not the number |
+  | the settle verdict | neither fed nor asserted — the port keeps every record, the gate compares the 1,059 the live settle was *called* on |
+
+  ★ **The eight emit slots are no longer typed anywhere.** `tools/extract_surround_slots.py`
+  interprets `(normalAxis, side, alongK, orient)` out of `0x4ecfb5`-`0x4ed9ea` and writes
+  `CwTownSurroundTables.h`; `gate_town_surround.py` re-runs it, diffs the header, and diffs
+  the interpreted ring against this file's own literals — so the three copies cannot drift
+  (lesson 7c/7i). It independently recovers all eight coin addresses §3 lists.
+
+  ⚠ **The interpreter's first draft got the normal axis wrong in half the slots**, and the
+  reason is worth keeping: it took the LAST anchor slot read before the factory call, which
+  works for the ±X faces and fails for the ±Z ones because the two coordinate chains swap
+  emission order between them. The rule that works is *which chain runs through the DOUBLE
+  helper* (`FUN_004e0700` / `FUN_004ce290`) rather than the integer one — a property of what
+  the code does, not of the order it does it in. Same shape as §3's note about the three
+  `% 6` encodings.
+
+  ★ **The port's own find: this stage's factory shares its first four arms with the
+  MARKET's.** `FUN_004f2cd0` arms 0-3 and `FUN_004f3490` (`RE_town_market.md` §1) produce the
+  same types, the same extents and the same single-precision chain — two functions decoded a
+  day apart from two different stages. cwgen shares one implementation
+  (`townPropFactoryArm`) and both gates assert the agreement, so either decode drifting
+  breaks the other (lesson 7q). ⚠ They are **not** byte-identical — MSVC places the `pop edi`
+  differently — so the claim is about the arms' *results*, which is what a shared
+  implementation must get right.
+
+  ⚠ **A trap the golden hit, recorded because it produced a plausible wrong number.** The
+  first generator assigned records to houses with an INDEX WINDOW round each house's coin
+  group (`first <= n <= last + margin`) and produced **1,035** records instead of 1,059 —
+  a 2.3% shortfall spread over 14 towns, which looks like nothing. The fix was to stop
+  guessing a window and use the measurement: over the whole capture a settle sits **exactly
+  2 draws after its coin 771 times and 3 times 288**, and its emit slot matches in all 1,059,
+  so each zero coin pairs with the next settle *and the generator asserts the gap and the
+  slot*. (Those two numbers are also §5's factory cost split, arrived at from the other
+  direction.) **A window is a guess; a measured gap is a check.**
 * **The `0x4ecf20`–`0x4ecfb5` prologue is decoded but not gated — and it is worth a line
   of its own.** It walks the prop vector the furnishing pass has just filled and copies
   each record's position into one of two lists **on the house object**: types `0x10` and

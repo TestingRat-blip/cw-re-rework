@@ -4,7 +4,9 @@
 plots, every position predicted exactly.
 *Source data:* `raw/town_props_capture*.json` (`tools/frida_town_props.py`, seed 42069) and
 `cw_rederive/model_id_map.json`.
-*Status:* **RE + gate only. NOT ported** — §6.
+*Status:* ✅ **PORTED 2026-07-29d** — `townAntiquePass` in `CwTown.h`, ab-initio gate
+`rederive_townantique` **62/62**: 31/31 site sequences and **45/45 placements, 270 fields**,
+every X/Y predicted exactly with no terrain. §6 records what it needed.
 
 ★ **These are the LAST two rand sites in the town builder.** With them closed the census is
 **176 of 176 firing sites and 228,413 of 228,413 recorded draws — 100.00%.**
@@ -149,13 +151,38 @@ files, but none of them is in the 228,413.
 house surround, village NPC, ruin occupants, and the market. That is the remaining town
 work, and it is larger than anything left to decode.
 
-## 6. What a port would have to be FED
+## 6. The PORT
+
+✅ **Ported 2026-07-29d** as `townAntiquePass` in `src/worldgen/cw/CwTown.h`; ab-initio gate
+`gateRederiveTownAntique` (section 68), golden built by
+`tools/cw_rederive/make_townantique_golden.py`.
 
 | input | status |
 |---|---|
-| the plot roles `0x12` / `0x14` | **derived** — `rederive_townpromo` |
-| `plot[+0x14]` (the rotation) and `plot[+4]` | **derived** — the verdict/promotion passes |
+| the plot roles `0x12` / `0x14`, `plot[+0x14]`, `plot[+4]` | **FED** — the first two are the promotion pass's, `maxH` is region-cache-blocked |
 | the plot lattice | **derived** — `rederive_townlattice` |
 | the model id | **derived** — `0x84c + rand()%K`, both constants byte-read |
-| the model's `w`,`h` | **not derived by cwgen** — they are `.cub` dimensions; `model_id_map.json` has them for exactly these four ids, so a port can table them |
-| the terrain column | needed only for the final Z; X/Y need no terrain at all |
+| the model's `w`,`h` | **tabled** — `.cub` dimensions for exactly four ids, from `model_id_map.json`, which knows nothing about this pass (§2) |
+| the ground drop | **FED** — the gate asserts only that the live z is at or below `plot[+4]`, which is all `while (!solid) --z` can produce; it does not pretend to derive it |
+
+`rederive_townantique` **62/62**:
+
+| | |
+|---|---|
+| SITE SEQUENCE — which arm each draw came from, in stream order | **31 / 31** towns |
+| placements: plotIdx / role / modelId / rot / x / y | **45 / 45**, 270 fields, **no terrain** |
+| the live z is at or below `plot[+4]` | **45 / 45** |
+
+★ Because the two arms are selected by the plot's ROLE and visited by the plot loop, the
+site sequence is a statement about the **loop order** (r outer, c inner, index `r + n*c`) as
+much as about the roles — the golden's own generator asserts the same pairing independently
+before it writes a byte.
+
+★ The model census comes out **38 placements on a 32-wide model and 7 on a 24-wide**, which
+is exactly §4's `antique-building1 ×20 + 2 ×18` and `3 ×3 + 4 ×4`.
+
+⚠ **§3's null baselines are carried into the gate's own output rather than left here**: role
+`0x14`'s `% 2` moves no position, role `0x12`'s `% 4` resolves only 2-way, and the
+odd-rotation w/h swap is untestable in this corpus because all four models are square. The
+port implements the swap from the disassembly and the gate says out loud that it cannot test
+it.

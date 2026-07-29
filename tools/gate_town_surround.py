@@ -46,6 +46,7 @@ RAW = os.path.join(HERE, "..", "raw")
 EXE = os.path.normpath(os.path.join(HERE, "..", "..", "..", "..", "Server.exe"))
 sys.path.insert(0, HERE)
 import extract_house_layouts as EX          # noqa: E402
+import extract_surround_slots as EXS        # noqa: E402
 
 BASE = 0x400000
 SPAN_LO, SPAN_HI = 0x4ECFB5, 0x4ED9EA
@@ -592,6 +593,56 @@ def main():
     print("    per-house draw counts take only %d values %s -- it is the SITE SEQUENCE that"
           " carries the information here, not the total"
           % (len(null["count"]), sorted(null["count"])))
+    # -- the slot ring, INTERPRETED, and cwgen's GENERATED copy of it ------------
+    # Added 2026-07-29d with the port. The eight slots' four literals each used to live
+    # only in this file; extract_surround_slots.py now derives them out of the binary and
+    # writes CwTownSurroundTables.h, so a drift on either side fails here (lesson 7c/7i).
+    slots = EXS.extract()
+    model = [(r["normalAxis"], r["far"], r["alongK"], r["orient"]) for r in slots]
+    mine = []
+    for f in range(4):
+        for s in range(2):
+            mine.append((0 if f < 2 else 1, f % 2 == 1,
+                         int(SLOT_OFF[s]), ORIENT_OF[f]))
+    check(model == mine,
+          "the interpreted slot ring differs from this gate's: %s"
+          % [(i, a, b) for i, (a, b) in enumerate(zip(model, mine)) if a != b])
+    check([r["coinAddr"] for r in slots] == [c for pair in COIN for c in pair],
+          "the interpreted coin sites differ from this gate's: %s"
+          % ["%X" % r["coinAddr"] for r in slots])
+    hdr = os.path.normpath(os.path.join(HERE, "..", "..", "..", "src", "worldgen", "cw",
+                                        "CwTownSurroundTables.h"))
+    if os.path.exists(hdr):
+        import subprocess
+        fresh = subprocess.run([sys.executable,
+                                os.path.join(HERE, "extract_surround_slots.py"), "--cpp"],
+                               capture_output=True, text=True, check=True).stdout
+        same = fresh.replace("\r\n", "\n").strip() == \
+            open(hdr, encoding="utf-8").read().replace("\r\n", "\n").strip()
+        check(same, "CwTownSurroundTables.h differs from a fresh extraction -- regenerate")
+        hdrmsg = "matches a fresh extraction" if same else "DIFFERS -- regenerate"
+    else:
+        hdrmsg = "NOT FOUND at %s" % hdr
+    print("  THE SLOT RING, interpreted out of 0x4ecfb5-0x4ed9ea rather than typed:")
+    print("    the eight (axis, side, alongK, orient) vs this gate's : %s"
+          % ("match" if model == mine else "DIFFER"))
+    print("    cwgen's generated CwTownSurroundTables.h              : %s" % hdrmsg)
+
+    # ★ TWO FACTORIES, ONE SET OF ARMS. FUN_004f2cd0's first four arms and the MARKET's
+    # goods factory FUN_004f3490 produce the same type and the same extents -- different
+    # functions, decoded a day apart from different stages. cwgen shares one implementation
+    # for them, so the agreement is asserted here rather than assumed (lesson 7q).
+    # ⚠ They are NOT byte-identical (MSVC places the `pop edi` differently); the claim is
+    # about the arms' RESULTS, which is exactly what a shared implementation must get right.
+    mkt = [(0x18, (2.0, 2.0, 2.0), False), (0x19, None, True),
+           (0x1A, None, True), (0x1B, (1.5, 1.5, 1.4), False)]
+    ours = [(a[1], a[2], a[3]) for a in ARMS[:4]]
+    check(ours == mkt,
+          "the surround factory's first four arms differ from the market's goods factory:"
+          " %s vs %s" % (ours, mkt))
+    print("    arms 0-3 == the MARKET's goods factory FUN_004f3490    : %s"
+          % ("yes -- cwgen shares one implementation" if ours == mkt else "NO"))
+
     print("  %d ok, %d FAIL" % (ok, fail))
     for m in notes:
         print("    !", m)

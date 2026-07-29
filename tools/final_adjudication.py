@@ -425,6 +425,17 @@ the body was the only way to settle these.
         # start, and the whole column prologue has exactly one writer for it -- 0x519701,
         # `col[+0x14] = col[+0x10] - 8`.
         "0052d860": {"name": "field_at_0x14", "kind": "gamemisc", "verdict": "DEEP-RE"},
+        # A bounds-checked index into a vector of 4-BYTE elements, returning **0** rather
+        # than throwing when the index is out of range: `js -> 0`, then
+        # `idx >= (end-begin)>>2 -> 0`, else `begin[idx]`, `ret 4`. Byte-exact, 0x26 bytes.
+        # ⚠ That return-0 is why the older `std_vector_int_at` label (kind `lib`) was wrong
+        # in both halves: `std::vector::at` THROWS, so this is game code, not the STL.
+        # ⚠ The name deliberately does NOT say what the element is. The town builder reaches
+        # the world model DB through it at 0x4eee64 / 0x4ef053 (`0x84c + rand()%K`) and gets
+        # a `VoxelModel*`, but the body is generic over any 4-byte type and the other
+        # callers have not been read -- naming it `..._ptr_at` would be a claim about them
+        # (lesson 7s: a name is a claim; and cf. 0x52d860's `field_at_0x14`).
+        "004013f0": {"name": "vector4_at_or_null", "kind": "gamemisc", "verdict": "DEEP-RE"},
         # --- the town builder's HOUSE PASS (Docs/RE_town_house.md) ---------------------
         # The house's module-grid extents, and the reason the port can hardcode 3x3x4:
         # the two HORIZONTAL accessors are mirrors of each other over `house[+4] % 2`
@@ -452,6 +463,13 @@ the body was the only way to settle these.
         # sources over four ids. Left named by field anyway: that is 4 models out of 2,550,
         # and it does not touch 07-28k's observation that the entity pass sees values a
         # .cub dimension could not take -- which is the thing to resolve before renaming.
+        # ⚠ 2026-07-29d tried to rename these to VoxelModel_dimX/Y/Z on the strength of the
+        # antique evidence above and was WRONG to: the accessor is one instruction shared by
+        # any struct with a field there, the tension two lines up is unresolved, and the
+        # duplicate entries were silently dead anyway (a later dict key wins). The evidence
+        # was already recorded here in 07-29c -- re-deriving it is not the same as resolving
+        # it. Leave these named by FIELD until the entity pass's out-of-range values are
+        # explained.
         "00402150": {"name": "model_field_0x44", "kind": "gamemisc", "verdict": "DEEP-RE"},
         "00402160": {"name": "model_field_0x48", "kind": "gamemisc", "verdict": "DEEP-RE"},
         "00402170": {"name": "model_field_0x4c", "kind": "gamemisc", "verdict": "DEEP-RE"},

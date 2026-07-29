@@ -8,13 +8,24 @@ The last open band in the town builder.  It is two plot-role sections, not one:
     0x4e3a3f-0x4e3e15   role == 8   DEAD -- the builder never assigns role 8 (see [1])
     0x4e3e15-0x4e5023   role == 9   the MARKET: 20 stalls and crates round the plot edge
 
-Each of the 20 blocks is the same four events -- and this is the first town stage since
+The section opens ONCE per role-9 plot with
+
+    Chunk_getColumnAt(plotCentre)               0x4e3e84 -- the PLOT CENTRE, once
+    if it exists: push (x, y, top) into [ebp-0x5d80]      <- the NPC pass's flag-B list
+
+*** CORRECTED 2026-07-29d: this docstring and RE_town_market.md sec.0 both had the column
+read and the landmark push INSIDE the slot loop ("one per perimeter slot whose column
+exists").  Censusing the role-9 section by call target finds exactly ONE of each, against
+20 settles, 20 push_backs and 40 rand sites -- and the coordinates they are handed are
+`plotOrigin + span/2` on both axes, built at 0x4e3e5f.  The conclusion about flag B is
+unaffected in substance (the list is non-empty iff the town has a market whose centre
+column exists) but the count is one per market, not up to twenty.  [9] asserts it now.
+
+then each of the 20 slots is the same four events -- and this is the first town stage since
 07-28l whose records the rig captures in full, so it is gated field by field:
 
-    Chunk_getColumnAt(x, y)                     the perimeter slot's column
-    if it exists: push (x, y, top) into [ebp-0x5d80]      <- the NPC pass's flag-B list
     rand() % 5                                  the slot is used unless this is 0
-    rand() % 3                                  a jitter ALONG the plot edge
+    rand() % 3                                  a jitter on the slot's EDGE coordinate
     <factory>(record, pos, ...)                 a hidden rand() the rig cannot see
     Prop_settleOnTerrain(record, site, 1)
     if it settled: push into site+0xc
@@ -54,6 +65,9 @@ except ImportError:                                            # pragma: no cove
     sys.exit("needs capstone (pip install capstone)")
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import extract_market_slots as EX              # noqa: E402
+
 RAW = os.path.join(HERE, "..", "raw")
 EXE = os.path.normpath(os.path.join(HERE, "..", "..", "..", "..", "Server.exe"))
 PROP_IDS = os.path.normpath(os.path.join(HERE, "..", "..", "..", "assets", "props",
@@ -71,6 +85,8 @@ DEAD_RAND, DEAD_PUSH = 0x4E3D7F, 0x4E3DA0
 
 RAND_THUNK = 0x5582F4
 SETTLE = 0x5287B0
+GET_COLUMN = 0x406100                          # Chunk_getColumnAt -- ONCE, at the centre
+HALF_SLOT = -0x5C90                            # [ebp-0x5c90], the span/2 the centre uses
 PUSH_BACK = 0x4D6670                           # the out-of-line prop push_back
 LANDMARK_PUSH = 0x42FEB0                       # -> [ebp-0x5d80], the NPC pass's flag B
 FLAG_B_SLOT = -0x5D80                          # RE_town_npcs.md sec.2
@@ -99,11 +115,17 @@ JIT = [b[1] for b in BLOCKS]
 SET = [b[2] for b in BLOCKS]
 PUSH = [b[3] for b in BLOCKS]
 
-# Which record coordinate the %3 jitter moves, and with which sign.  The SIGN is
-# disassembled (see [7]); the AXIS is pinned by the capture, because the two coordinates of
-# a block are emitted through two different code shapes and a symbolic walk of the span
-# does not resolve which is which.  Reported as such -- it is one bit per block and the
-# data leaves exactly one option for 19 of the 20.
+# Which record coordinate the %3 jitter moves, and with which sign.
+#
+# *** UPGRADED 2026-07-29d: this was one FITTED bit per block, and it is now DERIVED.
+# The earlier note here said "a symbolic walk of the span does not resolve which is which",
+# and the reason was that the walk followed REGISTERS through the 16.16 widening -- which
+# MSVC emits two different ways, one via FUN_004cde40 and one inlined as `cdq / shld / shl`.
+# Following the FRAME SLOTS the section reads its geometry out of ([ebp-0x5c8c] plotOriginX,
+# [ebp-0x5c9c] plotOriginZ, [ebp-0x5c90] span/2, [ebp-0x5ce4] span) resolves all 20 instead,
+# because the jitter term simply lands in whichever origin's expression it belongs to.
+# extract_market_slots.py does that; [10] asserts this table against it, so the fit is gone
+# and the capture is now a CROSS-CHECK rather than the source (lesson 7q).
 JITTER = {0: (1, +1), 1: (1, +1), 2: (1, +1), 3: (1, -1), 4: (1, -1), 5: (1, -1),
           6: (0, -1), 7: (0, -1), 8: (0, -1), 9: (0, +1), 10: (0, +1), 11: (0, +1),
           12: (1, +1), 13: (1, +1), 14: (1, -1), 15: (1, -1),
@@ -495,9 +517,12 @@ def main():
     print("      of the SIX (axis, coeff) options, exactly the two the model names survive"
           " in %d of %d" % (unique, N_BLOCKS))
     print("      blocks -- the right coefficient on the jitter axis, and 0 on the other."
-          "  That is the")
-    print("      null baseline for the one fitted bit per block (block %d is the"
-          " reference)." % ref)
+          "  (block %d is" % ref)
+    print("      the reference.)  ⚠ This WAS the null baseline for one fitted bit per"
+          " block; since")
+    print("      [10] the axis is disassembled, so this is now a cross-check of the"
+          " interpreter")
+    print("      against the capture rather than the evidence the axis rests on.")
     print("  [8] THE SEMANTIC READING -- and it is in the namespace that RESOLVES:")
     print("      the records go to `site+0xc`, which is what assets/props/prop_ids.json"
           " covers")
@@ -507,6 +532,77 @@ def main():
         print("        0x%02X -> %-14s  %d records" % (t, MARKET_NAMES[t],
                                                        seen_names[MARKET_NAMES[t]]))
     print("      12 stall slots + 8 goods slots round one plot: the town MARKET")
+
+    # -- [9] the column read and the landmark push are ONCE, at the plot centre ---
+    # Corrects this file's own docstring and RE_town_market.md sec.0, both of which put
+    # them inside the slot loop.
+    col = calls_in(ROLE9_LO, SPAN_HI, GET_COLUMN)
+    lm9 = calls_in(ROLE9_LO, SPAN_HI, LANDMARK_PUSH)
+    check(len(col) == 1 and len(lm9) == 1,
+          "the role-9 section has %d column reads and %d landmark pushes, expected 1 each"
+          % (len(col), len(lm9)))
+    # ...and they are handed `plotOrigin + span/2` on both axes: the two `add` forms at
+    # 0x4e3e5f (`lea edx, [ecx + eax]`) and 0x4e3e62 (`add eax, [ebp-0x5c8c]`), where eax
+    # is the span/2 slot.  Read out of the binary rather than asserted.
+    centre = 0
+    for x in disasm(ROLE9_LO, col[0] if col else ROLE9_LO):
+        if x.mnemonic in ("add", "lea") and "0x5c90" in x.op_str.replace("-", "-0x"):
+            centre += 1
+    half_reads = sum(1 for x in disasm(ROLE9_LO, col[0] if col else ROLE9_LO)
+                     if x.operands and any(o.type == X.X86_OP_MEM
+                                           and o.mem.base == capstone.x86.X86_REG_EBP
+                                           and o.mem.disp == HALF_SLOT for o in x.operands))
+    check(half_reads >= 1,
+          "nothing between the role gate and the column read touches the span/2 slot")
+    # ⚠ calls_in returns RETURN addresses (the rig's `ra` convention), so these are one
+    # instruction past the `call` -- 0x4e3e84 / 0x4e3ea2 in RE_town_market.md §0.
+    print("  [9] the column read (ra 0x%06X) and the landmark push (ra 0x%06X) happen ONCE"
+          " per" % (col[0] if col else 0, lm9[0] if lm9 else 0))
+    print("      role-9 plot, at the PLOT CENTRE -- not once per perimeter slot.  20"
+          " settles and 20")
+    print("      push_backs hang off the slot loop; these two do not.  ⚠ This CORRECTS"
+          " this gate's")
+    print("      own docstring and RE_town_market.md sec.0; flag B's meaning is unchanged,"
+          " its count")
+    print("      is one per market rather than up to twenty.")
+
+    # -- [10] the slot ring, INTERPRETED out of the binary ----------------------
+    # The 20 (edge axis, edge side, along offset, jitter sign) used to be a hand-fitted
+    # bit per block; extract_market_slots.py now derives all of it, and cwgen carries the
+    # result as a GENERATED header.  Diff both in the same run so neither can drift
+    # (lesson 7c/7i -- the extract_house_layouts.py pattern).
+    slots = EX.extract()
+    model_jit = {r["block"]: (r["edgeAxis"], r["jitter"]) for r in slots}
+    check(model_jit == JITTER,
+          "the interpreted jitter table differs from this gate's: %s"
+          % {b: (model_jit[b], JITTER[b]) for b in JITTER if model_jit.get(b) != JITTER[b]})
+    ex_ok, ex_tot = EX.check(slots, verbose=False)
+    check(ex_ok == ex_tot,
+          "the interpreted slot ring disagrees with the capture in %d of %d offsets"
+          % (ex_tot - ex_ok, ex_tot))
+    hdr = os.path.normpath(os.path.join(HERE, "..", "..", "..", "src", "worldgen", "cw",
+                                        "CwTownMarketTables.h"))
+    if os.path.exists(hdr):
+        import subprocess
+        fresh = subprocess.run([sys.executable,
+                                os.path.join(HERE, "extract_market_slots.py"), "--cpp"],
+                               capture_output=True, text=True, check=True).stdout
+        same = fresh.replace("\r\n", "\n").strip() == \
+            open(hdr, encoding="utf-8").read().replace("\r\n", "\n").strip()
+        check(same, "CwTownMarketTables.h differs from a fresh extraction -- regenerate it")
+        hdrmsg = "matches a fresh extraction" if same else "DIFFERS -- regenerate"
+    else:
+        hdrmsg = "NOT FOUND at %s" % hdr
+    print("  [10] the 20-slot ring is INTERPRETED out of 0x%06X-0x%06X, never typed:"
+          % (ROLE9_LO, SPAN_HI))
+    print("       edge = origin + edgeSpan*span + edgeConst + jitter*(rand()%3)")
+    print("       along = origin + span/2 + K,  K in {-7, 0, +7} for stalls and {-3, +3}"
+          " for goods")
+    print("       -> the jitter AXIS is now DERIVED, not the one fitted bit per block [7]"
+          " used to be")
+    print("       the interpreted ring vs the live capture             : %d / %d"
+          % (ex_ok, ex_tot))
+    print("       cwgen's generated CwTownMarketTables.h               : %s" % hdrmsg)
 
     print("  THE NULL BASELINES (what this run does NOT pin):")
     print("    only %d of 92 towns have a role-9 plot, and every one has exactly ONE --"
@@ -519,8 +615,11 @@ def main():
           " times with")
     print("    colour 0xdcdcdc, and whether that spends rand() is unknown because it never"
           " runs)")
-    print("    the jitter AXIS is one fitted bit per block, not disassembled -- see [7]"
-          " for its baseline")
+    print("    the SETTLE verdict is still not derived -- 8 of the 98 records were"
+          " rejected and this")
+    print("    gate does not predict which; Prop_settleOnTerrain is ported (0x5287b0) but"
+          " needs terrain")
+    print("    (the jitter AXIS is no longer on this list: [10] disassembles it)")
     print("  %d ok, %d FAIL" % (ok, fail))
     for m in notes:
         print("    !", m)
