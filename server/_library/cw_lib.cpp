@@ -1,4 +1,4 @@
-// cw_lib (_library) -- server. 53 functions. Bodies = Ghidra pseudo-C.
+// cw_lib (_library) -- server. 52 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "cw_lib.h"
 
@@ -945,85 +945,6 @@ void __thiscall FUN_004f2c50(void *this,undefined4 *param_1)
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0x20;
   return;
-}
-
-
-/* lib_fn_4f2cd0 @ 004f2cd0  kind=lib  attributed-by=ledger  size=498 */
-
-undefined4 * __cdecl FUN_004f2cd0(undefined4 *param_1,undefined4 *param_2,undefined4 param_3)
-
-{
-  int iVar1;
-  float fVar2;
-  float fVar3;
-  
-  *(undefined1 *)(param_1 + 0xc) = 1;
-  param_1[0xd] = 0;
-  param_1[0xe] = 0;
-  param_1[0x10] = 0;
-  param_1[0x11] = 0;
-  FUN_00406ef0(param_1 + 0x12);
-  param_1[0x5e] = 0xffffffff;
-  param_1[0x5f] = 0xffffffff;
-  param_1[0x60] = 0xffffffff;
-  param_1[0x61] = 0;
-  param_1[2] = *param_2;
-  param_1[3] = param_2[1];
-  param_1[4] = param_2[2];
-  param_1[5] = param_2[3];
-  param_1[6] = param_2[4];
-  param_1[7] = param_2[5];
-  param_1[8] = param_3;
-  iVar1 = rand();
-  switch(iVar1 % 7) {
-  case 0:
-    *param_1 = 0x18;
-    param_1[9] = 0x40000000;
-    param_1[10] = 0x40000000;
-    param_1[0xb] = 0x40000000;
-    return param_1;
-  case 1:
-    *param_1 = 0x19;
-    iVar1 = rand();
-    fVar2 = (((float)iVar1 * 0.5) / 32767.0 + 1.0) * 1.5;
-    param_1[9] = fVar2;
-    param_1[10] = fVar2;
-    param_1[0xb] = fVar2;
-    return param_1;
-  case 2:
-    *param_1 = 0x1a;
-    iVar1 = rand();
-    fVar3 = ((float)iVar1 * 0.5) / 32767.0 + 1.0;
-    fVar2 = fVar3 * 1.5;
-    param_1[9] = fVar2;
-    param_1[10] = fVar2;
-    param_1[0xb] = fVar3 * 0.75;
-    return param_1;
-  case 3:
-    *param_1 = 0x1b;
-    param_1[9] = 0x3fc00000;
-    param_1[10] = 0x3fc00000;
-    param_1[0xb] = 0x3fb33333;
-    return param_1;
-  case 4:
-    *param_1 = 0x12;
-    param_1[10] = 0x3f800000;
-    param_1[0xb] = 0x3ecccccd;
-    param_1[9] = 0x40400000;
-    return param_1;
-  case 5:
-    *param_1 = 0x10;
-    param_1[9] = 0x3f800000;
-    param_1[10] = 0x3f800000;
-    param_1[0xb] = 0x3f000000;
-    return param_1;
-  case 6:
-    *param_1 = 0x1c;
-    param_1[10] = 0x40400000;
-    param_1[0xb] = 0x40200000;
-    param_1[9] = 0x40400000;
-  }
-  return param_1;
 }
 
 

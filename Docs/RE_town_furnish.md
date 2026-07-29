@@ -271,6 +271,15 @@ conclusion (lesson 5). The binary corroborates independently: the house's own gr
 at `0x4e755b` walks a **15**-wide window from `plotBase + 6`, which is the 13-wide module
 row with one block of margin on each side.
 
+✅ **SUPERSEDED 07-28l — the 7 is now a measurement, not an argument.** The HOUSE SURROUND
+pass (`RE_town_surround.md`) reads the same anchor, and there every offset is a literal
+*relative to the anchor* while the plot base comes from the derived lattice — so the
+anchor can simply be swept. Over a whole 13-block module stride it closes **1,059 of
+1,059 records at +7 and 0 at all twelve other offsets**, with no second solution.
+`gate_town_surround.py` asserts that sweep. The paragraph above stays because the
+reasoning was sound and the ambiguity was real; what changed is that a *later consumer*
+could measure what this one could only argue (lesson 7l).
+
 ★ **This corrects `CwTown.h`.** `townHouseCentre2X` had the house anchored at the plot
 origin, with a comment asserting it was *not* centred — a claim, never a reading, and
 wrong by 6 blocks in the engine's own town rendering. `kTownHouseOrigin` is now 7 and the

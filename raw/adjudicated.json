@@ -312,6 +312,11 @@
    "name": "VoxelGrid_rotateIndices",
    "verdict": "DEEP-RE"
   },
+  "004e0700": {
+   "kind": "gamemisc",
+   "name": "fixed16_subDouble",
+   "verdict": "DEEP-RE"
+  },
   "004e0740": {
    "kind": "game",
    "name": "zone_prop_emitter",
@@ -351,6 +356,11 @@
    "kind": "lib",
    "name": "std_vector_push_back (32B elem)",
    "verdict": "NEITHER"
+  },
+  "004f2cd0": {
+   "kind": "game",
+   "name": "town_surround_prop_factory",
+   "verdict": "DEEP-RE"
   },
   "004f2ee0": {
    "kind": "game",

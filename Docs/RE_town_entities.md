@@ -269,6 +269,15 @@ The remaining **99 sites spend 16,929 draws** and the largest is now under 1,000
 per-house region is closed end to end: house pass → entity pass → interior marking →
 furnishing. What is left is the plot-level work outside a house.
 
+✅ **Updated 07-28l:** the HOUSE SURROUND pass (`RE_town_surround.md`) turned out to be the
+last per-house stage, not "plot-level work" — eight more sites at `0x4ecfb5`-`0x4ed9ea`,
+6,408 draws, the clutter against the house's outside walls. The census is now **85 of 176
+sites / 217,892 draws / 95.4%**, and the per-house chain runs house pass → entity pass →
+interior marking → furnishing → surround with no unexplained draw in between.
+★ It also corroborates §6 from a second observable: this file derived the module lattice
+`anchor + 13*m + 7` from the entity records, and the surround pass's own literals
+decompose to the *same* centre — and its anchor sweep pins the `+7` outright.
+
 ## 9. Not done, deliberately
 
 * **No port.** The walk needs the module grid *and* a `models[]` anchor field per emit

@@ -2385,7 +2385,7 @@ addr	name	kind	module	class	attributed_by	size
 004dd9da	FUN_004DD2E0__split_4dd9da	gamemisc	ai	_body_splits	role:body-split	1061
 004dde00	FUN_004dde00	gamemisc	game_misc	Unsorted_002	none	144
 004dde90	FUN_004dde90	gamemisc	ai	Unsorted	logic:caller-vote	10330
-004e0700	FUN_004e0700	gamemisc	world	_helpers_wrapper	role:wrapper	56
+004e0700	fixed16_subDouble	gamemisc	game_misc	Game	ledger	56
 004e0740	zone_prop_emitter	game	world	Proven	ledger	2035
 004e0f40	spawn_ctor	game	world	Proven	ledger	380
 004e10c0	cube::Spawn::~Spawn	game	world	Spawn	rtti	259
@@ -2445,7 +2445,7 @@ addr	name	kind	module	class	attributed_by	size
 004ee3aa	town_builder__split_4ee3aa	gamemisc	world	_body_splits	role:body-split	17215
 004f2be0	std_vector_push_back_int	lib	_library	cw_lib	ledger	101
 004f2c50	std_vector_push_back (32B elem)	lib	_library	cw_lib	ledger	117
-004f2cd0	lib_fn_4f2cd0	lib	_library	cw_lib	ledger	498
+004f2cd0	town_surround_prop_factory	game	world	Proven	ledger	498
 004f2ee0	town_furniture_factory	game	world	Proven	ledger	1359
 004f3490	lib_fn_4f3490	lib	_library	cw_lib	ledger	397
 004f3630	TownProp_make_0x15	game	world	Proven	ledger	186

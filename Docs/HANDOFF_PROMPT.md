@@ -306,6 +306,23 @@ if you are about to trust a green gate, read group B. Every one of these cost re
    capture hooks" — that is a statement about the PROP hooks, and it should be re-checked
    against the spawn hook before it is carried again.
 
+7l. **A constant pinned by an ARGUMENT is worth re-pinning by a SWEEP, and the stage that
+   can sweep it is usually a later one.** `RE_town_furnish.md` §5b had to record that its
+   own decomposition does not pin the house anchor — 7 and 8 both close — and broke the
+   tie by reasoning about which literals the span owns. That is a good argument and it
+   was still an argument. One stage later the same constant is *measurable*: every offset
+   in the SURROUND pass is a literal relative to the anchor and the plot base comes from
+   the derived lattice, so sweeping the anchor over a whole 13-block module stride gives
+   **1,059/1,059 records at +7 and 0 at all twelve other offsets**. The sweep cost four
+   lines. **When you carry a constant that a doc had to argue for, ask which later
+   consumer could sweep it — and put the sweep in that consumer's gate.** Corollary from
+   the same slice, and it is 7i pointed at my own work: the gate's first draft *typed*
+   the byte offsets of five `mov [esi+0x24], imm` stores off a listing and got **two of
+   the five wrong**, because MSVC emits those three stores in a different order in
+   different arms. Nothing about the wrong values looked wrong. The fix was to stop
+   typing and scan for the instruction — **a gate that hand-copies bytes out of the
+   binary is the thing lesson 7i is about, whichever side of the fence it sits on.**
+
 ### B. What a green gate does NOT prove
 
 The single most expensive family in this project. Five separate instances of the same
@@ -527,6 +544,7 @@ captures already on disk.
 | the town builder's **ROLE-6 PLOT** (`0x4e503a`-`0x4e5b9e`) — the fenced yard: 14 rand sites, **49.6% of every draw in the builder body**; fences derived field-by-field, the other two containers unhooked — RE'd *and ported* | `RE_town_yard.md` | `gate_town_yard` **2,822**; **`rederive_townyard` 51/51**, site sequence exact draw-for-draw in 17/17 towns |
 | the town builder's **ROLE-0/7 PLOT** (`0x4ef248`-`0x4f0046`) — the sand plaza: 7 rand sites, 24.6% of the body; `0x4ef7c8` is one draw per RING VOXEL of a radius-8 disc, not a scatter; the RUIN site set derived from the seed alone — RE'd *and ported* | `RE_town_plaza.md` | `gate_town_plaza` **11,877**; **`rederive_townplaza` 169/169**, falloff gate 430/430 ab initio |
 | the town builder's **HOUSE ENTITY** pass (`0x4e74a5`-`0x4ea988`) — the four face walks, the roof walk, the wall/roof walk (`0x4ea254`) and the four-neighbour walk: 11 rand sites, 34 emit sites, 16 spawn tails, **19,352 `creature_spawn_builder` records checked field by field**; ⚠ **RE + gate only, NOT ported** | `RE_town_entities.md` | `gate_town_entities` **46,344** / 435 houses |
+| the town builder's **HOUSE SURROUND** pass (`0x4ecfb5`-`0x4ed9ea`) — the clutter against the outside walls: 8 rand sites, 4 faces × 2 slots, **1,059 prop records checked field by field**; `FUN_004f2cd0` the PROP FACTORY, whose hidden draws are LCG-recovered; it also pins `kTownHouseOrigin = 7` by a **sweep** | `RE_town_surround.md` | `gate_town_surround` **6,639** |
 | the town builder's **HOUSE FURNISHING** pass (`0x4ead3a`-`0x4ecf20`) — 13 rand sites, 21 push sites, 6,759 records; `FUN_004f2ee0` the FURNITURE FACTORY, whose 8 rand sites the rig cannot see; `cellAt3D` ROTATES the module grid; the house sits `plotOrigin + 7` — RE'd *and ported* | `RE_town_furnish.md` | `gate_town_furnish` **34,307**; the factory **4,958/4,958** from LCG-recovered hidden draws; **`rederive_townfurnish` 1,004/1,004**, 323 houses draw-for-draw |
 
 Two structural facts worth carrying:
@@ -550,6 +568,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
+| 07-28l | ★ **the `0x4ed03e` FAMILY is one stage — the HOUSE SURROUND pass — RE'd and gated, and it is the first town stage checkable field by field with no new anything.** Eight table rows at 800-802 draws each in exactly 35 towns are one walk over the house's GROUND STOREY: at every BASE module with an EMPTY horizontal neighbour, two `rand() % 6` coins drop clutter against that outside face. **8 rand sites / 6,408 draws / 1,059 records**, models `barrel`/`crate`/`open-crate`/`sack`/`bench`/`stool`/`shelter`. ★ **THE FIND: the per-house SITE SEQUENCE is predicted draw-for-draw from the module grid `CwTownHouseTables.h` already holds** — 323 of 323 houses — because `cellAt3D` rotates before it indexes and the per-direction split, unlike a draw total, is **not** rotation-invariant (lesson 13 from the strong side). ★ **And it PINS `kTownHouseOrigin` outright**: every offset here is a literal relative to the anchor, so sweeping the anchor over a whole 13-block stride gives **1,059/1,059 at +7 and 0 at all twelve others** — where `RE_town_furnish.md` §5b could only argue 7 against 8. ★ The factory `FUN_004f2cd0` spends a hidden `rand() % 7` (and a second on two of its seven arms); LCG-recovered, it reproduces the TYPE and the EXTENTS of 1,059 of 1,059. ⚠ An off-grid neighbour reads as EMPTY — `cellAt3D` returns the **zeroed global at `0x584258`** — which is the whole reason props land on the outside walls. ⚠ **NOT PORTED**, but §9 says it could be: the only FED value would be the base Y | `RE_town_surround.md` | **`gate_town_surround` 6,639** |
 | 07-28k | ★ **`0x4ea254` is one of ELEVEN rand sites in the HOUSE ENTITY pass — RE'd and gated, and the observable was already in the capture.** Ninth slice running where reading the span first re-scoped the work: `0x4ea254` (1,653 draws) is the inhabitant coin of a stage running `0x4e74a5`-`0x4ea988`, five walks over the house's own 3×3×4 module grid spending **7,597 draws**. ★ **THE FIND: these are not props, they are `creature_spawn_builder` calls — and `frida_town_props.py` has hooked that function all along.** So unlike every other town stage, each record's POSITION, ORIENTATION and TYPE are in the capture, and 19,352 of them are checked field by field with no new rig (lesson 7h from a new direction: the observable was misfiled, not missing). ★ The geometry lands exactly on the FURNISHING pass's lattice: the house anchor is `plotOrigin + 7` and the record sits at the module's own `+7`, which is where `RE_town_furnish.md` §5b.2 puts the kind-0 centre — two stages decoded a week apart from different observables agreeing. ⚠ **The trap: a spawn "site" is a RETURN ADDRESS, and up to seven emit sites `jmp` to the same call**, so the per-site model offset is not one number; the emit→tail map is walked out of the binary (34 sites) and every per-site claim is made at the granularity the capture can see. ⚠ `FUN_00402150/60/70` take **no argument** — the `push eax` in front of each belongs to the `vec3_store` three lines later. ⚠ **NOT PORTED** — §9 says what a port would have to be FED | `RE_town_entities.md` | **`gate_town_entities` 46,344** |
 | 07-28j | ★ **the HOUSE FURNISHING pass PORTED — and the port found four things the RE had not, three of which no draw count could ever have caught.** ★ **`VoxelGrid_cellAt3D` is not an array index**: `FUN_004d1950` calls `FUN_004d8f90` on its indices FIRST, which rotates `(a,b)` by `house[+4] & 3` and mirrors `b` on `house[+8]` — so one layout furnishes eight ways. A rigid transform preserves the (wall, non-wall neighbour) count, so the draw TOTAL is identical under any rotation and only the POSITIONS move (lesson 13 from the other side). ★ **The house sits `plotOrigin + 7`**, not at the plot origin: 39 blocks centred in the 51-block plot. `CwTown.h` carried 0 with a comment asserting it was deliberately NOT centred — a sentence copied forward, and 6 blocks wrong in the engine's town rendering (lesson 7e). ⚠ The decomposition alone does **not** pin the 7 — 7 and 8 both close — and what breaks the tie is that the offsets are the span's own `.rdata` literals; the gate reports both halves. ★ **The type-`0x10` jitter is f32** (`divss`/`mulss`): in double it is off by one 16.16 unit in 1 record in 5,000, which is exactly how it was found. ★ And the pass's first draw is the house's first RECORDED draw in **323 of 323** houses, so the gate has no free parameter at all. The 21 offsets are machine-derived from the 6,759 records, never scraped (lesson 7i) | `RE_town_furnish.md` §5b | **`rederive_townfurnish` 1,004/1,004** — 323/323 site sequences draw-for-draw over 8,717 recorded + **12,248 hidden** draws, 6,759 records / 40,554 fields DERIVED; `gate_town_furnish` 26,891 → **34,307** |
 | 07-28i | ★ **the `0x4eafd2` CLUSTER is one stage — the HOUSE FURNISHING pass — RE'd and gated.** Seven table rows that all fired in exactly **35** towns turned out to be one walk over the house's own 3x3x4 MODULE GRID: at every WALL module, furniture against each of the four horizontal faces whose neighbour is not a wall, then a centre piece chosen by the module's `+8` KIND byte. **13 rand sites / 8,717 body draws / 21 push sites / 6,759 records.** ★ **THE FIND: the cost is somewhere the rig cannot see.** Every record is built by `FUN_004f2ee0`, a 1,359-byte factory with **eight more rand sites**, and `frida_town_props.py` filters to the builder body (lesson 18). Those draws were recovered anyway — msvcrt's rand is a plain LCG, so stepping it from the town's own zone seed pins every unrecorded index (lesson 33) — and the decoded factory then reproduces the type AND the extents of **4,958 of 4,958** live records, **0 failures**. ★ The null baseline is reported with it: the branch structure admits **exactly one type in 2,466 of the 4,958 gaps** and two in 2,424, so half the corpus is forced (lesson 5). ⚠ **Slot E takes no coin** and its record count is what says so: 1,005 against 653-664 for the six coined slots. ⚠ **NOT PORTED** — `RE_town_furnish.md` §7 lists what a port has (the module grid, now carrying `kind`/`flag`) and the one thing it does not (a per-record voxel read) | `RE_town_furnish.md` | **`gate_town_furnish` 26,891** |
@@ -689,13 +708,14 @@ what is next; take item 1.
    **172** of them left.
 
    ✅ **`0x4eda58` (07-28e), the HOUSE PASS (07-28f), the ROLE-6 YARD (07-28g), the
-   ROLE-0/7 PLAZA (07-28h), the HOUSE FURNISHING pass (07-28i/j) and the HOUSE ENTITY
-   pass (07-28k) are CLOSED.** Counted mechanically by span census (the method is written
-   down in `RE_town_plaza.md` §9 so the next recount is reproducible): **77 of the 176
-   firing sites are closed, carrying 211,484 of the 228,413 draws the rig records inside
-   the body** (92.6%; the count including callees is larger — the rig's filter is the
-   difference, lesson 18, and 07-28i is the
-   slice that finally measured through it). ⚠ The 07-28j figure of 66 / 203,887 / 89.3%
+   ROLE-0/7 PLAZA (07-28h), the HOUSE FURNISHING pass (07-28i/j), the HOUSE ENTITY
+   pass (07-28k) and the HOUSE SURROUND pass (07-28l) are CLOSED.** Counted mechanically
+   by span census (the method is written down in `RE_town_plaza.md` §9 so the next recount
+   is reproducible): **85 of the 176 firing sites are closed, carrying 217,892 of the
+   228,413 draws the rig records inside the body** (95.4%; the count including callees is
+   larger — the rig's filter is the difference, lesson 18, and 07-28i is the
+   slice that finally measured through it). ⚠ The 07-28k figure of 77 / 211,484 / 92.6%,
+   the 07-28j figure of 66 / 203,887 / 89.3%
    and the 07-28g figure of 39 / 138,935 are
    superseded by this census, which is the reproducible one. The guess that `0x4e5136`/`0x4e54fe` "sit in the same neighbourhood as
    `0x4e54e8` and may well fall with it" was right, and understated: **all fourteen** sites
@@ -725,22 +745,35 @@ what is next; take item 1.
 
    ✅ **`0x4ea254` and its whole stage are CLOSED (07-28k)** — it was one of ELEVEN rand
    sites in the HOUSE ENTITY pass, `RE_town_entities.md`, `gate_town_entities` 46,344.
-   The per-house region is now closed end to end: house pass → entity pass → interior
-   marking → furnishing.
+   With 07-28l the per-house region is closed end to end: house pass → entity pass →
+   interior marking → furnishing → **surround**, `0x4e6520` all the way to `0x4ed9ea`
+   with no unexplained draw in between.
 
-   **Next: the `0x4ed03e` FAMILY** — eight sites at `0x4ed03e` / `0x4ed162` / `0x4ed2a4` /
-   `0x4ed3c6` / `0x4ed513` / `0x4ed633` / `0x4ed76d` / `0x4ed895`, **800-802 draws each in
-   exactly 35 towns** (6,408 draws = 38% of everything left). The same-town-count tell
-   that named the `0x4eafd2` cluster as one stage says the same here, and eight
-   `Prop_settleOnTerrain` sites sit interleaved with them (`0x4ed133` … `0x4ed988`, the
-   `settles` array in the capture) — so this stage's records ARE hooked. Read
-   `0x4ecf20`-`0x4eda0b`, the span between the furnishing walk and the inhabitant scatter.
-   After that the largest single site left is `0x4f1f4b` (1,176 draws, 35 towns), which is
-   in a CALLEE, not the builder body.
+   ✅ **The `0x4ed03e` FAMILY is CLOSED too (07-28l)** — it was one stage, the HOUSE
+   SURROUND pass, `RE_town_surround.md`, `gate_town_surround` 6,639. The same-town-count
+   tell was right for the fourth time running.
+
+   **Next: the `0x4f0396`-`0x4f147f` REGION** — 34 sites, **6,236 draws**, 59% of
+   everything left, and the tell is loud in two bands: `0x4f0d66` / `0x4f0d98` /
+   `0x4f0dc9` / `0x4f0e49` / `0x4f0e81` / `0x4f1442` / `0x4f147f` fire **440 times in
+   exactly 32 towns** each, and `0x4f0ebb` / `0x4f0f21` / `0x4f10c4` / `0x4f112a` /
+   `0x4f13af` / `0x4f1415` **424 in 28**. Two more bands sit inside it (107 draws / 6
+   towns × 11 sites, 75 / 10 × 3). Read the span before budgeting for it, and **check the
+   `settles` and `pushes` arrays for return addresses in that range first** — that is what
+   made 07-28l a geometry gate instead of a count gate.
+
+   After that: `0x4f1d7d`-`0x4f26b3`, 11 sites / 2,872 draws, holding the largest single
+   remaining site `0x4f1f4b` (1,176 draws, 35 towns); then `0x4e3ead`-`0x4e4fb3`, 40 sites
+   spending 3-6 draws each in only 3-6 towns.
+
+   ⚠ **A correction: `0x4f1f4b` is NOT "in a CALLEE".** Earlier handoffs said so; it is
+   inside the builder's own 65,033-byte body (`0x4e28e0`-`0x4f26e9`, `RE_town_plaza.md`
+   §0, where `0x4ee3aa` is proven to be an alignment NOP and not a boundary), at offset
+   0xF66B.
 
    There is no monster left: the two that carried "36% of everything the layer spends"
    were `0x4e54e8` and `0x4ef7c8` and both are closed, so **the rest of the town chain is
-   a long tail** — **99 sites, 16,929 draws**, none over 1,200.
+   a long tail** — **91 sites, 10,521 draws**, only one over 500.
 
    ✅ **The role-6 yard is now PORTED too** (`townYardPass` in `CwTown.h`,
    `rederive_townyard` 51/51). Read `RE_town_yard.md` §6 before writing the next port —
@@ -889,6 +922,13 @@ still never came up in 99 firings.
   `FUN_004f8b40` directly. `RE_town_plaza.md` §4. Lesson 7g again: read the function before
   budgeting for what is inside it — this cost ten minutes and had been carried for a
   handoff.
+- ⚠ **A `lib_fn_*` name in this tree means "no evidence yet", not "library" — and the town
+  builder's neighbourhood has now produced two.** 07-28h found `lib_fn_4fc140` was fifty
+  bytes of `World_columnHumidity`; 07-28l found `lib_fn_4f2cd0` was 498 bytes of the
+  house-surround **prop factory**, sitting in `_library/cw_lib.cpp`. Both were read in ten
+  minutes and both had been carried. **If a stage you are scoping calls a `lib_fn_*`,
+  disassemble it before budgeting around it** (lessons 7g, 25). Worth a sweep: how many
+  other `lib_fn_*` in `server/_library/` are called from `world/`?
 - **Prop slots 6, 14 and 70 are null** in the client's array. `sandstone-table.cub` is loaded
   into the model DB and never bound, so a type-`0x0e` prop renders nothing in the shipped
   game — the engine deliberately diverges and draws it anyway.
@@ -916,15 +956,16 @@ Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fail
 cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
 ```
 
-**Known-good as of 07-28k:** the `cw_decomp` gate suite is **fully green** (35 gates —
-`gate_town_entities` is new), and **`cwgen_test` is fully green** (35 gates). Hash
-**`0FA08D5CB7998A34`** in both Debug and Release, re-verified at the start of 07-28k
-before anything changed.
+**Known-good as of 07-28l:** the `cw_decomp` gate suite is **fully green** (36 gates —
+`gate_town_surround` is new), and **`cwgen_test` is fully green** (35 gates). Hash
+**`0FA08D5CB7998A34`** in both Debug and Release, re-verified at the start of 07-28l
+before anything changed *and* re-verified in Debug after.
 
-⚠ **07-28k changed no hash and touched no golden**, because the slice is RE + gate only:
-it adds `tools/gate_town_entities.py`, `Docs/RE_town_entities.md` and three `DEEP_RE`
-entries, and nothing in `cwgen`. If a later port of this stage lands, the isolation run
-below applies to it.
+⚠ **07-28l changed no hash and touched no golden**, because the slice is RE + gate only:
+it adds `tools/gate_town_surround.py`, `Docs/RE_town_surround.md` and three `DEEP_RE`
+entries, and nothing in `cwgen`. (07-28k was the same shape, adding
+`gate_town_entities`.) If a later port of either stage lands, the isolation run below
+applies to it.
 
 ⚠ **`cwgen_test` takes about 5 minutes per config** — the town scan reads all 65,536
 columns of every town zone it replays. That is the gate doing real work, not a hang.
@@ -993,8 +1034,9 @@ moved with the C++. Of the 13 goldens that script writes, only that one changed,
 3,005 and only in `w`, by 1 ULP — diff the directory before and after, as here, so the blast
 radius is a measurement and not a hope (lesson 17).
 
-⚠ **Grepping the suite for "FAIL" gives two false alarms.** `gate_zone_bed.py` ends with
-`44 ok, 0 FAIL`, and six gates (`gate_dungeon_counter`, `gate_zone_landform`,
+⚠ **Grepping the suite for "FAIL" gives three false alarms.** `gate_zone_bed.py` ends with
+`44 ok, 0 FAIL` and `gate_town_surround.py` with `6639 ok, 0 FAIL`, and six gates
+(`gate_dungeon_counter`, `gate_zone_landform`,
 `gate_zone_landform_order`, `gate_zone_prechain`, `gate_zone_siteloop`, `gate_zone_tail`)
 print their own verdict format with no PASS/FAIL token at all. Read the tail of each.
 

@@ -742,6 +742,11 @@
    "name": "lib_fn_4d9010",
    "src": "CW_CONFIDENCE_XREF.md"
   },
+  "004e0700": {
+   "kind": "gamemisc",
+   "name": "fixed16_subDouble",
+   "src": "ADJUDICATION.md"
+  },
   "004e0740": {
    "kind": "game",
    "name": "zone_prop_emitter",
@@ -818,9 +823,9 @@
    "src": "ADJUDICATION.md"
   },
   "004f2cd0": {
-   "kind": "lib",
-   "name": "lib_fn_4f2cd0",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "kind": "game",
+   "name": "town_surround_prop_factory",
+   "src": "ADJUDICATION.md"
   },
   "004f2ee0": {
    "kind": "game",

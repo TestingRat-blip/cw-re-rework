@@ -223,6 +223,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `0052e250` | 511 | 1 | 2 |  | map/set<T> too long |
 | `00462b60` | 505 | 0 | 10 | orphan | delayed %dms for lock/sharing conflict, winAccess |
 | `00430230` | 501 | 1 | 5 |  |  |
+| `004f2cd0` | 498 | 1 | 2 |  |  |
 | `0052d990` | 498 | 4 | 7 |  |  |
 | `004d81b0` | 494 | 3 | 11 |  |  |
 | `00419c90` | 489 | 6 | 2 |  |  |
@@ -411,6 +412,5 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `00422b10` | 240 | 1 | 1 |  |  |
 | `0042af50` | 239 | 1 | 8 |  | bad cast |
 | `0042e9a0` | 239 | 2 | 8 |  | bad cast |
-| `004672d0` | 238 | 0 | 4 | orphan | %.*s"%w"%s, string or blob too big |
 
-**Total unnamed non-library functions: 1650** (117 of the listed 400 are orphans)
+**Total unnamed non-library functions: 1651** (116 of the listed 400 are orphans)

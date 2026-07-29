@@ -275,6 +275,22 @@ the body was the only way to settle these.
         # so the decode was checked by recovering them out of each town's own LCG:
         # 4,958 of 4,958 live records reproduced, type and extents.
         "004f2ee0": {"name": "town_furniture_factory", "kind": "game", "verdict": "DEEP-RE"},
+        # FUN_004f2cd0 -- the HOUSE SURROUND pass's prop ctor (Docs/RE_town_surround.md 5).
+        # Called as (out, &pos, orient, 0): copies the three int64 16.16 coordinates to
+        # +0x08/+0x10/+0x18 and the orientation to +0x20, then spends a `rand() % 7` of its
+        # own to pick the model out of the jump table at 0x4f2ec4 -- 0x18 barrel, 0x19
+        # crate, 0x1a open-crate, 0x1b sack, 0x12 bench, 0x10 stool, 0x1c shelter -- with
+        # two of the seven arms spending a SECOND draw for an f32 scale. Those draws are
+        # outside the builder body and so invisible to frida_town_props.py; recovered out
+        # of each town's own LCG they reproduce the type AND the extents of 1,059 of 1,059
+        # live records (tools/gate_town_surround.py). Sibling of 0x4f2ee0, not the same
+        # function: different table, different arity, different namespace.
+        "004f2cd0": {"name": "town_surround_prop_factory", "kind": "game", "verdict": "DEEP-RE"},
+        # FUN_004e0700 / FUN_004ce290 -- the two 16.16 +/- double helpers the surround pass
+        # builds its face offsets with. Both are `*out = *this -/+ (int64)ftol(d * 65536)`;
+        # 0x4e0700 multiplies by +65536 and subtracts, 0x4ce290 by -65536 and so ADDS.
+        # Byte-proven, and the sign of each is asserted per emit site by the gate.
+        "004e0700": {"name": "fixed16_subDouble", "kind": "gamemisc", "verdict": "DEEP-RE"},
         # (0x4d1950 keeps its adjudicated name `VoxelGrid_cellAt3D` -- the body really is a
         # generic bounds-checked 3D index and narrowing it to "module" would be wrong. What
         # 2026-07-28 adds is the CALL SITES: the house builder, the interior marking sweep
