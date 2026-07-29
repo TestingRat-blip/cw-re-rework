@@ -357,6 +357,11 @@
    "name": "std_sort_4byte",
    "verdict": "DEEP-RE"
   },
+  "004e1e90": {
+   "kind": "gamemisc",
+   "name": "vec4_store_i32",
+   "verdict": "DEEP-RE"
+  },
   "004e20d0": {
    "kind": "game",
    "name": "npc_schedule_waypoint",

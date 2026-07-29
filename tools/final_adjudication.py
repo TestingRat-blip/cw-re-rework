@@ -482,6 +482,12 @@ the body was the only way to settle these.
         # houses (Docs/RE_town_furnish.md §5b.1).
         "004d8f90": {"name": "VoxelGrid_rotateIndices", "kind": "gamemisc",
                      "verdict": "DEEP-RE"},
+        # thirty-two bytes, byte-exact: four `mov [ecx + 4k], arg_k`, `mov eax, ecx`,
+        # `ret 0x10` -- the INTEGER twin of 0x4010b0's f32 vec4 store. The house ENTITY
+        # pass's roof walk uses it to zero the four-int neighbour array at [ebp-0x74],
+        # which its two emits then pass where every other emit passes a zeroed f32 vec4
+        # (Docs/RE_town_entities.md §8b.3). Named from the body, not from that caller.
+        "004e1e90": {"name": "vec4_store_i32", "kind": "gamemisc", "verdict": "DEEP-RE"},
         # the two fixed-point accumulators the town prop builds chain. 0x405690 adds an
         # INT (`shld/shl 0x10` then a 64-bit add); 0x4ce290 adds a DOUBLE, and does it as
         # `fixed - ftol2(d * -65536.0)` -- the multiplier really is negative, so the

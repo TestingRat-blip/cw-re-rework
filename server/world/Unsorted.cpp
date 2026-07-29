@@ -1,4 +1,4 @@
-// Unsorted (world) -- server. 123 functions. Bodies = Ghidra pseudo-C.
+// Unsorted (world) -- server. 122 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Unsorted.h"
 
@@ -5753,20 +5753,6 @@ void __cdecl FUN_004e1d70(undefined4 *param_1,undefined4 *param_2,undefined4 *pa
     param_3 = param_3 + 3;
   }
   return;
-}
-
-
-/* FUN_004e1e90 @ 004e1e90  kind=gamemisc  attributed-by=logic:caller-vote  size=32 */
-
-undefined4 * __thiscall
-FUN_004e1e90(void *this,undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
-
-{
-  *(undefined4 *)this = param_1;
-  *(undefined4 *)((int)this + 4) = param_2;
-  *(undefined4 *)((int)this + 8) = param_3;
-  *(undefined4 *)((int)this + 0xc) = param_4;
-  return this;
 }
 
 

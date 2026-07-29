@@ -787,6 +787,11 @@
    "name": "std_sort_4byte",
    "src": "ADJUDICATION.md"
   },
+  "004e1e90": {
+   "kind": "gamemisc",
+   "name": "vec4_store_i32",
+   "src": "ADJUDICATION.md"
+  },
   "004e1f80": {
    "kind": "game",
    "name": "house_ctor",

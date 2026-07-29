@@ -68,7 +68,7 @@ applied). They are copies — **never mutate `RatForge\tools\ghidra_proj\CubeAud
 | `extract_market_slots.py` | INTERPRET the market's 20 perimeter slots out of `Server.exe`; `--cpp` writes `CwTownMarketTables.h` |
 | `extract_surround_slots.py` | INTERPRET the house surround's 8 emit slots; `--cpp` writes `CwTownSurroundTables.h` |
 | `extract_ruin_species.py` | format the ruin pass's species tables; `--cpp` writes `CwTownRuinTables.h`. ⚠ it has no interpreter of its own — it imports `gate_town_ruin.species_tables()`, so the gate that proves the tables is the gate that regenerates the header |
-| `extract_house_emits.py` | INTERPRET the HOUSE ENTITY pass: the nine model-set arms (13 ids + the entrance override each) and the 34 emit blocks run symbolically, so the per-emit model slot and axis constants are read and never typed. `gate_town_entities.py` re-runs it |
+| `extract_house_emits.py` | INTERPRET the HOUSE ENTITY pass: the nine model-set arms (13 ids + the entrance override each) and the 34 emit blocks run symbolically, so the per-emit model slot and axis constants are read and never typed. `--cpp` writes `CwTownEntityTables.h` (the ids joined to `model_id_map.json` for their `.cub` dims); `gate_town_entities.py` re-runs it and diffs the header |
 | `harvest_labels.py` | consolidate proven identities → `raw/labels.json` |
 | `structure.py` | emit the trees + `attribution.tsv` |
 | `flirt_islands.py` | carve static SQLite/FreeType by linker block |
@@ -536,6 +536,37 @@ if you are about to trust a green gate, read group B. Every one of these cost re
    that an input is unavailable, ask which namespace it is unavailable in, and grep the
    tree for the one that owns it** (7h, fifth instance: misfiled, not missing).
 
+7bb. **Count the LOOP HEADS before believing a nesting — and a rigid re-nesting is invisible
+   to every gate that counts.** `RE_town_entities.md` §3, this gate's own docstring and
+   three handoffs described the house entity pass as "four structurally identical FACE
+   walks", one triple loop per horizontal neighbour. Its span makes **nine** `House_dimY`
+   calls — one in the ground scan, then four head/tail pairs — so after the door path there
+   are exactly four triple loops, and only the first runs face code: the four faces are four
+   BLOCKS inside one loop, each falling THROUGH into the next, and the four addresses read
+   as "the next walk's tail" are simultaneously spawn tails *and* the next block's entry.
+   The same modules qualify under both readings, so all **65,955** of the RE gate's checks
+   are identical either way and no draw total could ever have caught it. What can is the
+   draw ORDER, and the capture had it all along: the recorded coin sequence steps
+   0 → 2 → 4 → 6 within one module and wraps 5 → 0 into the next. ★ This is lesson 13 from
+   the side where the order gate exists — and the census that settles it is one `Counter`
+   over the span's `call` targets, which is 7y's tool aimed at loop structure instead of
+   call structure. **When a doc describes N parallel walks, count the loop heads.**
+
+7cc. **The rig's boundary index is stamped at ENTRY, so it belongs to the record AFTER it —
+   and which side of the window you want depends on what you are slicing.** The house ctor
+   hook stamps the draw count at entry, and lesson 37 already used that to prove
+   `ctor[k] < n <= ctor[k+1]` is the right window for RECORDS (the house pass always spends
+   draws between the ctor and the first record, measured minimum 38). The *same* window is
+   wrong for DRAWS, because the house pass's very first `rand()` can carry exactly the ctor's
+   index — and dropping it gave the first house of (32730,32747) 41 draws instead of 42,
+   which is a different **layout**, which is a different door count, which desynchronises
+   every later house in the town. Nothing about the result looked wrong; it looked like a
+   port bug. ★ The fix is not a better window: **ship each stage's stream for the whole town
+   in stream order and consume it sequentially**, which is what the house golden had been
+   doing since 07-28f, and which also puts the per-house draw BUDGET under test for free.
+   **A boundary marker is evidence about one side of the boundary; check which side your
+   consumer needs before reusing someone else's window.**
+
 ### B. What a green gate does NOT prove
 
 The single most expensive family in this project. Five separate instances of the same
@@ -720,10 +751,10 @@ this year's work has been the **entity / prop layer**.
 
 ⚠ **Read this table as "the RE is done and gated *in this repo*" — not "the port is done".**
 Those are two different ledgers. As of 07-29c the **town builder's RE is complete**
-(176/176 rand sites, 100.00% of its recorded draws); as of **07-29f FIVE of the six unported
-town stages are ported** — the MARKET, the ANTIQUE BUILDINGS, the HOUSE SURROUND pass, the
-RUIN OCCUPANT pass and the VILLAGE NPC pass — so **two layers still have a green RE gate and
-no cwgen port**: emitter C and the HOUSE ENTITY pass. Closing that gap is "YOUR TASK".
+(176/176 rand sites, 100.00% of its recorded draws), and as of **07-29h the town builder's
+PORT is complete too** — all fourteen stages are in `cwgen` and gated ab initio, the last
+being the HOUSE ENTITY pass. **Exactly one layer still has a green RE gate and no cwgen
+port: emitter C**, and closing that is "YOUR TASK".
 ★ **Both NPC stages are done**: `site+0x88` was derived on 07-29e (`RE_town_buildings.md`,
 `gate_town_buildings.py` 25/25), and 07-29f derived the five per-town bits the NPC pass runs
 on — the ones its own RE gate reads off the recorded stream. Where a cwgen gate exists it is
@@ -744,7 +775,7 @@ rand sites are priced off the draw index rather than recorded (`RE_town_ruin.md`
 | `FUN_005104e0` = `camp_populator` (overworld encampments) | `RE_5104e0_camp.md` | 2,742 / 99 zones |
 | the town prop chain: plot lattice → promotion → role-2 house → 3×3 modules → 13-block lattice | `RE_town_props.md` | 8,646+ / 67 towns |
 | the camp populator's **candidate grid** | `RE_zone_grid.md` | 16,250 / 99 zones |
-| zone emitters **A** (runestone circle) + **C** (village street light) — ⚠ **RE only, NOT ported** | `RE_zone_emitters_ac.md` | 3,937 / 256 zones |
+| zone emitters **A** (runestone circle) + **C** (village street light) — ⚠ **C is RE only, NOT ported, and is now the ONLY such layer** | `RE_zone_emitters_ac.md` | 3,937 / 256 zones |
 | the per-zone **site-kind grid**, from the seed | `RE_site_kind_grid.md` | 590 / 118 regions |
 | the **prop-id table**, from the client's own init block | `RE_prop_ids.md` | 75 of 78 slots |
 | the zone builder's **TAIL** (mat-38 -> emitter B = the dense-forest tree pass; emitter B derived and reachable from the seed) | `RE_zone_tail.md` | 6,558 / 28 even zones |
@@ -766,7 +797,7 @@ rand sites are priced off the draw index rather than recorded (`RE_town_ruin.md`
 | the town builder's **HOUSE PASS** (`0x4e6520`-`0x4e74a5`) — 13 rand sites, 23 module grids EXECUTED out of the binary, the door rule — RE'd *and ported* | `RE_town_house.md` | `gate_town_house` **1,446** / 435 houses; **`rederive_townhouse` 140/140** |
 | the town builder's **ROLE-6 PLOT** (`0x4e503a`-`0x4e5b9e`) — the fenced yard: 14 rand sites, **49.6% of every draw in the builder body**; fences derived field-by-field, the other two containers unhooked — RE'd *and ported* | `RE_town_yard.md` | `gate_town_yard` **2,822**; **`rederive_townyard` 51/51**, site sequence exact draw-for-draw in 17/17 towns |
 | the town builder's **ROLE-0/7 PLOT** (`0x4ef248`-`0x4f0046`) — the sand plaza: 7 rand sites, 24.6% of the body; `0x4ef7c8` is one draw per RING VOXEL of a radius-8 disc, not a scatter; the RUIN site set derived from the seed alone — RE'd *and ported* | `RE_town_plaza.md` | `gate_town_plaza` **11,877**; **`rederive_townplaza` 169/169**, falloff gate 430/430 ab initio |
-| the town builder's **HOUSE ENTITY** pass (`0x4e74a5`-`0x4ea988`) — the four face walks, the roof walk, the wall/roof walk (`0x4ea254`) and the four-neighbour walk: 11 rand sites, 34 emit sites, 16 spawn tails, **19,352 `creature_spawn_builder` records checked field by field**; ★ 07-29g **the models are IDENTIFIED and every record's position DERIVED** from `model_id_map.json` — the port's blocker is gone; ⚠ **still RE + gate only, NOT ported** | `RE_town_entities.md` | `gate_town_entities` **65,954** / 435 houses |
+| the town builder's **HOUSE ENTITY** pass (`0x4e74a5`-`0x4ea988`) — the four face BLOCKS, the roof walk, the wall/roof walk (`0x4ea254`) and the four-neighbour walk: 11 rand sites, 34 emit sites, 16 spawn tails, **19,352 `creature_spawn_builder` records checked field by field**; ★ 07-29g **the models are IDENTIFIED and every record's position DERIVED** from `model_id_map.json`; ★ 07-29h **RE'd *and ported*** — the roof classifier decoded, the four "walks" corrected to four BLOCKS in one loop, the wall pick MEASURED 435/435 | `RE_town_entities.md` | `gate_town_entities` **65,955** / 435 houses; **`rederive_townentities` 1,375/1,375**, 19,352 records / 96,760 fields, site sequence draw-for-draw 435/435 |
 | the town builder's **HOUSE SURROUND** pass (`0x4ecfb5`-`0x4ed9ea`) — the clutter against the outside walls: 8 rand sites, 4 faces × 2 slots, **1,059 prop records checked field by field**; `FUN_004f2cd0` the PROP FACTORY, whose hidden draws are LCG-recovered; it also pins `kTownHouseOrigin = 7` by a **sweep** — RE'd *and ported* | `RE_town_surround.md` | `gate_town_surround` **6,643**; **`rederive_townsurround` 1004/1004**, 323/323 site sequences draw-for-draw |
 | the town builder's **NPC / DAILY-ROUTINE** pass (`0x4f0046`-`0x4f16b6`) — the last stage in the builder: five named-occupant arms + `1 + rand()%2` villagers per building, each with a behaviour tree and a **daily schedule**; 38 rand sites, **7,386 recorded + 47,230 hidden draws**; five per-town bits predict every draw in order — RE'd *and ported*, **and the port DERIVES those five bits**, which the RE gate reads off the stream | `RE_town_npcs.md` | `gate_town_npcs` **16,117**; **`rederive_townnpcs` 231/231**, 35/35 site sequences draw-for-draw, all five bits 32/32 with their null baselines printed |
 | the town builder's **ANTIQUE BUILDINGS** (`0x4eee3e`-`0x4ef248`, roles 0x14/0x12) — the LAST two rand sites: one `antique-building1..4` model per ruin plot, centred by half its own `.cub` footprint; 45/45 positions predicted exactly, and it CORRECTS "town NPC spawns" — RE'd *and ported* | `RE_town_antique.md` | `gate_town_antique` **290**; **`rederive_townantique` 62/62**, 45/45 placements with NO terrain |
@@ -796,6 +827,7 @@ mined out of the captures already on disk.
 
 | when | slice | doc | gate |
 |---|---|---|---|
+| 07-29h | ★★ **THE HOUSE ENTITY PASS IS PORTED — the town builder is now PORT-CLOSED, all fourteen stages.** `townEntityHouse` in `CwTown.h`; the nine model sets and their `.cub` dims are GENERATED into `CwTownEntityTables.h` by `extract_house_emits.py --cpp`, which `gate_town_entities.py` re-runs and diffs (the fifth generated header). **19,352 records checked field by field (96,760 fields: tail/type/orient/x/z) and the SITE SEQUENCE draw for draw in 435 of 435 houses.** ★ **The roof classifier is decoded** (§9's last open item): the walk sets BOTH halves to `*-roof1`, then `0x4f2b88` keyed on `cell[+1] % 4` picks the two neighbours the two halves look at — and probes the other two, whose results MSVC keeps and discards because `cellAt3D` is a call. A half becomes **`*-roof3` when the two modules' orientation PARITIES agree** and `*-roof2` when they do not; half B emits at `orient + 2`, so a gable's two slopes face opposite ways. ★★ **And the port corrected two things no draw count could ever see.** (1) **There are not four face WALKS — there are four face BLOCKS in one loop.** The stage has four `House_dimY` loop heads in its whole span and only the first runs face code, so a face block falls THROUGH into the next face's block and the four addresses this repo reads as "the next walk's tail" are each simultaneously a spawn tail *and* the next block's entry. The same modules qualify either way, so all 65,955 of the RE gate's checks are identical under both readings; the recorded draw ORDER is not, and it steps 0 → 2 → 4 → 6 inside one module (lesson 13 from the side where an order gate exists). (2) **`townHouseOne` stored each orientation draw at the UNROTATED module index** — the binary's loop reaches its cell through `cellAt3D`, so the draw for walk index `(a,b,k)` lands in the STORAGE cell that index rotates to. A bijection, so the door SET, the draw COUNT and every total `gate_town_house`/`rederive_townhouse` check were right either way; nothing read the array positionally until this pass needed the arc/base and roof emits' `orient` (**lesson 7z, second instance**). ★ **The wall pick is MEASURED, not fitted**: every face-block emit puts its record at `baseY + 7k` and the four entrance-stairs emits at `baseY + 7k − 4`, so an entrance record is the only one leaving its house's own Y residue mod 7 — **exactly one pick in 435 of 435 houses**. ⚠ **The draw stream is fed BY VALUE**: 341 of 435 houses have a contiguous recorded run and the other 94 sit in 19 towns whose HOUSE (1,264 draws / 27 towns) and FURNISHING passes gap the same way, so those draws are not this stage's — measured before the format was chosen. ⚠ New trap: **the ctor index is stamped at ENTRY, so the house pass's FIRST draw can carry it** and a `ctor[k] < i` window drops it (41 draws instead of 42 — a different LAYOUT); the golden ships each stage's stream for the whole town and consumes it sequentially. ⚠ **TWO causes, isolated separately** (the 07-29e lesson applied up front): the `orient` fix moves no printed number and still moves the hash, because `gateRederiveTownHouse` hashes the array. `AC495793EE9F9672` → `5784969A38266634` (the orient fix ALONE — the whole-output diff against the baseline is the hash and nothing else) → **`E0DD66F2099F3E37`** (+ the new golden; that diff is the new gate's five lines and the hash, with every other gate's numbers byte-identical) | `RE_town_entities.md` §10/§11 | **`rederive_townentities` 1,375/1,375**; `gate_town_entities` 65,954 → **65,955** |
 | 07-29g | ★★ **THE HOUSE ENTITY PASS'S MODELS ARE IDENTIFIED AND EVERY RECORD'S POSITION IS DERIVED — the last unported town stage's blocker was never a missing input.** `RE_town_entities.md` §9 had said the per-emit anchor field "lives in the server's model DB and nothing in `cwgen` reads it", so a port would have to be FED one constant per emit site. `models[]` **is** the world model DB — the same `+0x1c` vector `RE_town_antique.md` §0 indexes — so the ids resolve through `cw_rederive/model_id_map.json`, which holds the `.cub` dims of all 2,550 models and knows nothing about this pass. Feeding those in, **19,352 of 19,352 records land exactly on `anchor + 13*m + c − dim/2`**, and **6,401 pin ONE model id**. Lesson 7h fifth instance, 7u second. ★ **And the models are a semantic set that explains the whole stage**: six complete village families (`framework`/`wood`/`whitewood`/`stone`/`clay`/`whiteclay`) and three ruin ones, thirteen slots each — `base, floor, floor-stairs, wall, wall-window, wall-door, wall-indoor, wall-balcony, wall-lamp, roof1..3, arc` — and every slot is the model its emit's ROLE predicts (B+5, the only emit carrying `houseKind`, is the **door**; the `k==1` coin is the **lamp**, the `k>1` coin the **balcony**). ★★ **Four of this file's own claims fell to the re-read, none of which any draw count could see.** (1) §3.1's arm bases for `desc[+0x1c]` 4/5 were `0x8c1`/`0x8c2`; those are the **entrance-stairs override** the clay/whiteclay/ruin arms write into `[ebp-0x5c90]` before loading their thirteen — the real bases are `0x8b4`/`0x8c3`, and the gate had asserted the wrong ones because it checked the same first `push` the reading came from. (2) §6's *"`src[+0x44]` is not an extent and is not always positive"* is **withdrawn** — it is the `.cub` width; what looked off-lattice is the four ENTRANCE emits' own `−6`/`+20` axis constant, a whole module onto the face's neighbour, which `extract_house_emits.py` now interprets. (3) B+9 (`*-roof1`) was "not reached by any emit" — it is the roof walk's DEFAULT, stored into both model temps before the classifier. (4) `0x4e9f65`'s model is **not** B+5: the roof walk repurposes `[ebp-0x5cd4]`, and the tell was arithmetic (those records need a 16-wide model; `*-wall-door` is 18). ★ **And `0x4ea254`'s "inhabitant" is a CARPET** — `models[0x88a + rand()%3]` is `carpet1/2/3.cub`, laid flat with a `rand() & 3` facing; the old name came from `creature_spawn_builder`'s label, exactly as 07-29c's did. ⚠ **NOT PORTED** — §9 now lists what is left: the roof walk's four classifier arms (no draws), and two FED terrain values per house (base Y, and the wall pick, which the entrance record measures). ⚠ No hash change: nothing in `cwgen` moved | `RE_town_entities.md` | **`gate_town_entities` 46,344 → 65,954** |
 | 07-29f | ★★ **THE VILLAGE NPC PASS IS PORTED — and the point of the port is that it DERIVES the five bits its own RE gate reads off the recorded stream.** `RE_town_npcs.md` §2 establishes that five per-town booleans predict every draw in the stage (440 of 440 villagers, draw for draw) and then computes them with `0x4F0DC9 in ras`. That is **lesson 12 in its purest form** — a gate that feeds the port the captured draws does not prove the port derives them — and it is the whole reason this stage was worth porting rather than leaving gated. All five now come out of the plan: **C** = any building with kind 1, **D** = any with kind 2..5, **B** = any role-9 plot (`0x4e3ea2` pushes ONE market landmark per market, the 07-29d correction), **A** = any of the region's 64 feature cells with type ∉ {0, 1, 0xa} (the `0x4f01b0` sweep over `region + 0x14018`, stride `0x68` — `cw_featuregen` already produces every type bit-exact), **E** = the plaza pass produced a SITE. ★ **The null baselines say it is not vacuous**: B, C, D and E are true in **6, 10, 6 and 28 of 32** towns and all four are 32/32. ⚠ **A is the exception and is stated rather than hidden — TRUE in 32 of 32**, so no town in this corpus can tell the derivation from `A = true` (lesson 9); a region with no feature cell outside {0,1,0xa} would, and none of the 35 is one. ★ **E took the most work and it is one terrain read deep**: the `0x4efff8` push is per role-0/7 PLOT and guarded by a byte set at `0x4ef8f9`, which a village reaches only through falloff ≥ 0.72 + a surface + class `0xb` (SAND) below — i.e. exactly the quadrants the plaza pass turns into sites. `∃ role-0/7 plot` alone is **vacuous** (true in all 32); `∃ plaza site` is 32/32 against a 28/32 baseline. ★ **A CORRECTION to `RE_town_npcs.md` §4**: its "hidden draws" column reports the GAP between two recorded indices, which counts the successor draw itself — the callee costs are **668-1037 / 3321-3334 / 2009-2013 / 2011-2017**, one less than printed. `RE_town_ruin.md` §3 states the same arithmetic correctly, so the two files disagreed. The gate asserts the corrected column 23/23 and re-checks §4's own attribution test: the two arms sharing `lib_fn_4fde90` overlap. ⚠ Unlike `rederive_townruin` this stream **cannot** be made contiguous — those callees are undecoded — so the recorded values are FED and the gaps are checked, not claimed. Hash `2ECABECFE59D078E` → **`AC495793EE9F9672`**, isolated in one step (the whole-output diff is the new gate's eight lines and the hash, nothing else) | `RE_town_npcs.md` | **`rederive_townnpcs` 231/231** |
 | 07-29e | ★★ **THE BUILDING LIST IS DERIVED AND THE RUIN OCCUPANT PASS IS PORTED**, taking the unported-town-stage count from three to two (and the whole unported list from four to three). ★ **`site+0x88` was never a capture problem — it was a census.** Every `lea ecx, [reg + 0x88]` in the body is one of seven, and there is **no** `mov [reg+0x88]`, **no** `add reg, 0x88` and **no** indexed form anywhere, so the census is exhaustive in all four address forms; exactly ONE writes (`0x4e76db` -> `std::vector<T*>::push_back`), and the pointer it pushes comes from `[ebp-0x5cfc]`, the slot `0x4e6535` fills straight out of `operator_new(0x74)` + `FUN_004e1f80(h, 3, 3, 4)`. **A building IS a house**, one per role-2 plot in plot order — the handoff's open question ("whether the pushed object is the same house") answered by following the slot. `B[+0x60]` is `plot[+0x10]` (`0x4e6567`), and the three cell vectors are filled by the **no-draw** interior-marking sweep `0x4ea988`-`0x4ead3a` out of the module grid, rotation- and mirror-invariant. ★★ **Two independent tables agree, which is the only proof this derivation has**: `\|cells3c\|` is 1 in layouts **20, 21, 22** and 0 in the other twenty, and `kHouseFixed`/`kHouseSub1` — the layouts a sub-role 1..5 plot gets — are exactly `{22}` and `{20, 21}`, so a NAMED occupant always has a cell to stand on and `rand() % \|cells3c\|` is never a division by zero (lesson 7q). It also explains `RE_town_npcs.md` §2's live "the building's own `+0x30` in 440 of 440": `\|cells30\|` is **1** for every house. ★ **And the port re-read the decode, for the fifth slice running.** `0x4e7321`'s modulus in `CwTown.h` was "every type-1 module in the 3x3x4 grid"; the binary walks `(i, j)` at `k == 1` only plus three further tests — **7 against 2** in layout 0 (new lesson 7z). ⚠ One of those tests is TERRAIN, so the PICK stays region-cache-blocked; the correction is to the candidate COUNT, and cwgen now hashes `wallCandidates` instead of `wallPick` so the suite's identity holds only derived values. ★ **The ruin port's strongest claim is the invisible block**: the golden ships the CONTIGUOUS LCG stream, so all **406 draws of the seven rand sites no capture on disk records** are under test, and 35/35 towns land every recorded draw on its recorded offset. `ents - ents0` closes 35/35 — 31 guard + 224 quadrant + 364 pack + 58 patrol, matching `RE_town_ruin.md` §12 exactly. ⚠ Two corrections the port found: the cell erasures are **not per building** (phase 4 tests ANOTHER building's list), and `gate_town_ruin.py`'s one FED branch is **provably dead** (min `\|cells24\|` 3 vs at most 3 picks). Hash `CB8B2AB38BD28130` → `9123561DC0F03039` (the `0x4e7321` correction, isolated) → **`2ECABECFE59D078E`** (the ruin golden, isolated) | `RE_town_buildings.md`, `RE_town_ruin.md`, `RE_town_house.md` | **`gate_town_buildings` 25**, **`gate_town_ruin` 3,042**, **`rederive_townruin` 140/140** |
@@ -849,7 +881,19 @@ to a numbered lesson above:
 
 ## YOUR TASK
 
-### The next slice: PORT the town builder. The RE side of it is finished.
+### ✅ The town builder is CLOSED on both sides as of 07-29h — RE *and* port.
+
+**The next slice is EMITTER C** (`RE_zone_emitters_ac.md`, and the reference section at the
+end of this file). It was deferred because "emitter C needs essentially the whole 64 KB
+builder ported, not a per-plot formula"; that is now true and done. ⚠ Read the two warnings
+in that section before starting — `0x51fa10` is *not* where the emitter begins, and the
+site-kind byte is already derived (`rederive_sitekind` 116/116), so do not re-derive it
+from the feature-cell type.
+
+The rest of this section is the record of the port programme that just finished; the method
+is the transferable part.
+
+### The programme that just closed: PORT the town builder. The RE side of it was finished.
 
 **As of 07-29c the town builder is CLOSED on the RE side** — 176 of 176 firing rand sites,
 228,413 of 228,413 recorded draws, 100.00%, nothing open (`RE_town_antique.md` §5, where
@@ -880,14 +924,20 @@ the method transferred:
 the other direction: "no positions at all" was right, and the five bits turned out to be
 derivable from the plan with only ONE terrain read (flag E's sand test).
 
-**This is what is left:**
+✅ **Item 6 is DONE (07-29h)** — `rederive_townentities` 1,375/1,375, and all three of its
+sub-tasks landed as scoped: the roof classifier decoded, `townEntityHouse` written, the
+golden built. Both FED values were as predicted, and the **wall pick** turned out to be a
+clean measurement rather than a fit (435 of 435). What the row did *not* anticipate is in
+`RE_town_entities.md` §10, and it is one more instance of **porting a stage re-reads it and
+the re-read corrects it** — every port in this programme has produced one: the "four face
+walks" are four BLOCKS in one loop, and `TownHouse::orient` was stored at the unrotated
+index.
 
-| # | stage | doc | what a port needs |
-|---|---|---|---|
-| 6 | **HOUSE ENTITY** | `RE_town_entities.md` §9 | ★ **RE-SCOPED 07-29g and much smaller than this row used to say.** The "per-emit-site model anchor that lives in the server's model DB and nothing in `cwgen` reads" is `cw_rederive/model_id_map.json`, which is in the tree and which `rederive_townantique` already reads; feeding its `.cub` dims in predicts **19,352 of 19,352 live records exactly**, and 6,401 of them pin a single model id. What is left: (a) decode the ROOF walk's four classifier arms (`RE_town_entities.md` §8b.3 — no draws, ~4,000 records), (b) write `townEntityPass`, FEEDing two terrain values per house — the base Y and the **wall pick** (`0x4e7321`'s `cell[+2]` stamp, which the entrance-stairs record MEASURES), (c) golden + `rederive_townentities`. Read §3.1's and §6's 07-29g corrections first — three of this file's own claims about the models were wrong |
-
-and, outside the builder, **emitter C** — see the reference section below, which is still
-true: it needs the whole builder, and the whole builder is now within one stage of done.
+▶ **SO THE TOWN BUILDER IS NOW PORT-CLOSED. All fourteen stages are in `cwgen` and gated
+ab initio.** What is left in this programme is, outside the builder, **emitter C** — see
+the reference section below. Its analysis said "emitter C needs essentially the whole
+64 KB builder ported", and that is no longer a blocker: the whole builder IS ported. That
+is the next task.
 
 ✅ **THE BUILDING LIST IS DERIVED (07-29e) — `RE_town_buildings.md`, and it unblocked both
 as predicted.** The census below was right and its "next thing to pin" fell to one more
@@ -1374,11 +1424,11 @@ Debug) — it needs `vcvars64.bat` sourced first, or every translation unit fail
 cmd /c "\"<VS>\VC\Auxiliary\Build\vcvars64.bat\" >nul && \"<VS>\...\CMake\bin\cmake.exe\" --build build-release --target cwgen_test"
 ```
 
-**Known-good as of 07-29f:** the `cw_decomp` gate suite is **fully green** (**41** gates),
-and **`cwgen_test` is fully green**. Hash **`AC495793EE9F9672`**, verified in **both** Debug
-and Release with the two 172-line outputs diffed byte-for-byte against each other —
-identical. **61 `[PASS]` / 27 `[skip]`.** The 07-29d baseline `CB8B2AB38BD28130` (158 lines,
-59/27) was re-verified in both configs before any of this ran.
+**Known-good as of 07-29h:** the `cw_decomp` gate suite is **fully green** (**41** gates),
+and **`cwgen_test` is fully green**. Hash **`E0DD66F2099F3E37`**, **62 `[PASS]` /
+27 `[skip]`**, 177 lines. The 07-29f baseline `AC495793EE9F9672` (172 lines, 61/27) was
+re-verified in **both** Debug and Release before any of this ran, with the two outputs
+diffed byte-for-byte against each other — identical.
 
 ⚠ **`gate_town_market.py` crashes if its stdout is not UTF-8** — it prints a `⚠` and Windows
 gives a redirected/piped Python a cp1252 stdout. It is fine in a terminal and fine under
@@ -1396,7 +1446,7 @@ arithmetic: 56 → 57 with the market golden → 58 with the antique → 59 with
 Do not re-copy the 35 — count the `[PASS]` lines. A number nobody recomputes is exactly the
 lesson this file already carries about measured numbers nobody diffs.
 
-⚠ **The 07-29e/f chain. Each step isolated in place and the WHOLE output diffed**, not
+⚠ **The 07-29e/f/h chain. Each step isolated in place and the WHOLE output diffed**, not
 just the hash:
 
 ```
@@ -1409,7 +1459,23 @@ CB8B2AB38BD28130   the 07-29d baseline
 AC495793EE9F9672   + rederive_townnpcs                        (07-29f; one step, clean -- the whole
                                                                diff is the new gate's eight lines
                                                                plus the hash)
+5784969A38266634   + the TownHouse::orient ROTATION fix       (07-29h; reverting it restores
+                                                               AC495793EE9F9672 EXACTLY, and the
+                                                               only difference in the whole 172-line
+                                                               output is the hash -- it moves no
+                                                               printed number in any gate, because
+                                                               gateRederiveTownHouse hashes the
+                                                               array, lesson 7z again)
+E0DD66F2099F3E37   + rederive_townentities                    (07-29h; the whole diff is the new
+                                                               gate's five lines plus the hash,
+                                                               every other gate byte-identical)
 ```
+
+★ **Both 07-29h steps were isolated separately, and that ORDER is the point.** The `orient`
+fix and the new golden land in the same slice; had they been isolated together, moving the
+golden aside would have failed to restore `AC495793EE9F9672` and looked like a regression.
+This is the 07-29e experience applied up front — **if a slice touches a hashed value AND
+adds a gate, isolate the hashed value first.**
 
 ★★ **And the first isolation run is what FOUND the second cause.** Moving only the new
 `rederive_townruin.bin` aside did **not** restore `CB8B2AB38BD28130` — it gave a third hash.
@@ -1428,7 +1494,7 @@ AB6C3F09F789C1F9   + rederive_townantique
 CB8B2AB38BD28130   + rederive_townsurround
 ```
 
-⚠ **There are now FOUR generated headers**, all following the `CwTownHouseTables.h` rule —
+⚠ **There are now FIVE generated headers**, all following the `CwTownHouseTables.h` rule —
 the generator is the source of truth and a gate re-runs it and diffs:
 
 ```
@@ -1436,7 +1502,13 @@ python tools/cw_decomp/tools/extract_house_layouts.py  --cpp > src/worldgen/cw/C
 python tools/cw_decomp/tools/extract_market_slots.py   --cpp > src/worldgen/cw/CwTownMarketTables.h
 python tools/cw_decomp/tools/extract_surround_slots.py --cpp > src/worldgen/cw/CwTownSurroundTables.h
 python tools/cw_decomp/tools/extract_ruin_species.py   --cpp > src/worldgen/cw/CwTownRuinTables.h
+python tools/cw_decomp/tools/extract_house_emits.py    --cpp > src/worldgen/cw/CwTownEntityTables.h
 ```
+
+`gate_town_entities.py` [2c] regenerates and diffs the last one. ⚠ It is the only generated
+header whose content is not purely a reading of `Server.exe`: the model IDs are interpreted
+out of the binary, and their `.cub` DIMENSIONS are joined in from `model_id_map.json`. Two
+sources, and the agreement is exactly what the port's 19,352 position checks test.
 
 `gate_town_ruin.py` [12] regenerates and diffs the last one. ★ Note what it does NOT do:
 `extract_ruin_species.py` has **no interpreter of its own** — it imports
@@ -1519,7 +1591,8 @@ the header on disk. Without that the header is just another hand-typed table wit
 comment claiming otherwise (lesson 7c). Regenerate it with:
 `python tools/cw_decomp/tools/extract_house_layouts.py --cpp > src/worldgen/cw/CwTownHouseTables.h`
 
-**Superseded:** hash **`2ECABECFE59D078E`** was the 07-29e known-good,
+**Superseded:** hash **`AC495793EE9F9672`** was the 07-29f known-good,
+**`2ECABECFE59D078E`** the 07-29e one,
 **`CB8B2AB38BD28130`** the 07-29d one,
 **`0FA08D5CB7998A34`** the 07-29c one,
 **`CE700304401BFC57`** the 07-28i one,

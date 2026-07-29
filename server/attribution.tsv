@@ -2412,7 +2412,7 @@ addr	name	kind	module	class	attributed_by	size
 004e1db0	FUN_004e1db0	gamemisc	game_misc	Unsorted_002	none	72
 004e1e00	FUN_004e1e00	gamemisc	game_misc	Unsorted_002	none	68
 004e1e50	FUN_004e1e50	gamemisc	game_misc	Unsorted_002	none	54
-004e1e90	FUN_004e1e90	gamemisc	world	Unsorted	logic:caller-vote	32
+004e1e90	vec4_store_i32	gamemisc	render	Proven	ledger	32
 004e1eb0	FUN_004e1eb0	gamemisc	world	Unsorted	logic:caller-vote	23
 004e1ed0	FUN_004e1ed0	gamemisc	world	_helpers_ctor-like	role:ctor-like	156
 004e1f6c	Catch_All@004e1f6c	lib	_library	eh_funclets	eh	17

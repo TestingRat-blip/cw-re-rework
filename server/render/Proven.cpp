@@ -1,4 +1,4 @@
-// Proven (render) -- server. 6 functions. Bodies = Ghidra pseudo-C.
+// Proven (render) -- server. 7 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Proven.h"
 
@@ -109,6 +109,20 @@ int * __thiscall FUN_004e1200(void *this,int param_1)
     iVar2 = iVar2 + -1;
     piVar1 = piVar1 + 1;
   } while (iVar2 != 0);
+  return this;
+}
+
+
+/* vec4_store_i32 @ 004e1e90  kind=gamemisc  attributed-by=ledger  size=32 */
+
+undefined4 * __thiscall
+FUN_004e1e90(void *this,undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  *(undefined4 *)this = param_1;
+  *(undefined4 *)((int)this + 4) = param_2;
+  *(undefined4 *)((int)this + 8) = param_3;
+  *(undefined4 *)((int)this + 0xc) = param_4;
   return this;
 }
 

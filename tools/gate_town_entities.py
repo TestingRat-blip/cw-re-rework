@@ -8,10 +8,17 @@ four more times and hands every qualifying module to `creature_spawn_builder`
 (`FUN_00524540`).  The rig hooks that call, so unlike the props these records are
 observable field by field -- position, orientation and type.
 
-★ Four structurally identical FACE walks, one per horizontal neighbour, each carrying two
+★ Four structurally identical FACE blocks, one per horizontal neighbour, each carrying two
 `rand() % 6` sites; then a ROOF walk that spends nothing; then a WALL/ROOF walk whose
 village-only `rand() & 1` is `0x4ea254`, the largest single rand site left in the builder.
 **11 rand sites / 7,597 draws / 34 emit sites / 16 spawn tails.**
+
+⚠ CORRECTED 07-29h by the port: those four are BLOCKS inside ONE triple loop, not four
+walks -- the stage has four `House_dimY` loop heads in its whole span and only the first
+runs face code, so a face block falls through into the next face's block and the four
+"tails" double as the next block's entry.  No count in this gate can tell the two readings
+apart (the same modules qualify either way); the recorded draw ORDER can, and it steps
+0 -> 2 -> 4 -> 6 within one module.  See Docs/RE_town_entities.md 10.1.
 
 ⚠ THE TRAP THIS GATE IS BUILT AROUND: the rig stamps each spawn with the RETURN ADDRESS of
 the call, and up to seven different emit sites `jmp` to the same call.  A spawn "site" is
@@ -29,6 +36,7 @@ minimum rather than assuming it.
 """
 import collections
 import glob
+import io
 import json
 import os
 import re
@@ -109,6 +117,9 @@ SLOT_ROLE = ["base", "floor", "floor-stairs", "wall", "wall-window", "wall-door"
              "wall-indoor", "wall-balcony", "wall-lamp", "roof1", "roof2", "roof3", "arc"]
 MODEL_MAP = os.path.normpath(os.path.join(HERE, "..", "..", "cw_rederive",
                                           "model_id_map.json"))
+# the generated header the cwgen port reads (regenerated and diffed in section 2c)
+CPP_HEADER = os.path.normpath(os.path.join(HERE, "..", "..", "..", "src", "worldgen", "cw",
+                                           "CwTownEntityTables.h"))
 # The four tails whose model does not come from a frame slot the emit walk can read.
 # ⚠ 0x4e9f65's source is [ebp-0x5cd4], which IS B+5 in the face walk -- but the ROOF
 # walk repurposes that slot to hold its own roof model (0x4e9774 stores B+9 into it),
@@ -363,6 +374,27 @@ def main():
     check(len(entr_consts) == 4, "%d entrance emits, expected 4" % len(entr_consts))
     check(sorted(entr_consts) == [(-6, 7), (7, -6), (7, 20), (20, 7)],
           "the four entrance shifts are %s" % sorted(entr_consts))
+
+    # ================= 2c. the GENERATED header (added 07-29h) ========================
+    # CwTownEntityTables.h is written by `extract_house_emits.py --cpp`, which interprets
+    # the nine model-set arms and the 33 emit blocks out of Server.exe and joins the ids
+    # to model_id_map.json.  Re-run the generator and diff it, so a hand edit fails here
+    # instead of surviving -- the CwTownHouseTables.h rule (lesson 7c/7i).
+    buf = io.StringIO()
+    keep = sys.stdout
+    try:
+        sys.stdout = buf
+        EM.emit_cpp(data, secs, md)
+    finally:
+        sys.stdout = keep
+    want = buf.getvalue()
+    if os.path.exists(CPP_HEADER):
+        have = open(CPP_HEADER, encoding="utf-8", newline="").read().replace("\r\n", "\n")
+        check(have == want, "%s differs from the generator (%d vs %d bytes) -- regenerate"
+                            " it with `extract_house_emits.py --cpp`"
+                            % (os.path.basename(CPP_HEADER), len(have), len(want)))
+    else:
+        notes.append("!! %s is missing -- the header diff did not run" % CPP_HEADER)
     for t, how in TAIL_MODEL_OVERRIDE.items():
         per_tail_model[t] = [(how, MODULE_CENTRE, MODULE_CENTRE)] \
             if how != "floorpair" else per_tail_model[t] + [(how, 7, 7)]

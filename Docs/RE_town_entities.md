@@ -1,9 +1,19 @@
 # The town builder's HOUSE ENTITY pass (`0x4e74a5`–`0x4ea988`)
 
 *RE'd and gated 2026-07-28 (07-28k); the MODELS identified and every record's position
-DERIVED 2026-07-29g. Live gate: `tools/gate_town_entities.py`, **65,954 checks, 0 FAIL**
-over the 92 towns in `raw/town_props_capture*.json` (seed 42069) — 70 of which build a
-house, 435 houses, **19,352 spawn records**.*
+DERIVED 2026-07-29g; **PORTED 2026-07-29h**. Live gate: `tools/gate_town_entities.py`,
+**65,955 checks, 0 FAIL** over the 92 towns in `raw/town_props_capture*.json` (seed 42069)
+— 70 of which build a house, 435 houses, **19,352 spawn records**. Port gate:
+`rederive_townentities` **1,375/1,375**.*
+
+★★ **2026-07-29h — PORTED, and the port corrected two things no draw count could see.**
+`townEntityHouse` in `CwTown.h`; the model ids and their `.cub` dimensions are GENERATED
+into `src/worldgen/cw/CwTownEntityTables.h` by `extract_house_emits.py --cpp`, which
+`gate_town_entities.py` re-runs and diffs every run. The port derives the module grid, the
+layout/rotation/mirror, the per-module orientation, the model set and every dimension; it
+is FED the plot table, the house's base Y and the wall pick. **19,352 records checked field
+by field (96,760 fields) and the site sequence draw for draw in 435 of 435 houses.**
+See §10 for the two corrections and §11 for what the gate feeds.
 
 ★★ **2026-07-29g — the port's blocker is gone, and it was never a missing input.** §9
 said the per-emit anchor field "lives in the server's model DB and nothing in `cwgen`
@@ -58,17 +68,18 @@ the *rest of that house*, in one plot-loop iteration:
 | `0x4e7743`-`0x4e783a` | the module **bounding box** over cells with `type != 0` | 0 |
 | `0x4e783b`-`0x4e7cae` | the **door path** — village-only, `desc+0x1c` not 4 or 5; finds the class-`0xb` ground ring and `writeVoxel`s a noise-coloured path | 0 |
 | `0x4e7caf`-`0x4e7d0f` | `houseKind = jumpTable(plot[+0x10])` | 0 |
-| **`0x4e7d10`-`0x4e96ea`** | **the four FACE walks** — this document | **4,552** |
+| **`0x4e7d10`-`0x4e96ea`** | **ONE loop holding the four FACE blocks** (§10.1) — this document | **4,552** |
 | **`0x4e96f4`-`0x4e9fc5`** | **the ROOF walk** | 0 |
 | **`0x4e9fc6`-`0x4ea4e6`** | **the WALL/ROOF walk** — `0x4ea254` lives here | **3,045** |
 | `0x4ea4e7`-`0x4ea987` | the **four-neighbour walk** (kind-1 modules) | 0 |
 | `0x4ea9b0`-`0x4ecd34` | the interior marking sweep (`RE_town_furnish.md` §1) | 0 |
 | `0x4ead3a`-`0x4ecf20` | the **furnishing** walk (`RE_town_furnish.md`) | 8,717 |
 
-All five walks are the same triple loop over the module grid, `i` over `House_dimX`
+Every one of those is the same triple loop over the module grid, `i` over `House_dimX`
 (`FUN_004d8dc0` = 3), `j` over `House_dimZ` (`FUN_004d8de0` = 3), `k` over `House_dimY`
-(`FUN_004d8e00` = 4), and every one of them multiplies **13** into `i`/`j` and **7** into
-`k` — the same lattice as the furnishing pass.
+(`FUN_004d8e00` = 4), and every one multiplies **13** into `i`/`j` and **7** into `k` — the
+same lattice as the furnishing pass. ⚠ There are **four** such loops after the door path,
+not five: `0x4e7d10` holds all four face blocks (§10.1).
 
 ## 2. The eleven rand sites
 
@@ -90,7 +101,13 @@ The census over `0x4e7d10`–`0x4ea4e7` returns **exactly these eleven** and the
 it. ⚠ Two are `call esi` (two bytes); a census that only looks for the six-byte
 `call [0x5582f4]` misses them, exactly as in `RE_town_furnish.md` §2.
 
-## 3. The four face walks
+## 3. The four face blocks
+
+⚠ **This section says "the four face WALKS" throughout and that is corrected in §10.1:
+they are four BLOCKS inside one triple loop, so a module walks all four faces before the
+next module starts.** Everything else here is unchanged — the per-face tests, the emits and
+the constants are all right; only the nesting was wrong, and no count in this file's gate
+could tell (the recorded draw ORDER could, and does).
 
 Structurally identical, one per horizontal neighbour. Writing `jm` for the neighbour
 module index (`j-1`, `j+1`, `i-1`, `i+1` respectively):
@@ -386,7 +403,11 @@ have to compute:
 
 ## 9. Not done, deliberately
 
-* **No cwgen port yet — but the blocker is gone.** §9 used to say the anchor fields "live
+* ~~**No cwgen port yet**~~ ✅ **PORTED 07-29h** — `townEntityHouse`, `rederive_townentities`
+  1,375/1,375. The list below was right about what a port would need, and §11 is what it
+  actually took; the two things it did **not** anticipate are in §10. What follows is kept
+  because the reasoning is the record of how the blocker fell.
+* **The blocker was gone before the port started.** §9 used to say the anchor fields "live
   in the server's model DB and nothing in `cwgen` reads it". `cw_rederive/model_id_map.json`
   *is* that DB, it is already in the tree, and `rederive_townantique` already reads
   `w`/`h` out of it. What a port now needs:
@@ -401,9 +422,26 @@ have to compute:
     ★ It is not un-measurable, though: the pick is the only module that emits an
     entrance-stairs record, so the capture **measures** it, and a gate can feed the
     measured value rather than fit one.
-  * **Still to decode before the port:** the roof walk's four classifier arms (§8b.3).
-    They spend no draws, so the draw stream does not depend on them — only ~4,000 of the
-    19,352 records do.
+  * ~~**Still to decode before the port:** the roof walk's four classifier arms~~
+    ✅ **DECODED 07-29h.** The walk zeroes a four-int neighbour array, sets **both** roof
+    halves to `B+9` (`*-roof1`) at `0x4e9774`, marks `nb[0..3]` for each non-empty
+    horizontal neighbour, then jumps through `0x4f2b88` on `cell[+1] % 4`. Each arm picks
+    the two neighbours its two emitted halves look at — and probes the other two, whose
+    results MSVC keeps and discards because `cellAt3D` is a call:
+
+    | `cell[+1] % 4` | half A (tail `0x4e9ebd`) | half B (tail `0x4e9f65`) | dead probes |
+    |---|---|---|---|
+    | 0 | `i-1` (−X) | `i+1` (+X) | `j∓1` |
+    | 1 | `j+1` (+Z) | `j-1` (−Z) | `i∓1` |
+    | 2 | `i+1` (+X) | `i-1` (−X) | `j±1` |
+    | 3 | `j-1` (−Z) | `j+1` (+Z) | `i±1` |
+
+    A half stays `*-roof1` unless that neighbour is a roof too, and then it is **`*-roof3`
+    when the two modules' orientation PARITIES agree** and `*-roof2` when they do not
+    (`cmove` at `0x4e9968` / `0x4e9aeb` / `0x4e9c1e` and the `jne` pair at `0x4e9dec`).
+    Half A emits at `orient = cell[+1]` and half B at `(cell[+1] + 2) % 4`, so the two
+    slopes of a gable face opposite ways. All 3,970 roof records are now derived and their
+    orientation compared, which is what turned §8b.3 from a note into a table.
 * ⚠ The wall pick also **steers the draw stream**: a marked module takes the `models[B+5]`
   branch and so skips that face's `rand() % 6`. So the FED value is not cosmetic.
 * **The door path (`0x4e783b`-`0x4e7cae`) is decoded structurally but not gated.** It
@@ -412,3 +450,80 @@ have to compute:
 * **The ground scan's `houseBaseY` is region-cache-blocked**, like every other plot
   height in this builder. The gate works entirely in Y *differences*, which is why the
   lattice check is on `y mod 7` and spans rather than absolute values.
+
+
+## 10. ★ What the PORT corrected (07-29h)
+
+Both are lesson 13 / 7z shapes: a structure and a value that every *total* in this repo
+agrees with, and that only a consumer reading them positionally can falsify.
+
+### 10.1 There are not four face WALKS — there are four face BLOCKS in one walk
+
+§3 above, `gate_town_entities.py`'s docstring and three handoffs all say "four
+structurally identical FACE walks", one triple loop per horizontal neighbour. The census
+that settles it is one command over the span: it makes **nine** `House_dimY` calls — one in
+the ground scan (`0x4e74be`), then four head/tail pairs — so after the door path there are
+exactly **four** triple loops, heads `0x4e7d54`, `0x4e972a`, `0x4ea010`, `0x4ea520`, and
+only the first runs face code. The four faces are four BLOCKS inside that one loop: a face
+block either emits and **falls through** into the next face's block, or jumps to it. So the
+four addresses this file reads as "the next walk's tail" are each simultaneously a spawn
+tail *and* the next face's entry:
+
+```
+0x4e7f4b   -Z, orient 0    its emits' tail is 0x4e8524  = the +Z block's entry
+0x4e8524   +Z, orient 2    ...                0x4e8afd  = the -X block's entry
+0x4e8afd   -X, orient 1    ...                0x4e90cf  = the +X block's entry
+0x4e90cf   +X, orient 3    ...                0x4e96a2  = the module CONTINUE
+```
+
+⚠ **No draw count can see the difference.** The same modules qualify and the same faces
+pass their tests either way, so every per-site total, every town count and every one of
+this gate's 65,955 checks is identical under both readings. The **order** can, and the
+capture settles it in one command: the recorded coin sequence steps 0 → 2 → 4 → 6 inside
+one module and wraps 5 → 0 into the next, which is the interleaved order and not the
+walk-at-a-time one. That is lesson 13 from the side where an order gate exists, and it is
+why `rederive_townentities` compares the site sequence draw for draw.
+
+### 10.2 `TownHouse::orient` was stored at the UNROTATED index
+
+`townHouseOne` filled `h.orient[a*12 + b*4 + k]` from the draw for walk index `(a, b, k)`.
+The binary's loop at `0x4e73d1` reaches its cell through **`cellAt3D`**, so it walks in
+WALK space and the draw lands in the STORAGE cell that index *rotates* to. The rotation is
+a bijection, so the door SET, the draw COUNT (`36 - nDoors`) and every total
+`gate_town_house` and `rederive_townhouse` check are identical either way — what moves is
+**which module gets which orientation**. Nothing consumed the array positionally until
+this pass needed the `orient` argument of the arc/base and roof emits (lesson 7z, second
+instance: a value nobody reads is a free parameter). ⚠ It is hashed by
+`gateRederiveTownHouse`, so the fix moves the suite hash on its own and was isolated
+separately from the new gate.
+
+## 11. The port's ASSERTED / FED / MEASURED table
+
+| | what | why |
+|---|---|---|
+| **DERIVED** | the module grid, layout, rotation, mirror coin | the golden ships the HOUSE pass's own draws and `townHouseOne` runs for real |
+| **DERIVED** | the per-module orientation byte | §10.2 |
+| **DERIVED** | the model set from `desc[+0x18]`/`desc[+0x1c]`, every id, every `.cub` dim | `CwTownEntityTables.h`, regenerated and diffed by the gate |
+| **DERIVED** | `houseKind`, and so the `type` of the four `*-wall-door` emits | the jump table at `0x4f2b74` |
+| **DERIVED** | every record's tail, orientation and X/Z | 19,352 records, 96,760 fields |
+| **FED** | the plot table (role / sub / rotFinal) | region-cache-blocked scan booleans |
+| **FED** | the house's base **Y** | not shipped at all: the pass runs at `baseY = 0`, the gate takes the offset of each house's FIRST record and asserts every other record of that house carries the same one — 435 of 435. So all 19,352 Y values are checked *relative* and one integer per house is fed, and only the relative Y is hashed (lesson 7z) |
+| **MEASURED, then fed** | the **wall pick** | ★ every face-block emit puts its record at `baseY + 7k` and the four ENTRANCE-STAIRS emits at `baseY + 7k − 4`, so an entrance record is the only one leaving its house's own Y residue mod 7 — and its position then gives the module. **Exactly one pick in 435 of 435 houses**, so it is a reading and not a fit |
+
+⚠ **The draw stream is fed BY VALUE and is not made contiguous, and that is a measurement
+rather than a convenience.** 341 of the 435 houses have a perfectly contiguous recorded
+entity run; the other 94 sit in 19 towns whose **house** pass (1,264 draws over 27 towns)
+and **furnishing** pass gap the same way in the same capture, so those draws are not this
+stage's cost. Every one of the 70 towns has a valid LCG origin, so they are real `rand()`
+calls from outside the builder body. The gate therefore compares the port's SITE SEQUENCE
+draw for draw against the recorded return addresses — which is what proves the port spends
+its own draws at its own sites — and reports the contiguous count rather than claiming a
+budget it cannot derive (the `rederive_townnpcs` treatment, lesson 12).
+
+★ **The two streams are consumed SEQUENTIALLY across a town's houses**, not sliced per
+house by the ctor index, and that is not cosmetic: the ctor is stamped with the draw count
+at *entry*, so the house pass's very first draw can carry exactly that index and a
+`ctor[k] < i` window silently drops it. It did — the first house of (32730,32747) came out
+41 draws instead of 42, which is a different **layout**. Records are the other way round
+and the ctor window IS right for them, by this file's own boundary argument (the house
+pass always spends draws between the ctor and the first record, measured minimum 38).
