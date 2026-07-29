@@ -232,6 +232,11 @@
    "name": "std_vector_free",
    "verdict": "B"
   },
+  "0042feb0": {
+   "kind": "gamemisc",
+   "name": "vec3i_vector_push_back",
+   "verdict": "DEEP-RE"
+  },
   "00431400": {
    "kind": "gamemisc",
    "name": "loadVoxelModels",
@@ -387,9 +392,14 @@
    "name": "town_furniture_factory",
    "verdict": "DEEP-RE"
   },
+  "004f3490": {
+   "kind": "game",
+   "name": "town_market_goods_factory",
+   "verdict": "DEEP-RE"
+  },
   "004f3630": {
    "kind": "game",
-   "name": "TownProp_make_0x15",
+   "name": "town_market_stall_factory",
    "verdict": "DEEP-RE"
   },
   "004f3820": {
@@ -563,9 +573,9 @@
    "verdict": "DEEP-RE"
   },
   "00513400": {
-   "kind": "lib",
-   "name": "lib_fn_513400",
-   "verdict": "B"
+   "kind": "game",
+   "name": "structure_stamp_513400",
+   "verdict": "DEEP-RE"
   },
   "00513760": {
    "kind": "lib",

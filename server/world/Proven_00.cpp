@@ -1,4 +1,4 @@
-// Proven_00 (world) -- server. 43 functions. Bodies = Ghidra pseudo-C.
+// Proven_00 (world) -- server. 44 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Proven_00.h"
 
@@ -30984,7 +30984,73 @@ switchD_004f3006_default:
 }
 
 
-/* TownProp_make_0x15 @ 004f3630  kind=game  attributed-by=ledger  size=186 */
+/* town_market_goods_factory @ 004f3490  kind=game  attributed-by=ledger  size=397 */
+
+undefined4 * __cdecl FUN_004f3490(undefined4 *param_1,undefined4 *param_2,undefined4 param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  float fVar3;
+  float fVar4;
+  
+  *(undefined1 *)(param_1 + 0xc) = 1;
+  param_1[0xd] = 0;
+  param_1[0xe] = 0;
+  param_1[0x10] = 0;
+  param_1[0x11] = 0;
+  FUN_00406ef0(param_1 + 0x12);
+  param_1[0x5e] = 0xffffffff;
+  param_1[0x5f] = 0xffffffff;
+  param_1[0x60] = 0xffffffff;
+  param_1[0x61] = 0;
+  param_1[2] = *param_2;
+  param_1[3] = param_2[1];
+  param_1[4] = param_2[2];
+  param_1[5] = param_2[3];
+  param_1[6] = param_2[4];
+  param_1[7] = param_2[5];
+  param_1[8] = param_3;
+  uVar1 = rand();
+  uVar1 = uVar1 & 0x80000003;
+  if ((int)uVar1 < 0) {
+    uVar1 = (uVar1 - 1 | 0xfffffffc) + 1;
+  }
+  switch(uVar1) {
+  case 0:
+    *param_1 = 0x18;
+    param_1[9] = 0x40000000;
+    param_1[10] = 0x40000000;
+    param_1[0xb] = 0x40000000;
+    return param_1;
+  case 1:
+    *param_1 = 0x19;
+    iVar2 = rand();
+    fVar3 = (((float)iVar2 * 0.5) / 32767.0 + 1.0) * 1.5;
+    param_1[9] = fVar3;
+    param_1[10] = fVar3;
+    param_1[0xb] = fVar3;
+    return param_1;
+  case 2:
+    *param_1 = 0x1a;
+    iVar2 = rand();
+    fVar4 = ((float)iVar2 * 0.5) / 32767.0 + 1.0;
+    fVar3 = fVar4 * 1.5;
+    param_1[9] = fVar3;
+    param_1[10] = fVar3;
+    param_1[0xb] = fVar4 * 0.75;
+    return param_1;
+  case 3:
+    *param_1 = 0x1b;
+    param_1[9] = 0x3fc00000;
+    param_1[10] = 0x3fc00000;
+    param_1[0xb] = 0x3fb33333;
+  }
+  return param_1;
+}
+
+
+/* town_market_stall_factory @ 004f3630  kind=game  attributed-by=ledger  size=186 */
 
 int * __cdecl FUN_004f3630(int *param_1,int *param_2,int param_3)
 

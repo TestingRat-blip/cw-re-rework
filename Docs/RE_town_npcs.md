@@ -237,7 +237,7 @@ there are **thirteen**, the extra one being `0x4f2786` in the ruin pass's phase 
 | the building list `site+0x88`, and each building's `+0x60` kind | **not derived** — produced by the house/plot chain; `CwTown` has the plots but not this list |
 | `B->cells24`, `B->cells3c`, `B->+0x30` (their sizes only) | **not derived** — the villager position is `rand() % size`, so only the SIZE is needed to advance the stream |
 | flag E's list `[ebp-0x5d64]` | **derivable** — pushed at `0x4efff8` in the plaza pass, which is ported (`rederive_townplaza`) |
-| flag B's list `[ebp-0x5d80]` | pushed at `0x4e3ea2`, in the not-yet-RE'd `0x4e3ead` band |
+| flag B's list `[ebp-0x5d80]` | ✅ **derived 07-29** — `0x4e3ea2` is the MARKET pass's landmark push, one per perimeter slot with a column, so **flag B is the market-stall list** (`RE_town_market.md` §3). It also explains `B ⟺ D`, and it makes the schedule stop at `0x4f0fc0` a **trip to the market** |
 | flag A's list `[ebp-0x40]` | the 8×8 region-site sweep at `0x4f01b0` |
 | flags C and D | fall out of the building list's kinds |
 | `desc[0x18]`, `desc[0x24]` | the site descriptor, already in `cw_featuregen` |
@@ -257,7 +257,7 @@ over **both** capture files:
 |---|---|---|---|
 | scan/verdict `0x4e2a80`-`0x4e3093` | 3 | 3,310 | closed |
 | promotion `0x4e3095`-`0x4e39e9` | 12 | 280 | closed |
-| **`0x4e39ea`-`0x4e4fb3`** | **40** | **218** | open |
+| **`0x4e3a3f`-`0x4e5023`** | **40** | **218** | ✅ closed 07-29, `RE_town_market.md` (the MARKET; ⚠ this table's `-0x4e4fb3` bound was the band's last RAND site and cut off its 20th block's settle and push) |
 | role-6 yard `0x4e503a`-`0x4e5b9e` | 14 | 113,353 | closed |
 | house pass `0x4e6520`-`0x4e74a5` | 13 | 17,947 | closed |
 | house entity `0x4e74a5`-`0x4ea988` | 11 | 7,597 | closed |
@@ -270,19 +270,14 @@ over **both** capture files:
 | `0x4eee4f`, `0x4ef03e` | 2 | 45 | open |
 
 **123 of the 176 firing sites, 225,278 of 228,413 draws — 98.6%** *as this file was
-written*. ⚠ **Superseded 2026-07-29:** the ruin pass closed the `0x4f16bb` row, so the
-count is **134 / 176 sites, 228,150 / 228,413 draws — 99.88%**, leaving **42 sites and 218
-recorded draws** (`RE_town_ruin.md` §10, where the census is re-run over the corrected body
-end). Note also that this table's upper bound `0x4f26e9` was wrong: seven more rand sites
-exist past it and no capture on disk records them.
+written*. ⚠ **Superseded twice since.** 07-29 closed the `0x4f16bb` row (the ruin pass) and
+then the `0x4e39ea` row (the market), so the count is **174 / 176 sites, 228,368 / 228,413
+draws — 99.98%** (`RE_town_market.md` §9, where the census is re-run over both corrected
+spans). Note also that this table's `0x4f16bb`-`0x4f26e9` upper bound was wrong: seven more
+rand sites exist past it and no capture on disk records them.
 
-What is left:
-
-* `0x4e39ea`-`0x4e4fb3` is 40 sites spending 218 draws in 6 towns — but it has **20
-  `prop_push` and 20 settle sites** hanging off it, so unlike this pass it can be gated
-  field by field. It is also where the kind-2/3/4/5 buildings and flag B's list come from,
-  so closing it closes two of this stage's five inputs.
-* `0x4eee4f` (31) and `0x4ef03e` (14), the role-0x14 / role-0x12 spawns.
+**All that is left in the whole town builder is two rand sites spending 45 draws**:
+`0x4eee4f` (31) and `0x4ef03e` (14), the role-0x14 / role-0x12 spawns.
 
 ## 10. Numbers
 

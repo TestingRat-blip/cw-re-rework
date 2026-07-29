@@ -1,4 +1,4 @@
-// Proven_02 (world) -- server. 23 functions. Bodies = Ghidra pseudo-C.
+// Proven_02 (world) -- server. 24 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Proven_02.h"
 
@@ -8170,6 +8170,166 @@ LAB_0050f9eb:
     operator_delete(local_2c4);
   }
   goto LAB_00510493;
+}
+
+
+/* structure_stamp_513400 @ 00513400  kind=game  attributed-by=ledger  size=864 */
+
+void __thiscall
+FUN_00513400(void *this,int param_1,int param_2,int param_3,int *param_4,byte *param_5,float param_6
+            ,int param_7,byte param_8)
+
+{
+  float *pfVar1;
+  byte bVar2;
+  int iVar3;
+  void *this_00;
+  int iVar4;
+  undefined2 *puVar5;
+  int iVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  float10 fVar10;
+  int local_b4;
+  undefined2 local_ac;
+  undefined1 local_aa;
+  byte local_a9;
+  undefined2 local_a8;
+  undefined1 local_a6;
+  byte local_a5;
+  undefined2 local_a4;
+  undefined1 local_a2;
+  undefined2 local_a0;
+  undefined1 local_9e;
+  int local_9c;
+  int local_98;
+  void *local_94;
+  uint local_90;
+  int local_8c;
+  float local_88;
+  float fStack_84;
+  float local_80;
+  undefined8 local_7c;
+  float local_74;
+  undefined8 local_70;
+  float local_68;
+  int aiStack_64 [23];
+  uint local_8;
+  
+  local_8 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
+  uVar7 = 0;
+  local_98 = param_7;
+  local_94 = this;
+  do {
+    if ((uVar7 & 7) == 0) {
+      iVar3 = rand();
+      aiStack_64[uVar7] = iVar3 % 0x14;
+    }
+    else {
+      aiStack_64[uVar7] = 0;
+    }
+    uVar7 = uVar7 + 1;
+  } while ((int)uVar7 < 0x17);
+  local_8c = 0;
+  if (0 < *param_4) {
+    local_b4 = 0;
+    do {
+      iVar3 = local_b4;
+      iVar4 = local_8c;
+      if (0 < param_4[1]) {
+        do {
+          local_9c = iVar3;
+          iVar3 = param_4[2] + -1;
+          if (-1 < iVar3) {
+            local_90 = iVar4 + param_2 + local_9c;
+            iVar9 = param_3 + iVar3;
+            iVar8 = iVar3 * 7 + iVar4;
+            do {
+              iVar4 = aiStack_64[(iVar8 / 2 + ((local_9c + iVar8) / 2) * 7) % 0x17];
+              bVar2 = param_5[1];
+              local_88 = (float)(int)((uint)*param_5 + iVar4);
+              local_80 = (float)(int)((uint)param_5[2] + iVar4);
+              fVar10 = FUN_00523b90(local_94,(float)(local_8c + param_1),local_90,iVar9,local_98);
+              fStack_84 = (float)fVar10 * (120.0 - (float)(int)((uint)bVar2 + iVar4)) +
+                          (float)(int)((uint)bVar2 + iVar4);
+              this_00 = (void *)FUN_00406100(local_94,local_8c + param_1,local_90,local_98);
+              if (((this_00 != (void *)0x0) &&
+                  (iVar4 = *(int *)((int)this_00 + 0x10), iVar4 <= iVar9)) &&
+                 (iVar9 < *(int *)((int)this_00 + 0x1c) + iVar4)) {
+                FUN_00405f20(this_00,iVar9 - iVar4);
+              }
+              iVar4 = rand();
+              if (param_6 < (float)iVar4 / 32767.0) {
+                local_68 = local_80;
+                local_70 = CONCAT44(fStack_84,local_88);
+                iVar4 = 0;
+                do {
+                  pfVar1 = (float *)((int)&local_70 + iVar4 * 4);
+                  if (*pfVar1 <= 0.0 && *pfVar1 != 0.0) {
+                    *(undefined4 *)((int)&local_70 + iVar4 * 4) = 0;
+                  }
+                  if (255.0 < *(float *)((int)&local_70 + iVar4 * 4)) {
+                    *(undefined4 *)((int)&local_70 + iVar4 * 4) = 0x437f0000;
+                  }
+                  iVar4 = iVar4 + 1;
+                } while (iVar4 < 3);
+                iVar4 = 0;
+                do {
+                  iVar6 = iVar4 + 1;
+                  *(char *)((int)&local_a4 + iVar4) =
+                       (char)(int)*(float *)((int)&local_70 + iVar4 * 4);
+                  iVar4 = iVar6;
+                } while (iVar6 < 3);
+                local_a8 = local_a4;
+                local_a6 = local_a2;
+                local_a5 = param_8 | 0x46;
+                puVar5 = &local_a8;
+              }
+              else {
+                local_74 = local_80;
+                local_7c = CONCAT44(fStack_84,local_88);
+                iVar4 = 0;
+                do {
+                  pfVar1 = (float *)((int)&local_7c + iVar4 * 4);
+                  if (*pfVar1 <= 0.0 && *pfVar1 != 0.0) {
+                    *(undefined4 *)((int)&local_7c + iVar4 * 4) = 0;
+                  }
+                  if (255.0 < *(float *)((int)&local_7c + iVar4 * 4)) {
+                    *(undefined4 *)((int)&local_7c + iVar4 * 4) = 0x437f0000;
+                  }
+                  iVar4 = iVar4 + 1;
+                } while (iVar4 < 3);
+                iVar4 = 0;
+                do {
+                  iVar6 = iVar4 + 1;
+                  *(char *)((int)&local_a0 + iVar4) =
+                       (char)(int)*(float *)((int)&local_7c + iVar4 * 4);
+                  iVar4 = iVar6;
+                } while (iVar6 < 3);
+                local_ac = local_a0;
+                local_aa = local_9e;
+                local_a9 = param_8 | 0x4d;
+                puVar5 = &local_ac;
+              }
+              FUN_0041ff00(local_94,(float)(local_8c + param_1),local_90,iVar9,(undefined1 *)puVar5,
+                           local_98);
+              iVar8 = iVar8 + -7;
+              iVar9 = iVar9 + -1;
+              iVar3 = iVar3 + -1;
+              iVar4 = local_8c;
+            } while (-1 < iVar3);
+          }
+          local_9c = local_9c + 1;
+          iVar3 = local_9c;
+        } while (local_9c + iVar4 < param_4[1]);
+      }
+      local_8c = iVar4 + 1;
+      local_b4 = local_b4 + -1;
+    } while (local_8c < *param_4);
+  }
+  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
+  return;
 }
 
 

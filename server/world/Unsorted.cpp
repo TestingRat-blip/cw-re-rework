@@ -1,4 +1,4 @@
-// Unsorted (world) -- server. 124 functions. Bodies = Ghidra pseudo-C.
+// Unsorted (world) -- server. 123 functions. Bodies = Ghidra pseudo-C.
 // Attribution: see ../attribution.tsv. Toolchain of the original: MSVC 11.0 (VS2012).
 #include "Unsorted.h"
 
@@ -4558,45 +4558,6 @@ int * __thiscall FUN_0042ede0(void *this,int *param_1,int param_2)
   param_1[1] = *(int *)((int)this + 4) / param_2;
   param_1[2] = *(int *)((int)this + 8) / param_2;
   return param_1;
-}
-
-
-/* FUN_0042feb0 @ 0042feb0  kind=gamemisc  attributed-by=logic:caller-vote  size=143 */
-
-void __thiscall FUN_0042feb0(void *this,undefined4 *param_1)
-
-{
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  
-  puVar1 = *(undefined4 **)((int)this + 4);
-  if ((param_1 < puVar1) && (puVar2 = *(undefined4 **)this, puVar2 <= param_1)) {
-    if (puVar1 == *(undefined4 **)((int)this + 8)) {
-      FUN_0041bb80(this,1);
-    }
-    puVar1 = (undefined4 *)(*(int *)this + (((int)param_1 - (int)puVar2) / 0xc) * 0xc);
-    puVar2 = *(undefined4 **)((int)this + 4);
-    if (puVar2 != (undefined4 *)0x0) {
-      *puVar2 = *puVar1;
-      puVar2[1] = puVar1[1];
-      puVar2[2] = puVar1[2];
-      *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0xc;
-      return;
-    }
-  }
-  else {
-    if (puVar1 == *(undefined4 **)((int)this + 8)) {
-      FUN_0041bb80(this,1);
-    }
-    puVar1 = *(undefined4 **)((int)this + 4);
-    if (puVar1 != (undefined4 *)0x0) {
-      *puVar1 = *param_1;
-      puVar1[1] = param_1[1];
-      puVar1[2] = param_1[2];
-    }
-  }
-  *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0xc;
-  return;
 }
 
 

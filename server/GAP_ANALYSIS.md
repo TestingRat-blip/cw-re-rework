@@ -121,6 +121,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `004d863a` | 870 | 0 | 17 | orphan | Save/world_ |
 | `00418ea0` | 869 | 1 | 5 |  |  |
 | `00485faa` | 868 | 0 | 5 | orphan | minute, month, second |
+| `00513400` | 864 | 6 | 6 |  |  |
 | `00413df0` | 858 | 1 | 0 |  |  |
 | `00470360` | 858 | 2 | 2 |  |  |
 | `00486540` | 856 | 2 | 2 |  |  |
@@ -273,6 +274,7 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `00407730` | 405 | 4 | 0 |  |  |
 | `00468460` | 405 | 0 | 3 | orphan |  |
 | `004da790` | 400 | 2 | 3 |  |  |
+| `004f3490` | 397 | 1 | 2 |  |  |
 | `004d61c0` | 395 | 1 | 5 |  |  |
 | `0054709a` | 395 | 0 | 16 | orphan |  |
 | `004653d0` | 393 | 0 | 6 | orphan |  |
@@ -410,7 +412,5 @@ assembler -- so treat an orphan as a fragment of its owner, not as dead code.
 | `0042ff40` | 243 | 1 | 3 |  |  |
 | `00467f70` | 242 | 0 | 7 | orphan |  |
 | `004189b0` | 241 | 1 | 3 |  |  |
-| `0041de30` | 240 | 2 | 1 |  |  |
-| `0041f770` | 240 | 3 | 3 |  |  |
 
-**Total unnamed non-library functions: 1655** (116 of the listed 400 are orphans)
+**Total unnamed non-library functions: 1657** (116 of the listed 400 are orphans)

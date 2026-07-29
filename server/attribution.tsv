@@ -867,7 +867,7 @@ addr	name	kind	module	class	attributed_by	size
 0042f9a0	World_loadVoxelModel	game	world	Proven	ledger	656
 0042fc30	std::basic_filebuf<char,std::char_traits<char>_>::vfunction4	lib	_library	stl	stl-ns	483
 0042fe20	std::basic_filebuf<char,std::char_traits<char>_>::vfunction5	lib	_library	stl	stl-ns	136
-0042feb0	FUN_0042feb0	gamemisc	world	Unsorted	logic:caller-vote	143
+0042feb0	vec3i_vector_push_back	gamemisc	render	Proven	ledger	143
 0042ff40	FUN_0042ff40	gamemisc	world	Helpers	caller-vote	243
 00430033	Catch_All@00430033	lib	_library	eh_funclets	eh	17
 00430050	std::basic_filebuf<char,std::char_traits<char>_>::vfunction11	lib	_library	stl	stl-ns	242
@@ -2447,8 +2447,8 @@ addr	name	kind	module	class	attributed_by	size
 004f2c50	std_vector_push_back (32B elem)	lib	_library	cw_lib	ledger	117
 004f2cd0	town_surround_prop_factory	game	world	Proven	ledger	498
 004f2ee0	town_furniture_factory	game	world	Proven	ledger	1359
-004f3490	lib_fn_4f3490	lib	_library	cw_lib	ledger	397
-004f3630	TownProp_make_0x15	game	world	Proven	ledger	186
+004f3490	town_market_goods_factory	game	world	Proven	ledger	397
+004f3630	town_market_stall_factory	game	world	Proven	ledger	186
 004f36f0	lib_fn_4f36f0	lib	_library	cw_lib	ledger	275
 004f3803	Catch_All@004f3803	lib	_library	eh_funclets	eh	17
 004f3820	SpeciesGroupVector_size	gamemisc	game_misc	Game	ledger	23
@@ -2602,7 +2602,7 @@ addr	name	kind	module	class	attributed_by	size
 0050e080	featureGrid	game	world	Proven	ledger	9264
 005104e0	camp_populator	game	game_misc	Game	ledger	7192
 0051210a	camp_populator__split_51210a	game	game_misc	Game	ledger	4767
-00513400	lib_fn_513400	lib	_library	cw_lib	ledger	864
+00513400	structure_stamp_513400	game	world	Proven	ledger	864
 00513760	lib_fn_513760	lib	_library	cw_lib	ledger	7494
 005154aa	lib_fn_513760__split_5154aa	gamemisc	game_misc	_body_splits	role:body-split	2225
 00515d6a	lib_fn_513760__split_515d6a	gamemisc	game_misc	_body_splits	role:body-split	9225

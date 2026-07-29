@@ -331,6 +331,28 @@ the body was the only way to settle these.
                      "verdict": "DEEP-RE"},
         "004f79b0": {"name": "SpeciesGroupVector_at", "kind": "gamemisc",
                      "verdict": "DEEP-RE"},
+        # The town MARKET's two prop factories (Docs/RE_town_market.md).  Both are called
+        # from the town builder and nowhere else, and both spend a rand() the rig cannot
+        # see -- LCG-recovered, they reproduce the TYPE and all three EXTENTS of 90 of 90
+        # live records.
+        #   0x4f3630  type = 0x15 + rand()%3  -> market-stand1/2/3, extents 3.5/2.0/3.0
+        #   0x4f3490  type = 0x18 + rand()%4  -> barrel/crate/open-crate/sack, via a
+        #             4-entry jump table at 0x4f3620; arms 1 and 2 spend a SECOND draw.
+        # (0x4f3630's row is further down, where it already lived.)
+        "004f3490": {"name": "town_market_goods_factory", "kind": "game",
+                     "verdict": "DEEP-RE"},
+        # FUN_0042feb0 -- std::vector<T>::push_back for a 12-byte element (the 0x2aaaaaab /
+        # sar 1 reciprocal divide is /12).  The market pass uses it for the landmark list
+        # `[ebp-0x5d80]`, which is the NPC pass's flag B.
+        "0042feb0": {"name": "vec3i_vector_push_back", "kind": "gamemisc",
+                     "verdict": "DEEP-RE"},
+        # lib_fn_513400 -- the SEVENTH `lib_fn_*` in this neighbourhood that is not a
+        # library function.  Its callers are the town builder and FIVE sites inside the
+        # dungeon assembler (0x502dca, 0x50529a, 0x5053ca, 0x5054fa, 0x50702a), so it is
+        # game code in the structure-building layer.  NOT decoded: the town builder's only
+        # call is in the role-8 section, which is dead (RE_town_market.md sec.2), so this
+        # project has never observed it running from there.
+        "00513400": {"name": "structure_stamp_513400", "kind": "game", "verdict": "DEEP-RE"},
         # FUN_004024c0 / FUN_004024a0 -- sinf / cosf through __libm_sse2_{sin,cos}_precise,
         # the /fp:precise imports (they are wrappers, not the CRT routines themselves). The
         # ruin pack ring is `2 * cos/sin(i * PI / n)`.
@@ -363,11 +385,17 @@ the body was the only way to settle these.
         # plus a ring of rand()%3+1 creatures) or a creature group. Gated over 99 firing
         # zones, 2,742 checks. Was `lib_fn_5104e0` under `_library` -- it is game code.
         "005104e0": {"name": "camp_populator", "kind": "game", "verdict": "DEEP-RE"},
-        # the town builder's prop record builder (Docs/RE_town_props.md). Was
-        # "unproven ctor -- GAME": it fills the record from a position and a direction and
+        # the town MARKET's stall factory (Docs/RE_town_market.md; was
+        # Docs/RE_town_props.md). It fills the record from a position and a direction and
         # then ends `type = rand() % 3 + 0x15` with the size hard-coded to (3.5, 2, 3).
         # Its fourth argument is pushed by every caller and never read.
-        "004f3630": {"name": "TownProp_make_0x15", "kind": "game", "verdict": "DEEP-RE"},
+        # RENAMED 2026-07-29 from `TownProp_make_0x15`. The old comment had the decode
+        # right -- `rand() % 3 + 0x15` is right there in it -- and the NAME still said the
+        # function makes type 0x15, which is the one thing it does not do: it makes one of
+        # THREE, and through prop_ids.json those three are market-stand1/2/3. A name is a
+        # claim; this one contradicted the comment directly above it for two slices.
+        "004f3630": {"name": "town_market_stall_factory", "kind": "game",
+                     "verdict": "DEEP-RE"},
         # CONFIRMED library, and worth pinning because the previous handoff asked for
         # "FUN_004e19f0's sort key" as if the function had one (Docs/RE_town_promotion.md).
         # It is MSVC's std::_Sort over a 4-byte element -- the `sar eax,2` count, the

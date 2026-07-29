@@ -602,6 +602,11 @@
    "name": "World_loadVoxelModel",
    "src": "CW_CONFIDENCE_XREF.md"
   },
+  "0042feb0": {
+   "kind": "gamemisc",
+   "name": "vec3i_vector_push_back",
+   "src": "ADJUDICATION.md"
+  },
   "00430230": {
    "kind": "game",
    "name": "World_buildVoxelMesh",
@@ -843,13 +848,13 @@
    "src": "ADJUDICATION.md"
   },
   "004f3490": {
-   "kind": "lib",
-   "name": "lib_fn_4f3490",
-   "src": "CW_CONFIDENCE_XREF.md"
+   "kind": "game",
+   "name": "town_market_goods_factory",
+   "src": "ADJUDICATION.md"
   },
   "004f3630": {
    "kind": "game",
-   "name": "TownProp_make_0x15",
+   "name": "town_market_stall_factory",
    "src": "ADJUDICATION.md"
   },
   "004f36f0": {
@@ -1068,8 +1073,8 @@
    "src": "ADJUDICATION.md"
   },
   "00513400": {
-   "kind": "lib",
-   "name": "lib_fn_513400",
+   "kind": "game",
+   "name": "structure_stamp_513400",
    "src": "ADJUDICATION.md"
   },
   "00513760": {
