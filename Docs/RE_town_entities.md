@@ -1,8 +1,27 @@
 # The town builder's HOUSE ENTITY pass (`0x4e74a5`–`0x4ea988`)
 
-*RE'd and gated 2026-07-28 (07-28k). Live gate: `tools/gate_town_entities.py`, **46,338
-checks, 0 FAIL** over the 92 towns in `raw/town_props_capture*.json` (seed 42069) — 70 of
-which build a house, 435 houses, **19,352 spawn records**.*
+*RE'd and gated 2026-07-28 (07-28k); the MODELS identified and every record's position
+DERIVED 2026-07-29g. Live gate: `tools/gate_town_entities.py`, **65,954 checks, 0 FAIL**
+over the 92 towns in `raw/town_props_capture*.json` (seed 42069) — 70 of which build a
+house, 435 houses, **19,352 spawn records**.*
+
+★★ **2026-07-29g — the port's blocker is gone, and it was never a missing input.** §9
+said the per-emit anchor field "lives in the server's model DB and nothing in `cwgen`
+reads it", so a port would have to be FED one constant per emit site. Both halves are
+wrong. `models[]` **is** the world model DB — the same `vector<Model*>` at `+0x1c` that
+`RE_town_antique.md` §2 read `m->[+0x44]` / `m->[+0x48]` out of a day earlier — so the
+ids resolve through `cw_rederive/model_id_map.json`, which already holds the `.cub`
+dimensions of all 2,550 models and knows nothing about this pass. Feeding those in,
+**19,352 of 19,352 records land exactly** on
+
+```
+X = houseAnchor.x + 13*i + c - model.w/2      Z = houseAnchor.z + 13*j + c - model.d/2
+```
+
+with `c = 7` at every emit but the four entrance-stairs ones. **6,401 of the records pin
+exactly ONE model id.** Lesson 7h for the fifth time (the input was misfiled, not
+missing) and lesson 7u for the second (a second source that knows the id's geometry, and
+the agreement is the gate).
 
 ```
 python tools/gate_town_entities.py
@@ -109,36 +128,67 @@ about that is typed here.
 
 ### 3.1 `models[]` and its frame slots
 
-`models` is the vector at `site+0x1c`. `0x4e5c39` gates the whole house chain on
-`plot[+0xc] == 2`, reads `models[0x889]` into `[ebp-0x5c90]`, and then a **second** jump
-table at `0x4f2b60`, keyed on `desc[+0x1c]`, picks a thirteen-entry base `B` and loads
-`models[B+0 .. B+12]` into thirteen frame slots:
+`models` is the **world model DB**, the `vector<Model*>` at `+0x1c` of the same object the
+antique-building pass indexes (`RE_town_antique.md` §0). `0x4e5c39` gates the whole house
+chain on `plot[+0xc] == 2`, reads `models[0x889]` into `[ebp-0x5c90]`, and then a
+**second** jump table at `0x4f2b60`, keyed on `desc[+0x1c]`, picks a thirteen-entry base
+`B` and loads `models[B+0 .. B+12]` into thirteen frame slots.
 
-| `desc[+0x1c]` | 0 | 1 | 2 | 3 | 4 | 5 | ruin (`desc[+0x18] != 1`) |
-|---|---|---|---|---|---|---|---|
-| arm | `0x4e611d` | `0x4e5c7e` | `0x4e5d63` | `0x4e5e48` | `0x4e5f2d` | `0x4e6025` | `0x4e6202` |
-| base `B` | `0x88d` | `0x8ef` | `0x8a7` | `0x89a` | `0x8c1` | `0x8c2` | — |
+⚠ The store for entry `N` is emitted *after* the `push` for entry `N+1`, the same MSVC
+habit `RE_town_house.md` §2 records, so the table is read by following the stores and not
+the pushes — and `tools/extract_house_emits.py` **interprets** the arms rather than
+reading them (lesson 7i). Every slot is the model its role names:
 
-⚠ The
-store for entry `N` is emitted *after* the `push` for entry `N+1`, the same MSVC habit
-`RE_town_house.md` §2 records, so this table was read by following the stores and not the
-pushes:
+| slot | `[ebp-]` | model | used by |
+|---|---|---|---|
+| B+0 | `0x5c88` | `*-base` | the BASE module emit |
+| B+1 | `0x5cb0` | `*-floor` | the wall/roof walk's roof and wall emits |
+| B+2 | `0x14` | `*-floor-stairs` | the wall walk's `cell[+3] != 0` emit |
+| B+3 | `0x5c9c` | `*-wall` | a face whose neighbour module is neither empty nor a wall |
+| B+4 | `0x5d08` | `*-wall-window` | a face's default emit (the coin failed) |
+| B+5 | `0x5cd4` | `*-wall-door` | the `cell[+2]` / stacked-wall emit — **the only one that carries `houseKind`** |
+| B+6 | `0x5c8c` | `*-wall-indoor` | the four-neighbour walk (kind-1 modules) |
+| B+7 | `0x5d2c` | `*-wall-balcony` | a face's `k > 1` coin |
+| B+8 | `0x5d04` | `*-wall-lamp` | a face's `k == 1` coin |
+| B+9 | `0x5c7c` | `*-roof1` | the roof walk's DEFAULT (see the correction below) |
+| B+10 | `0x5d00` | `*-roof2` | the roof walk, `cmove` arm A |
+| B+11 | `0x5ca8` | `*-roof3` | the roof walk, `cmove` arm B |
+| B+12 | `0x5ca0` | `*-arc` | the DOOR module emit |
+| — | `0x5c90` | `*-entrance-stairs` | the `cell[+2] != 0` emit |
 
-| slot | `[ebp-]` | used by |
-|---|---|---|
-| B+0 | `0x5c88` | the BASE module emit |
-| B+1 | `0x5cb0` | the wall/roof walk's roof and wall emits |
-| B+2 | `0x14` | the wall walk's `cell[+3] != 0` emit |
-| B+3 | `0x5c9c` | a face whose neighbour module is neither empty nor a wall |
-| B+4 | `0x5d08` | a face's default emit (the coin failed) |
-| B+5 | `0x5cd4` | the `cell[+2]` / stacked-wall emit — **the only one that carries `houseKind`** |
-| B+6 | `0x5c8c` | the four-neighbour walk (kind-1 modules) |
-| B+7 | `0x5d2c` | a face's `k > 1` coin |
-| B+8 | `0x5d04` | a face's `k == 1` coin |
-| B+9 | `0x5c7c` | — (not reached by any emit in this stage) |
-| B+10 | `0x5d00` | the roof walk, `cmove` arm A |
-| B+11 | `0x5ca8` | the roof walk, `cmove` arm B |
-| B+12 | `0x5ca0` | the DOOR module emit |
+### ⚠ CORRECTION 2026-07-29g: the arm bases, and what the first `push` is
+
+The table this section used to carry gave `desc[+0x1c] == 4` the base `0x8c1` and `== 5`
+the base `0x8c2`, on the strength of each arm's **first `push imm32`**. That is the right
+reading for arms 0–3 and the wrong one for every other arm: the clay, whiteclay and all
+three ruin arms **open by overwriting the entrance-stairs slot** `[ebp-0x5c90]` — which
+the other arms leave holding the generic `models[0x889]` = `entrance-stairs.cub` — and
+only then load their thirteen. The gate asserted the old numbers and passed, because it
+was checking the same first push the reading came from. The corrected arms, machine-read
+by interpreting the stores:
+
+| kind | `desc[+0x1c]` | arm | base `B` | family | entrance override |
+|---|---|---|---|---|---|
+| village | 0 / other | `0x4e611d` | `0x88d` | `framework` | — (`0x889`) |
+| village | 1 | `0x4e5c7e` | `0x8ef` | `wood` | — |
+| village | 2 | `0x4e5d63` | `0x8a7` | `whitewood` | — |
+| village | 3 | `0x4e5e48` | `0x89a` | `stone` | — |
+| village | 4 | `0x4e5f2d` | **`0x8b4`** | `clay` | `0x8c1` |
+| village | 5 | `0x4e6025` | **`0x8c3`** | `whiteclay` | `0x8c2` |
+| ruin | 2 | `0x4e6402` | `0x8e5` | `desertruin` | `0x8e4` |
+| ruin | 3 | `0x4e630d` | `0x8da` | `jungleruin` | `0x8d9` |
+| ruin | other | `0x4e6218` | `0x8d1` | `antiqueruin` | `0x8d0` |
+
+★ **The six village families are complete** — `base, floor, floor-stairs, wall,
+wall-window, wall-door, wall-indoor, wall-balcony, wall-lamp, roof1, roof2, roof3, arc`,
+thirteen consecutive ids in every one. The three **ruin** families are not: the assets
+ship no window/balcony/lamp (and `antiqueruin` no door or indoor either), so those arms
+repeat `*-wall` into the missing slots — 3, 3 and 5 duplicates. That is reported by the
+gate, not asserted; it is a property of the shipped `.cub` set.
+
+⚠ **The corpus never runs the `desertruin` arm** (`desc[+0x18] != 1` and
+`desc[+0x1c] == 2`): 28 ruins take the antique arm, 14 the jungle one, 0 the desert one.
+Its ids are byte-read, not observed (lesson 9).
 
 ## 4. `houseKind` — the jump table at `0x4f2b74`
 
@@ -208,11 +258,29 @@ furnishing port pinned — and the entity record then sits at the module's own `
 is exactly where `RE_town_furnish.md` §5b.2 puts the kind-0 centre piece (`dx = dz = 7`).
 Two stages decoded a week apart, from different observables, agree on the same lattice.
 
-⚠ **`src[+0x44]` is not an extent and is not always positive.** Records appear at module
-offsets that only close if the subtracted value is negative for some models, so this is
-recorded as *the model's own anchor field*, not as "half the width". The gate does not
-claim a value for it: it asserts only that it is **constant per emit site**, which is what
-the lattice needs.
+### ⚠ CORRECTION 2026-07-29g: `src[+0x44]` *is* an extent, and it is always positive
+
+This section used to read: *"`src[+0x44]` is not an extent and is not always positive —
+records appear at module offsets that only close if the subtracted value is negative for
+some models."* Both halves are withdrawn. `+0x44` / `+0x48` / `+0x4c` are the model's
+`.cub` **width / depth / height**, exactly as `RE_town_antique.md` §2 reads them, and every
+one is positive. What produced the off-lattice records was a constant belonging to the
+**emit**, not to the model: the four entrance-stairs emits add **−6** or **+20** instead of
+`+7` on their own face's axis — a whole 13-block module onto the neighbour the face looks
+at — and **−4** in Y. `extract_house_emits.py` interprets that constant out of each emit
+block, so the gate reads it rather than fitting it, and with it every record closes.
+
+The per-emit constants, machine-derived: `+7` on both axes at all 30 other emits;
+`(7, −6)`, `(7, 20)`, `(−6, 7)`, `(20, 7)` at the four entrance emits, one per face.
+Y is `houseBaseY + 7*k`, less `model.height` (and `+1`) at the wall/roof walk's emits and
+`−4` at the entrance emits.
+
+★ **What the 19,352 records now prove.** Every record is predicted exactly by
+`anchor + 13*m + c − dim/2` on both axes, `m ∈ 0..2`. Where the tail is fed by one emit
+the model id is **pinned**: 6,401 records resolve to a single id, 6,477 to two, 5,685 to
+three and 789 to four — and the multi-way ones are only ambiguous because the models
+concerned share a footprint (all four `*-roof` variants are 16×16, the three carpets
+14×14), which is a statement about the assets and not a gap in the decode.
 
 ## 7. Falsification record
 
@@ -234,8 +302,13 @@ the lattice needs.
 | the module lattice: one residual class per emit site | residual pairs vs the derived emit count | **5,080** |
 | …and single-model tails land on the exact 3×3×4 lattice | span and divisibility, no free parameter | **2,176** |
 | the house boundary is decidable | min draws between a ctor and its first record | **38** |
+| the nine model-set arms and their entrance overrides | `extract_house_emits.model_sets` interprets the stores | 27 |
+| every model in a set belongs to that set's `.cub` family | `model_id_map.json`, by name | 117 |
+| …and a VILLAGE family is the complete thirteen roles | by name, per slot | 78 |
+| the per-emit axis constants are `+7`, and the four entrance emits `−6`/`+20` | interpreted per emit block | 34 |
+| **every record's position, from the model dims** | `anchor + 13*m + c − dim/2`, both axes, `m ∈ 0..2` | **19,352** |
 
-Total: **46,338 checks, 0 FAIL.**
+Total: **65,954 checks, 0 FAIL** (was 46,338 before 07-29g).
 
 ### 7.1 The null baseline, and what the gate cannot see
 
@@ -253,11 +326,15 @@ Total: **46,338 checks, 0 FAIL.**
   the byte-checked instructions that load the source, so the bound stays a reading of the
   binary. Each of the three nevertheless shows **one** class in every house, so those
   models share an anchor — a reading of the data, reported and not relied on.
-* **The models themselves are not identified.** `models[]` is `site+0x1c`, indexed by a
-  per-`desc[+0x1c]` base (`0x8ef`, `0x8a7`, `0x89a`, … selected through a second jump
-  table at `0x4f2b60`); the ids resolve through `prop_ids.json`, but that is the
-  `site+0xc` namespace and these go elsewhere — the same reason `RE_town_yard.md` §5
-  withdrew its semantic reading (lesson A1). No claim is made here about what they *are*.
+* ~~**The models themselves are not identified.**~~ ✅ **They are, 07-29g** — and the
+  reason the old note gave for not identifying them was the right reason applied to the
+  wrong map. `prop_ids.json` really is the `site+0xc` namespace and really does not cover
+  these; but `models[]` is the **world model DB**, whose namespace is
+  `model_id_map.json`, built from 2,550 live model pointers joined to the loader and
+  verified against the decoded `.cub` files — the same map `RE_town_antique.md` §2 used
+  for `0x84c`-`0x84f`. Lesson 7t from the other side: the namespace is what licenses the
+  reading, and here it is the *right* namespace, so the reading stands and the gate
+  asserts it.
 
 ## 8. What this leaves
 
@@ -278,14 +355,57 @@ interior marking → furnishing → surround with no unexplained draw in between
 `anchor + 13*m + 7` from the entity records, and the surround pass's own literals
 decompose to the *same* centre — and its anchor sweep pins the `+7` outright.
 
+## 8b. ★ What the 07-29g re-read corrected, beyond the models
+
+Four more things the decode had wrong or missing, all found by asking what a port would
+have to compute:
+
+1. **B+9 is reached.** §3.1 said `*-roof1` "is not reached by any emit in this stage". It
+   is the roof walk's **default**: `0x4e9774` stores it into *both* of the walk's model
+   temps (`[ebp-0x5c54]` and `[ebp-0x5cd4]`) before the classifier runs, and the `cmove`s
+   only replace it when a neighbour is also a roof.
+2. **`0x4e9f65`'s model is not B+5.** `gate_town_entities.REG_SRC` recorded, correctly,
+   that its `esi` comes from `[ebp-0x5cd4]` "with no other write" — but that slot holds
+   the *wall-door* only in the face walk; the **roof walk repurposes it**, so the model
+   there is one of the three roofs. The tell was arithmetic: those 1,985 records need a
+   16-wide model and `*-wall-door` is 18. Lesson 7z's shape — a frame slot is not a
+   variable.
+3. **The roof walk emits a PAIR per roof module**, at `orient = cell[+1]` and
+   `orient = cell[+1] + 2`, each half independently upgraded to `roof2`/`roof3` by a
+   four-arm classifier (jump table at `0x4f2b88`, keyed on `cell[+1] % 4`) that tests
+   whether the neighbour on that side is also a roof and compares the two modules'
+   orientation parities. Both emits also pass the walk's own **four-int neighbour array**
+   (`[ebp-0x74]`, one flag per non-empty horizontal neighbour) where every other emit
+   passes a zeroed vec4, and their fourth argument is **`0xe`**, not the `6` every other
+   emit pushes.
+4. **The `0x4ea254` "inhabitant" is a CARPET.** `models[0x88a + rand() % 3]` is
+   `carpet1/carpet2/carpet3.cub` — 14×14×1, laid on a wall module's floor with a random
+   `rand() & 3` facing when the module above has `[+3] == 0`. The old name came from the
+   callee's label, `creature_spawn_builder`, which is the generic entity builder — the
+   same mistake `RE_town_antique.md` §1 corrected for the antique buildings (lesson 7u).
+
 ## 9. Not done, deliberately
 
-* **No port.** The walk needs the module grid *and* a `models[]` anchor field per emit
-  site; the grid is in `CwTownHouseTables.h` already (with `kind`/`flag` since 07-28i, and
-  the `+1` orientation byte the house pass rolls), but the anchor fields live in the
-  server's model DB and nothing in `cwgen` reads it. A port can derive positions only up
-  to that per-site constant, so it would have to be **FED** — write the ASSERTED / FED
-  table first, as `RE_town_yard.md` §6.1 does.
+* **No cwgen port yet — but the blocker is gone.** §9 used to say the anchor fields "live
+  in the server's model DB and nothing in `cwgen` reads it". `cw_rederive/model_id_map.json`
+  *is* that DB, it is already in the tree, and `rederive_townantique` already reads
+  `w`/`h` out of it. What a port now needs:
+  * **ASSERTED / derived:** the module grid (`CwTownHouseTables.h`, with `kind`/`flag`),
+    the layout, rotation and mirror (`TownHouse`, derived), the per-module `+1`
+    orientation (`TownHouse::orient[36]`, derived), the plot lattice, the model set from
+    `desc[+0x18]`/`desc[+0x1c]`, and the `.cub` dimensions.
+  * **FED, and both are terrain:** the house's **base Y** (region-cache-blocked like every
+    plot height, exactly as the surround port FEDs it), and the **wall pick** — `0x4e7321`
+    stamps `cell[+2] = 1` on one module and its candidate list applies a terrain test
+    (`RE_town_house.md`'s 07-29e correction), so *which* module is stamped is blocked.
+    ★ It is not un-measurable, though: the pick is the only module that emits an
+    entrance-stairs record, so the capture **measures** it, and a gate can feed the
+    measured value rather than fit one.
+  * **Still to decode before the port:** the roof walk's four classifier arms (§8b.3).
+    They spend no draws, so the draw stream does not depend on them — only ~4,000 of the
+    19,352 records do.
+* ⚠ The wall pick also **steers the draw stream**: a marked module takes the `models[B+5]`
+  branch and so skips that face's `rand() % 6`. So the FED value is not cosmetic.
 * **The door path (`0x4e783b`-`0x4e7cae`) is decoded structurally but not gated.** It
   spends no draws and its only output is `writeVoxel`, which `frida_town_props.py` does
   not hook — so nothing here can check it. Recorded as a closed door, not a result.

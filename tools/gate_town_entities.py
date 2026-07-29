@@ -35,7 +35,12 @@ import re
 import struct
 import sys
 
+import capstone
+
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import extract_house_emits as EM          # noqa: E402
+
 RAW = os.path.join(HERE, "..", "raw")
 EXE = os.path.normpath(os.path.join(HERE, "..", "..", "..", "..", "Server.exe"))
 BASE = 0x400000
@@ -99,6 +104,18 @@ MODULE_XZ, MODULE_Y, MODULE_LEVELS, MODULE_N = 13, 7, 4, 3
 HOUSE_ORIGIN = 7             # the house anchor, +7 into the plot (RE_town_furnish.md 5b.2)
 MODULE_CENTRE = 7            # and the record sits at the module's own +7
 
+# the thirteen slots of a model set, in the order the arms fill them (section 3.1)
+SLOT_ROLE = ["base", "floor", "floor-stairs", "wall", "wall-window", "wall-door",
+             "wall-indoor", "wall-balcony", "wall-lamp", "roof1", "roof2", "roof3", "arc"]
+MODEL_MAP = os.path.normpath(os.path.join(HERE, "..", "..", "cw_rederive",
+                                          "model_id_map.json"))
+# The four tails whose model does not come from a frame slot the emit walk can read.
+# ⚠ 0x4e9f65's source is [ebp-0x5cd4], which IS B+5 in the face walk -- but the ROOF
+# walk repurposes that slot to hold its own roof model (0x4e9774 stores B+9 into it),
+# so the model there is one of roof1/roof2/roof3, not the wall-door.
+TAIL_MODEL_OVERRIDE = {0x4EA386: "carpet", 0x4E9EBD: "roof", 0x4E9F65: "roof",
+                       0x4EA47E: "floorpair"}
+
 
 # --- image helpers ------------------------------------------------------------------
 def load_image():
@@ -158,8 +175,8 @@ def census_spawn(data, secs, lo, hi):
 def emit_sites(data, secs):
     """Every `push <src>` that is the last push before a spawn tail, paired with the tail
     it reaches.  Walked out of the binary, following `jmp` chains -- never typed."""
-    import capstone
-    md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    import capstone as _cs
+    md = _cs.Cs(_cs.CS_ARCH_X86, _cs.CS_MODE_32)
     blob = at(data, secs, STAGE_LO, STAGE_HI - STAGE_LO)
     insns = list(md.disasm(blob, STAGE_LO))
     idx = {ins.address: i for i, ins in enumerate(insns)}
@@ -256,16 +273,53 @@ def main():
     sub_kind = {s + 1: KIND_ARM.get(order[s]) for s in range(5)}
     check(sub_kind == {1: 2, 2: 3, 3: 4, 4: 5, 5: 6}, "sub -> kind is %s" % sub_kind)
 
-    # the model-set jump table at 0x4f2b60, keyed on desc[+0x1c]: each arm's first
-    # `push imm32` is the base of that set's thirteen models (section 3.1)
-    for i, want in enumerate((0x8EF, 0x8A7, 0x89A, 0x8C1, 0x8C2)):
-        tgt = struct.unpack_from("<I", at(data, secs, MODEL_TABLE + 4 * i, 4))[0]
-        b = at(data, secs, tgt, 5)
-        check(b[0] == 0x68 and struct.unpack_from("<I", b, 1)[0] == want,
-              "model arm %d at 0x%x starts %s, expected push 0x%x" % (i + 1, tgt, b.hex(), want))
-    b = at(data, secs, MODEL_DEFAULT, 5)
-    check(b[0] == 0x68 and struct.unpack_from("<I", b, 1)[0] == 0x88D,
-          "the desc[+0x1c]==0 model arm does not start at 0x88d")
+    # the model-set jump table at 0x4f2b60, keyed on desc[+0x1c].  ⚠ CORRECTED 07-29g:
+    # an arm's FIRST `push imm32` is NOT always the base of its thirteen models -- the
+    # clay, whiteclay and all three ruin arms open by overwriting the ENTRANCE-STAIRS
+    # slot [ebp-0x5c90] (which the other arms leave holding models[0x889]) and only then
+    # load the set.  `extract_house_emits.model_sets` interprets the stores instead of
+    # reading the pushes, and this gate re-runs it (lesson 7i).
+    md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    sets = EM.model_sets(data, secs, md)
+    for name, want_base, want_entr in (
+            ("village d1c=0", 0x88D, None), ("village d1c=1", 0x8EF, None),
+            ("village d1c=2", 0x8A7, None), ("village d1c=3", 0x89A, None),
+            ("village d1c=4", 0x8B4, 0x8C1), ("village d1c=5", 0x8C3, 0x8C2),
+            ("ruin d1c=2", 0x8E5, 0x8E4), ("ruin d1c=3", 0x8DA, 0x8D9),
+            ("ruin other", 0x8D1, 0x8D0)):
+        s = sets[name]
+        check(s["base"][0] == want_base, "%s: B+0 is 0x%x, expected 0x%x"
+                                         % (name, s["base"][0], want_base))
+        check(s["entr"] == want_entr, "%s: the entrance override is %s, expected %s"
+                                      % (name, s["entr"], want_entr))
+        check(len(s["base"]) == 13, "%s: %d models, expected 13" % (name, len(s["base"])))
+    # and every model the pass can reach is a real entry in the client's model DB, with
+    # the NAME its slot's role predicts -- `model_id_map.json` was built by a completely
+    # separate effort and knows nothing about this pass (lesson 7u).
+    db = json.load(open(MODEL_MAP, encoding="utf-8"))["world_model_db"]
+    ruin_reuse = {}
+    for name, s in sets.items():
+        fam = db[str(s["base"][0])]["name"].split("-")[0]
+        for slot, (role, mid) in enumerate(zip(SLOT_ROLE, s["base"])):
+            nm = db[str(mid)]["name"].replace(".cub", "")
+            check(nm.split("-")[0] == fam, "%s B+%d is %s, not a %s model"
+                                           % (name, slot, nm, fam))
+            if name.startswith("village"):
+                # a village family is complete: every slot is the model its role names
+                check(nm == fam + "-" + role, "%s B+%d is %s, not a %s"
+                                              % (name, slot, nm, role))
+        if name.startswith("ruin"):
+            # ⚠ the three RUIN families are incomplete -- they ship no window/balcony/lamp
+            # (and antiqueruin no door or indoor either), so the arm repeats `*-wall` into
+            # those slots.  Reported, not asserted: it is a property of the assets.
+            ruin_reuse[name] = 13 - len(set(s["base"]))
+        if s["entr"]:
+            check(db[str(s["entr"])]["name"] == fam + "-entrance-stairs.cub",
+                  "%s: the entrance override is %s" % (name, db[str(s["entr"])]["name"]))
+    check(db["2185"]["name"] == "entrance-stairs.cub", "0x889 is not entrance-stairs.cub")
+    check([db[str(0x88A + i)]["name"] for i in range(3)]
+          == ["carpet1.cub", "carpet2.cub", "carpet3.cub"],
+          "0x88a..0x88c are not the three carpets")
 
     # ================= 2. the emit -> tail map =================
     emits = emit_sites(data, secs)
@@ -285,6 +339,49 @@ def main():
     check(seq[3][-len(seq[0]):] == seq[0], "face walk 4 does not end with that sequence: %s" % seq[3])
     check(len(seq[0]) == 6, "a face walk has %d emit sites, expected 6" % len(seq[0]))
 
+    # ================= 2b. the emit DESCRIPTORS (added 07-29g) ========================
+    # `extract_house_emits.describe` runs each emit block symbolically and reports the
+    # model slot and the constant it adds on each axis.  Every emit adds +7 -- the module
+    # centre RE_town_furnish.md 5b.2 also derives -- except the four ENTRANCE-STAIRS
+    # emits, which add -6 or +20, i.e. a whole 13-block module onto the face's own
+    # neighbour.  That single constant is what made 6 of section 6 read the anchor field
+    # as "not an extent and not always positive"; it is an extent, and the shift is the
+    # emit's, not the model's.
+    per_tail_model, entr_consts = collections.defaultdict(list), []
+    for e in EM.describe(data, secs, md):
+        if e["slot"] is None:
+            continue
+        cx, cz = e["y"].c, e["z"].c          # e["y"] is the first vec3 argument (game X)
+        per_tail_model[e["tail"]].append((e["slot"], cx, cz))
+        if EM.MODEL_SLOT.get(e["slot"]) == "ENTR":
+            entr_consts.append((cx, cz))
+            check(sorted((cx, cz)) in ([-6, 7], [7, 20]),
+                  "the entrance emit at 0x%x adds (%d, %d)" % (e["emit"], cx, cz))
+        else:
+            check(cx == MODULE_CENTRE and cz == MODULE_CENTRE,
+                  "emit 0x%x adds (%d, %d), expected (7, 7)" % (e["emit"], cx, cz))
+    check(len(entr_consts) == 4, "%d entrance emits, expected 4" % len(entr_consts))
+    check(sorted(entr_consts) == [(-6, 7), (7, -6), (7, 20), (20, 7)],
+          "the four entrance shifts are %s" % sorted(entr_consts))
+    for t, how in TAIL_MODEL_OVERRIDE.items():
+        per_tail_model[t] = [(how, MODULE_CENTRE, MODULE_CENTRE)] \
+            if how != "floorpair" else per_tail_model[t] + [(how, 7, 7)]
+
+    def candidate_models(tail, base, entr):
+        out = []
+        for slot, cx, cz in per_tail_model[tail]:
+            if slot == "carpet":
+                ids = [0x88A, 0x88B, 0x88C]
+            elif slot == "roof":
+                ids = [base[9], base[10], base[11]]
+            elif slot == "floorpair":
+                ids = [base[1], base[2]]
+            else:
+                role = EM.MODEL_SLOT.get(slot)
+                ids = [entr] if role == "ENTR" else ([base[role]] if isinstance(role, int) else [])
+            out += [(m, cx, cz) for m in ids]
+        return out
+
     # ================= 3. the live capture =================
     hits = []
     for name in sorted(glob.glob(os.path.join(RAW, "town_props_capture*.json"))):
@@ -298,12 +395,21 @@ def main():
     cls_ok = single_ok = 0
     min_gap = None
     seen_cls = collections.defaultdict(collections.Counter)
+    lattice_ok = 0
+    resolved = collections.Counter()
+    arms_seen = collections.Counter()
+    MODEL_DIMS = {int(k): v["dims"] for k, v in db.items()}
 
     for h in hits:
         zx, zz = h["zone"]
         P = plots_of(h.get("plotsLate"))
         desc = bytes(h["desc"])
         is_village = struct.unpack_from("<i", desc, 0x18)[0] == 1
+        d1c = struct.unpack_from("<i", desc, 0x1C)[0]
+        mset = sets.get(("village d1c=%d" % d1c) if is_village else ("ruin d1c=%d" % d1c),
+                        sets["village d1c=0"] if is_village else sets["ruin other"])
+        mbase, mentr = mset["base"], (mset["entr"] or 0x889)
+        arms_seen[("village" if is_village else "ruin", d1c)] += 1
         n = 5 if is_village else 4
         draws = collections.defaultdict(list)
         for ra, v, i in h["draws"]:
@@ -378,6 +484,27 @@ def main():
                 X, Z, Y = struct.unpack_from("<iii", bytes(s["pos"]))
                 grp[ra].append((X - ox, Z - oz, Y))
 
+                # 3d'. THE DERIVED POSITION (added 07-29g).  The record sits at
+                #    houseAnchor + 13*m + c - model->[+0x44 or +0x48] / 2,
+                # with the model id read out of the binary's own jump-table arm and the
+                # dimension read out of `model_id_map.json`, which was built from the
+                # decoded .cub files and knows nothing about this pass.  Two independent
+                # sources; the module index m must land in 0..2 on both axes.
+                fits = []
+                for mid, cx, cz in candidate_models(ra, mbase, mentr):
+                    w, dpt = MODEL_DIMS[mid][0], MODEL_DIMS[mid][1]
+                    a = X - (ox - MODULE_CENTRE) - cx + w // 2
+                    b = Z - (oz - MODULE_CENTRE) - cz + dpt // 2
+                    if a % MODULE_XZ == 0 and b % MODULE_XZ == 0 \
+                            and 0 <= a // MODULE_XZ < MODULE_N and 0 <= b // MODULE_XZ < MODULE_N:
+                        fits.append(mid)
+                check(bool(fits), "%d,%d h%d 0x%x: (%d, %d) is off the derived lattice for %s"
+                                  % (zx, zz, hi_, ra, X - ox, Z - oz,
+                                     [hex(m) for m, _c, _d in candidate_models(ra, mbase, mentr)]))
+                if fits:
+                    lattice_ok += 1
+                    resolved[len(set(fits))] += 1
+
             # 3d. the module lattice.  Every record sits at
             #        plotOrigin + 7 + 13*m + 7 - (model offset), m in 0..2
             # so all records from ONE emit site share a residual mod 13 on both axes.
@@ -420,6 +547,19 @@ def main():
           % (type_kind, type_one, type_either, orient_ok))
     print("  lattice: %d residual-class checks, %d single-model houses on the exact lattice"
           % (cls_ok, single_ok))
+    print("  ** DERIVED positions: %d of %d records land exactly on"
+          " houseAnchor + 13*m + c - modelDim/2" % (lattice_ok, records))
+    print("    the model id comes from the binary's jump-table arm, the dimension from"
+          " model_id_map.json -- two independent sources")
+    print("    how many candidate models close per record (1 = the id is PINNED): %s"
+          % dict(sorted(resolved.items())))
+    print("  the six VILLAGE model sets are complete families (base/floor/wall/roof/arc,"
+          " 13 slots each);")
+    print("    the three RUIN sets repeat `*-wall` into slots the assets do not have"
+          " -- duplicates: %s" % ruin_reuse)
+    print("  model-set arms exercised by the corpus (kind, desc[+0x1c]) -> towns: %s"
+          % dict(sorted(arms_seen.items())))
+    print("    !! NULL COVERAGE: the desertruin arm (ruin, desc[+0x1c]==2) never fires here")
     print("  ctor -> first record gap, minimum over %d houses: %s draws" % (houses, min_gap))
     print("  residual classes seen per tail (reported, the assertion is <= the emit count):")
     for ra in sorted(seen_cls):
